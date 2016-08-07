@@ -1,0 +1,40 @@
+{
+  "name": "<%= module %>",
+  "version": "0.0.0",
+  "description": "<%= description %>",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/<%= github_user %>/<%= module %>.git"
+  },
+  "keywords": [],
+  "author": {
+    "name": "<%= author %>",
+    "email": "<%= email %>"
+  },
+  "contributors": [],
+  "license": "<%= license %>",
+  "engines": {
+    "node": ">=6.3.0"
+  },
+  "bugs": {
+    "url": "https://github.com/<%= github_user %>/<%= module %>/issues"
+  },
+  "homepage": "https://github.com/<%= github_user %>/<%= module %>#readme",
+  "devDependencies": {
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.9.0",
+    "chai": "^3.5.0",
+    "del": "^2.2.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-jscs": "^4.0.0",
+    "gulp-mocha": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.6.0"
+  },
+  "dependencies": {}
+}
