@@ -1,14 +1,13 @@
 'use strict';
 var path = require('path');
 var assert = require('yeoman-assert');
-var helpers = require('yeoman-generator').test;
+var helpers = require('yeoman-test');
 
 describe('generator-wupjs:app', function () {
-  before(function (done) {
-    helpers.run(path.join(__dirname, '../generators/app'))
-      .withOptions({someOption: true})
+  before(function () {
+    return helpers.run(path.join(__dirname, '../generators/app'))
       .withPrompts({someAnswer: true})
-      .on('end', done);
+      .toPromise();
   });
 
   it('creates files', function () {

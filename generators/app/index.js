@@ -3,20 +3,31 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = yeoman.Base.extend({
   prompting: function() {
-    var done = this.async();
-
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the beautiful ' + chalk.red('generator-wupjs') + ' generator!'
+      'Welcome to the incredible ' + chalk.red('generator-wupjs') +
+        ' generator!'
     ));
+
+    var prompts = [{
+      type: 'confirm',
+      name: 'someAnswer',
+      message: 'Would you like to enable this option?',
+      default: true
+    }];
+
+    return this.prompt(prompts).then(function(props) {
+      // To access props later use this.props.someAnswer;
+      this.props = props;
+    }.bind(this));
   },
 
   writing: function() {
   },
 
   install: function() {
-    this.installDependencies();
+    //this.installDependencies();
   }
 });
