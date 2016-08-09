@@ -2,32 +2,115 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var upperCamelCase = require('uppercamelcase');
 
 module.exports = yeoman.Base.extend({
+  initializing: function() {
+    this.argument('moduleName', {type: String, required: false});
+  },
+
   prompting: function() {
-    // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the incredible ' + chalk.red('generator-wupjs') +
+      'Welcome to our ' + chalk.red('generator-wupjs') +
         ' generator!'
     ));
 
     var prompts = [{
-      type: 'confirm',
-      name: 'someAnswer',
-      message: 'Would you like to enable this option?',
-      default: true
+      type: 'input',
+      name: 'module',
+      message: 'Module name:',
+      default: this.moduleName || this.appname.replace(/\s+/g, '-')
+    }, {
+      type: 'input',
+      name: 'description',
+      message: 'Description:',
+      default: this.config.get('description')
+    }, {
+      type: 'input',
+      name: 'author',
+      message: 'Author\'s name:',
+      default: this.config.get('author')
+    }, {
+      type: 'input',
+      name: 'email',
+      message: 'Email address:',
+      default: this.config.get('email')
+    }, {
+      type: 'input',
+      name: 'github',
+      message: 'GitHub user name:',
+      default: this.config.get('github')
+    }, {
+      type: 'input',
+      name: 'license',
+      message: 'LICENSE:',
+      default: this.config.get('license') || 'MIT'
     }];
 
     return this.prompt(prompts).then(function(props) {
-      // To access props later use this.props.someAnswer;
+      props.Class = upperCamelCase(props.module);
       this.props = props;
     }.bind(this));
   },
 
+  configuring: function() {
+    this.fs.copy(
+      this.templatePath('babelrc'),
+      this.destinationPath('.babelrc')
+    );
+
+    this.fs.copy(
+      this.templatePath('gitignore'),
+      this.destinationPath('.gitignore')
+    );
+
+    this.fs.copy(
+      this.templatePath('jscsrc'),
+      this.destinationPath('.jscsrc')
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('LICENSE'),
+      this.destinationPath('LICENSE'),
+      this.props
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('README.md'),
+      this.destinationPath('README.md'),
+      this.props
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('gulpfile.babel.js'),
+      this.destinationPath('gulpfile.babel.js'),
+      this.props
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('package.json'),
+      this.destinationPath('package.json'),
+      this.props
+    );
+
+    this.config.set(this.props);
+  },
+
   writing: function() {
+    this.fs.copyTpl(
+      this.templatePath('rename_me.js'),
+      this.destinationPath('src/' + this.props.module + '.js'),
+      this.props
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('rename_me.test.js'),
+      this.destinationPath('test/' + this.props.module + '.test.js'),
+      this.props
+    );
   },
 
   install: function() {
-    //this.installDependencies();
+    this.installDependencies();
   }
 });

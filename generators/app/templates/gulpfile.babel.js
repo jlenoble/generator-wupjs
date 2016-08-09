@@ -60,7 +60,7 @@ const clean = () => {
 };
 
 gulp.task('clean', clean);
-gulp.task('build', gulp.parallel(copy, build));
+gulp.task('build', build);
 gulp.task('test', gulp.series('build', test));
 
 gulp.task('watch', watch);
