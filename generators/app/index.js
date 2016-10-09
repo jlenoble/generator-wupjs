@@ -41,10 +41,10 @@ module.exports = yeoman.Base.extend({
       message: 'GitHub user name:',
       default: this.config.get('github')
     }, {
-      type: 'input',
+      type: 'list',
       name: 'license',
       message: 'LICENSE:',
-      default: this.config.get('license') || 'MIT'
+      choices: ['MIT', 'GPL-3.0']
     }];
 
     return this.prompt(prompts).then(function(props) {
@@ -70,7 +70,7 @@ module.exports = yeoman.Base.extend({
     );
 
     this.fs.copyTpl(
-      this.templatePath('LICENSE'),
+      this.templatePath('LICENSE_' + this.props.license),
       this.destinationPath('LICENSE'),
       this.props
     );
