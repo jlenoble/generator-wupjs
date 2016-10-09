@@ -7,6 +7,7 @@ import plumber from 'gulp-plumber';
 import rename from 'gulp-rename';
 import del from 'del';
 import path from 'path';
+import autoreload from 'autoreload-gulp';
 
 const originalSrc = gulp.src;
 gulp.src = function() {
@@ -76,4 +77,4 @@ gulp.task('tdd', gulp.series('test', 'watch'));
 gulp.task('dist', dist);
 gulp.task('prepublish', gulp.series('test', 'clean', 'dist'));
 
-gulp.task('default', gulp.parallel('tdd'));
+gulp.task('default', autoreload('tdd'));
