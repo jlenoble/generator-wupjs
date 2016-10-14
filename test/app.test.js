@@ -1,0 +1,147 @@
+import path from 'path';
+import upperCamelCase from 'uppercamelcase';
+import assert from 'yeoman-assert';
+import helpers from 'yeoman-test';
+
+const envFiles = [
+  '.babelrc',
+  '.gitignore',
+  '.jscsrc',
+  'package.json',
+];
+
+const gulpFiles = [
+  'gulpfile.babel.js',
+  'gulp/build.js',
+  'gulp/clean.js',
+  'gulp/dist.js',
+  'gulp/globs.js',
+  'gulp/prepublish.js',
+  'gulp/tdd.js',
+  'gulp/test.js',
+  'gulp/watch.js'
+];
+
+const appFiles = [
+  'LICENSE',
+  'README.md'
+];
+
+describe('generator-wupjs:app', function() {
+
+  describe('Testing with no argument', function() {
+
+    before(function() {
+      this.runContext = helpers.run(path.join(__dirname, '../generators/app'))
+        .withPrompts({
+          description: 'Some fancy description',
+          author: 'Me Me',
+          email: 'me@there',
+          github: 'me',
+          license: 'GPL-3.0'
+        })
+        .toPromise();
+
+      return this.runContext;
+    });
+
+    it('creates files', function() {
+      assert.file(envFiles);
+      assert.file(gulpFiles);
+      assert.file(appFiles);
+      this.runContext.then(dir => {
+        const str = path.basename(dir);
+        assert.file([`src/${str}.js`, `test/${str}.test.js`]);
+      });
+    });
+
+    it('files have expected content', function() {
+      assert.fileContent('package.json',
+        /"description": "Some fancy description"/);
+      assert.fileContent('package.json', /"name": "Me Me"/);
+      assert.fileContent('package.json', /"email": "me@there"/);
+      assert.fileContent('package.json', /"license": "GPL-3\.0"/);
+
+      assert.fileContent('LICENSE', /GPL-3\.0 License/);
+      assert.fileContent('LICENSE', /Copyright \(c\) \d+ Me Me <me@there>/);
+
+      assert.fileContent('README.md', /Some fancy description/);
+      assert.fileContent('README.md', /© \d+ \[Me Me\]\(mailto:me@there\)/);
+
+      return this.runContext.then(dir => {
+        const str = path.basename(dir);
+        assert.fileContent('package.json', new RegExp(
+          `"name": "${str}"`));
+        assert.fileContent('package.json', new RegExp(
+          `"url": "git://github\.com/me/${str}\.git"`));
+
+        assert.fileContent('gulp/globs.js', new RegExp(
+          `export const srcGlob = 'src/${str}\.js';`));
+
+        assert.fileContent('README.md', new RegExp(`# ${str}`));
+        assert.fileContent('README.md', new RegExp(
+          `${str} is \\[GPL-3.0 licensed\\]\\(./LICENSE\\).`));
+
+        assert.fileContent(`src/${str}.js`, new RegExp(
+          `export default ${upperCamelCase(str)};`));
+        assert.fileContent(`test/${str}.test.js`, new RegExp(
+          `import ${upperCamelCase(str)} from '../src/${str}';`));
+      }).catch(err => {
+        throw err;
+      });
+    });
+
+  });
+
+  describe('Testing with argument', function() {
+
+    before(function() {
+      return helpers.run(path.join(__dirname, '../generators/app'))
+        .withArguments(['MyApp'])
+        .withPrompts({
+          description: 'Some fancy description',
+          author: 'Me Me',
+          email: 'me@there',
+          github: 'me',
+          license: 'MIT'
+        })
+        .toPromise();
+    });
+
+    it('creates files', function() {
+      assert.file(envFiles);
+      assert.file(gulpFiles);
+      assert.file(appFiles);
+      assert.file(['src/MyApp.js', 'test/MyApp.test.js']);
+    });
+
+    it('files have expected content', function() {
+      assert.fileContent('package.json', /"name": "MyApp"/);
+      assert.fileContent('package.json',
+        /"description": "Some fancy description"/);
+      assert.fileContent('package.json',
+        /"url": "git:\/\/github\.com\/me\/MyApp\.git"/);
+      assert.fileContent('package.json', /"name": "Me Me"/);
+      assert.fileContent('package.json', /"email": "me@there"/);
+      assert.fileContent('package.json', /"license": "MIT"/);
+
+      assert.fileContent('gulp/globs.js',
+        /export const srcGlob = 'src\/MyApp\.js';/);
+
+      assert.fileContent('LICENSE', /MIT License/);
+      assert.fileContent('LICENSE', /Copyright \(c\) \d+ Me Me <me@there>/);
+
+      assert.fileContent('README.md', /# MyApp/);
+      assert.fileContent('README.md', /Some fancy description/);
+      assert.fileContent('README.md',
+        /MyApp is \[MIT licensed\]\(\.\/LICENSE\)\./);
+      assert.fileContent('README.md', /© \d+ \[Me Me\]\(mailto:me@there\)/);
+
+      assert.fileContent('src/MyApp.js', /export default Myapp;/);
+      assert.fileContent('test/MyApp.test.js',
+        /import Myapp from '\.\.\/src\/MyApp';/);
+    });
+
+  });
+
+});

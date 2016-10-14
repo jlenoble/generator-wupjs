@@ -117,11 +117,11 @@ module.exports = yeoman.Base.extend({
 
   install: function() {
     this.installDependencies();
-    this.spawnCommandSync('git', [
+    /*this.spawnCommandSync('git', [
       'remote',
       'set-url',
       'origin',
       `git@github.com:${this.props.github}/${this.props.module}.git`
-    ]);
+    ]);*/
   }
 });

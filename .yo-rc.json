@@ -1,0 +1,11 @@
+{
+  "generator-wupjs": {
+    "module": "generator-wupjs",
+    "description": "A custom Yeoman generator to reduce boiler-plate in JS dev",
+    "author": "Jason Lenoble",
+    "email": "jason.lenoble@gmail.com",
+    "github": "jlenoble",
+    "license": "MIT",
+    "Class": "GeneratorWupjs"
+  }
+}
