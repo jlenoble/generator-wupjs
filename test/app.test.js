@@ -1,5 +1,6 @@
 import path from 'path';
 import upperCamelCase from 'uppercamelcase';
+import {exec} from 'child-process-promise';
 import assert from 'yeoman-assert';
 import helpers from 'yeoman-test';
 
@@ -69,7 +70,13 @@ describe('generator-wupjs:app', function() {
       assert.fileContent('README.md', /© \d+ \[Me Me\]\(mailto:me@there\)/);
 
       return this.runContext.then(dir => {
-        const str = path.basename(dir);
+        let str = path.basename(dir);
+        let Class;
+        if (!/^[a-zA-Z]+.*/.test(str)) {
+          Class = 'Wup' + str;
+        } else {
+          Class = upperCamelCase(str);
+        }
         assert.fileContent('package.json', new RegExp(
           `"name": "${str}"`));
         assert.fileContent('package.json', new RegExp(
@@ -83,11 +90,27 @@ describe('generator-wupjs:app', function() {
           `${str} is \\[GPL-3.0 licensed\\]\\(./LICENSE\\).`));
 
         assert.fileContent(`src/${str}.js`, new RegExp(
-          `export default ${upperCamelCase(str)};`));
+          `export default ${Class};`));
         assert.fileContent(`test/${str}.test.js`, new RegExp(
-          `import ${upperCamelCase(str)} from '../src/${str}';`));
+          `import ${Class} from '../src/${str}';`));
       }).catch(err => {
         throw err;
+      });
+    });
+
+    it(`'gulp test' runs Ok`, function() {
+      this.timeout(500000);
+      return this.runContext.then(dir => {
+        return exec('npm install', {cwd: dir})
+          .then(res => {
+            return exec('gulp test', {cwd: dir});
+          })
+          .then(res => {
+            console.log(res.stdout);
+            console.warn(res.stderr);
+          }, error => {
+            console.error(error);
+          });
       });
     });
 

@@ -1,6 +1,8 @@
 class <%= Class %> {
 
-  constructor() {}
+  constructor() {
+    console.log('Hello!');
+  }
 
 }
 

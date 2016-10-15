@@ -48,7 +48,11 @@ module.exports = yeoman.Base.extend({
     }];
 
     return this.prompt(prompts).then(function(props) {
-      props.Class = upperCamelCase(props.module);
+      if (!/^[a-zA-Z]+.*/.test(props.module)) {
+        props.Class = 'Wup' + props.module;
+      } else {
+        props.Class = upperCamelCase(props.module);
+      }
       this.props = props;
     }.bind(this));
   },
