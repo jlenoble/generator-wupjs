@@ -52,6 +52,12 @@ module.exports = yeoman.Base.extend({
       message: 'Ecmascript presets (Babel):',
       choices: ['none', 'es2015', 'es2016', 'es2017'],
       default: this.config.get('transpile')
+    }, {
+      type: 'checkbox',
+      name: 'addons',
+      message: 'Use vendor libraries:',
+      choices: ['React'],
+      default: this.config.get('addons')
     }];
 
     return this.prompt(prompts).then(function(props) {
@@ -65,7 +71,8 @@ module.exports = yeoman.Base.extend({
   },
 
   configuring: function() {
-    if (this.props.transpile !== 'none') {
+    if (this.props.transpile !== 'none' ||
+      this.props.addons.includes('React')) {
       this.fs.copyTpl(
         this.templatePath('babelrc'),
         this.destinationPath('.babelrc'),

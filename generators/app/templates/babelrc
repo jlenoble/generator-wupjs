@@ -6,7 +6,9 @@
       break;
     case 'es2017': %>"es2015", "es2016", "es2017"<%
       break;
-    } %>],
+    case 'none':
+      if (addons.includes('React')) { %>"react"<% }
+    } %><% if (transpile !== 'none' && addons.includes('React')) { %>, "react"<% } %>],
   "plugins": [
     "add-module-exports"
   ]
