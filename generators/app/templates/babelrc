@@ -1,5 +1,12 @@
 {
-  "presets": ["es2015"],
+  "presets": [<% switch(transpile) {
+    case 'es2015': %>"es2015"<%
+      break;
+    case 'es2016': %>"es2015", "es2016"<%
+      break;
+    case 'es2017': %>"es2015", "es2016", "es2017"<%
+      break;
+    } %>],
   "plugins": [
     "add-module-exports"
   ]

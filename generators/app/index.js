@@ -44,7 +44,14 @@ module.exports = yeoman.Base.extend({
       type: 'list',
       name: 'license',
       message: 'LICENSE:',
-      choices: ['MIT', 'GPL-3.0']
+      choices: ['MIT', 'GPL-3.0'],
+      default: this.config.get('license')
+    }, {
+      type: 'list',
+      name: 'transpile',
+      message: 'Ecmascript presets (Babel):',
+      choices: ['none', 'es2015', 'es2016', 'es2017'],
+      default: this.config.get('transpile')
     }];
 
     return this.prompt(prompts).then(function(props) {
@@ -58,10 +65,13 @@ module.exports = yeoman.Base.extend({
   },
 
   configuring: function() {
-    this.fs.copy(
-      this.templatePath('babelrc'),
-      this.destinationPath('.babelrc')
-    );
+    if (this.props.transpile !== 'none') {
+      this.fs.copyTpl(
+        this.templatePath('babelrc'),
+        this.destinationPath('.babelrc'),
+        this.props
+      );
+    }
 
     this.fs.copy(
       this.templatePath('gitignore'),
