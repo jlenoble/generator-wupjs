@@ -113,6 +113,14 @@ module.exports = yeoman.Base.extend({
       this.props
     );
 
+    if (this.props.addons.includes('React')) {
+      this.fs.copyTpl(
+        this.templatePath('gulp_react/**/*.js'),
+        this.destinationPath('gulp'),
+        this.props
+      );
+    }
+
     this.fs.copyTpl(
       this.templatePath('package.json'),
       this.destinationPath('package.json'),
@@ -123,6 +131,20 @@ module.exports = yeoman.Base.extend({
   },
 
   writing: function() {
+    if (this.props.addons.includes('React')) {
+      this.fs.copyTpl(
+        this.templatePath('index.html'),
+        this.destinationPath('src/index.html'),
+        this.props
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('index.js'),
+        this.destinationPath('src/index.js'),
+        this.props
+      );
+    }
+
     this.fs.copyTpl(
       this.templatePath('rename_me.js'),
       this.destinationPath('src/' + this.props.module + '.js'),

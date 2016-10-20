@@ -31,7 +31,9 @@
     "babel-preset-es2016": "^6.9.0",<% } else if (transpile === 'es2017') { %>
     "babel-preset-es2016": "^6.9.0",
     "babel-preset-es2017": "^6.9.0",<% } %><% if (addons.includes('React')) { %>
-    "babel-preset-react": "^6.9.0",<% } %>
+    "babel-preset-react": "^6.9.0",
+    "browser-sync": "^2.17.5",
+    "browserify": "^13.1.0",<% } %>
     "chai": "^3.5.0",
     "del": "^2.2.1",
     "gulp": "git://github.com/gulpjs/gulp.git#4.0",<% if (transpile !== 'none') { %>
@@ -41,7 +43,9 @@
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
-    "muter": "^0.4.1"
+    "muter": "^0.5.0"<% if (addons.includes('React')) { %>,
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"<% } %>
   },
   "dependencies": {<% if (addons.includes('React')) { %>
     "react": "^15.3.2",
