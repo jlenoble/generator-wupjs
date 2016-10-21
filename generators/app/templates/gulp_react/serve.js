@@ -22,4 +22,4 @@ export const serve = done => {
     });
 };
 
-gulp.task('serve', gulp.series('bundle', serve));
+gulp.task('serve', serve);

@@ -140,6 +140,12 @@ module.exports = yeoman.Base.extend({
         this.props
       );
 
+      this.fs.copyTpl(
+        this.templatePath('runner.html'),
+        this.destinationPath('test/runner.html'),
+        this.props
+      );
+
       jsExt = '.jsx';
     }
 
@@ -157,7 +163,7 @@ module.exports = yeoman.Base.extend({
 
     this.fs.copyTpl(
       this.templatePath('rename_me.test.js'),
-      this.destinationPath('test/' + this.props.module + '.test.js'),
+      this.destinationPath('test/' + this.props.module + '.test' + jsExt),
       this.props
     );
   },
