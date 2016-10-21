@@ -131,6 +131,8 @@ module.exports = yeoman.Base.extend({
   },
 
   writing: function() {
+    let jsExt = '.js';
+
     if (this.props.addons.includes('React')) {
       this.fs.copyTpl(
         this.templatePath('index.html'),
@@ -138,16 +140,18 @@ module.exports = yeoman.Base.extend({
         this.props
       );
 
-      this.fs.copyTpl(
-        this.templatePath('index.js'),
-        this.destinationPath('src/index.js'),
-        this.props
-      );
+      jsExt = '.jsx';
     }
 
     this.fs.copyTpl(
+      this.templatePath('index.js'),
+      this.destinationPath('src/index' + jsExt),
+      this.props
+    );
+
+    this.fs.copyTpl(
       this.templatePath('rename_me.js'),
-      this.destinationPath('src/' + this.props.module + '.js'),
+      this.destinationPath('src/' + this.props.module + jsExt),
       this.props
     );
 

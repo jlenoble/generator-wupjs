@@ -1,5 +1,18 @@
 import path from 'path';
 
+function join(...args) {
+  let len = args.length;
+  let glob = args[len - 1];
+
+  if (!Array.isArray(glob)) {
+    glob = [glob];
+  }
+
+  args.pop();
+
+  return glob.map(str => path.join(...args, str));
+}
+
 export const srcDir = 'src';
 export const testDir = 'test';
 export const buildDir = 'build';
@@ -7,14 +20,14 @@ export const buildDir = 'build';
 export const apps = ['<%= module %>'];
 export const bundleGlob = 'bundle.js';
 
-export const srcGlob = path.join(srcDir, '**/*.js');
-export const testGlob = path.join(testDir, '**/*.test.js');
+export const srcGlob = join(srcDir, ['**/*.js', '**/*.jsx']);
+export const testGlob = join(testDir, '**/*.test.js');
 
-export const srcBuildGlob = path.join(buildDir, srcGlob);
-export const testBuildGlob = path.join(buildDir, testGlob);
+export const srcBuildGlob = join(buildDir, srcGlob);
+export const testBuildGlob = join(buildDir, testGlob);
 
-export const allSrcGlob = [srcGlob, testGlob];
-export const allBuildGlob = [srcBuildGlob, testBuildGlob];
+export const allSrcGlob = srcGlob.concat(testGlob);
+export const allBuildGlob = srcBuildGlob.concat(testBuildGlob);
 
-export const bundleRootGlob = path.join(buildDir, srcDir, 'index.js');
-export const bundleBuildGlob = path.join(buildDir, bundleGlob);
+export const bundleRootGlob = join(buildDir, srcDir, 'index.js');
+export const bundleBuildGlob = join(buildDir, bundleGlob);
