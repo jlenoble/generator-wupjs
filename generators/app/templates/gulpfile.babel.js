@@ -2,8 +2,8 @@ import gulp from 'gulp';
 import plumber from 'gulp-plumber';
 import autoreload from 'autoreload-gulp';
 
-import './gulp/serve';
-import './gulp/tdd';
+<% if(addons.includes('React')) { %>import './gulp/serve';
+<% } %>import './gulp/tdd';
 import './gulp/prepublish';
 
 const originalSrc = gulp.src;

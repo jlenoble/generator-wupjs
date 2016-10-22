@@ -102,9 +102,10 @@ module.exports = yeoman.Base.extend({
       this.props
     );
 
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath('gulpfile.babel.js'),
-      this.destinationPath('gulpfile.babel.js')
+      this.destinationPath('gulpfile.babel.js'),
+      this.props
     );
 
     this.fs.copyTpl(
