@@ -39,7 +39,8 @@ describe('generator-wupjs:app', function() {
           author: 'Me Me',
           email: 'me@there',
           github: 'me',
-          license: 'GPL-3.0'
+          license: 'GPL-3.0',
+          addons: []
         })
         .toPromise();
 
@@ -82,15 +83,15 @@ describe('generator-wupjs:app', function() {
         assert.fileContent('package.json', new RegExp(
           `"url": "git://github\.com/me/${str}\.git"`));
 
-        assert.fileContent('gulp/globs.js', new RegExp(
-          `export const srcGlob = 'src/${str}\.js';`));
+        /*assert.fileContent('gulp/globs.js', new RegExp(
+          `export const srcGlob = 'src/${str}\.js';`));*/
 
         assert.fileContent('README.md', new RegExp(`# ${str}`));
         assert.fileContent('README.md', new RegExp(
           `${str} is \\[GPL-3.0 licensed\\]\\(./LICENSE\\).`));
 
         assert.fileContent(`src/${str}.js`, new RegExp(
-          `export default ${Class};`));
+          `export default class ${Class}`));
         assert.fileContent(`test/${str}.test.js`, new RegExp(
           `import ${Class} from '../src/${str}';`));
       }).catch(err => {
@@ -126,7 +127,8 @@ describe('generator-wupjs:app', function() {
           author: 'Me Me',
           email: 'me@there',
           github: 'me',
-          license: 'MIT'
+          license: 'MIT',
+          addons: []
         })
         .toPromise();
     });
@@ -148,8 +150,8 @@ describe('generator-wupjs:app', function() {
       assert.fileContent('package.json', /"email": "me@there"/);
       assert.fileContent('package.json', /"license": "MIT"/);
 
-      assert.fileContent('gulp/globs.js',
-        /export const srcGlob = 'src\/MyApp\.js';/);
+      /*assert.fileContent('gulp/globs.js',
+        /export const srcGlob = 'src\/MyApp\.js';/);*/
 
       assert.fileContent('LICENSE', /MIT License/);
       assert.fileContent('LICENSE', /Copyright \(c\) \d+ Me Me <me@there>/);
@@ -160,7 +162,7 @@ describe('generator-wupjs:app', function() {
         /MyApp is \[MIT licensed\]\(\.\/LICENSE\)\./);
       assert.fileContent('README.md', /© \d+ \[Me Me\]\(mailto:me@there\)/);
 
-      assert.fileContent('src/MyApp.js', /export default Myapp;/);
+      assert.fileContent('src/MyApp.js', /export default class Myapp/);
       assert.fileContent('test/MyApp.test.js',
         /import Myapp from '\.\.\/src\/MyApp';/);
     });

@@ -44,7 +44,8 @@
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
-    "muter": "^0.5.0"<% if (addons.includes('React')) { %>,
+    "muter": "^0.5.0",
+    "plumb-gulp": "^0.1.0"<% if (addons.includes('React')) { %>,
     "react-addons-test-utils": "^15.3.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"<% } %>
