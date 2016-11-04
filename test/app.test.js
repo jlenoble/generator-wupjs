@@ -33,7 +33,7 @@ describe('generator-wupjs:app', function() {
   describe('Testing with no argument', function() {
 
     before(function() {
-      this.runContext = helpers.run(path.join(__dirname, '../generators/app'))
+      this.runContext = helpers.run(path.join(__dirname, '../../generators/app'))
         .withPrompts({
           description: 'Some fancy description',
           author: 'Me Me',
@@ -120,7 +120,7 @@ describe('generator-wupjs:app', function() {
   describe('Testing with argument', function() {
 
     before(function() {
-      return helpers.run(path.join(__dirname, '../generators/app'))
+      return helpers.run(path.join(__dirname, '../../generators/app'))
         .withArguments(['MyApp'])
         .withPrompts({
           description: 'Some fancy description',

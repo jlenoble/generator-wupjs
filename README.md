@@ -3,8 +3,8 @@ A custom Yeoman generator to reduce boiler-plate in JS dev
 
 ## Usage
 
-```bash
-yo wupjs
+```js
+import GeneratorWupjs from 'generator-wupjs';
 ```
 
 ## License
