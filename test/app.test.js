@@ -33,6 +33,7 @@ describe('generator-wupjs:app', function() {
   describe('Testing with no argument', function() {
 
     before(function() {
+      this.cwd = process.cwd();
       this.runContext = helpers.run(path.join(__dirname, '../../generators/app'))
         .withPrompts({
           description: 'Some fancy description',
@@ -45,6 +46,10 @@ describe('generator-wupjs:app', function() {
         .toPromise();
 
       return this.runContext;
+    });
+
+    after(function() {
+      process.chdir(this.cwd);
     });
 
     it('creates files', function() {
@@ -120,6 +125,7 @@ describe('generator-wupjs:app', function() {
   describe('Testing with argument', function() {
 
     before(function() {
+      this.cwd = process.cwd();
       return helpers.run(path.join(__dirname, '../../generators/app'))
         .withArguments(['MyApp'])
         .withPrompts({
@@ -131,6 +137,10 @@ describe('generator-wupjs:app', function() {
           addons: []
         })
         .toPromise();
+    });
+
+    after(function() {
+      process.chdir(this.cwd);
     });
 
     it('creates files', function() {
