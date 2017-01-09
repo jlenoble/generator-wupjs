@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/jlenoble/generator-wupjs#readme",
   "devDependencies": {
+    "autoreload-gulp": "^0.1.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.9.0",
     "chai": "^3.5.0",
