@@ -3,6 +3,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var upperCamelCase = require('uppercamelcase');
+var config = require('config');
 
 module.exports = yeoman.Base.extend({
   initializing: function() {
@@ -29,17 +30,17 @@ module.exports = yeoman.Base.extend({
       type: 'input',
       name: 'author',
       message: 'Author\'s name:',
-      default: this.config.get('author')
+      default: this.config.get('author') || config.get('author')
     }, {
       type: 'input',
       name: 'email',
       message: 'Email address:',
-      default: this.config.get('email')
+      default: this.config.get('email') || config.get('email')
     }, {
       type: 'input',
       name: 'github',
       message: 'GitHub user name:',
-      default: this.config.get('github')
+      default: this.config.get('github') || config.get('github')
     }, {
       type: 'list',
       name: 'license',
