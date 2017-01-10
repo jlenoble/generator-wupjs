@@ -67,6 +67,16 @@ module.exports = yeoman.Base.extend({
       } else {
         props.Class = upperCamelCase(props.module);
       }
+
+      props.updated = new Date().getFullYear();
+      props.created = this.config.get('created') || props.updated;
+      if (props.created < props.updated) {
+        props.year = props.created + '-'
+      } else {
+        props.year = '';
+      }
+      props.year += props.updated;
+
       this.props = props;
     }.bind(this));
   },

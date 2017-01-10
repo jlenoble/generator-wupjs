@@ -1,6 +1,6 @@
 GPL-3.0 License
 
-Copyright (c) 2016 <%= author %> <<%= email %>>
+Copyright (c) <%= year %> <%= author %> <<%= email %>>
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007

@@ -11,4 +11,4 @@ import <%= Class %> from '<%= module %>';
 
 <%= module %> is [<%= license %> licensed](./LICENSE).
 
-© 2016 [<%= author %>](mailto:<%= email %>)
+© <%= year %> [<%= author %>](mailto:<%= email %>)
