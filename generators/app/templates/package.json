@@ -2,7 +2,7 @@
   "name": "<%= module %>",
   "version": "0.0.0",
   "description": "<%= description %>",
-  "main": "index.js",
+  "main": "lib/<%= module %>.js",
   "scripts": {
     "test": "gulp test"
   },
