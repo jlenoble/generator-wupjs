@@ -7,7 +7,7 @@ import helpers from 'yeoman-test';
 const envFiles = [
   '.babelrc',
   '.gitignore',
-  '.jscsrc',
+  '.eslintrc',
   'package.json',
 ];
 

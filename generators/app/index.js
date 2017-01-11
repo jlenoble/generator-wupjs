@@ -97,8 +97,8 @@ module.exports = yeoman.Base.extend({
     );
 
     this.fs.copy(
-      this.templatePath('jscsrc'),
-      this.destinationPath('.jscsrc')
+      this.templatePath('eslintrc'),
+      this.destinationPath('.eslintrc')
     );
 
     this.fs.copyTpl(
