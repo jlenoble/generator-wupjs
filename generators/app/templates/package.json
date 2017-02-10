@@ -35,7 +35,8 @@
     "browser-sync": "^2.17.5",
     "browserify": "^13.1.0",<% } %>
     "chai": "^3.5.0",
-    "del": "^2.2.1",
+    "del": "^2.2.1",<% if (addons.includes('React')) { %>
+    "eslint-plugin-react": "^6.9.0",<% } %>
     "eslint-config-google": "^0.7.0",
     "gulp": "git://github.com/gulpjs/gulp.git#4.0",<% if (transpile !== 'none') { %>
     "gulp-babel": "^6.1.2",<% } %>

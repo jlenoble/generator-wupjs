@@ -1,15 +1,11 @@
 <% if(addons.includes('React')) { %>import React, {Component} from 'react';
 
 export default class <%= Class %> extends Component {
-
-  render() {
+  render () {
     return <h1>Hello!</h1>;
   }
-
 }<% } else { %>export default class <%= Class %> {
-
-  constructor() {
+  constructor () {
     console.log('Hello!');
   }
-
 }<% } %>

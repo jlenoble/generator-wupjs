@@ -5,8 +5,9 @@
     "ecmaFeatures": {
       "jsx": true
     }
-  },
-  "plugins": [],
+  },<% if(addons.includes('React')) { %>
+  "plugins": ["react"],<% } else { %>
+  "plugins": [],<% } %>
   "extends": [
     "google"
   ],
@@ -19,7 +20,9 @@
     "indent": ["error", 2],
     "no-param-reassign": ["error", {"props": true}],
     "one-var": ["error", "never"],
-    "quotes": ["error", "single", {"allowTemplateLiterals": true}],
+    "quotes": ["error", "single", {"allowTemplateLiterals": true}],<% if(addons.includes('React')) { %>
+    "react/jsx-uses-react": ["error"],
+    "react/jsx-uses-vars": ["error"],<% } %>
     "require-jsdoc": ["off"],
     "space-before-function-paren": ["error", "always"]
   }
