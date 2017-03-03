@@ -8,7 +8,9 @@ import {bundleRootGlob, buildDir, bundleGlob,
 import './build';
 
 export const bundle = () => {
-  return browserify(bundleRootGlob)
+  return browserify(bundleRootGlob, {
+    debug: true,
+  })
     .bundle()
     .pipe(source(bundleGlob))
     .pipe(buffer())
@@ -16,7 +18,12 @@ export const bundle = () => {
 };
 
 export const testBundle = () => {
-  return browserify(testBundleRootGlob)
+  return browserify(testBundleRootGlob, {
+    debug: true,
+  })
+    .external('react/addons')
+    .external('react/lib/ReactContext')
+    .external('react/lib/ExecutionEnvironment')
     .bundle()
     .pipe(source(testBundleGlob))
     .pipe(buffer())
