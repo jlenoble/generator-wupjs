@@ -57,7 +57,7 @@ module.exports = yeoman.Base.extend({
       type: 'checkbox',
       name: 'addons',
       message: 'Use vendor libraries:',
-      choices: ['React'],
+      choices: ['React', 'Enzyme'],
       default: this.config.get('addons')
     }];
 
