@@ -78,6 +78,10 @@ module.exports = yeoman.Base.extend({
       props.year += props.updated;
 
       this.props = props;
+
+      if (props.addons.includes('Enzyme') && !props.addons.includes('React')) {
+        props.addons.push('React');
+      }
     }.bind(this));
   },
 
@@ -164,13 +168,25 @@ module.exports = yeoman.Base.extend({
 
     this.fs.copyTpl(
       this.templatePath('index.js'),
-      this.destinationPath('src/index' + jsExt),
+      this.destinationPath('src/index.js'),
+      this.props
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('rename_me.demo.js'),
+      this.destinationPath('src/demo' + jsExt),
       this.props
     );
 
     this.fs.copyTpl(
       this.templatePath('rename_me.js'),
       this.destinationPath('src/' + this.props.module + jsExt),
+      this.props
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('index.test.js'),
+      this.destinationPath('test/index.test.js'),
       this.props
     );
 

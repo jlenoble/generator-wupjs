@@ -1,12 +1,9 @@
 <% if(addons.includes('React')) { %>import React from 'react';
-<% if(addons.includes('Enzyme')) { %>import {shallow} from 'enzyme';
-import chaiEnzyme from 'chai-enzyme';<% } else { %>
+<% if(addons.includes('Enzyme')) { %>import {shallow} from 'enzyme';<% } else { %>
 import TestUtils from 'react-addons-test-utils';<% } %>
 <% } else { %>import Muter, {captured} from 'muter';
 <% } %>import {expect} from 'chai';
 import <%= Class %> from '../src/<%= module %>';
-<% if(addons.includes('Enzyme')) { %>
-chai.use(chaiEnzyme());<% } %>
 <% if(addons.includes('React')) { %>
 describe('Testing <<%= Class %>/>', function () {
   it(`Component <<%= Class %>/> says 'Hello!'`, function () {<% if(addons.includes('Enzyme')) { %>
