@@ -1,6 +1,6 @@
 {
   "name": "generator-wupjs",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "description": "A custom Yeoman generator to reduce boiler-plate in JS dev",
   "main": "index.js",
   "scripts": {
