@@ -57,7 +57,7 @@ module.exports = yeoman.Base.extend({
       type: 'checkbox',
       name: 'addons',
       message: 'Use vendor libraries:',
-      choices: ['React', 'Enzyme'],
+      choices: ['React', 'Enzyme', 'Sass'],
       default: this.config.get('addons')
     }];
 
@@ -79,7 +79,8 @@ module.exports = yeoman.Base.extend({
 
       this.props = props;
 
-      if (props.addons.includes('Enzyme') && !props.addons.includes('React')) {
+      if ((props.addons.includes('Enzyme') || props.addons.includes('Sass')) &&
+        !props.addons.includes('React')) {
         props.addons.push('React');
       }
     }.bind(this));
@@ -95,9 +96,10 @@ module.exports = yeoman.Base.extend({
       );
     }
 
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath('gitignore'),
-      this.destinationPath('.gitignore')
+      this.destinationPath('.gitignore'),
+      this.props
     );
 
     this.fs.copyTpl(
@@ -138,6 +140,14 @@ module.exports = yeoman.Base.extend({
       );
     }
 
+    if (this.props.addons.includes('Sass')) {
+      this.fs.copyTpl(
+        this.templatePath('gulp_sass/**/*.js'),
+        this.destinationPath('gulp'),
+        this.props
+      );
+    }
+
     this.fs.copyTpl(
       this.templatePath('_package.json'),
       this.destinationPath('package.json'),
@@ -164,6 +174,13 @@ module.exports = yeoman.Base.extend({
       );
 
       jsExt = '.jsx';
+    }
+
+    if (this.props.addons.includes('Sass')) {
+      this.fs.copy(
+        this.templatePath('style.scss'),
+        this.destinationPath('src/static/scss/style.scss')
+      );
     }
 
     this.fs.copyTpl(

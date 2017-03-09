@@ -1,5 +1,6 @@
 # Build
 build
+<% if(addons.includes('Sass')) { %>.sass-cache<% } %>
 
 # Logs
 logs
