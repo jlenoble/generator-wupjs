@@ -17,10 +17,12 @@ export const srcDir = 'src';
 export const testDir = 'test';
 export const buildDir = 'build';
 export const distDir = 'lib';
+export const nodeModulesDir = 'node_modules';
 
 export const staticDir = path.join(srcDir, 'static');
 export const sassDir = path.join(staticDir, 'scss');
 export const cssDir = path.join(buildDir, 'css');
+export const sassImportDir = nodeModulesDir;
 
 export const apps = ['<%= module %>'];
 export const bundleGlob = 'bundle.js';
