@@ -43,6 +43,7 @@
     "babel-preset-es2016": "^6.22.0"<% } else if (transpile === 'es2017') { %>,
     "babel-preset-es2016": "^6.22.0",
     "babel-preset-es2017": "^6.22.0"<% } %><% if (addons.includes('React')) { %>,
+    "babel-polyfill": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "browser-sync": "^2.18.7",
     "browserify": "^14.0.0",

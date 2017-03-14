@@ -1,4 +1,5 @@
-<% if(addons.includes('Enzyme')) { %>import chai from 'chai';
+<% if(addons.includes('React')) { %>import 'babel-polyfill';
+<% } %><% if(addons.includes('Enzyme')) { %>import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 
 <% } %>import './<%= module %>.test';<% if(addons.includes('Enzyme')) { %>
