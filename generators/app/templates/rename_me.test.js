@@ -20,7 +20,7 @@ describe('Testing <<%= Class %>/>', function () {
   });
 });<% } else { %>
 describe('Testing <%= Class %>', function () {
-  const muter = Muter(console, 'log');
+  const muter = Muter(console, 'log'); // eslint-disable-line new-cap
 
   it(`Class <%= Class %> says 'Hello!'`, captured(muter, function () {
     new <%= Class %>();
