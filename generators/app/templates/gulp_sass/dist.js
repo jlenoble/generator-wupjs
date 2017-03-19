@@ -4,7 +4,8 @@ import eslint from 'gulp-eslint';
 import babel from 'gulp-babel';
 import compass from 'gulp-compass';
 
-import {distGlob, distDir, sassDir, sassGlob, sassImportDir} from './globs';
+import {distGlob, allTestGlob, distDir, sassDir, sassGlob, sassImportDir}
+  from './globs';
 
 export const dist = () => {
   return gulp.src(distGlob)
@@ -28,4 +29,10 @@ export const distSass = () => {
   .pipe(gulp.dest(distDir));
 };
 
-gulp.task('dist', gulp.parallel(dist, distSass));
+export const lintTest = () => {
+  return gulp.src(allTestGlob)
+    .pipe(eslint())
+    .pipe(eslint.format());
+};
+
+gulp.task('dist', gulp.parallel(dist, distSass, lintTest));
