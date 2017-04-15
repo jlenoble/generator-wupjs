@@ -37,6 +37,15 @@ export default class Config {
         },
       },
 
+      prompt: {
+        value: function (name) {
+          if (!this.has(name)) {
+            return;
+          }
+          properties.get(name).emit('prompt');
+        },
+      },
+
       add: {
         value: function (name, value) {
           if (this.has(name)) {

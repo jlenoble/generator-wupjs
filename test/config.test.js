@@ -18,9 +18,17 @@ describe('Testing config', function () {
 
   it(`Method 'set' registers changed properties`, function () {
     const config = new Config();
+    expect(config.changedProperties).to.eql([]);
 
     config.set('author', 'Billy Bob');
-
     expect(config.changedProperties).to.eql(['author']);
+  });
+
+  it(`Method 'prompt' registers properties to be prompted`, function () {
+    const config = new Config();
+    expect(config.promptedProperties).to.eql([]);
+
+    config.prompt('email');
+    expect(config.promptedProperties).to.eql(['email']);
   });
 });
