@@ -28,9 +28,10 @@ export const apps = ['generator-wupjs'];
 
 export const srcGlob = join(srcDir, ['**/*.js', '**/*.jsx']);
 export const testGlob = join(testDir, ['**/*.test.js', '**/*.test.jsx']);
+export const allTestGlob = join(testDir, ['**/*.js', '**/*.jsx']);
 export const testBuildGlob = join(buildDir, testGlob);
 export const generateGlob = join(generatorsDir, ['**/*.js', '**/*.jsx']);
 export const templateGlob = join(srcDir, '**/templates/*');
 
-export const allSrcGlob = testGlob;
+export const allSrcGlob = allTestGlob;
 export const allBuildGlob = testBuildGlob.concat(generateGlob);
