@@ -19,6 +19,7 @@ export default class Config {
 
     const properties = new Map();
     const changedProperties = new Map();
+    const promptedProperties = new Map();
 
     const conf = yoConfig[genName];
 
@@ -44,9 +45,17 @@ export default class Config {
           }
 
           const p = new Property({name, value});
+
           p.on('change', () => {
             changedProperties.set(p, p.name);
           });
+          p.on('prompt', () => {
+            promptedProperties.set(p, p.name);
+          });
+
+          if (value === undefined) {
+            p.emit('prompt');
+          }
 
           properties.set(name, p);
         },
@@ -63,9 +72,15 @@ export default class Config {
         },
       },
 
-      changedProperties: {
+      changedProperties: { // depending files require writing
         get () {
           return [...changedProperties].map(([obj, name]) => name);
+        },
+      },
+
+      promptedProperties: { // props require prompting
+        get () {
+          return [...promptedProperties].map(([obj, name]) => name);
         },
       },
     });
