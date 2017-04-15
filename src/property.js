@@ -2,7 +2,7 @@ import EventEmitter from 'events';
 
 export default class Property extends EventEmitter {
   constructor (options = {}) {
-    const {name, defaultValue} = options;
+    const {name, value} = options;
 
     if (typeof name !== 'string') {
       throw new Error('Property has no name');
@@ -10,7 +10,7 @@ export default class Property extends EventEmitter {
 
     super();
 
-    let _value = defaultValue;
+    let _value = value;
     let _prevValue;
 
     Object.defineProperties(this, {

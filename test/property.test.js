@@ -10,7 +10,7 @@ describe('Testing class Property', function () {
   it('Setting a property', function () {
     const prop = new Property({
       name: 'version',
-      defaultValue: 2,
+      value: 2,
     });
 
     expect(prop.name).to.equal('version');
@@ -20,7 +20,7 @@ describe('Testing class Property', function () {
   it('A property value can be changed', function () {
     const prop = new Property({
       name: 'version',
-      defaultValue: 2,
+      value: 2,
     });
 
     prop.value = 3;
@@ -31,7 +31,7 @@ describe('Testing class Property', function () {
   it('A property emits on change', function (done) {
     const prop = new Property({
       name: 'version',
-      defaultValue: 2,
+      value: 2,
     });
 
     prop.on('change', function (value) {
