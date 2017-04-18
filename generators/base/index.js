@@ -28,7 +28,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var mainGenerator = void 0;
 var appDir = __dirname;
 var conf = new _config2.default();
 
@@ -40,10 +39,7 @@ var _class = function (_Base) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, opts));
 
-    if (!mainGenerator) {
-      // First child generator is the one called
-      mainGenerator = opts.generator;
-    }
+    conf.addGen(opts.generator);
 
     var props = opts.props;
 
@@ -72,7 +68,11 @@ var _class = function (_Base) {
     key: 'composeWith',
     value: function composeWith(genDir) {
       var dir = _path2.default.join(appDir, '..', genDir);
-      _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), 'composeWith', this).call(this, dir);
+
+      if (!conf.hasGen(genDir)) {
+        _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), 'composeWith', this).call(this, dir);
+        conf.addGen(genDir);
+      }
     }
   }, {
     key: 'get',
@@ -99,6 +99,5 @@ exports.default = _class;
 
 _yeomanGenerator.Base.reset = function () {
   conf.reset();
-  mainGenerator = undefined;
 };
 module.exports = exports['default'];

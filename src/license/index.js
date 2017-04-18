@@ -10,6 +10,7 @@ export default class extends Base {
     super(args, options);
 
     this.composeWith('date');
+    this.composeWith('gen-version');
   }
 
   prompting () {

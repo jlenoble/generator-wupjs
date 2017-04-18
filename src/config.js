@@ -18,6 +18,7 @@ export default class Config {
     }
 
     const properties = new Map();
+    const generators = new Map();
     const changedProperties = new Map();
     const promptedProperties = new Map();
 
@@ -27,6 +28,12 @@ export default class Config {
       has: {
         value: function (name) {
           return properties.has(name);
+        },
+      },
+
+      hasGen: {
+        value: function (name) {
+          return generators.has(name);
         },
       },
 
@@ -70,6 +77,12 @@ export default class Config {
         },
       },
 
+      addGen: {
+        value: function (name) {
+          generators.set(name, true);
+        },
+      },
+
       set: {
         value: function (name, value) {
           if (!this.has(name)) {
@@ -84,6 +97,7 @@ export default class Config {
       reset: {
         value: function () {
           properties.clear();
+          generators.clear();
           changedProperties.clear();
           promptedProperties.clear();
         },

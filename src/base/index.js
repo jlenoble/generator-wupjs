@@ -2,7 +2,6 @@ import {Base} from 'yeoman-generator';
 import path from 'path';
 import Config from '../config';
 
-let mainGenerator;
 const appDir = __dirname;
 const conf = new Config();
 
@@ -10,9 +9,7 @@ export default class extends Base {
   constructor (args, opts) {
     super(args, opts);
 
-    if (!mainGenerator) { // First child generator is the one called
-      mainGenerator = opts.generator;
-    }
+    conf.addGen(opts.generator);
 
     let props = opts.props;
 
@@ -37,7 +34,11 @@ export default class extends Base {
 
   composeWith (genDir) {
     const dir = path.join(appDir, '..', genDir);
-    super.composeWith(dir);
+
+    if (!conf.hasGen(genDir)) {
+      super.composeWith(dir);
+      conf.addGen(genDir);
+    }
   }
 
   get (name) {
@@ -56,5 +57,4 @@ export default class extends Base {
 
 Base.reset = function () {
   conf.reset();
-  mainGenerator = undefined;
 };

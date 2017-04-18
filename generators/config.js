@@ -45,6 +45,7 @@ var Config = function Config() {
   }
 
   var properties = new Map();
+  var generators = new Map();
   var changedProperties = new Map();
   var promptedProperties = new Map();
 
@@ -54,6 +55,12 @@ var Config = function Config() {
     has: {
       value: function value(name) {
         return properties.has(name);
+      }
+    },
+
+    hasGen: {
+      value: function value(name) {
+        return generators.has(name);
       }
     },
 
@@ -97,6 +104,12 @@ var Config = function Config() {
       }
     },
 
+    addGen: {
+      value: function value(name) {
+        generators.set(name, true);
+      }
+    },
+
     set: {
       value: function value(name, _value2) {
         if (!this.has(name)) {
@@ -111,6 +124,7 @@ var Config = function Config() {
     reset: {
       value: function value() {
         properties.clear();
+        generators.clear();
         changedProperties.clear();
         promptedProperties.clear();
       }

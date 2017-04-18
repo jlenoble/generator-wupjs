@@ -1,10 +1,12 @@
 import path from 'path';
 import assert from 'yeoman-assert';
 import helpers from 'yeoman-test';
+import Base from '../../generators/base';
 
 describe('generator-wupjs:license', function () {
   before(function () {
     this.cwd = process.cwd();
+    Base.reset();
     this.runContext = helpers
       .run(path.join(__dirname, '../../generators/license'))
       .withPrompts({
@@ -25,6 +27,7 @@ describe('generator-wupjs:license', function () {
 
   it('.yo-rc.json has the expected content', function () {
     assert.fileContent('.yo-rc.json', /"license": "GPL-3.0"/);
+    assert.fileContent('.yo-rc.json', /"genVersion": "0.2.16"/);
     assert.fileContent('.yo-rc.json', /"created": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/);
     assert.fileContent('.yo-rc.json', /"updated": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/);
   });
