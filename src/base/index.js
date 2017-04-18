@@ -46,3 +46,8 @@ export default class extends Base {
     });
   }
 }
+
+Base.reset = function () {
+  conf.reset();
+  mainGenerator = undefined;
+};

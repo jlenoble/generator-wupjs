@@ -1,10 +1,12 @@
 import path from 'path';
 import assert from 'yeoman-assert';
 import helpers from 'yeoman-test';
+import Base from '../../generators/base';
 
 describe('generator-wupjs:gen-version', function () {
   before(function () {
     this.cwd = process.cwd();
+    Base.reset();
     this.runContext = helpers
       .run(path.join(__dirname, '../../generators/gen-version'))
       .toPromise();

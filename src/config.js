@@ -81,6 +81,14 @@ export default class Config {
         },
       },
 
+      reset: {
+        value: function () {
+          properties.clear();
+          changedProperties.clear();
+          promptedProperties.clear();
+        },
+      },
+
       changedProperties: { // depending files require writing
         get () {
           return [...changedProperties].map(([obj, name]) => name);
