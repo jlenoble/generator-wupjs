@@ -1,7 +1,9 @@
 import {Base} from 'yeoman-generator';
+import path from 'path';
 import Config from '../config';
 
 let mainGenerator;
+const appDir = __dirname;
 const conf = new Config();
 
 export default class extends Base {
@@ -31,6 +33,11 @@ export default class extends Base {
         conf.add(name); // Undefined value forces prompting
       }
     });
+  }
+
+  composeWith (genDir) {
+    const dir = path.join(appDir, '..', genDir);
+    super.composeWith(dir);
   }
 
   get (name) {

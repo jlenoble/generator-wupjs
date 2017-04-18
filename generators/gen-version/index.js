@@ -36,7 +36,10 @@ var _class = function (_Base) {
       generator: 'gen-version'
     }, opts);
 
-    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
+
+    _this.composeWith('date');
+    return _this;
   }
 
   _createClass(_class, [{

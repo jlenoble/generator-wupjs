@@ -24,5 +24,7 @@ describe('generator-wupjs:gen-version', function () {
 
   it('.yo-rc.json has the expected content', function () {
     assert.fileContent('.yo-rc.json', /"genVersion": "0.2.16"/);
+    assert.fileContent('.yo-rc.json', /"created": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/);
+    assert.fileContent('.yo-rc.json', /"updated": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/);
   });
 });
