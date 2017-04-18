@@ -33,6 +33,7 @@ var _class = function (_Base) {
 
     _this.composeWith('date');
     _this.composeWith('gen-version');
+    _this.composeWith('who');
     return _this;
   }
 
@@ -52,6 +53,26 @@ var _class = function (_Base) {
       return this.prompt(prompts).then(function (props) {
         _this2.set(props);
       });
+    }
+  }, {
+    key: 'writing',
+    value: function writing() {
+      var props = {};
+      var created = this.get('created');
+      var updated = this.get('updated');
+
+      props.author = this.get('author');
+      props.email = this.get('email');
+      props.license = this.get('license');
+
+      if (created < updated) {
+        props.cYear = created + '-';
+      } else {
+        props.cYear = '';
+      }
+      props.cYear += updated;
+
+      this.fs.copyTpl(this.templatePath('LICENSE_' + props.license), this.destinationPath('LICENSE'), props);
     }
   }]);
 
