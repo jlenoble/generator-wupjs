@@ -3,7 +3,11 @@ import path from 'path';
 
 export default class extends Base {
   constructor (args, opts) {
-    super(args, opts);
+    const options = Object.assign({
+      generator: 'write-package',
+    }, opts);
+
+    super(args, options);
 
     this.promptIfMissing(['name', 'description', 'author', 'email', 'github',
       'license', 'libDir']);
