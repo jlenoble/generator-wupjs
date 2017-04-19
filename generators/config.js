@@ -72,7 +72,7 @@ var Config = function Config() {
       value: function value(name) {
         var prop = properties.get(name);
 
-        if (prop === undefined && _config2.default.has(name)) {
+        if ((prop === undefined || prop.value === undefined) && _config2.default.has(name)) {
           prop = _config2.default.get(name);
 
           if (prop !== undefined) {

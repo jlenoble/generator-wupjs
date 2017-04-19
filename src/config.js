@@ -42,7 +42,8 @@ export default class Config {
         value: function (name) {
           let prop = properties.get(name);
 
-          if (prop === undefined && config.has(name)) {
+          if ((prop === undefined || prop.value === undefined)
+            && config.has(name)) {
             prop = config.get(name);
 
             if (prop !== undefined) {
