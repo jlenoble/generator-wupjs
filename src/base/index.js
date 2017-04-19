@@ -1,6 +1,7 @@
 import {Base} from 'yeoman-generator';
 import path from 'path';
 import Config from '../config';
+import getGenerator from '../get-generator';
 
 const appDir = __dirname;
 const conf = new Config();
@@ -39,6 +40,23 @@ export default class extends Base {
       super.composeWith(dir);
       conf.addGen(genDir);
     }
+  }
+
+  promptIfMissing (propNames) {
+    const generators = {};
+
+    propNames.forEach(propName => {
+      if (!this.get(propName)) {
+        const genName = getGenerator(propName);
+        if (genName) {
+          generators[genName] = true;
+        }
+      }
+    });
+
+    Object.keys(generators).forEach(gen => {
+      this.composeWith(gen);
+    });
   }
 
   get (name) {

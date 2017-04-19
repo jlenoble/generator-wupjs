@@ -11,7 +11,8 @@ export default class extends Base {
 
     this.composeWith('date');
     this.composeWith('gen-version');
-    this.composeWith('who');
+
+    this.promptIfMissing(['author', 'email']);
   }
 
   prompting () {

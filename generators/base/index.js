@@ -18,6 +18,10 @@ var _config = require('../config');
 
 var _config2 = _interopRequireDefault(_config);
 
+var _getGenerator = require('../get-generator');
+
+var _getGenerator2 = _interopRequireDefault(_getGenerator);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -73,6 +77,26 @@ var _class = function (_Base) {
         _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), 'composeWith', this).call(this, dir);
         conf.addGen(genDir);
       }
+    }
+  }, {
+    key: 'promptIfMissing',
+    value: function promptIfMissing(propNames) {
+      var _this2 = this;
+
+      var generators = {};
+
+      propNames.forEach(function (propName) {
+        if (!_this2.get(propName)) {
+          var genName = (0, _getGenerator2.default)(propName);
+          if (genName) {
+            generators[genName] = true;
+          }
+        }
+      });
+
+      Object.keys(generators).forEach(function (gen) {
+        _this2.composeWith(gen);
+      });
     }
   }, {
     key: 'get',

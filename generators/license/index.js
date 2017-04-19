@@ -33,7 +33,8 @@ var _class = function (_Base) {
 
     _this.composeWith('date');
     _this.composeWith('gen-version');
-    _this.composeWith('who');
+
+    _this.promptIfMissing(['author', 'email']);
     return _this;
   }
 
