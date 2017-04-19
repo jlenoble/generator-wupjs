@@ -1,0 +1,14 @@
+{
+  "name": "<%= name %>",
+  "description": "<%= description %>",
+  "main": "<%= main %>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/<%= github %>/<%= name %>.git"
+  },
+  "author": {
+    "name": "<%= author %>",
+    "email": "<%= email %>"
+  },
+  "license": "<%= license %>"
+}
