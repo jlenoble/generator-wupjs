@@ -24,34 +24,31 @@ var _class = function (_Base) {
   function _class(args, opts) {
     _classCallCheck(this, _class);
 
-    var options = Object.assign({
-      props: ['license'],
-      generator: 'license'
-    }, opts);
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, opts));
 
-    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
-
-    _this.composeWith('date');
-    _this.composeWith('gen-version');
+    _this.promptIfMissing(['author', 'email', 'license', 'created', 'updated']);
     return _this;
   }
 
   _createClass(_class, [{
-    key: 'prompting',
-    value: function prompting() {
-      var _this2 = this;
+    key: 'writing',
+    value: function writing() {
+      var props = {};
+      var created = this.get('created').getFullYear();
+      var updated = this.get('updated').getFullYear();
 
-      var prompts = [{
-        type: 'list',
-        name: 'license',
-        message: 'LICENSE:',
-        choices: ['MIT', 'GPL-3.0'],
-        default: this.get('license')
-      }];
+      props.author = this.get('author');
+      props.email = this.get('email');
+      props.license = this.get('license');
 
-      return this.prompt(prompts).then(function (props) {
-        _this2.set(props);
-      });
+      if (created < updated) {
+        props.cYear = created + '-';
+      } else {
+        props.cYear = '';
+      }
+      props.cYear += updated;
+
+      this.fs.copyTpl(this.templatePath('LICENSE_' + props.license), this.destinationPath('LICENSE'), props);
     }
   }]);
 

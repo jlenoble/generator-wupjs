@@ -11,8 +11,6 @@ export default class extends Base {
 
     this.composeWith('date');
     this.composeWith('gen-version');
-
-    this.promptIfMissing(['author', 'email']);
   }
 
   prompting () {
@@ -27,28 +25,5 @@ export default class extends Base {
     return this.prompt(prompts).then(props => {
       this.set(props);
     });
-  }
-
-  writing () {
-    const props = {};
-    const created = this.get('created').getFullYear();
-    const updated = this.get('updated').getFullYear();
-
-    props.author = this.get('author');
-    props.email = this.get('email');
-    props.license = this.get('license');
-
-    if (created < updated) {
-      props.cYear = created + '-';
-    } else {
-      props.cYear = '';
-    }
-    props.cYear += updated;
-
-    this.fs.copyTpl(
-      this.templatePath('LICENSE_' + props.license),
-      this.destinationPath('LICENSE'),
-      props
-    );
   }
 }

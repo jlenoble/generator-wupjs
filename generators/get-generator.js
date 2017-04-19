@@ -5,6 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 var getGenerator = function getGenerator(name) {
   switch (name) {
+    case 'created':case 'updated':
+      return 'date';
+
     case 'author':case 'email':
       return 'who';
 
