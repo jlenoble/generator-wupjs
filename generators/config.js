@@ -51,7 +51,6 @@ var Config = function Config() {
   var properties = new Map();
   var generators = new Map();
   var changedProperties = new Map();
-  var promptedProperties = new Map();
 
   var conf = yoConfig[genName];
 
@@ -100,15 +99,6 @@ var Config = function Config() {
       }
     },
 
-    prompt: {
-      value: function value(name) {
-        if (!this.has(name)) {
-          return;
-        }
-        properties.get(name).emit('prompt');
-      }
-    },
-
     add: {
       value: function value(name, _value) {
         if (this.has(name)) {
@@ -121,13 +111,6 @@ var Config = function Config() {
         p.on('change', function () {
           changedProperties.set(p, p.name);
         });
-        p.on('prompt', function () {
-          promptedProperties.set(p, p.name);
-        });
-
-        if (_value === undefined) {
-          p.emit('prompt');
-        }
 
         properties.set(name, p);
       }
@@ -155,7 +138,6 @@ var Config = function Config() {
         properties.clear();
         generators.clear();
         changedProperties.clear();
-        promptedProperties.clear();
       }
     },
 
@@ -166,19 +148,6 @@ var Config = function Config() {
           var _ref3 = _slicedToArray(_ref2, 2),
               obj = _ref3[0],
               name = _ref3[1];
-
-          return name;
-        });
-      }
-    },
-
-    promptedProperties: {
-      // props require prompting
-      get: function get() {
-        return [].concat(_toConsumableArray(promptedProperties)).map(function (_ref4) {
-          var _ref5 = _slicedToArray(_ref4, 2),
-              obj = _ref5[0],
-              name = _ref5[1];
 
           return name;
         });
