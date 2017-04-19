@@ -58,8 +58,8 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = {};
-      var created = this.get('created');
-      var updated = this.get('updated');
+      var created = this.get('created').getFullYear();
+      var updated = this.get('updated').getFullYear();
 
       props.author = this.get('author');
       props.email = this.get('email');
