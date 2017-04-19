@@ -55,6 +55,18 @@ export default class Config {
         },
       },
 
+      getProps: {
+        value: function () {
+          const props = {};
+
+          properties.forEach(({name, value}) => {
+            props[name] = value;
+          });
+
+          return props;
+        },
+      },
+
       prompt: {
         value: function (name) {
           if (!this.has(name)) {

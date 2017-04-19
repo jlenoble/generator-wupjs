@@ -85,6 +85,21 @@ var Config = function Config() {
       }
     },
 
+    getProps: {
+      value: function value() {
+        var props = {};
+
+        properties.forEach(function (_ref) {
+          var name = _ref.name,
+              value = _ref.value;
+
+          props[name] = value;
+        });
+
+        return props;
+      }
+    },
+
     prompt: {
       value: function value(name) {
         if (!this.has(name)) {
@@ -147,10 +162,10 @@ var Config = function Config() {
     changedProperties: {
       // depending files require writing
       get: function get() {
-        return [].concat(_toConsumableArray(changedProperties)).map(function (_ref) {
-          var _ref2 = _slicedToArray(_ref, 2),
-              obj = _ref2[0],
-              name = _ref2[1];
+        return [].concat(_toConsumableArray(changedProperties)).map(function (_ref2) {
+          var _ref3 = _slicedToArray(_ref2, 2),
+              obj = _ref3[0],
+              name = _ref3[1];
 
           return name;
         });
@@ -160,10 +175,10 @@ var Config = function Config() {
     promptedProperties: {
       // props require prompting
       get: function get() {
-        return [].concat(_toConsumableArray(promptedProperties)).map(function (_ref3) {
-          var _ref4 = _slicedToArray(_ref3, 2),
-              obj = _ref4[0],
-              name = _ref4[1];
+        return [].concat(_toConsumableArray(promptedProperties)).map(function (_ref4) {
+          var _ref5 = _slicedToArray(_ref4, 2),
+              obj = _ref5[0],
+              name = _ref5[1];
 
           return name;
         });

@@ -104,6 +104,11 @@ var _class = function (_Base) {
       return conf.get(name);
     }
   }, {
+    key: 'getProps',
+    value: function getProps() {
+      return conf.getProps();
+    }
+  }, {
     key: 'set',
     value: function set(name, value) {
       var props = value === undefined ? name : _defineProperty({}, name, value);

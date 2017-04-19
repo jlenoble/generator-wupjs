@@ -63,6 +63,10 @@ export default class extends Base {
     return conf.get(name);
   }
 
+  getProps () {
+    return conf.getProps();
+  }
+
   set (name, value) {
     const props = value === undefined ? name : {[name]: value};
     this.config.set(props);
