@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import config from 'config';
 import Property from './property';
 
 const genName = 'generator-wupjs';
@@ -39,8 +40,18 @@ export default class Config {
 
       get: {
         value: function (name) {
-          const property = properties.get(name);
-          return property ? property.value : undefined;
+          let prop = properties.get(name);
+
+          if (prop === undefined && config.has(name)) {
+            prop = config.get(name);
+
+            if (prop !== undefined) {
+              this.add(name, prop);
+              prop = properties.get(name);
+            }
+          }
+
+          return prop ? prop.value: undefined;
         },
       },
 

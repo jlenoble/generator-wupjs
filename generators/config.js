@@ -14,6 +14,10 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _config = require('config');
+
+var _config2 = _interopRequireDefault(_config);
+
 var _property = require('./property');
 
 var _property2 = _interopRequireDefault(_property);
@@ -66,8 +70,18 @@ var Config = function Config() {
 
     get: {
       value: function value(name) {
-        var property = properties.get(name);
-        return property ? property.value : undefined;
+        var prop = properties.get(name);
+
+        if (prop === undefined && _config2.default.has(name)) {
+          prop = _config2.default.get(name);
+
+          if (prop !== undefined) {
+            this.add(name, prop);
+            prop = properties.get(name);
+          }
+        }
+
+        return prop ? prop.value : undefined;
       }
     },
 
