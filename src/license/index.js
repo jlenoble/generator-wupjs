@@ -30,8 +30,8 @@ export default class extends Base {
 
   writing () {
     const props = {};
-    const created = this.get('created');
-    const updated = this.get('updated');
+    const created = this.get('created').getFullYear();
+    const updated = this.get('updated').getFullYear();
 
     props.author = this.get('author');
     props.email = this.get('email');
