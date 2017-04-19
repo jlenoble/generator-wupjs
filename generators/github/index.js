@@ -29,11 +29,7 @@ var _class = function (_Base) {
       generator: 'github'
     }, opts);
 
-    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
-
-    _this.composeWith('date');
-    _this.composeWith('gen-version');
-    return _this;
+    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
   }
 
   _createClass(_class, [{

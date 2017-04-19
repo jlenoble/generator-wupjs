@@ -65,6 +65,9 @@ var _class = function (_Base) {
         conf.add(name); // Undefined value forces prompting
       }
     });
+
+    _this.composeWith('gen-version');
+    _this.composeWith('date');
     return _this;
   }
 

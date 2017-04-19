@@ -31,6 +31,9 @@ export default class extends Base {
         conf.add(name); // Undefined value forces prompting
       }
     });
+
+    this.composeWith('gen-version');
+    this.composeWith('date');
   }
 
   composeWith (genDir) {

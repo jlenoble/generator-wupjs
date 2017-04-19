@@ -8,9 +8,6 @@ export default class extends Base {
     }, opts);
 
     super(args, options);
-
-    this.composeWith('date');
-    this.composeWith('gen-version');
   }
 
   prompting () {
