@@ -28,7 +28,11 @@ var _class = function (_Base) {
   function _class(args, opts) {
     _classCallCheck(this, _class);
 
-    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, opts));
+    var options = Object.assign({
+      generator: 'write-package'
+    }, opts);
+
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
     _this.promptIfMissing(['name', 'description', 'author', 'email', 'github', 'license', 'libDir']);
     return _this;
