@@ -22,6 +22,10 @@ var _getGenerator = require('../get-generator');
 
 var _getGenerator2 = _interopRequireDefault(_getGenerator);
 
+var _getWriteGenerators = require('../get-write-generators');
+
+var _getWriteGenerators2 = _interopRequireDefault(_getWriteGenerators);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -43,7 +47,17 @@ var _class = function (_Base) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, opts));
 
+    if (!opts.generator) {
+      throw new Error('opts.generator must be defined');
+    }
+
     conf.addGen(opts.generator);
+
+    if (conf.listeners('change').length === 0) {
+      conf.on('change', function (propName) {
+        return _this.writeIfChanged(propName);
+      });
+    }
 
     var props = opts.props;
 
@@ -99,6 +113,17 @@ var _class = function (_Base) {
 
       Object.keys(generators).forEach(function (gen) {
         _this2.composeWith(gen);
+      });
+    }
+  }, {
+    key: 'writeIfChanged',
+    value: function writeIfChanged(propName) {
+      var _this3 = this;
+
+      var generators = (0, _getWriteGenerators2.default)(propName);
+
+      generators.forEach(function (gen) {
+        _this3.composeWith(gen);
       });
     }
   }, {

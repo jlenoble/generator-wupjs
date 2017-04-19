@@ -15,12 +15,4 @@ describe('Testing config', function () {
     expect(config.get('author')).to.equal('Jason Lenoble');
     expect(config.get('dummy')).to.be.undefined;
   });
-
-  it(`Method 'set' registers changed properties`, function () {
-    const config = new Config();
-    expect(config.changedProperties).to.eql([]);
-
-    config.set('author', 'Billy Bob');
-    expect(config.changedProperties).to.eql(['author']);
-  });
 });

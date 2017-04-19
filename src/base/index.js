@@ -2,6 +2,7 @@ import {Base} from 'yeoman-generator';
 import path from 'path';
 import Config from '../config';
 import getGenerator from '../get-generator';
+import getWriteGenerators from '../get-write-generators';
 
 const appDir = __dirname;
 const conf = new Config();
@@ -10,7 +11,15 @@ export default class extends Base {
   constructor (args, opts) {
     super(args, opts);
 
+    if (!opts.generator) {
+      throw new Error('opts.generator must be defined');
+    }
+
     conf.addGen(opts.generator);
+
+    if (conf.listeners('change').length === 0) {
+      conf.on('change', propName => this.writeIfChanged(propName));
+    }
 
     let props = opts.props;
 
@@ -58,6 +67,14 @@ export default class extends Base {
     });
 
     Object.keys(generators).forEach(gen => {
+      this.composeWith(gen);
+    });
+  }
+
+  writeIfChanged (propName) {
+    const generators = getWriteGenerators(propName);
+
+    generators.forEach(gen => {
       this.composeWith(gen);
     });
   }

@@ -1,12 +1,15 @@
 import fs from 'fs';
 import path from 'path';
+import EventEmitter from 'events';
 import config from 'config';
 import Property from './property';
 
 const genName = 'generator-wupjs';
 
-export default class Config {
+export default class Config extends EventEmitter {
   constructor () {
+    super();
+
     const appDir = process.cwd();
     const yoRcJson = path.join(appDir, '.yo-rc.json');
 
@@ -20,7 +23,6 @@ export default class Config {
 
     const properties = new Map();
     const generators = new Map();
-    const changedProperties = new Map();
 
     const conf = yoConfig[genName];
 
@@ -77,7 +79,7 @@ export default class Config {
           const p = new Property({name, value});
 
           p.on('change', () => {
-            changedProperties.set(p, p.name);
+            this.emit('change', p.name);
           });
 
           properties.set(name, p);
@@ -103,15 +105,14 @@ export default class Config {
 
       reset: {
         value: function () {
+          this.removeAllListeners();
+
           properties.clear();
           generators.clear();
-          changedProperties.clear();
-        },
-      },
 
-      changedProperties: { // depending files require writing
-        get () {
-          return [...changedProperties].map(([obj, name]) => name);
+          Object.keys(conf).forEach(name => {
+            this.add(name, conf[name]);
+          });
         },
       },
     });
