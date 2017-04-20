@@ -28,21 +28,13 @@ var _class = function (_Base) {
       generator: 'write-gulpfile'
     }, opts);
 
-    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
-
-    _this.composeWith('write-package');
-    return _this;
+    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
   }
 
   _createClass(_class, [{
     key: 'writing',
     value: function writing() {
       this.fs.copy(this.templatePath('gulpfile.js'), this.destinationPath('gulpfile.js'));
-    }
-  }, {
-    key: 'install',
-    value: function install() {
-      this.npmInstall(['gulp@git://github.com/gulpjs/gulp.git#4.0'], { 'save-dev': true });
     }
   }]);
 

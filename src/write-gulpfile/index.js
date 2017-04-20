@@ -7,8 +7,6 @@ export default class extends Base {
     }, opts);
 
     super(args, options);
-
-    this.composeWith('write-package');
   }
 
   writing () {
@@ -16,10 +14,5 @@ export default class extends Base {
       this.templatePath('gulpfile.js'),
       this.destinationPath('gulpfile.js')
     );
-  }
-
-  install () {
-    this.npmInstall(['gulp@git://github.com/gulpjs/gulp.git#4.0'],
-      {'save-dev': true});
   }
 }
