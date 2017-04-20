@@ -19,6 +19,9 @@ var getGenerator = function getGenerator(name) {
 
     case 'name':case 'description':
       return 'module';
+
+    case 'deps':case 'devDeps':case 'peerDeps':
+      return 'install';
   }
 };
 

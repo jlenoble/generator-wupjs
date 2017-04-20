@@ -1,4 +1,4 @@
-const getWriteGenerator = name => {
+const getWriteGenerators = name => {
   switch (name) {
   case 'updated': case 'created':
     return ['write-license'];
@@ -7,6 +7,7 @@ const getWriteGenerator = name => {
     return ['write-license', 'write-package'];
 
   case 'github': case 'name': case 'description': case 'libDir':
+  case 'deps': case 'devDeps': case 'peerDeps':
     return ['write-package'];
 
   default:
@@ -14,4 +15,4 @@ const getWriteGenerator = name => {
   }
 };
 
-export default getWriteGenerator;
+export default getWriteGenerators;

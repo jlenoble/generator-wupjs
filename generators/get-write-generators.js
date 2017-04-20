@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var getWriteGenerator = function getWriteGenerator(name) {
+var getWriteGenerators = function getWriteGenerators(name) {
   switch (name) {
     case 'updated':case 'created':
       return ['write-license'];
@@ -12,6 +12,7 @@ var getWriteGenerator = function getWriteGenerator(name) {
       return ['write-license', 'write-package'];
 
     case 'github':case 'name':case 'description':case 'libDir':
+    case 'deps':case 'devDeps':case 'peerDeps':
       return ['write-package'];
 
     default:
@@ -19,5 +20,5 @@ var getWriteGenerator = function getWriteGenerator(name) {
   }
 };
 
-exports.default = getWriteGenerator;
+exports.default = getWriteGenerators;
 module.exports = exports['default'];
