@@ -10,18 +10,6 @@ var _base = require('../base');
 
 var _base2 = _interopRequireDefault(_base);
 
-var _path = require('path');
-
-var _path2 = _interopRequireDefault(_path);
-
-var _slug = require('slug');
-
-var _slug2 = _interopRequireDefault(_slug);
-
-var _uppercamelcase = require('uppercamelcase');
-
-var _uppercamelcase2 = _interopRequireDefault(_uppercamelcase);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37,39 +25,16 @@ var _class = function (_Base) {
     _classCallCheck(this, _class);
 
     var options = Object.assign({
-      generator: 'class'
+      generator: 'write-src'
     }, opts);
 
-    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
-
-    _this.promptIfMissing(['srcDir', 'name']);
-    return _this;
+    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
   }
 
   _createClass(_class, [{
     key: 'initializing',
     value: function initializing() {
-      this.argument('className', { type: String, required: false });
-    }
-  }, {
-    key: 'configuring',
-    value: function configuring() {
-      if (!this.className) {
-        this.className = (0, _uppercamelcase2.default)(this.get('name'));
-      }
-    }
-  }, {
-    key: 'writing',
-    value: function writing() {
-      var srcDir = this.get('srcDir');
-
-      var filename = this.className[0].toLowerCase() + this.className.substring(1);
-      filename = filename.replace(/[A-Z]/g, function (s) {
-        return '-' + s;
-      });
-      filename = (0, _slug2.default)(filename, { lower: true }) + '.js';
-
-      this.fs.copyTpl(this.templatePath('class.ejs'), this.destinationPath(_path2.default.join(srcDir, filename)), { Class: this.className });
+      this.composeWith('class');
     }
   }]);
 

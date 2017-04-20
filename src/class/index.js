@@ -1,6 +1,7 @@
 import Base from '../base';
 import path from 'path';
 import slug from 'slug';
+import upperCamelCase from 'uppercamelcase';
 
 export default class extends Base {
   constructor (args, opts) {
@@ -10,11 +11,17 @@ export default class extends Base {
 
     super(args, options);
 
-    this.promptIfMissing(['srcDir']);
+    this.promptIfMissing(['srcDir', 'name']);
   }
 
   initializing () {
-    this.argument('className', {type: String, required: true});
+    this.argument('className', {type: String, required: false});
+  }
+
+  configuring () {
+    if (!this.className) {
+      this.className = upperCamelCase(this.get('name'));
+    }
   }
 
   writing () {
