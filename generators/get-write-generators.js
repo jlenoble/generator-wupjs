@@ -15,6 +15,9 @@ var getWriteGenerators = function getWriteGenerators(name) {
     case 'deps':case 'devDeps':case 'peerDeps':
       return ['write-package'];
 
+    case 'babel':
+      return ['write-babel', 'write-package'];
+
     default:
       return [];
   }
