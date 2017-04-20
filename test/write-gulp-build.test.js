@@ -14,4 +14,8 @@ testGenerator('write-gulp-build', {babel: 'none'}, {
     /const buildDir = 'build';/,
     /const allSrcGlob = 'src\/\*\*\/\*\.js';/,
   ],
+  '!gulp/build.js': [
+    /import babel from 'gulp-babel';/,
+    /\.pipe\(babel\(\)\)/,
+  ],
 });
