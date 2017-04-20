@@ -26,7 +26,7 @@ var _class = function (_Base) {
 
     var options = Object.assign({
       props: ['deps', 'devDeps', 'peerDeps'],
-      generator: 'install'
+      generator: 'deps'
     }, opts);
 
     return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
@@ -40,17 +40,6 @@ var _class = function (_Base) {
       var peerDeps = this.get('peerDeps') || {};
 
       this.set({ deps: deps, devDeps: devDeps, peerDeps: peerDeps });
-    }
-  }, {
-    key: 'install',
-    value: function install() {
-      // const deps = this.get('deps');
-      // const devDeps = this.get('devDeps');
-      // const peerDeps = this.get('peerDeps');
-
-      // this.npmInstall(deps);
-      // this.npmInstall(devDeps);
-      // this.npmInstall(peerDeps);
     }
   }]);
 

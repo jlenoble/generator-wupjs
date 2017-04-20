@@ -16,7 +16,7 @@ const getGenerator = name => {
     return 'module';
 
   case 'deps': case 'devDeps': case 'peerDeps':
-    return 'install';
+    return 'deps';
   }
 };
 
