@@ -131,6 +131,8 @@ var _class = function (_Base) {
     value: function addDeps(_deps) {
       var deps = this.get('deps') || {};
       Object.assign(deps, _deps);
+
+      this.promptIfMissing(['deps']);
       this.set({ deps: deps });
     }
   }, {
@@ -138,6 +140,8 @@ var _class = function (_Base) {
     value: function addDevDeps(_devDeps) {
       var devDeps = this.get('devDeps') || {};
       Object.assign(devDeps, _devDeps);
+
+      this.promptIfMissing(['devDeps']);
       this.set({ devDeps: devDeps });
     }
   }, {
@@ -145,6 +149,8 @@ var _class = function (_Base) {
     value: function addPeerDeps(_peerDeps) {
       var peerDeps = this.get('peerDeps') || {};
       Object.assign(peerDeps, _peerDeps);
+
+      this.promptIfMissing(['peerDeps']);
       this.set({ peerDeps: peerDeps });
     }
   }, {

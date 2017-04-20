@@ -82,18 +82,24 @@ export default class extends Base {
   addDeps (_deps) {
     const deps = this.get('deps') || {};
     Object.assign(deps, _deps);
+
+    this.promptIfMissing(['deps']);
     this.set({deps});
   }
 
   addDevDeps (_devDeps) {
     const devDeps = this.get('devDeps') || {};
     Object.assign(devDeps, _devDeps);
+
+    this.promptIfMissing(['devDeps']);
     this.set({devDeps});
   }
 
   addPeerDeps (_peerDeps) {
     const peerDeps = this.get('peerDeps') || {};
     Object.assign(peerDeps, _peerDeps);
+
+    this.promptIfMissing(['peerDeps']);
     this.set({peerDeps});
   }
 
