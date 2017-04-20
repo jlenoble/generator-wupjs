@@ -14,6 +14,10 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _jsonStableStringify = require('json-stable-stringify');
+
+var _jsonStableStringify2 = _interopRequireDefault(_jsonStableStringify);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -46,9 +50,9 @@ var _class = function (_Base) {
       var module = props.name.replace(/\s+/g, '-').toLowerCase();
       props.main = _path2.default.join(props.libDir, module) + '.js';
 
-      props.deps = JSON.stringify(props.deps);
-      props.devDeps = JSON.stringify(props.devDeps);
-      props.peerDeps = JSON.stringify(props.peerDeps);
+      props.deps = (0, _jsonStableStringify2.default)(props.deps, { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+      props.devDeps = (0, _jsonStableStringify2.default)(props.devDeps, { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+      props.peerDeps = (0, _jsonStableStringify2.default)(props.peerDeps, { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
 
       this.fs.copyTpl(this.templatePath('package.ejs'), this.destinationPath('package.json'), props);
     }
