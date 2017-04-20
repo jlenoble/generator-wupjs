@@ -14,6 +14,18 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _slug = require('slug');
+
+var _slug2 = _interopRequireDefault(_slug);
+
+var _uppercamelcase = require('uppercamelcase');
+
+var _uppercamelcase2 = _interopRequireDefault(_uppercamelcase);
+
+var _jsonStableStringify = require('json-stable-stringify');
+
+var _jsonStableStringify2 = _interopRequireDefault(_jsonStableStringify);
+
 var _config = require('../config');
 
 var _config2 = _interopRequireDefault(_config);
@@ -152,6 +164,92 @@ var _class = function (_Base) {
 
       this.promptIfMissing(['peerDeps']);
       this.set({ peerDeps: peerDeps });
+    }
+  }, {
+    key: 'compute',
+    value: function compute(propName) {
+      switch (propName) {
+        case 'allSrcGlob':
+          return _path2.default.join(this.get('srcDir'), '**/*.js');
+
+        case 'babelPlugins':
+          return Object.keys(this.get('devDeps')).filter(function (dep) {
+            return dep.match(/babel-plugin/);
+          }).map(function (dep) {
+            return '"' + dep.replace('babel-plugin-', '') + '"';
+          }).join(', ');
+
+        case 'classFileName':
+          {
+            var filename = this.className[0].toLowerCase() + this.className.substring(1);
+            filename = filename.replace(/[A-Z]/g, function (s) {
+              return '-' + s;
+            });
+            return (0, _slug2.default)(filename, { lower: true }) + '.js';
+          }
+
+        case 'className':
+          return (0, _uppercamelcase2.default)(this.get('name'));
+
+        case 'componentFileName':
+          {
+            var _filename = this.componentName[0].toLowerCase() + this.componentName.substring(1);
+            _filename = _filename.replace(/[A-Z]/g, function (s) {
+              return '-' + s;
+            });
+            return (0, _slug2.default)(_filename, { lower: true }) + '.jsx';
+          }
+
+        case 'cYear':
+          {
+            var created = this.get('created').getFullYear();
+            var updated = this.get('updated').getFullYear();
+            var cYear = created < updated ? created + '-' : '';
+            cYear += updated;
+            return cYear;
+          }
+
+        case 'dependencies':
+          return (0, _jsonStableStringify2.default)(this.get('deps'), { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+
+        case 'devDependencies':
+          return (0, _jsonStableStringify2.default)(this.get('devDeps'), { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+
+        case 'main':
+          return _path2.default.join(this.get('libDir'), this.compute('module')) + '.js';
+
+        case 'module':
+          return this.get('name').replace(/\s+/g, '-').toLowerCase();
+
+        case 'name':
+          return this.appname;
+
+        case 'peerDependencies':
+          return (0, _jsonStableStringify2.default)(this.get('peerDeps'), { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+
+        case 'presets':
+          {
+            var presets = [];
+
+            switch (this.get('babel')) {
+              case 'es2017':
+                presets.push('es2017');
+              // FALL THROUGH
+
+              case 'es2016':
+                presets.push('es2016');
+              // FALL THROUGH
+
+              case 'es2015':
+                presets.push('es2015');
+            }
+
+            presets.reverse();
+            return presets.map(function (preset) {
+              return '"' + preset + '"';
+            }).join(', ');
+          }
+      }
     }
   }, {
     key: 'get',

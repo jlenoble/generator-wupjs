@@ -41,7 +41,7 @@ var _class = function (_Base) {
         type: 'input',
         name: 'name',
         message: 'Package name:',
-        default: this.get('name') || this.appname
+        default: this.get('name') || this.compute('name')
       }, {
         type: 'input',
         name: 'description',

@@ -1,5 +1,8 @@
 import {Base} from 'yeoman-generator';
 import path from 'path';
+import slug from 'slug';
+import upperCamelCase from 'uppercamelcase';
+import stringify from 'json-stable-stringify';
 import Config from '../config';
 import getGenerator from '../get-generator';
 import getWriteGenerators from '../get-write-generators';
@@ -101,6 +104,92 @@ export default class extends Base {
 
     this.promptIfMissing(['peerDeps']);
     this.set({peerDeps});
+  }
+
+  compute (propName) {
+    switch (propName) {
+    case 'allSrcGlob':
+      return path.join(this.get('srcDir'), '**/*.js');
+
+    case 'babelPlugins':
+      return Object.keys(this.get('devDeps')).filter(dep => {
+        return dep.match(/babel-plugin/);
+      }).map(dep => '"' + dep.replace('babel-plugin-', '') + '"').join(', ');
+
+    case 'classFileName':
+      {
+        let filename = this.className[0].toLowerCase() +
+          this.className.substring(1);
+        filename = filename.replace(/[A-Z]/g, function (s) {
+          return '-' + s;
+        });
+        return slug(filename, {lower: true}) + '.js';
+      }
+
+    case 'className':
+      return upperCamelCase(this.get('name'));
+
+    case 'componentFileName':
+      {
+        let filename = this.componentName[0].toLowerCase() +
+          this.componentName.substring(1);
+        filename = filename.replace(/[A-Z]/g, function (s) {
+          return '-' + s;
+        });
+        return slug(filename, {lower: true}) + '.jsx';
+      }
+
+    case 'cYear':
+      {
+        const created = this.get('created').getFullYear();
+        const updated = this.get('updated').getFullYear();
+        let cYear = created < updated ? created + '-' : '';
+        cYear += updated;
+        return cYear;
+      }
+
+    case 'dependencies':
+      return stringify(this.get('deps'), {space: 2})
+      .replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+
+    case 'devDependencies':
+      return stringify(this.get('devDeps'), {space: 2})
+      .replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+
+    case 'main':
+      return path.join(this.get('libDir'), this.compute('module')) + '.js';
+
+    case 'module':
+      return this.get('name').replace(/\s+/g, '-').toLowerCase();
+
+    case 'name':
+      return this.appname;
+
+    case 'peerDependencies':
+      return stringify(this.get('peerDeps'), {space: 2})
+      .replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+
+    case 'presets':
+      {
+        const presets = [];
+
+        switch (this.get('babel')) {
+        case 'es2017':
+          presets.push('es2017');
+          // FALL THROUGH
+
+        case 'es2016':
+          presets.push('es2016');
+          // FALL THROUGH
+
+        case 'es2015':
+          presets.push('es2015');
+        }
+
+        presets.reverse();
+        return presets.map(preset => `"${preset}"`).join(', ');
+      }
+    }
   }
 
   get (name) {

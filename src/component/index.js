@@ -1,6 +1,5 @@
 import Base from '../base';
 import path from 'path';
-import slug from 'slug';
 
 export default class extends Base {
   constructor (args, opts) {
@@ -19,13 +18,7 @@ export default class extends Base {
 
   writing () {
     const srcDir = this.get('srcDir');
-
-    let filename = this.componentName[0].toLowerCase() +
-      this.componentName.substring(1);
-    filename = filename.replace(/[A-Z]/g, function (s) {
-      return '-' + s;
-    });
-    filename = slug(filename, {lower: true}) + '.jsx';
+    const filename = this.compute('componentFileName');
 
     this.fs.copyTpl(
       this.templatePath('component.ejs'),

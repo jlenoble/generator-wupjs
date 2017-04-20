@@ -39,32 +39,8 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      var presets = [];
-
-      switch (props.babel) {
-        case 'es2017':
-          presets.push('es2017');
-        // FALL THROUGH
-
-        case 'es2016':
-          presets.push('es2016');
-        // FALL THROUGH
-
-        case 'es2015':
-          presets.push('es2015');
-      }
-
-      presets.reverse();
-      presets = presets.map(function (preset) {
-        return '"' + preset + '"';
-      }).join(', ');
-      props.presets = presets;
-
-      props.babelPlugins = Object.keys(props.devDeps).filter(function (dep) {
-        return dep.match(/babel-plugin/);
-      }).map(function (dep) {
-        return '"' + dep.replace('babel-plugin-', '') + '"';
-      }).join(', ');
+      props.presets = this.compute('presets');
+      props.babelPlugins = this.compute('babelPlugins');
 
       this.fs.copyTpl(this.templatePath('babelrc.ejs'), this.destinationPath('.babelrc'), props);
     }

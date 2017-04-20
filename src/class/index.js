@@ -1,7 +1,5 @@
 import Base from '../base';
 import path from 'path';
-import slug from 'slug';
-import upperCamelCase from 'uppercamelcase';
 
 export default class extends Base {
   constructor (args, opts) {
@@ -20,19 +18,13 @@ export default class extends Base {
 
   configuring () {
     if (!this.className) {
-      this.className = upperCamelCase(this.get('name'));
+      this.className = this.compute('className');
     }
   }
 
   writing () {
     const srcDir = this.get('srcDir');
-
-    let filename = this.className[0].toLowerCase() +
-      this.className.substring(1);
-    filename = filename.replace(/[A-Z]/g, function (s) {
-      return '-' + s;
-    });
-    filename = slug(filename, {lower: true}) + '.js';
+    const filename = this.compute('classFileName');
 
     this.fs.copyTpl(
       this.templatePath('class.ejs'),

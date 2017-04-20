@@ -37,20 +37,8 @@ var _class = function (_Base) {
   _createClass(_class, [{
     key: 'writing',
     value: function writing() {
-      var props = {};
-      var created = this.get('created').getFullYear();
-      var updated = this.get('updated').getFullYear();
-
-      props.author = this.get('author');
-      props.email = this.get('email');
-      props.license = this.get('license');
-
-      if (created < updated) {
-        props.cYear = created + '-';
-      } else {
-        props.cYear = '';
-      }
-      props.cYear += updated;
+      var props = this.getProps();
+      props.cYear = this.compute('cYear');
 
       this.fs.copyTpl(this.templatePath('LICENSE_' + props.license), this.destinationPath('LICENSE'), props);
     }
