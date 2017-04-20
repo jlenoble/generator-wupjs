@@ -38,10 +38,10 @@ var _class = function (_Base) {
   _createClass(_class, [{
     key: 'writing',
     value: function writing() {
-      var babel = this.get('babel');
+      var props = this.getProps();
       var presets = [];
 
-      switch (babel) {
+      switch (props.babel) {
         case 'es2017':
           presets.push('es2017');
         // FALL THROUGH
@@ -58,8 +58,15 @@ var _class = function (_Base) {
       presets = presets.map(function (preset) {
         return '"' + preset + '"';
       }).join(', ');
+      props.presets = presets;
 
-      this.fs.copyTpl(this.templatePath('babelrc.ejs'), this.destinationPath('.babelrc'), { presets: presets });
+      props.babelPlugins = Object.keys(props.devDeps).filter(function (dep) {
+        return dep.match(/babel-plugin/);
+      }).map(function (dep) {
+        return '"' + dep.replace('babel-plugin-', '') + '"';
+      }).join(', ');
+
+      this.fs.copyTpl(this.templatePath('babelrc.ejs'), this.destinationPath('.babelrc'), props);
     }
   }]);
 

@@ -8,6 +8,6 @@ testGenerator('write-babel', {babel: 'none'}, {
     /"devDependencies": \{\s*"babel-plugin-add-module-exports":\s*"\*"\s*\}/,
   ],
   '.babelrc': [
-    /"plugins": \[\s+"add-module-exports"\s+\]/,
+    /"plugins": \["add-module-exports"\]/,
   ],
 });

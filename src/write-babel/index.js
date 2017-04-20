@@ -13,10 +13,10 @@ export default class extends Base {
   }
 
   writing () {
-    const babel = this.get('babel');
+    const props = this.getProps();
     let presets = [];
 
-    switch (babel) {
+    switch (props.babel) {
     case 'es2017':
       presets.push('es2017');
       // FALL THROUGH
@@ -31,11 +31,16 @@ export default class extends Base {
 
     presets.reverse();
     presets = presets.map(preset => `"${preset}"`).join(', ');
+    props.presets = presets;
+
+    props.babelPlugins = Object.keys(props.devDeps).filter(dep => {
+      return dep.match(/babel-plugin/);
+    }).map(dep => '"' + dep.replace('babel-plugin-', '') + '"').join(', ');
 
     this.fs.copyTpl(
       this.templatePath('babelrc.ejs'),
       this.destinationPath('.babelrc'),
-      {presets}
+      props
     );
   }
 }
