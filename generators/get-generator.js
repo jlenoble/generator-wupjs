@@ -5,11 +5,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 var getGenerator = function getGenerator(name) {
   switch (name) {
+    case 'babel':
+      return 'babel';
+
     case 'created':case 'updated':
       return 'date';
 
-    case 'author':case 'email':
-      return 'who';
+    case 'deps':case 'devDeps':case 'peerDeps':
+      return 'deps';
 
     case 'github':
       return 'github';
@@ -20,8 +23,11 @@ var getGenerator = function getGenerator(name) {
     case 'name':case 'description':
       return 'module';
 
-    case 'deps':case 'devDeps':case 'peerDeps':
-      return 'deps';
+    case 'srcDir':case 'testDir':case 'buildDir':case 'libDir':case 'gulpDir':
+      return 'paths';
+
+    case 'author':case 'email':
+      return 'who';
   }
 };
 
