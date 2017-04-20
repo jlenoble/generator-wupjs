@@ -32,7 +32,8 @@ describe(`generator-wupjs:${name}`, function () {
     tests['.yo-rc.json'] = tests['.yo-rc.json'].concat(assertContent);
   } else {
     Object.keys(assertContent).forEach(file => {
-      tests[file] = tests[file].concat(assertContent[file]);
+      tests[file] = tests[file] ? tests[file].concat(assertContent[file]) :
+        assertContent[file];
     });
   }
 
