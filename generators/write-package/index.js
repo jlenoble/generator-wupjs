@@ -34,7 +34,7 @@ var _class = function (_Base) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
-    _this.promptIfMissing(['name', 'description', 'author', 'email', 'github', 'license', 'libDir']);
+    _this.promptIfMissing(['name', 'description', 'author', 'email', 'github', 'license', 'libDir', 'deps', 'devDeps', 'peerDeps']);
     return _this;
   }
 
@@ -46,7 +46,11 @@ var _class = function (_Base) {
       var module = props.name.replace(/\s+/g, '-').toLowerCase();
       props.main = _path2.default.join(props.libDir, module) + '.js';
 
-      this.fs.copyTpl(this.templatePath('_package.json'), this.destinationPath('package.json'), props);
+      props.deps = JSON.stringify(props.deps);
+      props.devDeps = JSON.stringify(props.devDeps);
+      props.peerDeps = JSON.stringify(props.peerDeps);
+
+      this.fs.copyTpl(this.templatePath('package.ejs'), this.destinationPath('package.json'), props);
     }
   }]);
 

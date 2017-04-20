@@ -10,7 +10,7 @@ export default class extends Base {
     super(args, options);
 
     this.promptIfMissing(['name', 'description', 'author', 'email', 'github',
-      'license', 'libDir']);
+      'license', 'libDir', 'deps', 'devDeps', 'peerDeps']);
   }
 
   writing () {
@@ -19,8 +19,12 @@ export default class extends Base {
     const module = props.name.replace(/\s+/g, '-').toLowerCase();
     props.main = path.join(props.libDir, module) + '.js';
 
+    props.deps = JSON.stringify(props.deps);
+    props.devDeps = JSON.stringify(props.devDeps);
+    props.peerDeps = JSON.stringify(props.peerDeps);
+
     this.fs.copyTpl(
-      this.templatePath('_package.json'),
+      this.templatePath('package.ejs'),
       this.destinationPath('package.json'),
       props
     );
