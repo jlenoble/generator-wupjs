@@ -20,17 +20,31 @@ describe(`generator-wupjs:${name}`, function () {
     process.chdir(this.cwd);
   });
 
-  it('creates a .yo-rc.json file', function () {
-    assert.file('.yo-rc.json');
-  });
+  const tests = {
+    '.yo-rc.json': [
+      /"genVersion": "0.2.16"/,
+      /"created": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/,
+      /"updated": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/,
+    ],
+  };
 
-  it('.yo-rc.json has the expected content', function () {
-    assert.fileContent('.yo-rc.json', /"genVersion": "0.2.16"/);
-    assert.fileContent('.yo-rc.json', /"created": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/);
-    assert.fileContent('.yo-rc.json', /"updated": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/);
+  if (Array.isArray(assertContent)) {
+    tests['.yo-rc.json'] = tests['.yo-rc.json'].concat(assertContent);
+  } else {
+    Object.keys(assertContent).forEach(file => {
+      tests[file] = tests[file].concat(assertContent[file]);
+    });
+  }
 
-    assertContent.forEach(content => {
-      assert.fileContent('.yo-rc.json', content);
+  Object.keys(tests).forEach(file => {
+    it(`creates a ${file} file`, function () {
+      assert.file(file);
+    });
+
+    tests[file].forEach(content => {
+      it(`${file} has the expected content ${content}`, function () {
+        assert.fileContent(file, content);
+      });
     });
   });
 });
