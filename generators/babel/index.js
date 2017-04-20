@@ -49,6 +49,30 @@ var _class = function (_Base) {
         _this2.set(props);
       });
     }
+  }, {
+    key: 'configuring',
+    value: function configuring() {
+      var babel = this.get('babel');
+      var deps = {};
+
+      switch (babel) {
+        case 'es2017':
+          Object.assign(deps, { 'babel-preset-es2017': '*' });
+        // FALL THROUGH
+
+        case 'es2016':
+          Object.assign(deps, { 'babel-preset-es2016': '*' });
+        // FALL THROUGH
+
+        case 'es2015':
+          Object.assign(deps, {
+            'babel-preset-es2015': '*',
+            'gulp-babel': '*'
+          });
+          this.composeWith('write-gulpfile');
+          this.addDevDeps(deps);
+      }
+    }
   }]);
 
   return _class;
