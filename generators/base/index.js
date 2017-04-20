@@ -127,6 +127,27 @@ var _class = function (_Base) {
       });
     }
   }, {
+    key: 'addDeps',
+    value: function addDeps(_deps) {
+      var deps = this.get('deps') || {};
+      Object.assign(deps, _deps);
+      this.set({ deps: deps });
+    }
+  }, {
+    key: 'addDevDeps',
+    value: function addDevDeps(_devDeps) {
+      var devDeps = this.get('devDeps') || {};
+      Object.assign(devDeps, _devDeps);
+      this.set({ devDeps: devDeps });
+    }
+  }, {
+    key: 'addPeerDeps',
+    value: function addPeerDeps(_peerDeps) {
+      var peerDeps = this.get('peerDeps') || {};
+      Object.assign(peerDeps, _peerDeps);
+      this.set({ peerDeps: peerDeps });
+    }
+  }, {
     key: 'get',
     value: function get(name) {
       return conf.get(name);

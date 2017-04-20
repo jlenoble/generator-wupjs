@@ -7,6 +7,8 @@ export default class extends Base {
     }, opts);
 
     super(args, options);
+
+    this.addDevDeps({gulp: 'git://github.com/gulpjs/gulp.git#4.0'});
   }
 
   writing () {

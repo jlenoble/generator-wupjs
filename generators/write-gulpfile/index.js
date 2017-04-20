@@ -28,7 +28,10 @@ var _class = function (_Base) {
       generator: 'write-gulpfile'
     }, opts);
 
-    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
+
+    _this.addDevDeps({ gulp: 'git://github.com/gulpjs/gulp.git#4.0' });
+    return _this;
   }
 
   _createClass(_class, [{
