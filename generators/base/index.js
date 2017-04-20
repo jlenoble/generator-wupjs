@@ -26,6 +26,14 @@ var _jsonStableStringify = require('json-stable-stringify');
 
 var _jsonStableStringify2 = _interopRequireDefault(_jsonStableStringify);
 
+var _gulpIf = require('gulp-if');
+
+var _gulpIf2 = _interopRequireDefault(_gulpIf);
+
+var _gulpBabel = require('gulp-babel');
+
+var _gulpBabel2 = _interopRequireDefault(_gulpBabel);
+
 var _config = require('../config');
 
 var _config2 = _interopRequireDefault(_config);
@@ -250,6 +258,12 @@ var _class = function (_Base) {
             }).join(', ');
           }
       }
+    }
+  }, {
+    key: 'transpile',
+    value: function transpile() {
+      var glob = ['gulpfile.js', _path2.default.join(this.get('gulpDir'), '**/*.js')];
+      this.registerTransformStream((0, _gulpIf2.default)(glob, (0, _gulpBabel2.default)()));
     }
   }, {
     key: 'get',

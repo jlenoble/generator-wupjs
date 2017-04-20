@@ -1,6 +1,4 @@
-var gulp = require('gulp');
+import gulp from 'gulp';
+import './gulp/build';
 
-gulp.task('default', function (done) {
-  console.log('>>>>>>>>>>>>>');
-  done();
-});
+gulp.task('default', gulp.parallel('build'));

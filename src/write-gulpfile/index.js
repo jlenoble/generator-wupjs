@@ -16,5 +16,7 @@ export default class extends Base {
       this.templatePath('gulpfile.js'),
       this.destinationPath('gulpfile.js')
     );
+
+    this.transpile();
   }
 }

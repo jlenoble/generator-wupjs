@@ -38,6 +38,8 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       this.fs.copy(this.templatePath('gulpfile.js'), this.destinationPath('gulpfile.js'));
+
+      this.transpile();
     }
   }]);
 

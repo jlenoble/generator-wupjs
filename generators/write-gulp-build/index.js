@@ -45,6 +45,8 @@ var _class = function (_Base) {
       props.allSrcGlob = this.compute('allSrcGlob');
 
       this.fs.copyTpl(this.templatePath('build.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'build.js')), props);
+
+      this.transpile();
     }
   }]);
 
