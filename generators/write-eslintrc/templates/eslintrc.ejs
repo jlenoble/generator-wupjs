@@ -2,21 +2,11 @@
   "parserOptions": {
     "ecmaVersion": <%- ecmaVersion %>,
     "sourceType": "module",
-    "ecmaFeatures": {}
+    "ecmaFeatures": <%- ecmaFeatures %>
   },
-  "plugins": [],
+  "plugins": <%- esLintPlugins %>,
   "extends": [
     "google"
   ],
-  "rules": {
-    "arrow-parens": ["error", "as-needed"],
-    "func-names": ["error", "never"],
-    "indent": ["error", 2],
-    "max-len": ["error", {"ignoreRegExpLiterals": true}],
-    "no-param-reassign": ["error", {"props": true}],
-    "one-var": ["error", "never"],
-    "quotes": ["error", "single", {"allowTemplateLiterals": true}],
-    "require-jsdoc": ["off"],
-    "space-before-function-paren": ["error", "always"]
-  }
+  "rules": <%- esLintRules %>
 }

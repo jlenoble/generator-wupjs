@@ -8,12 +8,15 @@ export default class extends Base {
 
     super(args, options);
 
-    this.promptIfMissing(['babel', 'linters']);
+    this.promptIfMissing(['babel', 'linters', 'addons']);
   }
 
   writing () {
     const props = this.getProps();
     props.ecmaVersion = this.compute('ecmaVersion');
+    props.ecmaFeatures = this.compute('ecmaFeatures');
+    props.esLintPlugins = this.compute('esLintPlugins');
+    props.esLintRules = this.compute('esLintRules');
 
     if (props.linters.includes('EsLint')) {
       this.fs.copyTpl(

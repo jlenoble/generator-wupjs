@@ -30,7 +30,7 @@ var _class = function (_Base) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
-    _this.promptIfMissing(['babel', 'linters']);
+    _this.promptIfMissing(['babel', 'linters', 'addons']);
     return _this;
   }
 
@@ -39,6 +39,9 @@ var _class = function (_Base) {
     value: function writing() {
       var props = this.getProps();
       props.ecmaVersion = this.compute('ecmaVersion');
+      props.ecmaFeatures = this.compute('ecmaFeatures');
+      props.esLintPlugins = this.compute('esLintPlugins');
+      props.esLintRules = this.compute('esLintRules');
 
       if (props.linters.includes('EsLint')) {
         this.fs.copyTpl(this.templatePath('eslintrc.ejs'), this.destinationPath('.eslintrc'), props);

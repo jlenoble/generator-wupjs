@@ -41,3 +41,31 @@ testGenerator('write-eslintrc', {babel: 'es2016', linters: ['EsLint']}, {
     /"ecmaVersion": 2016/,
   ],
 });
+
+testGenerator('write-eslintrc', {
+  babel: 'es2016',
+  linters: ['EsLint'],
+  addons: ['React'],
+}, {
+  '.yo-rc.json': [
+    /"gulp-eslint": "\*"/,
+    /"gulp-babel": "\*"/,
+    /"react": "\*"/,
+    /"react-dom": "\*"/,
+    /"eslint-plugin-react": "\*"/,
+  ],
+  'package.json': [
+    /"gulp-eslint": "\*"/,
+    /"gulp-babel": "\*"/,
+    /"react": "\*"/,
+    /"react-dom": "\*"/,
+    /"eslint-plugin-react": "\*"/,
+  ],
+  '.eslintrc': [
+    /"ecmaVersion": 2016/,
+    /"jsx": true/,
+    /"plugins": \["react"\]/,
+    /"react\/jsx-uses-react": \["error"\]/,
+    /"react\/jsx-uses-vars": \["error"\]/,
+  ],
+});

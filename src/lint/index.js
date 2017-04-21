@@ -35,6 +35,10 @@ export default class extends Base {
         'gulp-eslint': '*',
         'eslint-config-google': '*',
       });
+
+      if (this.has('React')) {
+        this.addDevDeps({'eslint-plugin-react': '*'});
+      }
     }
 
     this.composeWith('write-gulp-lint');

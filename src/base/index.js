@@ -191,6 +191,10 @@ export default class extends Base {
       return stringify(this.get('devDeps'), {space: 2})
       .replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
 
+    case 'ecmaFeatures':
+      return stringify(this.has('React') ? {jsx: true} : {}, {space: 2})
+      .replace(/\n/g, '\n    ');
+
     case 'ecmaVersion':
       {
         const babel = this.get('babel');
@@ -201,6 +205,42 @@ export default class extends Base {
         default:
           return 5;
         }
+      }
+
+    case 'esLintPlugins':
+      return stringify(this.has('React') ? ['react'] : []);
+
+    case 'esLintRules':
+      {
+        const rules = {
+          'arrow-parens': ['error', 'as-needed'],
+          'func-names': ['error', 'never'],
+          'indent': ['error', 2],
+          'max-len': ['error', {ignoreRegExpLiterals: true}],
+          'no-param-reassign': ['error', {props: true}],
+          'one-var': ['error', 'never'],
+          'quotes': ['error', 'single', {allowTemplateLiterals: true}],
+          'require-jsdoc': ['off'],
+          'space-before-function-paren': ['error', 'always'],
+        };
+
+        if (this.has('React')) {
+          Object.assign(rules, {
+            'react/jsx-uses-react': ['error'],
+            'react/jsx-uses-vars': ['error'],
+          });
+        }
+
+        const keys = Object.keys(rules).sort();
+        let str = '{';
+        keys.forEach((key, i) => {
+          str += '\n    "' + key + '": ' + stringify(rules[key])
+            .replace(/,/g, ', ').replace(/:/g, ': ') + (i < keys.length - 1 ?
+            ',' : '');
+        });
+        str += '\n  }';
+
+        return str;
       }
 
     case 'main':
