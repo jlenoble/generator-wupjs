@@ -129,6 +129,16 @@ export default class extends Base {
     case 'className':
       return upperCamelCase(this.get('name'));
 
+    case 'classTestFileName':
+      {
+        let filename = this.className[0].toLowerCase() +
+          this.className.substring(1);
+        filename = filename.replace(/[A-Z]/g, function (s) {
+          return '-' + s;
+        });
+        return slug(filename, {lower: true}) + '.test.js';
+      }
+
     case 'componentFileName':
       {
         let filename = this.componentName[0].toLowerCase() +

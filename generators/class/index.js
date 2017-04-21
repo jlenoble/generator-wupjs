@@ -34,7 +34,7 @@ var _class = function (_Base) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
-    _this.promptIfMissing(['srcDir', 'name']);
+    _this.promptIfMissing(['srcDir', 'testDir', 'name']);
     return _this;
   }
 
@@ -53,10 +53,17 @@ var _class = function (_Base) {
   }, {
     key: 'writing',
     value: function writing() {
-      var srcDir = this.get('srcDir');
-      var filename = this.compute('classFileName');
+      var props = this.getProps();
 
-      this.fs.copyTpl(this.templatePath('class.ejs'), this.destinationPath(_path2.default.join(srcDir, filename)), { Class: this.className });
+      var filename = this.compute('classFileName');
+      var testFilename = this.compute('classTestFileName');
+
+      props.Class = this.className;
+      props.module = this.compute('module');
+
+      this.fs.copyTpl(this.templatePath('class.ejs'), this.destinationPath(_path2.default.join(props.srcDir, filename)), props);
+
+      this.fs.copyTpl(this.templatePath('class.test.ejs'), this.destinationPath(_path2.default.join(props.testDir, testFilename)), props);
     }
   }]);
 

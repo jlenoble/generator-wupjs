@@ -9,7 +9,7 @@ export default class extends Base {
 
     super(args, options);
 
-    this.promptIfMissing(['srcDir', 'name']);
+    this.promptIfMissing(['srcDir', 'testDir', 'name']);
   }
 
   initializing () {
@@ -23,13 +23,24 @@ export default class extends Base {
   }
 
   writing () {
-    const srcDir = this.get('srcDir');
+    const props = this.getProps();
+
     const filename = this.compute('classFileName');
+    const testFilename = this.compute('classTestFileName');
+
+    props.Class = this.className;
+    props.module = this.compute('module');
 
     this.fs.copyTpl(
       this.templatePath('class.ejs'),
-      this.destinationPath(path.join(srcDir, filename)),
-      {Class: this.className}
+      this.destinationPath(path.join(props.srcDir, filename)),
+      props
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('class.test.ejs'),
+      this.destinationPath(path.join(props.testDir, testFilename)),
+      props
     );
   }
 }
