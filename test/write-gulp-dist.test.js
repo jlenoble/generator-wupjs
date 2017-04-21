@@ -7,9 +7,9 @@ testGenerator('write-gulp-dist', {babel: 'es2015', linters: ['EsLint']}, {
     /const allSrcGlob = 'src\/\*\*\/\*\.js';/,
     /\.pipe\(babel\(\)\)/,
   ],
-  'gulp/lint.js': [],
-  '.babelrc': [],
-  '.eslintrc': [],
+  'gulp/lint.js': true,
+  '.babelrc': true,
+  '.eslintrc': true,
 });
 
 testGenerator('write-gulp-dist', {babel: 'es2015', linters: []}, {
@@ -20,7 +20,7 @@ testGenerator('write-gulp-dist', {babel: 'es2015', linters: []}, {
     /\.pipe\(babel\(\)\)/,
   ],
   'gulp/lint.js': false,
-  '.babelrc': [],
+  '.babelrc': true,
   '.eslintrc': false,
 });
 

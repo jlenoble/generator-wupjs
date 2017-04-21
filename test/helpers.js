@@ -32,8 +32,8 @@ describe(`generator-wupjs:${name}`, function () {
     tests['.yo-rc.json'] = tests['.yo-rc.json'].concat(assertContent);
   } else {
     Object.keys(assertContent).forEach(file => {
-      tests[file] = tests[file] ? tests[file].concat(assertContent[file]) :
-        assertContent[file];
+      tests[file] = Array.isArray(tests[file]) ?
+        tests[file].concat(assertContent[file]) : assertContent[file];
     });
   }
 
@@ -43,11 +43,13 @@ describe(`generator-wupjs:${name}`, function () {
         assert.file(file);
       });
 
-      tests[file].forEach(content => {
-        it(`${file} has the expected content ${content}`, function () {
-          assert.fileContent(file, content);
+      if (tests[file] !== true) {
+        tests[file].forEach(content => {
+          it(`${file} has the expected content ${content}`, function () {
+            assert.fileContent(file, content);
+          });
         });
-      });
+      }
     } else {
       if (tests[file]) {
         tests[file].forEach(content => {
