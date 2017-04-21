@@ -1,6 +1,6 @@
 import {testGenerator} from './helpers';
 
-testGenerator('write-babel', {babel: 'none'}, {
+testGenerator('write-babelrc', {babel: 'none'}, {
   '.yo-rc.json': [
     /"devDeps": \{\s*"babel-plugin-add-module-exports": "\*"\s*\}/,
   ],

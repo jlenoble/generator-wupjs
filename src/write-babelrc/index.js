@@ -3,7 +3,7 @@ import Base from '../base';
 export default class extends Base {
   constructor (args, opts) {
     const options = Object.assign({
-      generator: 'write-babel',
+      generator: 'write-babelrc',
     }, opts);
 
     super(args, options);

@@ -11,7 +11,7 @@ const getWriteGenerators = name => {
     return ['write-package'];
 
   case 'babel':
-    return ['write-babel', 'write-package'];
+    return ['write-babelrc', 'write-package'];
 
   default:
     return [];
