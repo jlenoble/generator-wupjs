@@ -261,6 +261,9 @@ var _class = function (_Base) {
               return '"' + preset + '"';
             }).join(', ');
           }
+
+        case 'testGlob':
+          return _path2.default.join(this.get('buildDir'), this.get('testDir'), '**/*.test.js');
       }
     }
   }, {

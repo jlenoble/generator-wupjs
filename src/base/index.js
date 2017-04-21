@@ -201,6 +201,10 @@ export default class extends Base {
         presets.reverse();
         return presets.map(preset => `"${preset}"`).join(', ');
       }
+
+    case 'testGlob':
+      return path.join(this.get('buildDir'), this.get('testDir'),
+        '**/*.test.js');
     }
   }
 
