@@ -37,7 +37,7 @@ var _class = function (_Base) {
   _createClass(_class, [{
     key: 'writing',
     value: function writing() {
-      this.fs.copy(this.templatePath('gulpfile.ejs'), this.destinationPath('gulpfile.js'));
+      this.fs.copy(this.templatePath('gulpfile.ejs'), this.destinationPath('gulpfile.babel.js'));
     }
   }]);
 
