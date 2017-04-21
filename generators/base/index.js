@@ -282,6 +282,9 @@ var _class = function (_Base) {
             }).join(', ');
           }
 
+        case 'srcGlob':
+          return (0, _jsonStableStringify2.default)([_path2.default.join(this.get('srcDir'), '**/*.js')], { space: 2 }).replace(/"/g, '\'');
+
         case 'testGlob':
           return _path2.default.join(this.get('buildDir'), this.get('testDir'), '**/*.test.js');
       }

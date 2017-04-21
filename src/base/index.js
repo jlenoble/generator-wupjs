@@ -223,6 +223,11 @@ export default class extends Base {
         return presets.map(preset => `"${preset}"`).join(', ');
       }
 
+    case 'srcGlob':
+      return stringify([
+        path.join(this.get('srcDir'), '**/*.js'),
+      ], {space: 2}).replace(/"/g, `'`);
+
     case 'testGlob':
       return path.join(this.get('buildDir'), this.get('testDir'),
         '**/*.test.js');

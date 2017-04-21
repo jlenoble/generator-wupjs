@@ -1,19 +1,15 @@
 import gulp from 'gulp';<% if (babel !== 'none') { %>
 import babel from 'gulp-babel';<% } %>
-import sourcemaps from 'gulp-sourcemaps';
 
-const buildDir = '<%- buildDir %>';
-const allSrcGlob = <%- allSrcGlob %>;
+const libDir = '<%- libDir %>';
+const srcGlob = <%- srcGlob %>;
 
-export const build = () => {
-  return gulp.src(allSrcGlob, {
-    base: process.cwd(),
-    since: gulp.lastRun(build)
-  })
-    .pipe(sourcemaps.init())<% if (babel !== 'none') { %>
+export const dist = () => {
+  return gulp.src(srcGlob, {
+    since: gulp.lastRun(dist)
+  })<% if (babel !== 'none') { %>
     .pipe(babel())<% } %>
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(buildDir));
+    .pipe(gulp.dest(libDir));
 };
 
-gulp.task('build', build);
+gulp.task('dist', dist);
