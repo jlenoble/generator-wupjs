@@ -10,6 +10,7 @@ export default class extends Base {
     super(args, options);
 
     this.promptIfMissing(['gulpDir', 'buildDir']);
+    this.addDevDeps({del: '*'});
   }
 
   writing () {
