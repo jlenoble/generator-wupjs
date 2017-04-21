@@ -14,7 +14,7 @@ const getWriteGenerators = name => {
     return ['write-babelrc', 'write-package'];
 
   case 'linters':
-    return ['write-package'];
+    return ['write-eslintrc', 'write-package'];
 
   default:
     return [];

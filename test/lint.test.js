@@ -1,6 +1,6 @@
 import {testGenerator} from './helpers';
 
-testGenerator('lint', {linters: ['EsLint']}, {
+testGenerator('lint', {babel: 'none', linters: ['EsLint']}, {
   '.yo-rc.json': [
     /"linters"/,
     /"EsLint"/,
@@ -14,7 +14,7 @@ testGenerator('lint', {linters: ['EsLint']}, {
   ],
 });
 
-testGenerator('lint', {linters: []}, {
+testGenerator('lint', {babel: 'none', linters: []}, {
   '.yo-rc.json': [
     /"linters": \[\]/,
   ],
