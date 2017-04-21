@@ -67,6 +67,7 @@ var _class = function (_Base) {
         case 'es2015':
           Object.assign(deps, {
             'babel-preset-es2015': '*',
+            'babel-plugin-add-module-exports': '*',
             'gulp-babel': '*'
           });
           this.composeWith('write-gulpfile');

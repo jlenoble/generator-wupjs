@@ -38,7 +38,7 @@ describe(`generator-wupjs:${name}`, function () {
   }
 
   Object.keys(tests).forEach(file => {
-    if (file[0] !== '!') {
+    if (file[0] !== '!' && tests[file]) {
       it(`creates a ${file} file`, function () {
         assert.file(file);
       });
@@ -49,12 +49,18 @@ describe(`generator-wupjs:${name}`, function () {
         });
       });
     } else {
-      tests[file].forEach(content => {
-        const _file = file.substring(1);
-        it(`${_file} has not the content ${content}`, function () {
-          assert.noFileContent(_file, content);
+      if (tests[file]) {
+        tests[file].forEach(content => {
+          const _file = file.substring(1);
+          it(`${_file} has not the content ${content}`, function () {
+            assert.noFileContent(_file, content);
+          });
         });
-      });
+      } else {
+        it(`${file} is missing as expected`, function () {
+          assert.noFile(file);
+        });
+      }
     }
   });
 });

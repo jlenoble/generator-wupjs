@@ -31,7 +31,6 @@ var _class = function (_Base) {
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
     _this.promptIfMissing(['babel']);
-    _this.addDevDeps({ 'babel-plugin-add-module-exports': '*' });
     return _this;
   }
 
@@ -39,10 +38,13 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.presets = this.compute('presets');
-      props.babelPlugins = this.compute('babelPlugins');
 
-      this.fs.copyTpl(this.templatePath('babelrc.ejs'), this.destinationPath('.babelrc'), props);
+      if (props.babel !== 'none') {
+        props.presets = this.compute('presets');
+        props.babelPlugins = this.compute('babelPlugins');
+
+        this.fs.copyTpl(this.templatePath('babelrc.ejs'), this.destinationPath('.babelrc'), props);
+      }
     }
   }]);
 

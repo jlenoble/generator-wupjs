@@ -9,18 +9,20 @@ export default class extends Base {
     super(args, options);
 
     this.promptIfMissing(['babel']);
-    this.addDevDeps({'babel-plugin-add-module-exports': '*'});
   }
 
   writing () {
     const props = this.getProps();
-    props.presets = this.compute('presets');
-    props.babelPlugins = this.compute('babelPlugins');
 
-    this.fs.copyTpl(
-      this.templatePath('babelrc.ejs'),
-      this.destinationPath('.babelrc'),
-      props
-    );
+    if (props.babel !== 'none') {
+      props.presets = this.compute('presets');
+      props.babelPlugins = this.compute('babelPlugins');
+
+      this.fs.copyTpl(
+        this.templatePath('babelrc.ejs'),
+        this.destinationPath('.babelrc'),
+        props
+      );
+    }
   }
 }

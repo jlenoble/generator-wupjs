@@ -1,13 +1,23 @@
 import {testGenerator} from './helpers';
 
-testGenerator('write-babelrc', {babel: 'none'}, {
+testGenerator('write-babelrc', {babel: 'es2016'}, {
   '.yo-rc.json': [
-    /"devDeps": \{\s*"babel-plugin-add-module-exports": "\*"\s*\}/,
+    /"babel-plugin-add-module-exports": "\*"/,
   ],
   'package.json': [
-    /"devDependencies": \{\s*"babel-plugin-add-module-exports":\s*"\*"\s*\}/,
+    /"babel-plugin-add-module-exports": "\*"/,
   ],
   '.babelrc': [
     /"plugins": \["add-module-exports"\]/,
   ],
+});
+
+testGenerator('write-babelrc', {babel: 'none'}, {
+  '!.yo-rc.json': [
+    /"babel-plugin-add-module-exports": "\*"/,
+  ],
+  '!package.json': [
+    /"babel-plugin-add-module-exports": "\*"/,
+  ],
+  '.babelrc': false,
 });

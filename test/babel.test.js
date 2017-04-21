@@ -14,3 +14,16 @@ testGenerator('babel', {babel: 'es2017'}, {
     /"presets": \["es2015", "es2016", "es2017"\]/,
   ],
 });
+
+testGenerator('babel', {babel: 'none'}, {
+  '!.yo-rc.json': [
+    /"babel": "es2017"/,
+  ],
+  '!package.json': [
+    /"babel-preset-es2015":\s*"\*"/,
+    /"babel-preset-es2016":\s*"\*"/,
+    /"babel-preset-es2017":\s*"\*"/,
+    /"gulp-babel":\s*"\*"/,
+  ],
+  '.babelrc': false,
+});
