@@ -36,5 +36,7 @@ export default class extends Base {
         'chai': '*',
       });
     }
+
+    this.composeWith('write-gulp-test');
   }
 }

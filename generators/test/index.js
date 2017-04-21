@@ -63,6 +63,8 @@ var _class = function (_Base) {
           'chai': '*'
         });
       }
+
+      this.composeWith('write-gulp-test');
     }
   }]);
 
