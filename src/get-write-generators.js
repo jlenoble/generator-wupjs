@@ -7,7 +7,7 @@ const getWriteGenerators = name => {
     return ['write-license', 'write-package'];
 
   case 'github': case 'name': case 'description': case 'libDir':
-  case 'deps': case 'devDeps': case 'peerDeps':
+  case 'deps': case 'devDeps': case 'peerDeps': case 'testRunners':
     return ['write-package'];
 
   case 'babel':

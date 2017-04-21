@@ -29,6 +29,9 @@ var getGenerator = function getGenerator(name) {
     case 'srcDir':case 'testDir':case 'buildDir':case 'libDir':case 'gulpDir':
       return 'paths';
 
+    case 'testRunners':
+      return 'test';
+
     case 'author':case 'email':
       return 'who';
   }
