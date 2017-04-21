@@ -3,7 +3,9 @@ import {testGenerator} from './helpers';
 testGenerator('write-gulp-lint', undefined, {
   'gulp/lint.js': [
     /import eslint from 'gulp-eslint';/,
-    /const allSrcGlob = 'src\/\*\*\/\*\.js';/,
+    /const allSrcGlob = \[/,
+    /'src\/\*\*\/\*\.js'/,
+    /'test\/\*\*\/\*\.js'/,
     /\.pipe\(eslint\(\)\)/,
     /\.pipe\(eslint\.format\(\)\)/,
   ],

@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import eslint from 'gulp-eslint';
 
-const allSrcGlob = '<%- allSrcGlob %>';
+const allSrcGlob = <%- allSrcGlob %>;
 
 export const lint = () => {
   return gulp.src(allSrcGlob)

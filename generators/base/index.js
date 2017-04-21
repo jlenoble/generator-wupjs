@@ -170,7 +170,7 @@ var _class = function (_Base) {
     value: function compute(propName) {
       switch (propName) {
         case 'allSrcGlob':
-          return _path2.default.join(this.get('srcDir'), '**/*.js');
+          return (0, _jsonStableStringify2.default)([_path2.default.join(this.get('srcDir'), '**/*.js'), _path2.default.join(this.get('testDir'), '**/*.js')], { space: 2 }).replace(/"/g, '\'');
 
         case 'babelPlugins':
           return Object.keys(this.get('devDeps')).filter(function (dep) {

@@ -4,7 +4,9 @@ testGenerator('write-gulp-dist', {babel: 'es2015', linters: ['EsLint']}, {
   'gulp/dist.js': [
     /import babel from 'gulp-babel';/,
     /const buildDir = 'build';/,
-    /const allSrcGlob = 'src\/\*\*\/\*\.js';/,
+    /const allSrcGlob = \[/,
+    /'src\/\*\*\/\*\.js'/,
+    /'test\/\*\*\/\*\.js'/,
     /\.pipe\(babel\(\)\)/,
   ],
   'gulp/lint.js': true,
@@ -16,7 +18,9 @@ testGenerator('write-gulp-dist', {babel: 'es2015', linters: []}, {
   'gulp/dist.js': [
     /import babel from 'gulp-babel';/,
     /const buildDir = 'build';/,
-    /const allSrcGlob = 'src\/\*\*\/\*\.js';/,
+    /const allSrcGlob = \[/,
+    /'src\/\*\*\/\*\.js'/,
+    /'test\/\*\*\/\*\.js'/,
     /\.pipe\(babel\(\)\)/,
   ],
   'gulp/lint.js': false,
@@ -27,7 +31,9 @@ testGenerator('write-gulp-dist', {babel: 'es2015', linters: []}, {
 testGenerator('write-gulp-dist', {babel: 'none', linters: []}, {
   'gulp/dist.js': [
     /const buildDir = 'build';/,
-    /const allSrcGlob = 'src\/\*\*\/\*\.js';/,
+    /const allSrcGlob = \[/,
+    /'src\/\*\*\/\*\.js'/,
+    /'test\/\*\*\/\*\.js'/,
   ],
   '!gulp/dist.js': [
     /import babel from 'gulp-babel';/,

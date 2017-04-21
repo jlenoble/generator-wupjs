@@ -4,7 +4,9 @@ testGenerator('write-gulp-build', {babel: 'es2015'}, {
   'gulp/build.js': [
     /import babel from 'gulp-babel';/,
     /const buildDir = 'build';/,
-    /const allSrcGlob = 'src\/\*\*\/\*\.js';/,
+    /const allSrcGlob = \[/,
+    /'src\/\*\*\/\*\.js'/,
+    /'test\/\*\*\/\*\.js'/,
     /\.pipe\(babel\(\)\)/,
   ],
   'package.json': [
@@ -15,7 +17,9 @@ testGenerator('write-gulp-build', {babel: 'es2015'}, {
 testGenerator('write-gulp-build', {babel: 'none'}, {
   'gulp/build.js': [
     /const buildDir = 'build';/,
-    /const allSrcGlob = 'src\/\*\*\/\*\.js';/,
+    /const allSrcGlob = \[/,
+    /'src\/\*\*\/\*\.js'/,
+    /'test\/\*\*\/\*\.js'/,
   ],
   '!gulp/build.js': [
     /import babel from 'gulp-babel';/,

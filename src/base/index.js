@@ -109,7 +109,10 @@ export default class extends Base {
   compute (propName) {
     switch (propName) {
     case 'allSrcGlob':
-      return path.join(this.get('srcDir'), '**/*.js');
+      return stringify([
+        path.join(this.get('srcDir'), '**/*.js'),
+        path.join(this.get('testDir'), '**/*.js'),
+      ], {space: 2}).replace(/"/g, `'`);
 
     case 'babelPlugins':
       return Object.keys(this.get('devDeps')).filter(dep => {
