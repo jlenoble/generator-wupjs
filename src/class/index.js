@@ -10,6 +10,7 @@ export default class extends Base {
     super(args, options);
 
     this.promptIfMissing(['srcDir', 'testDir', 'name']);
+    this.addDevDeps({muter: '*'});
   }
 
   initializing () {
