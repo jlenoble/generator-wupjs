@@ -7,6 +7,9 @@ testGenerator('write-gulp-build', {babel: 'es2015'}, {
     /const allSrcGlob = 'src\/\*\*\/\*\.js';/,
     /\.pipe\(babel\(\)\)/,
   ],
+  'package.json': [
+    /"gulp-babel": "\*"/,
+  ],
 });
 
 testGenerator('write-gulp-build', {babel: 'none'}, {
@@ -17,5 +20,8 @@ testGenerator('write-gulp-build', {babel: 'none'}, {
   '!gulp/build.js': [
     /import babel from 'gulp-babel';/,
     /\.pipe\(babel\(\)\)/,
+  ],
+  '!package.json': [
+    /"gulp-babel": "\*"/,
   ],
 });

@@ -5,4 +5,7 @@ testGenerator('write-gulp-clean', undefined, {
     /return del\('build'\);/,
     /gulp\.task\('clean', clean\);/,
   ],
+  'package.json': [
+    /"del": "\*"/,
+  ],
 });

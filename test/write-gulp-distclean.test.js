@@ -7,4 +7,7 @@ testGenerator('write-gulp-distclean', undefined, {
     /return del\('lib'\);/,
     /gulp\.task\('distclean', gulp\.parallel\('clean', distClean\)\);/,
   ],
+  'package.json': [
+    /"del": "\*"/,
+  ],
 });
