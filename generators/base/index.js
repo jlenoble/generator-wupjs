@@ -300,11 +300,14 @@ var _class = function (_Base) {
     key: 'set',
     value: function set(name, value) {
       var props = value === undefined ? name : _defineProperty({}, name, value);
-      this.config.set(props);
 
       Object.keys(props).forEach(function (name) {
         conf.set(name, props[name]);
       });
+
+      var _props = Object.assign({}, props);
+      delete _props.gulpIncludes; // Global, but recomputed each time
+      this.config.set(_props);
     }
   }]);
 

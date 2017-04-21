@@ -239,11 +239,14 @@ export default class extends Base {
 
   set (name, value) {
     const props = value === undefined ? name : {[name]: value};
-    this.config.set(props);
 
     Object.keys(props).forEach(name => {
       conf.set(name, props[name]);
     });
+
+    const _props = Object.assign({}, props);
+    delete _props.gulpIncludes; // Global, but recomputed each time
+    this.config.set(_props);
   }
 }
 
