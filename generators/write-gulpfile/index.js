@@ -25,17 +25,23 @@ var _class = function (_Base) {
     _classCallCheck(this, _class);
 
     var options = Object.assign({
+      props: ['gulpIncludes'],
       generator: 'write-gulpfile'
     }, opts);
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
-    _this.promptIfMissing(['gulpDir', 'gulpIncludes']);
+    _this.promptIfMissing(['gulpDir']);
     _this.addDevDeps({ gulp: 'git://github.com/gulpjs/gulp.git#4.0' });
     return _this;
   }
 
   _createClass(_class, [{
+    key: 'initializing',
+    value: function initializing() {
+      this.set({ gulpIncludes: this.get('gulpIncludes') || [] });
+    }
+  }, {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();

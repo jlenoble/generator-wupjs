@@ -18,7 +18,7 @@ var getGenerator = function getGenerator(name) {
       return 'github';
 
     case 'gulpIncludes':
-      return 'gulp-includes';
+      return 'write-gulpfile';
 
     case 'license':
       return 'license';
