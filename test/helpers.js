@@ -3,8 +3,12 @@ import assert from 'yeoman-assert';
 import helpers from 'yeoman-test';
 import Base from '../../generators/base';
 
-export const testGenerator = (name, prompt = {}, assertContent = []) =>
+export const testGenerator = (name, _prompt = {}, assertContent = []) =>
 describe(`generator-wupjs:${name}`, function () {
+  const prompt = Object.assign({
+    description: 'Dummy description',
+  }, _prompt);
+
   before(function () {
     this.cwd = process.cwd();
     Base.reset();
