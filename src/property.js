@@ -20,7 +20,7 @@ export default class Property extends EventEmitter {
         },
         set (value) {
           if (value === undefined) {
-            throw new Error('Argument is missing or undefined');
+            throw new Error(`Argument ${this.name} is missing or undefined`);
           }
 
           if (value === _prevValue) {
