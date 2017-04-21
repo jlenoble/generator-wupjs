@@ -20,6 +20,9 @@ var getGenerator = function getGenerator(name) {
     case 'license':
       return 'license';
 
+    case 'linters':
+      return 'lint';
+
     case 'name':case 'description':
       return 'module';
 
