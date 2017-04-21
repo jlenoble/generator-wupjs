@@ -1,6 +1,6 @@
 {
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": <%- ecmaVersion %>,
     "sourceType": "module",
     "ecmaFeatures": {}
   },
@@ -8,9 +8,6 @@
   "extends": [
     "google"
   ],
-  "env": {
-    "es6": true
-  },
   "rules": {
     "arrow-parens": ["error", "as-needed"],
     "func-names": ["error", "never"],

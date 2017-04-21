@@ -215,6 +215,18 @@ var _class = function (_Base) {
         case 'devDependencies':
           return (0, _jsonStableStringify2.default)(this.get('devDeps'), { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
 
+        case 'ecmaVersion':
+          {
+            var babel = this.get('babel');
+            switch (babel) {
+              case 'es2015':case 'es2016':case 'es2017':
+                return babel.substring(2);
+
+              default:
+                return 5;
+            }
+          }
+
         case 'main':
           return _path2.default.join(this.get('libDir'), this.compute('module')) + '.js';
 

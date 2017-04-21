@@ -38,6 +38,7 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
+      props.ecmaVersion = this.compute('ecmaVersion');
 
       if (props.linters.includes('EsLint')) {
         this.fs.copyTpl(this.templatePath('eslintrc.ejs'), this.destinationPath('.eslintrc'), props);

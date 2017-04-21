@@ -156,6 +156,18 @@ export default class extends Base {
       return stringify(this.get('devDeps'), {space: 2})
       .replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
 
+    case 'ecmaVersion':
+      {
+        const babel = this.get('babel');
+        switch (babel) {
+        case 'es2015': case 'es2016': case 'es2017':
+          return babel.substring(2);
+
+        default:
+          return 5;
+        }
+      }
+
     case 'main':
       return path.join(this.get('libDir'), this.compute('module')) + '.js';
 

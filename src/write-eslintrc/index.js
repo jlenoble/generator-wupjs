@@ -13,6 +13,7 @@ export default class extends Base {
 
   writing () {
     const props = this.getProps();
+    props.ecmaVersion = this.compute('ecmaVersion');
 
     if (props.linters.includes('EsLint')) {
       this.fs.copyTpl(
