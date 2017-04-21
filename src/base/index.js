@@ -106,6 +106,12 @@ export default class extends Base {
     this.set({peerDeps});
   }
 
+  addGulpIncludes (_gulpIncludes) {
+    const gulpIncludes = this.get('gulpIncludes') || [];
+    const set = new Set(...gulpIncludes, ..._gulpIncludes);
+    this.set({gulpIncludes: [...set]});
+  }
+
   compute (propName) {
     switch (propName) {
     case 'allSrcGlob':

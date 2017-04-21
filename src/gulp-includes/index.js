@@ -11,7 +11,7 @@ export default class extends Base {
   }
 
   initializing () {
-    const gulpIncludes = this.get('gulpIncludes') || {};
+    const gulpIncludes = this.get('gulpIncludes') || [];
 
     this.set({gulpIncludes});
   }

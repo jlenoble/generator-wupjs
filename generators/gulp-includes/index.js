@@ -35,7 +35,7 @@ var _class = function (_Base) {
   _createClass(_class, [{
     key: 'initializing',
     value: function initializing() {
-      var gulpIncludes = this.get('gulpIncludes') || {};
+      var gulpIncludes = this.get('gulpIncludes') || [];
 
       this.set({ gulpIncludes: gulpIncludes });
     }

@@ -1,5 +1,5 @@
 import gulp from 'gulp';
-<% for (let i = 0, l = gulps.length; i < l; i++) { %>
-import './<%- gulpDir %>/<%- gulps[i] %>';<% } %>
+<% for (let i = 0, l = gulpIncludes.length; i < l; i++) { %>
+import './<%- gulpDir %>/<%- gulpIncludes[i] %>';<% } %>
 
 gulp.task('default', gulp.parallel('build'));

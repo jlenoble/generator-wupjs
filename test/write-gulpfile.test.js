@@ -2,10 +2,10 @@ import {testGenerator} from './helpers';
 
 testGenerator('write-gulpfile', undefined, {
   '.yo-rc.json': [
-    /"devDeps": \{\s*"gulp": "git:\/\/github\.com\/gulpjs\/gulp\.git#4\.0"\s*\}/,
+    /"gulp": "git:\/\/github\.com\/gulpjs\/gulp\.git#4\.0"/,
   ],
   'package.json': [
-    /"devDependencies": \{\s*"gulp":\s*"git:\/\/github\.com\/gulpjs\/gulp\.git#4\.0"\s*\}/,
+    /gulp":\s*"git:\/\/github\.com\/gulpjs\/gulp\.git#4\.0"/,
   ],
-  'gulpfile.babel.js': [],
+  'gulpfile.babel.js': true,
 });

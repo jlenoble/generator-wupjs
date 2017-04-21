@@ -30,7 +30,7 @@ var _class = function (_Base) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
-    _this.promptIfMissing(['gulpDir']);
+    _this.promptIfMissing(['gulpDir', 'gulpIncludes']);
     _this.addDevDeps({ gulp: 'git://github.com/gulpjs/gulp.git#4.0' });
     return _this;
   }
@@ -39,7 +39,6 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.gulps = ['build', 'test', 'clean', 'distclean', 'dist', 'lint'];
 
       this.fs.copyTpl(this.templatePath('gulpfile.ejs'), this.destinationPath('gulpfile.babel.js'), props);
     }
