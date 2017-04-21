@@ -8,13 +8,13 @@ export default class extends Base {
 
     super(args, options);
 
-    this.promptIfMissing(['babel']);
+    this.promptIfMissing(['babel', 'addons']);
   }
 
   writing () {
     const props = this.getProps();
 
-    if (props.babel !== 'none') {
+    if (this.has('Babel')) {
       props.presets = this.compute('presets');
       props.babelPlugins = this.compute('babelPlugins');
 

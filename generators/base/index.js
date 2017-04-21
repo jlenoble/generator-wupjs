@@ -179,6 +179,19 @@ var _class = function (_Base) {
       this.set({ gulpIncludes: [].concat(_toConsumableArray(set)) });
     }
   }, {
+    key: 'has',
+    value: function has(vendorLibrary) {
+      var libname = vendorLibrary.toLowerCase();
+
+      switch (libname) {
+        case 'babel':
+          return this.get('babel') !== 'none' || this.has('React');
+
+        case 'react':
+          return this.get('addons').includes('React');
+      }
+    }
+  }, {
     key: 'compute',
     value: function compute(propName) {
       switch (propName) {
@@ -278,7 +291,11 @@ var _class = function (_Base) {
                 presets.push('es2015');
             }
 
-            presets.reverse();
+            if (this.has('React')) {
+              presets.push('react');
+            }
+
+            presets.sort();
             return presets.map(function (preset) {
               return '"' + preset + '"';
             }).join(', ');

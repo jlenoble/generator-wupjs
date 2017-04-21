@@ -5,6 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 var getGenerator = function getGenerator(name) {
   switch (name) {
+    case 'addons':
+      return 'addons';
+
     case 'babel':
       return 'babel';
 

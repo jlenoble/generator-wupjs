@@ -30,7 +30,7 @@ var _class = function (_Base) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
-    _this.promptIfMissing(['babel']);
+    _this.promptIfMissing(['babel', 'addons']);
     return _this;
   }
 
@@ -39,7 +39,7 @@ var _class = function (_Base) {
     value: function writing() {
       var props = this.getProps();
 
-      if (props.babel !== 'none') {
+      if (this.has('Babel')) {
         props.presets = this.compute('presets');
         props.babelPlugins = this.compute('babelPlugins');
 

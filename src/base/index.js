@@ -116,6 +116,18 @@ export default class extends Base {
     this.set({gulpIncludes: [...set]});
   }
 
+  has (vendorLibrary) {
+    const libname = vendorLibrary.toLowerCase();
+
+    switch(libname) {
+    case 'babel':
+      return this.get('babel') !== 'none' || this.has('React');
+
+    case 'react':
+      return this.get('addons').includes('React');
+    }
+  }
+
   compute (propName) {
     switch (propName) {
     case 'allSrcGlob':
@@ -221,7 +233,11 @@ export default class extends Base {
           presets.push('es2015');
         }
 
-        presets.reverse();
+        if (this.has('React')) {
+          presets.push('react');
+        }
+
+        presets.sort();
         return presets.map(preset => `"${preset}"`).join(', ');
       }
 
