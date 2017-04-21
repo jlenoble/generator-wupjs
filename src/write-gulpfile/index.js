@@ -8,13 +8,18 @@ export default class extends Base {
 
     super(args, options);
 
+    this.promptIfMissing(['gulpDir']);
     this.addDevDeps({gulp: 'git://github.com/gulpjs/gulp.git#4.0'});
   }
 
   writing () {
-    this.fs.copy(
+    const props = this.getProps();
+    props.gulps = ['build', 'test', 'clean', 'distclean', 'dist', 'lint'];
+
+    this.fs.copyTpl(
       this.templatePath('gulpfile.ejs'),
-      this.destinationPath('gulpfile.babel.js')
+      this.destinationPath('gulpfile.babel.js'),
+      props
     );
   }
 }
