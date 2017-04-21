@@ -40,6 +40,7 @@ var _class = function (_Base) {
       'chai': '*'
     });
     _this.addGulpIncludes(['test']);
+    _this.composeWith('write-gulpfile');
     return _this;
   }
 

@@ -15,6 +15,7 @@ export default class extends Base {
       'chai': '*',
     });
     this.addGulpIncludes(['test']);
+    this.composeWith('write-gulpfile');
   }
 
   writing () {
