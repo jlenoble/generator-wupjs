@@ -37,6 +37,7 @@ var _class = function (_Base) {
     _this.promptIfMissing(['gulpDir']);
     _this.addDevDeps({ 'gulp-eslint': '*' });
     _this.addGulpIncludes(['lint']);
+    _this.composeWith('write-gulpfile');
     return _this;
   }
 

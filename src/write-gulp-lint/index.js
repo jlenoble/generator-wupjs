@@ -12,6 +12,7 @@ export default class extends Base {
     this.promptIfMissing(['gulpDir']);
     this.addDevDeps({'gulp-eslint': '*'});
     this.addGulpIncludes(['lint']);
+    this.composeWith('write-gulpfile');
   }
 
   writing () {

@@ -1,10 +1,6 @@
 import {testGenerator} from './helpers';
 
 testGenerator('write-gulp-lint', undefined, {
-  '.yo-rc.json': [
-    /"gulpIncludes": \[/,
-    /  "lint"/,
-  ],
   'gulp/lint.js': [
     /import eslint from 'gulp-eslint';/,
     /const allSrcGlob = \[/,
@@ -15,5 +11,8 @@ testGenerator('write-gulp-lint', undefined, {
   ],
   'package.json': [
     /"gulp-eslint": "\*"/,
+  ],
+  'gulpfile.babel.js': [
+    /import '\.\/gulp\/lint';/,
   ],
 });
