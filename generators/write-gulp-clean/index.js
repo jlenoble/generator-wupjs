@@ -36,6 +36,7 @@ var _class = function (_Base) {
 
     _this.promptIfMissing(['gulpDir', 'buildDir']);
     _this.addDevDeps({ del: '*' });
+    _this.addGulpIncludes(['clean']);
     return _this;
   }
 

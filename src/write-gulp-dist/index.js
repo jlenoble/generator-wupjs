@@ -10,6 +10,7 @@ export default class extends Base {
     super(args, options);
 
     this.promptIfMissing(['babel', 'gulpDir', 'buildDir', 'srcDir', 'linters']);
+    this.addGulpIncludes(['dist']);
   }
 
   writing () {

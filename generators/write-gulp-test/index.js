@@ -39,6 +39,7 @@ var _class = function (_Base) {
       'gulp-mocha': '*',
       'chai': '*'
     });
+    _this.addGulpIncludes(['test']);
     return _this;
   }
 

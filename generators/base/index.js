@@ -171,7 +171,9 @@ var _class = function (_Base) {
     key: 'addGulpIncludes',
     value: function addGulpIncludes(_gulpIncludes) {
       var gulpIncludes = this.get('gulpIncludes') || [];
-      var set = new (Function.prototype.bind.apply(Set, [null].concat(_toConsumableArray(gulpIncludes), _toConsumableArray(_gulpIncludes))))();
+      var set = new Set(gulpIncludes.concat(_gulpIncludes));
+
+      this.promptIfMissing(['gulpIncludes']);
       this.set({ gulpIncludes: [].concat(_toConsumableArray(set)) });
     }
   }, {

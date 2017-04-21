@@ -108,7 +108,9 @@ export default class extends Base {
 
   addGulpIncludes (_gulpIncludes) {
     const gulpIncludes = this.get('gulpIncludes') || [];
-    const set = new Set(...gulpIncludes, ..._gulpIncludes);
+    const set = new Set(gulpIncludes.concat(_gulpIncludes));
+
+    this.promptIfMissing(['gulpIncludes']);
     this.set({gulpIncludes: [...set]});
   }
 

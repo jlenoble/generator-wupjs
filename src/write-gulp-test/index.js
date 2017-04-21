@@ -14,6 +14,7 @@ export default class extends Base {
       'gulp-mocha': '*',
       'chai': '*',
     });
+    this.addGulpIncludes(['test']);
   }
 
   writing () {

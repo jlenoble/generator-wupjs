@@ -1,6 +1,10 @@
 import {testGenerator} from './helpers';
 
 testGenerator('write-gulp-dist', {babel: 'es2015', linters: ['EsLint']}, {
+  '.yo-rc.json': [
+    /"gulpIncludes": \[/,
+    /  "dist"/,
+  ],
   'gulp/dist.js': [
     /import babel from 'gulp-babel';/,
     /const buildDir = 'build';/,
@@ -15,6 +19,10 @@ testGenerator('write-gulp-dist', {babel: 'es2015', linters: ['EsLint']}, {
 });
 
 testGenerator('write-gulp-dist', {babel: 'es2015', linters: []}, {
+  '.yo-rc.json': [
+    /"gulpIncludes": \[/,
+    /  "dist"/,
+  ],
   'gulp/dist.js': [
     /import babel from 'gulp-babel';/,
     /const buildDir = 'build';/,
@@ -29,6 +37,10 @@ testGenerator('write-gulp-dist', {babel: 'es2015', linters: []}, {
 });
 
 testGenerator('write-gulp-dist', {babel: 'none', linters: []}, {
+  '.yo-rc.json': [
+    /"gulpIncludes": \[/,
+    /  "dist"/,
+  ],
   'gulp/dist.js': [
     /const buildDir = 'build';/,
     /const allSrcGlob = \[/,
