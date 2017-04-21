@@ -14,6 +14,8 @@ export default class extends Base {
   constructor (args, opts) {
     super(args, opts);
 
+    conf.initialize();
+
     if (!opts.generator) {
       throw new Error('opts.generator must be defined');
     }
@@ -256,5 +258,7 @@ export default class extends Base {
 }
 
 Base.reset = function () {
-  conf.reset();
+  if (typeof conf.reset === 'function') {
+    conf.reset();
+  }
 };

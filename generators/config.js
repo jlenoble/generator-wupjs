@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
@@ -42,126 +44,140 @@ var Config = function (_EventEmitter) {
   function Config() {
     _classCallCheck(this, Config);
 
-    var _this = _possibleConstructorReturn(this, (Config.__proto__ || Object.getPrototypeOf(Config)).call(this));
-
-    var appDir = process.cwd();
-    var yoRcJson = _path2.default.join(appDir, '.yo-rc.json');
-
-    var yoConfig = void 0;
-
-    try {
-      yoConfig = JSON.parse(_fs2.default.readFileSync(yoRcJson, 'utf8'));
-    } catch (e) {
-      yoConfig = _defineProperty({}, genName, {});
-    }
-
-    var properties = new Map();
-    var generators = new Map();
-
-    var conf = yoConfig[genName];
-
-    Object.defineProperties(_this, {
-      has: {
-        value: function value(name) {
-          return properties.has(name);
-        }
-      },
-
-      hasGen: {
-        value: function value(name) {
-          return generators.has(name);
-        }
-      },
-
-      get: {
-        value: function value(name) {
-          var prop = properties.get(name);
-
-          if ((prop === undefined || prop.value === undefined) && _config2.default.has(name)) {
-            prop = _config2.default.get(name);
-
-            if (prop !== undefined) {
-              this.add(name, prop);
-              prop = properties.get(name);
-            }
-          }
-
-          return prop ? prop.value : undefined;
-        }
-      },
-
-      getProps: {
-        value: function value() {
-          var props = {};
-
-          properties.forEach(function (_ref) {
-            var name = _ref.name,
-                value = _ref.value;
-
-            props[name] = value;
-          });
-
-          return props;
-        }
-      },
-
-      add: {
-        value: function value(name, _value) {
-          var _this2 = this;
-
-          if (this.has(name)) {
-            this.set(name, _value);
-            return;
-          }
-
-          var p = new _property2.default({ name: name, value: _value });
-
-          p.on('change', function () {
-            _this2.emit('change', p.name);
-          });
-
-          properties.set(name, p);
-        }
-      },
-
-      addGen: {
-        value: function value(name) {
-          generators.set(name, true);
-        }
-      },
-
-      set: {
-        value: function value(name, _value2) {
-          if (!this.has(name)) {
-            return;
-          }
-
-          var p = properties.get(name);
-          p.value = _value2;
-        }
-      },
-
-      reset: {
-        value: function value() {
-          var _this3 = this;
-
-          this.removeAllListeners();
-
-          properties.clear();
-          generators.clear();
-
-          Object.keys(conf).forEach(function (name) {
-            _this3.add(name, conf[name]);
-          });
-        }
-      }
-    });
-
-    Object.keys(conf).forEach(function (name) {
-      _this.add(name, conf[name]);
-    });
-    return _this;
+    return _possibleConstructorReturn(this, (Config.__proto__ || Object.getPrototypeOf(Config)).apply(this, arguments));
   }
+
+  _createClass(Config, [{
+    key: 'initialize',
+    value: function initialize() {
+      var _this4 = this;
+
+      if (this.isInitialized) {
+        return;
+      }
+
+      var appDir = process.cwd();
+      var yoRcJson = _path2.default.join(appDir, '.yo-rc.json');
+
+      var yoConfig = void 0;
+
+      try {
+        yoConfig = JSON.parse(_fs2.default.readFileSync(yoRcJson, 'utf8'));
+      } catch (e) {
+        yoConfig = _defineProperty({}, genName, {});
+      }
+
+      var properties = new Map();
+      var generators = new Map();
+
+      var conf = yoConfig[genName];
+
+      Object.defineProperties(this, {
+        isInitialized: {
+          value: true
+        },
+
+        has: {
+          value: function value(name) {
+            return properties.has(name);
+          }
+        },
+
+        hasGen: {
+          value: function value(name) {
+            return generators.has(name);
+          }
+        },
+
+        get: {
+          value: function value(name) {
+            var prop = properties.get(name);
+
+            if ((prop === undefined || prop.value === undefined) && _config2.default.has(name)) {
+              prop = _config2.default.get(name);
+
+              if (prop !== undefined) {
+                this.add(name, prop);
+                prop = properties.get(name);
+              }
+            }
+
+            return prop ? prop.value : undefined;
+          }
+        },
+
+        getProps: {
+          value: function value() {
+            var props = {};
+
+            properties.forEach(function (_ref) {
+              var name = _ref.name,
+                  value = _ref.value;
+
+              props[name] = value;
+            });
+
+            return props;
+          }
+        },
+
+        add: {
+          value: function value(name, _value) {
+            var _this2 = this;
+
+            if (this.has(name)) {
+              this.set(name, _value);
+              return;
+            }
+
+            var p = new _property2.default({ name: name, value: _value });
+
+            p.on('change', function () {
+              _this2.emit('change', p.name);
+            });
+
+            properties.set(name, p);
+          }
+        },
+
+        addGen: {
+          value: function value(name) {
+            generators.set(name, true);
+          }
+        },
+
+        set: {
+          value: function value(name, _value2) {
+            if (!this.has(name)) {
+              return;
+            }
+
+            var p = properties.get(name);
+            p.value = _value2;
+          }
+        },
+
+        reset: {
+          value: function value() {
+            var _this3 = this;
+
+            this.removeAllListeners();
+
+            properties.clear();
+            generators.clear();
+
+            Object.keys(conf).forEach(function (name) {
+              _this3.add(name, conf[name]);
+            });
+          }
+        }
+      });
+
+      Object.keys(conf).forEach(function (name) {
+        _this4.add(name, conf[name]);
+      });
+    }
+  }]);
 
   return Config;
 }(_events2.default);

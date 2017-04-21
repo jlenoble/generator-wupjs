@@ -61,6 +61,8 @@ var _class = function (_Base) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, opts));
 
+    conf.initialize();
+
     if (!opts.generator) {
       throw new Error('opts.generator must be defined');
     }
@@ -321,6 +323,8 @@ exports.default = _class;
 
 
 _yeomanGenerator.Base.reset = function () {
-  conf.reset();
+  if (typeof conf.reset === 'function') {
+    conf.reset();
+  }
 };
 module.exports = exports['default'];

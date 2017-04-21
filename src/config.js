@@ -7,8 +7,10 @@ import Property from './property';
 const genName = 'generator-wupjs';
 
 export default class Config extends EventEmitter {
-  constructor () {
-    super();
+  initialize () {
+    if (this.isInitialized) {
+      return;
+    }
 
     const appDir = process.cwd();
     const yoRcJson = path.join(appDir, '.yo-rc.json');
@@ -27,6 +29,10 @@ export default class Config extends EventEmitter {
     const conf = yoConfig[genName];
 
     Object.defineProperties(this, {
+      isInitialized: {
+        value: true,
+      },
+
       has: {
         value: function (name) {
           return properties.has(name);
