@@ -1,10 +1,6 @@
 import {testGenerator} from './helpers';
 
 testGenerator('write-gulp-build', {babel: 'es2015'}, {
-  '.yo-rc.json': [
-    /"gulpIncludes": \[/,
-    /  "build"/,
-  ],
   'gulp/build.js': [
     /import babel from 'gulp-babel';/,
     /const buildDir = 'build';/,
@@ -16,13 +12,12 @@ testGenerator('write-gulp-build', {babel: 'es2015'}, {
   'package.json': [
     /"gulp-babel": "\*"/,
   ],
+  'gulpfile.babel.js': [
+    /import '\.\/gulp\/build';/,
+  ],
 });
 
 testGenerator('write-gulp-build', {babel: 'none'}, {
-  '.yo-rc.json': [
-    /"gulpIncludes": \[/,
-    /  "build"/,
-  ],
   'gulp/build.js': [
     /const buildDir = 'build';/,
     /const allSrcGlob = \[/,
@@ -35,5 +30,8 @@ testGenerator('write-gulp-build', {babel: 'none'}, {
   ],
   '!package.json': [
     /"gulp-babel": "\*"/,
+  ],
+  'gulpfile.babel.js': [
+    /import '\.\/gulp\/build';/,
   ],
 });

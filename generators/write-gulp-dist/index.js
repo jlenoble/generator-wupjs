@@ -36,6 +36,7 @@ var _class = function (_Base) {
 
     _this.promptIfMissing(['babel', 'gulpDir', 'buildDir', 'srcDir', 'linters']);
     _this.addGulpIncludes(['dist']);
+    _this.composeWith('write-gulpfile');
     return _this;
   }
 

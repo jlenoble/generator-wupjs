@@ -12,6 +12,7 @@ export default class extends Base {
     this.promptIfMissing(['gulpDir', 'buildDir', 'libDir']);
     this.composeWith('write-gulp-clean');
     this.addGulpIncludes(['distclean']);
+    this.composeWith('write-gulpfile');
   }
 
   writing () {

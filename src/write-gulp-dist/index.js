@@ -11,6 +11,7 @@ export default class extends Base {
 
     this.promptIfMissing(['babel', 'gulpDir', 'buildDir', 'srcDir', 'linters']);
     this.addGulpIncludes(['dist']);
+    this.composeWith('write-gulpfile');
   }
 
   writing () {
