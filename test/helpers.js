@@ -33,7 +33,8 @@ describe(`generator-wupjs:${name}`, function () {
   } else {
     Object.keys(assertContent).forEach(file => {
       tests[file] = Array.isArray(tests[file]) ?
-        tests[file].concat(assertContent[file]) : assertContent[file];
+        tests[file].concat(Array.isArray(assertContent[file]) ?
+          assertContent[file] : []) : assertContent[file];
     });
   }
 
