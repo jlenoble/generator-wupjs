@@ -21,7 +21,5 @@ export default class extends Base {
       this.destinationPath(path.join(props.gulpDir, 'build.js')),
       props
     );
-
-    this.transpile();
   }
 }

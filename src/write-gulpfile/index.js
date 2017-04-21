@@ -13,10 +13,8 @@ export default class extends Base {
 
   writing () {
     this.fs.copy(
-      this.templatePath('gulpfile.js'),
+      this.templatePath('gulpfile.ejs'),
       this.destinationPath('gulpfile.js')
     );
-
-    this.transpile();
   }
 }

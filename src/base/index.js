@@ -3,8 +3,6 @@ import path from 'path';
 import slug from 'slug';
 import upperCamelCase from 'uppercamelcase';
 import stringify from 'json-stable-stringify';
-import gulpif from 'gulp-if';
-import babel from 'gulp-babel';
 import Config from '../config';
 import getGenerator from '../get-generator';
 import getWriteGenerators from '../get-write-generators';
@@ -192,11 +190,6 @@ export default class extends Base {
         return presets.map(preset => `"${preset}"`).join(', ');
       }
     }
-  }
-
-  transpile () {
-    const glob = ['gulpfile.js', path.join(this.get('gulpDir'), '**/*.js')];
-    this.registerTransformStream(gulpif(glob, babel()));
   }
 
   get (name) {
