@@ -18,6 +18,9 @@ var getWriteGenerators = function getWriteGenerators(name) {
     case 'babel':
       return ['write-babelrc', 'write-package'];
 
+    case 'linters':
+      return ['write-package'];
+
     default:
       return [];
   }
