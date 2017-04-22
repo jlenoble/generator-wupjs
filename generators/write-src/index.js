@@ -28,13 +28,20 @@ var _class = function (_Base) {
       generator: 'write-src'
     }, opts);
 
-    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
+
+    _this.promptIfMissing(['addons']);
+    return _this;
   }
 
   _createClass(_class, [{
-    key: 'initializing',
-    value: function initializing() {
-      this.composeWith('class');
+    key: 'configuring',
+    value: function configuring() {
+      if (this.has('React')) {
+        this.composeWith('component');
+      } else {
+        this.composeWith('class');
+      }
     }
   }]);
 

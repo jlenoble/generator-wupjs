@@ -13,17 +13,34 @@ export default class extends Base {
   }
 
   initializing () {
-    this.argument('componentName', {type: String, required: true});
+    this.argument('componentName', {type: String, required: false});
+  }
+
+  configuring () {
+    if (!this.className) {
+      this.className = this.compute('className');
+    }
   }
 
   writing () {
-    const srcDir = this.get('srcDir');
+    const props = this.getProps();
+
     const filename = this.compute('componentFileName');
+    const testFilename = this.compute('componentTestFileName');
+
+    props.Component = this.className;
+    props.module = this.compute('module');
 
     this.fs.copyTpl(
       this.templatePath('component.ejs'),
-      this.destinationPath(path.join(srcDir, filename)),
-      {Component: this.componentName}
+      this.destinationPath(path.join(props.srcDir, filename)),
+      props
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('component.test.ejs'),
+      this.destinationPath(path.join(props.testDir, testFilename)),
+      props
     );
   }
 }

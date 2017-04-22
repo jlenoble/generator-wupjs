@@ -7,9 +7,15 @@ export default class extends Base {
     }, opts);
 
     super(args, options);
+
+    this.promptIfMissing(['addons']);
   }
 
-  initializing () {
-    this.composeWith('class');
+  configuring () {
+    if (this.has('React')) {
+      this.composeWith('component');
+    } else {
+      this.composeWith('class');
+    }
   }
 }

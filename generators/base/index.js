@@ -206,34 +206,19 @@ var _class = function (_Base) {
           }).join(', ');
 
         case 'classFileName':
-          {
-            var filename = this.className[0].toLowerCase() + this.className.substring(1);
-            filename = filename.replace(/[A-Z]/g, function (s) {
-              return '-' + s;
-            });
-            return (0, _slug2.default)(filename, { lower: true }) + '.js';
-          }
+          return this.compute('fileStem') + '.js';
 
         case 'className':
           return (0, _uppercamelcase2.default)(this.get('name'));
 
         case 'classTestFileName':
-          {
-            var _filename = this.className[0].toLowerCase() + this.className.substring(1);
-            _filename = _filename.replace(/[A-Z]/g, function (s) {
-              return '-' + s;
-            });
-            return (0, _slug2.default)(_filename, { lower: true }) + '.test.js';
-          }
+          return this.compute('fileStem') + '.test.js';
 
         case 'componentFileName':
-          {
-            var _filename2 = this.componentName[0].toLowerCase() + this.componentName.substring(1);
-            _filename2 = _filename2.replace(/[A-Z]/g, function (s) {
-              return '-' + s;
-            });
-            return (0, _slug2.default)(_filename2, { lower: true }) + '.jsx';
-          }
+          return this.compute('fileStem') + '.jsx';
+
+        case 'componentTestFileName':
+          return this.compute('fileStem') + '.test.jsx';
 
         case 'cYear':
           {
@@ -297,6 +282,15 @@ var _class = function (_Base) {
             str += '\n  }';
 
             return str;
+          }
+
+        case 'fileStem':
+          {
+            var filestem = this.className[0].toLowerCase() + this.className.substring(1);
+            filestem = filestem.replace(/[A-Z]/g, function (s) {
+              return '-' + s;
+            });
+            return (0, _slug2.default)(filestem, { lower: true });
           }
 
         case 'main':

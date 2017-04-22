@@ -142,37 +142,19 @@ export default class extends Base {
       }).map(dep => '"' + dep.replace('babel-plugin-', '') + '"').join(', ');
 
     case 'classFileName':
-      {
-        let filename = this.className[0].toLowerCase() +
-          this.className.substring(1);
-        filename = filename.replace(/[A-Z]/g, function (s) {
-          return '-' + s;
-        });
-        return slug(filename, {lower: true}) + '.js';
-      }
+      return this.compute('fileStem') + '.js';
 
     case 'className':
       return upperCamelCase(this.get('name'));
 
     case 'classTestFileName':
-      {
-        let filename = this.className[0].toLowerCase() +
-          this.className.substring(1);
-        filename = filename.replace(/[A-Z]/g, function (s) {
-          return '-' + s;
-        });
-        return slug(filename, {lower: true}) + '.test.js';
-      }
+      return this.compute('fileStem') + '.test.js';
 
     case 'componentFileName':
-      {
-        let filename = this.componentName[0].toLowerCase() +
-          this.componentName.substring(1);
-        filename = filename.replace(/[A-Z]/g, function (s) {
-          return '-' + s;
-        });
-        return slug(filename, {lower: true}) + '.jsx';
-      }
+      return this.compute('fileStem') + '.jsx';
+
+    case 'componentTestFileName':
+      return this.compute('fileStem') + '.test.jsx';
 
     case 'cYear':
       {
@@ -241,6 +223,16 @@ export default class extends Base {
         str += '\n  }';
 
         return str;
+      }
+
+    case 'fileStem':
+      {
+        let filestem = this.className[0].toLowerCase() +
+          this.className.substring(1);
+        filestem = filestem.replace(/[A-Z]/g, function (s) {
+          return '-' + s;
+        });
+        return slug(filestem, {lower: true});
       }
 
     case 'main':

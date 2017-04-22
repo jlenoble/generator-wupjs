@@ -41,15 +41,29 @@ var _class = function (_Base) {
   _createClass(_class, [{
     key: 'initializing',
     value: function initializing() {
-      this.argument('componentName', { type: String, required: true });
+      this.argument('componentName', { type: String, required: false });
+    }
+  }, {
+    key: 'configuring',
+    value: function configuring() {
+      if (!this.className) {
+        this.className = this.compute('className');
+      }
     }
   }, {
     key: 'writing',
     value: function writing() {
-      var srcDir = this.get('srcDir');
-      var filename = this.compute('componentFileName');
+      var props = this.getProps();
 
-      this.fs.copyTpl(this.templatePath('component.ejs'), this.destinationPath(_path2.default.join(srcDir, filename)), { Component: this.componentName });
+      var filename = this.compute('componentFileName');
+      var testFilename = this.compute('componentTestFileName');
+
+      props.Component = this.className;
+      props.module = this.compute('module');
+
+      this.fs.copyTpl(this.templatePath('component.ejs'), this.destinationPath(_path2.default.join(props.srcDir, filename)), props);
+
+      this.fs.copyTpl(this.templatePath('component.test.ejs'), this.destinationPath(_path2.default.join(props.testDir, testFilename)), props);
     }
   }]);
 
