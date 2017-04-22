@@ -60,3 +60,35 @@ testGenerator('write-gulp-build', {
     /import '\.\/gulp\/build';/,
   ],
 });
+
+testGenerator('write-gulp-build', {
+  babel: 'none',
+  linters: [],
+  addons: ['React'],
+}, {
+  'gulp/build.js': [
+    /import babel from 'gulp-babel';/,
+    /const buildDir = 'build';/,
+    /const allSrcGlob = \[/,
+    /'src\/\*\*\/\*\.js'/,
+    /'src\/\*\*\/\*\.jsx'/,
+    /'test\/\*\*\/\*\.js'/,
+    /'test\/\*\*\/\*\.jsx'/,
+    /\n    \.pipe\(babel\(\)\)/,
+  ],
+  'package.json': [
+    /"gulp-babel": "\*"/,
+    /"react": "\*"/,
+    /"react-dom": "\*"/,
+    /"react-addons-test-util": "\*"/,
+  ],
+  'gulp/lint.js': false,
+  '.babelrc': [
+    /"presets": \["react"\]/,
+    /"plugins": \["add-module-exports"\]/,
+  ],
+  '.eslintrc': false,
+  'gulpfile.babel.js': [
+    /import '\.\/gulp\/build';/,
+  ],
+});

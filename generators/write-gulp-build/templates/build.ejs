@@ -1,5 +1,5 @@
-import gulp from 'gulp';<% if (babel !== 'none') { %>
-import babel from 'gulp-babel';<% } %>
+import gulp from 'gulp';
+<%- importBabel  %>
 import sourcemaps from 'gulp-sourcemaps';
 
 const buildDir = '<%- buildDir %>';
@@ -10,8 +10,7 @@ export const build = () => {
     base: process.cwd(),
     since: gulp.lastRun(build)
   })
-    .pipe(sourcemaps.init())<% if (babel !== 'none') { %>
-    .pipe(babel())<% } %>
+    .pipe(sourcemaps.init())<%- pipeBabel %>
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(buildDir));
 };
