@@ -63,7 +63,8 @@ var _class = function (_Base) {
           'react-dom': '*'
         });
         this.addDevDeps({
-          'babel-preset-react': '*'
+          'babel-preset-react': '*',
+          'react-addons-test-util': '*'
         });
       }
     }
