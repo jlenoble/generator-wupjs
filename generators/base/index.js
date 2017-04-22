@@ -38,6 +38,10 @@ var _getWriteGenerators = require('../get-write-generators');
 
 var _getWriteGenerators2 = _interopRequireDefault(_getWriteGenerators);
 
+var _joinGlobs = require('../join-globs');
+
+var _joinGlobs2 = _interopRequireDefault(_joinGlobs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -196,7 +200,7 @@ var _class = function (_Base) {
     value: function compute(propName) {
       switch (propName) {
         case 'allSrcGlob':
-          return (0, _jsonStableStringify2.default)([_path2.default.join(this.get('srcDir'), '**/*.js'), _path2.default.join(this.get('testDir'), '**/*.js')], { space: 2 }).replace(/"/g, '\'');
+          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)([this.get('srcDir'), this.get('testDir')], this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
 
         case 'babelPlugins':
           return Object.keys(this.get('devDeps')).filter(function (dep) {
@@ -293,6 +297,9 @@ var _class = function (_Base) {
             return (0, _slug2.default)(filestem, { lower: true });
           }
 
+        case 'glob':
+          return this.has('React') ? ['**/*.js', '**/*.jsx'] : '**/*.js';
+
         case 'main':
           return _path2.default.join(this.get('libDir'), this.compute('module')) + '.js';
 
@@ -333,10 +340,10 @@ var _class = function (_Base) {
           }
 
         case 'srcGlob':
-          return (0, _jsonStableStringify2.default)([_path2.default.join(this.get('srcDir'), '**/*.js')], { space: 2 }).replace(/"/g, '\'');
+          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
 
         case 'testGlob':
-          return _path2.default.join(this.get('buildDir'), this.get('testDir'), '**/*.test.js');
+          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
       }
     }
   }, {

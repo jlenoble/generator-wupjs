@@ -34,7 +34,7 @@ var _class = function (_Base) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
-    _this.promptIfMissing(['gulpDir']);
+    _this.promptIfMissing(['gulpDir', 'addons']);
     _this.addDevDeps({ 'gulp-eslint': '*' });
     _this.addGulpIncludes(['lint']);
     _this.composeWith('write-gulpfile');

@@ -9,7 +9,7 @@ export default class extends Base {
 
     super(args, options);
 
-    this.promptIfMissing(['gulpDir']);
+    this.promptIfMissing(['gulpDir', 'addons']);
     this.addDevDeps({'gulp-eslint': '*'});
     this.addGulpIncludes(['lint']);
     this.composeWith('write-gulpfile');

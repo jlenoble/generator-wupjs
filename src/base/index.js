@@ -6,6 +6,7 @@ import stringify from 'json-stable-stringify';
 import Config from '../config';
 import getGenerator from '../get-generator';
 import getWriteGenerators from '../get-write-generators';
+import joinGlobs from '../join-globs';
 
 const appDir = __dirname;
 const conf = new Config();
@@ -131,10 +132,8 @@ export default class extends Base {
   compute (propName) {
     switch (propName) {
     case 'allSrcGlob':
-      return stringify([
-        path.join(this.get('srcDir'), '**/*.js'),
-        path.join(this.get('testDir'), '**/*.js'),
-      ], {space: 2}).replace(/"/g, `'`);
+      return stringify(joinGlobs([this.get('srcDir'), this.get('testDir')],
+        this.compute('glob')), {space: 2}).replace(/"/g, `'`);
 
     case 'babelPlugins':
       return Object.keys(this.get('devDeps')).filter(dep => {
@@ -235,6 +234,9 @@ export default class extends Base {
         return slug(filestem, {lower: true});
       }
 
+    case 'glob':
+      return this.has('React') ? ['**/*.js', '**/*.jsx'] : '**/*.js';
+
     case 'main':
       return path.join(this.get('libDir'), this.compute('module')) + '.js';
 
@@ -274,13 +276,12 @@ export default class extends Base {
       }
 
     case 'srcGlob':
-      return stringify([
-        path.join(this.get('srcDir'), '**/*.js'),
-      ], {space: 2}).replace(/"/g, `'`);
+      return stringify(joinGlobs(this.get('srcDir'), this.compute('glob')),
+        {space: 2}).replace(/"/g, `'`);
 
     case 'testGlob':
-      return path.join(this.get('buildDir'), this.get('testDir'),
-        '**/*.test.js');
+      return stringify(joinGlobs(this.get('buildDir'), this.get('testDir'),
+        '**/*.test.js'), {space: 2}).replace(/"/g, `'`);
     }
   }
 

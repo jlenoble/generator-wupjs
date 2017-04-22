@@ -3,7 +3,7 @@ import mocha from 'gulp-mocha';
 
 import './build';
 
-const testGlob = '<%- testGlob %>';
+const testGlob = <%- testGlob %>;
 
 export const test = () => {
   return gulp.src(testGlob)
