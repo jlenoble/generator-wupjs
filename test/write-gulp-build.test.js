@@ -11,6 +11,7 @@ testGenerator('write-gulp-build', {babel: 'es2015'}, {
   ],
   'package.json': [
     /"gulp-babel": "\*"/,
+    /"gulp-sourcemaps": "\*"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/build';/,
@@ -27,6 +28,9 @@ testGenerator('write-gulp-build', {babel: 'none'}, {
   '!gulp/build.js': [
     /import babel from 'gulp-babel';/,
     /\.pipe\(babel\(\)\)/,
+  ],
+  'package.json': [
+    /"gulp-sourcemaps": "\*"/,
   ],
   '!package.json': [
     /"gulp-babel": "\*"/,
@@ -52,6 +56,7 @@ testGenerator('write-gulp-build', {
   ],
   'package.json': [
     /"gulp-babel": "\*"/,
+    /"gulp-sourcemaps": "\*"/,
     /"react": "\*"/,
     /"react-dom": "\*"/,
     /"react-addons-test-util": "\*"/,
@@ -78,6 +83,7 @@ testGenerator('write-gulp-build', {
   ],
   'package.json': [
     /"gulp-babel": "\*"/,
+    /"gulp-sourcemaps": "\*"/,
     /"react": "\*"/,
     /"react-dom": "\*"/,
     /"react-addons-test-util": "\*"/,

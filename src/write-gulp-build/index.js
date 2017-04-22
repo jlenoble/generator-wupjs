@@ -12,6 +12,7 @@ export default class extends Base {
     this.promptIfMissing(['babel', 'gulpDir', 'buildDir', 'srcDir']);
     this.addGulpIncludes(['build']);
     this.composeWith('write-gulpfile');
+    this.addDevDeps({'gulp-sourcemaps': '*'});
   }
 
   writing () {

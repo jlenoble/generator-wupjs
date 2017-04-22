@@ -37,6 +37,7 @@ var _class = function (_Base) {
     _this.promptIfMissing(['babel', 'gulpDir', 'buildDir', 'srcDir']);
     _this.addGulpIncludes(['build']);
     _this.composeWith('write-gulpfile');
+    _this.addDevDeps({ 'gulp-sourcemaps': '*' });
     return _this;
   }
 
