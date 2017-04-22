@@ -45,6 +45,8 @@ var _class = function (_Base) {
     value: function writing() {
       var props = this.getProps();
       props.srcGlob = this.compute('srcGlob');
+      props.importBabel = this.compute('importBabel');
+      props.pipeBabel = this.compute('pipeBabel');
 
       this.fs.copyTpl(this.templatePath('dist.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'dist.js')), props);
     }

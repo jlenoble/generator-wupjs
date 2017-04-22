@@ -1,14 +1,12 @@
-import gulp from 'gulp';<% if (babel !== 'none') { %>
-import babel from 'gulp-babel';<% } %>
-
+import gulp from 'gulp';
+<%- importBabel  %>
 const libDir = '<%- libDir %>';
 const srcGlob = <%- srcGlob %>;
 
 export const dist = () => {
   return gulp.src(srcGlob, {
     since: gulp.lastRun(dist)
-  })<% if (babel !== 'none') { %>
-    .pipe(babel())<% } %>
+  })<%- pipeBabel %>
     .pipe(gulp.dest(libDir));
 };
 

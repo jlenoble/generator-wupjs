@@ -38,6 +38,8 @@ export default class extends Base {
       this.addDevDeps({
         'babel-preset-react': '*',
         'react-addons-test-util': '*',
+        'babel-plugin-add-module-exports': '*',
+        'gulp-babel': '*',
       });
     }
   }

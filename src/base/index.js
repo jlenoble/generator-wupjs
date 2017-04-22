@@ -237,6 +237,9 @@ export default class extends Base {
     case 'glob':
       return this.has('React') ? ['**/*.js', '**/*.jsx'] : '**/*.js';
 
+    case 'importBabel':
+      return this.has('Babel') ? `import babel from 'gulp-babel';\n` : '';
+
     case 'main':
       return path.join(this.get('libDir'), this.compute('module')) + '.js';
 
@@ -249,6 +252,9 @@ export default class extends Base {
     case 'peerDependencies':
       return stringify(this.get('peerDeps'), {space: 2})
       .replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+
+    case 'pipeBabel':
+      return this.has('Babel') ? '\n    .pipe(babel())' : '';
 
     case 'presets':
       {

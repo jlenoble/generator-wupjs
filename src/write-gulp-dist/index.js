@@ -17,6 +17,8 @@ export default class extends Base {
   writing () {
     const props = this.getProps();
     props.srcGlob = this.compute('srcGlob');
+    props.importBabel = this.compute('importBabel');
+    props.pipeBabel = this.compute('pipeBabel');
 
     this.fs.copyTpl(
       this.templatePath('dist.ejs'),

@@ -300,6 +300,9 @@ var _class = function (_Base) {
         case 'glob':
           return this.has('React') ? ['**/*.js', '**/*.jsx'] : '**/*.js';
 
+        case 'importBabel':
+          return this.has('Babel') ? 'import babel from \'gulp-babel\';\n' : '';
+
         case 'main':
           return _path2.default.join(this.get('libDir'), this.compute('module')) + '.js';
 
@@ -311,6 +314,9 @@ var _class = function (_Base) {
 
         case 'peerDependencies':
           return (0, _jsonStableStringify2.default)(this.get('peerDeps'), { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+
+        case 'pipeBabel':
+          return this.has('Babel') ? '\n    .pipe(babel())' : '';
 
         case 'presets':
           {
