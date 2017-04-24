@@ -1,0 +1,22 @@
+import gulp from 'gulp';
+import browserify from 'browserify';
+import buffer from 'vinyl-buffer';
+import source from 'vinyl-source-stream';
+
+import './build';
+
+const buildDir = '<%- buildDir %>';
+const testBundleRoot = '<%- testBundleRoot %>';
+const testBundleName = '<%- testBundleName %>';
+
+export const testBundle = () => {
+  return browserify(testBundleRoot, {
+    debug: true,
+  })<%- externalReact %>
+    .bundle()
+    .pipe(source(testBundleName))
+    .pipe(buffer())
+    .pipe(gulp.dest(buildDir));
+};
+
+gulp.task('test-bundle', gulp.series('build', testBundle));

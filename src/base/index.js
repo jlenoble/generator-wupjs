@@ -125,7 +125,13 @@ export default class extends Base {
       return this.get('babel') !== 'none' || this.has('React');
 
     case 'react':
-      return this.get('addons').includes('React');
+      try {
+        return this.get('addons').includes('React');
+      } catch (e) {
+        throw new Error(
+          `Property 'addons' is undefined: You should add a
+     this.promptIfMissing(['addons']) in the ctor of this generator`);
+      }
     }
   }
 
@@ -224,6 +230,11 @@ export default class extends Base {
         return str;
       }
 
+    case 'externalReact':
+      return this.has('React') ? `\n    .external('react/addons')
+    .external('react/lib/ReactContext')
+    .external('react/lib/ExecutionEnvironment')` : '';
+
     case 'fileStem':
       {
         let filestem = this.className[0].toLowerCase() +
@@ -284,6 +295,13 @@ export default class extends Base {
     case 'srcGlob':
       return stringify(joinGlobs(this.get('srcDir'), this.compute('glob')),
         {space: 2}).replace(/"/g, `'`);
+
+    case 'testBundleName':
+      return 'test-bundle.js';
+
+    case 'testBundleRoot':
+      return path.join(this.get('buildDir'), this.get('testDir'),
+        'index.test.js');
 
     case 'testGlob':
       return stringify(joinGlobs(this.get('buildDir'), this.get('testDir'),

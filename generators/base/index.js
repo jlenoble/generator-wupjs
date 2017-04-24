@@ -192,7 +192,11 @@ var _class = function (_Base) {
           return this.get('babel') !== 'none' || this.has('React');
 
         case 'react':
-          return this.get('addons').includes('React');
+          try {
+            return this.get('addons').includes('React');
+          } catch (e) {
+            throw new Error('Property \'addons\' is undefined: You should add a\n     this.promptIfMissing([\'addons\']) in the ctor of this generator');
+          }
       }
     }
   }, {
@@ -288,6 +292,9 @@ var _class = function (_Base) {
             return str;
           }
 
+        case 'externalReact':
+          return this.has('React') ? '\n    .external(\'react/addons\')\n    .external(\'react/lib/ReactContext\')\n    .external(\'react/lib/ExecutionEnvironment\')' : '';
+
         case 'fileStem':
           {
             var filestem = this.className[0].toLowerCase() + this.className.substring(1);
@@ -347,6 +354,12 @@ var _class = function (_Base) {
 
         case 'srcGlob':
           return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
+
+        case 'testBundleName':
+          return 'test-bundle.js';
+
+        case 'testBundleRoot':
+          return _path2.default.join(this.get('buildDir'), this.get('testDir'), 'index.test.js');
 
         case 'testGlob':
           return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
