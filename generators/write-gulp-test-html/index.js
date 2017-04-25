@@ -35,6 +35,7 @@ var _class = function (_Base) {
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
     _this.promptIfMissing(['gulpDir', 'buildDir', 'addons']);
+    _this.addDevDeps({ 'mocha': '*' });
     _this.composeWith('write-gulp-test-bundle');
     return _this;
   }

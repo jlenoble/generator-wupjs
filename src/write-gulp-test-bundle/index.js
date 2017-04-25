@@ -19,6 +19,14 @@ export default class extends Base {
     this.composeWith('write-gulpfile');
   }
 
+  configuring () {
+    if (this.has('React')) {
+      this.addDevDeps({
+        'mocha': '*',
+      });
+    }
+  }
+
   writing () {
     const props = this.getProps();
     props.testBundleRoot = this.compute('testBundleRoot');

@@ -10,6 +10,7 @@ export default class extends Base {
     super(args, options);
 
     this.promptIfMissing(['gulpDir', 'buildDir', 'addons']);
+    this.addDevDeps({'mocha': '*'});
     this.composeWith('write-gulp-test-bundle');
   }
 

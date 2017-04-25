@@ -46,6 +46,15 @@ var _class = function (_Base) {
   }
 
   _createClass(_class, [{
+    key: 'configuring',
+    value: function configuring() {
+      if (this.has('React')) {
+        this.addDevDeps({
+          'mocha': '*'
+        });
+      }
+    }
+  }, {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();

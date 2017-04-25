@@ -33,8 +33,11 @@ testGenerator('write-gulp-test-bundle', {addons: ['React']}, {
   ],
   'package.json': [
     /"browserify": "\*"/,
+    /"mocha": "\*"/,
     /"vinyl-buffer": "\*"/,
     /"vinyl-source-stream": "\*"/,
+    /"react": "\*"/,
+    /"react-dom": "\*"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/test-bundle';/,
