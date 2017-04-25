@@ -1,0 +1,17 @@
+import gulp from 'gulp';
+import mocha from 'gulp-mocha-phantomjs';
+
+import './build';
+import './test-bundle';
+
+const runnerFile = '<%- runnerFile %>';
+
+export const test = done => {
+  return gulp.src(runnerFile)
+    .pipe(mocha())
+    .on('end', () => {
+      done();
+    });
+};
+
+gulp.task('test', gulp.series('bundle', test));

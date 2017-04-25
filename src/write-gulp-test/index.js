@@ -9,18 +9,31 @@ export default class extends Base {
 
     super(args, options);
 
-    this.promptIfMissing(['gulpDir', 'testDir', 'buildDir']);
-    this.addDevDeps({
-      'gulp-mocha': '*',
-      'chai': '*',
-    });
+    this.promptIfMissing(['gulpDir', 'testDir', 'buildDir', 'addons']);
+    this.addDevDeps({'chai': '*'});
     this.addGulpIncludes(['test']);
     this.composeWith('write-gulpfile');
+  }
+
+  configuring () {
+    if (this.has('React')) {
+      this.addDevDeps({
+        'gulp-mocha-phantomjs': '*',
+        'mocha': '*',
+      });
+    } else {
+      this.addDevDeps({
+        'gulp-mocha': '*',
+      });
+    }
   }
 
   writing () {
     const props = this.getProps();
     props.testGlob = this.compute('testGlob');
+    props.gulpMocha = this.compute('gulpMocha');
+    props.importPreTestTask = this.compute('importPreTestTask');
+    props.preTestTask = this.compute('preTestTask');
 
     this.fs.copyTpl(
       this.templatePath('test.ejs'),

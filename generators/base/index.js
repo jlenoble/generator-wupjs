@@ -310,8 +310,14 @@ var _class = function (_Base) {
         case 'glob':
           return this.has('React') ? ['**/*.js', '**/*.jsx'] : '**/*.js';
 
+        case 'gulpMocha':
+          return this.has('React') ? 'gulp-mocha-phantomjs' : 'gulp-mocha';
+
         case 'importBabel':
           return this.has('Babel') ? 'import babel from \'gulp-babel\';\n' : '';
+
+        case 'importPreTestTask':
+          return './' + this.compute('preTestTask');
 
         case 'main':
           return _path2.default.join(this.get('libDir'), this.compute('module')) + '.js';
@@ -358,6 +364,12 @@ var _class = function (_Base) {
             }).join(', ');
           }
 
+        case 'preTestTask':
+          return this.has('React') ? 'bundle' : 'build';
+
+        case 'runnerFile':
+          return 'runner.html';
+
         case 'srcGlob':
           return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
 
@@ -368,7 +380,7 @@ var _class = function (_Base) {
           return _path2.default.join(this.get('buildDir'), this.get('testDir'), 'index.test.js');
 
         case 'testGlob':
-          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
+          return this.has('React') ? '\'' + _path2.default.join(this.get('buildDir'), this.compute('runnerFile')) + '\'' : (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
       }
     }
   }, {

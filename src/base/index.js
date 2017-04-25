@@ -252,8 +252,14 @@ export default class extends Base {
     case 'glob':
       return this.has('React') ? ['**/*.js', '**/*.jsx'] : '**/*.js';
 
+    case 'gulpMocha':
+      return this.has('React') ? 'gulp-mocha-phantomjs' : 'gulp-mocha';
+
     case 'importBabel':
       return this.has('Babel') ? `import babel from 'gulp-babel';\n` : '';
+
+    case 'importPreTestTask':
+      return './' + this.compute('preTestTask');
 
     case 'main':
       return path.join(this.get('libDir'), this.compute('module')) + '.js';
@@ -299,6 +305,12 @@ export default class extends Base {
         return presets.map(preset => `"${preset}"`).join(', ');
       }
 
+    case 'preTestTask':
+      return this.has('React') ? 'bundle' : 'build';
+
+    case 'runnerFile':
+      return 'runner.html';
+
     case 'srcGlob':
       return stringify(joinGlobs(this.get('srcDir'), this.compute('glob')),
         {space: 2}).replace(/"/g, `'`);
@@ -311,8 +323,10 @@ export default class extends Base {
         'index.test.js');
 
     case 'testGlob':
-      return stringify(joinGlobs(this.get('buildDir'), this.get('testDir'),
-        '**/*.test.js'), {space: 2}).replace(/"/g, `'`);
+      return this.has('React') ? `'${path.join(this.get('buildDir'),
+        this.compute('runnerFile'))}'` : stringify(joinGlobs(
+        this.get('buildDir'), this.get('testDir'), '**/*.test.js'),
+        {space: 2}).replace(/"/g, `'`);
     }
   }
 

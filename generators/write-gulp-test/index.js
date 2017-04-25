@@ -34,21 +34,35 @@ var _class = function (_Base) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
-    _this.promptIfMissing(['gulpDir', 'testDir', 'buildDir']);
-    _this.addDevDeps({
-      'gulp-mocha': '*',
-      'chai': '*'
-    });
+    _this.promptIfMissing(['gulpDir', 'testDir', 'buildDir', 'addons']);
+    _this.addDevDeps({ 'chai': '*' });
     _this.addGulpIncludes(['test']);
     _this.composeWith('write-gulpfile');
     return _this;
   }
 
   _createClass(_class, [{
+    key: 'configuring',
+    value: function configuring() {
+      if (this.has('React')) {
+        this.addDevDeps({
+          'gulp-mocha-phantomjs': '*',
+          'mocha': '*'
+        });
+      } else {
+        this.addDevDeps({
+          'gulp-mocha': '*'
+        });
+      }
+    }
+  }, {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
       props.testGlob = this.compute('testGlob');
+      props.gulpMocha = this.compute('gulpMocha');
+      props.importPreTestTask = this.compute('importPreTestTask');
+      props.preTestTask = this.compute('preTestTask');
 
       this.fs.copyTpl(this.templatePath('test.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'test.js')), props);
     }
