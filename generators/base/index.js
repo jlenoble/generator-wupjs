@@ -197,6 +197,13 @@ var _class = function (_Base) {
           } catch (e) {
             throw new Error('Property \'addons\' is undefined: You should add a\n     this.promptIfMissing([\'addons\']) in the ctor of this generator');
           }
+
+        case 'enzyme':
+          try {
+            return this.get('addons').includes('Enzyme');
+          } catch (e) {
+            throw new Error('Property \'addons\' is undefined: You should add a\n     this.promptIfMissing([\'addons\']) in the ctor of this generator');
+          }
       }
     }
   }, {

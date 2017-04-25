@@ -15,12 +15,17 @@ export default class extends Base {
       type: 'checkbox',
       name: 'addons',
       message: 'Use vendor libraries:',
-      choices: ['React'],
+      choices: ['React', 'Enzyme'],
       default: this.get('addons'),
     }];
 
     return this.prompt(prompts).then(props => {
       this.set(props);
+      if (this.has('Enzyme') && !this.has('React')) {
+        const addons = this.get('addons');
+        addons.push('React');
+        this.set({addons});
+      }
     });
   }
 
@@ -39,6 +44,14 @@ export default class extends Base {
         'babel-preset-react': '*',
         'babel-plugin-add-module-exports': '*',
         'gulp-babel': '*',
+      });
+    }
+
+    if (addons.includes('Enzyme')) {
+      this.addDevDeps({
+        'enzyme': '*',
+        'chai': '*',
+        'chai-enzyme': '*',
       });
     }
   }

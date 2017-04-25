@@ -41,12 +41,17 @@ var _class = function (_Base) {
         type: 'checkbox',
         name: 'addons',
         message: 'Use vendor libraries:',
-        choices: ['React'],
+        choices: ['React', 'Enzyme'],
         default: this.get('addons')
       }];
 
       return this.prompt(prompts).then(function (props) {
         _this2.set(props);
+        if (_this2.has('Enzyme') && !_this2.has('React')) {
+          var addons = _this2.get('addons');
+          addons.push('React');
+          _this2.set({ addons: addons });
+        }
       });
     }
   }, {
@@ -66,6 +71,14 @@ var _class = function (_Base) {
           'babel-preset-react': '*',
           'babel-plugin-add-module-exports': '*',
           'gulp-babel': '*'
+        });
+      }
+
+      if (addons.includes('Enzyme')) {
+        this.addDevDeps({
+          'enzyme': '*',
+          'chai': '*',
+          'chai-enzyme': '*'
         });
       }
     }
