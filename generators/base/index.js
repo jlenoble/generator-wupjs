@@ -240,9 +240,9 @@ var _class = function (_Base) {
 
         case 'componentTestText':
           if (this.has('Enzyme')) {
-            return '    const wrapper = shallow(\n      <' + this.compute('className') + '/>\n    );\n\n    expect(wrapper.find(\'h1\').text()).to.equal(\'Hello!\');';
+            return 'const wrapper = shallow(\n      <' + this.compute('className') + '/>\n    );\n\n    expect(wrapper.find(\'h1\').text()).to.equal(\'Hello!\');';
           } else if (this.has('React')) {
-            return '    const component = TestUtils.renderIntoDocument(<' + this.compute('className') + '/>);\n    const h1 = TestUtils.findRenderedDOMComponentWithTag(component, \'h1\');\n\n    expect(h1.textContent).to.equal(\'Hello world!\');';
+            return 'const component = TestUtils.renderIntoDocument(<' + this.compute('className') + '/>);\n    const h1 = TestUtils.findRenderedDOMComponentWithTag(component, \'h1\');\n\n    expect(h1.textContent).to.equal(\'Hello world!\');';
           } else {
             return '';
           }

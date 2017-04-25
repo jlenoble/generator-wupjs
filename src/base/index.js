@@ -176,13 +176,13 @@ export default class extends Base {
 
     case 'componentTestText':
       if (this.has('Enzyme')) {
-        return `    const wrapper = shallow(
+        return `const wrapper = shallow(
       <${this.compute('className')}/>
     );
 
     expect(wrapper.find('h1').text()).to.equal('Hello!');`;
       } else if (this.has('React')) {
-        return `    const component = TestUtils.renderIntoDocument(<${
+        return `const component = TestUtils.renderIntoDocument(<${
           this.compute('className')}/>);
     const h1 = TestUtils.findRenderedDOMComponentWithTag(component, 'h1');
 
