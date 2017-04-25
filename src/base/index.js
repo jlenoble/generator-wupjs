@@ -180,7 +180,7 @@ export default class extends Base {
       <${this.compute('className')}/>
     );
 
-    expect(wrapper.find('h1').text()).to.equal('Hello!');`;
+    expect(wrapper.find('h1').text()).to.equal('Hello world!');`;
       } else if (this.has('React')) {
         return `const component = TestUtils.renderIntoDocument(<${
           this.compute('className')}/>);
