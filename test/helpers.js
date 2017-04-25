@@ -8,6 +8,7 @@ describe(`generator-wupjs:${name}`, function () {
   const prompt = Object.assign({
     description: 'Dummy description',
     addons: [],
+    preprocessors: [],
   }, _prompt);
 
   before(function () {

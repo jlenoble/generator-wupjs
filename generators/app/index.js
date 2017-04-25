@@ -37,6 +37,7 @@ var _class = function (_Base) {
     _this.composeWith('babel');
     _this.composeWith('lint');
     _this.composeWith('addons');
+    _this.composeWith('preprocessors');
     _this.composeWith('test');
     _this.composeWith('write-gulpfile');
     _this.composeWith('write-gulp-build');
