@@ -21,6 +21,10 @@ export default class extends Base {
 
     return this.prompt(prompts).then(props => {
       this.set(props);
+      if (this.has('Compass')) {
+        this.composeWith('write-gulp-sass');
+        this.composeWith('write-scss');
+      }
     });
   }
 

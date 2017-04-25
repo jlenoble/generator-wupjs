@@ -124,18 +124,27 @@ export default class extends Base {
     case 'babel':
       return this.get('babel') !== 'none' || this.has('React');
 
-    case 'react':
+    case 'compass':
       try {
-        return this.get('addons').includes('React');
+        return this.get('preprocessors').includes('Compass');
+      } catch (e) {
+        throw new Error(
+          `Property 'preprocessors' is undefined: You should add a
+     this.promptIfMissing(['preprocessors']) in the ctor of this generator`);
+      }
+
+    case 'enzyme':
+      try {
+        return this.get('addons').includes('Enzyme');
       } catch (e) {
         throw new Error(
           `Property 'addons' is undefined: You should add a
      this.promptIfMissing(['addons']) in the ctor of this generator`);
       }
 
-    case 'enzyme':
+    case 'react':
       try {
-        return this.get('addons').includes('Enzyme');
+        return this.get('addons').includes('React');
       } catch (e) {
         throw new Error(
           `Property 'addons' is undefined: You should add a

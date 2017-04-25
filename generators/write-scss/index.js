@@ -10,6 +10,10 @@ var _base = require('../base');
 
 var _base2 = _interopRequireDefault(_base);
 
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25,47 +29,21 @@ var _class = function (_Base) {
     _classCallCheck(this, _class);
 
     var options = Object.assign({
-      props: ['preprocessors'],
-      generator: 'preprocessors'
+      generator: 'write-scss'
     }, opts);
 
-    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
+
+    _this.promptIfMissing(['preprocessors']);
+    return _this;
   }
 
   _createClass(_class, [{
-    key: 'prompting',
-    value: function prompting() {
-      var _this2 = this;
+    key: 'writing',
+    value: function writing() {
+      var props = this.getProps();
 
-      var prompts = [{
-        type: 'checkbox',
-        name: 'preprocessors',
-        message: 'Use preprocessors:',
-        choices: ['Compass'],
-        default: this.get('preprocessors')
-      }];
-
-      return this.prompt(prompts).then(function (props) {
-        _this2.set(props);
-        if (_this2.has('Compass')) {
-          _this2.composeWith('write-gulp-sass');
-          _this2.composeWith('write-scss');
-        }
-      });
-    }
-  }, {
-    key: 'configuring',
-    value: function configuring() {
-      var addons = this.get('preprocessors');
-      if (addons.length === 0) {
-        return;
-      }
-
-      if (addons.includes('Compass')) {
-        this.addDevDeps({
-          'gulp-compass': '*'
-        });
-      }
+      this.fs.copyTpl(this.templatePath('style.ejs'), this.destinationPath(_path2.default.join(this.compute('sassDir'), 'style.scss')), props);
     }
   }]);
 
