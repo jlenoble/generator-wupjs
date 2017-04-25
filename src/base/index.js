@@ -188,8 +188,9 @@ export default class extends Base {
 
     expect(h1.textContent).to.equal('Hello world!');`;
       } else {
-        throw new Error('No default text for component test');
+        return '';
       }
+
 
     case 'cYear':
       {
@@ -289,6 +290,8 @@ export default class extends Base {
         return `import {shallow} from 'enzyme';`;
       } else if (this.has('React')) {
         return `import TestUtils from 'react-dom/test-utils';`;
+      } else {
+        return '';
       }
 
     case 'importPreTestTask':

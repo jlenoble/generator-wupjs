@@ -244,7 +244,7 @@ var _class = function (_Base) {
           } else if (this.has('React')) {
             return '    const component = TestUtils.renderIntoDocument(<' + this.compute('className') + '/>);\n    const h1 = TestUtils.findRenderedDOMComponentWithTag(component, \'h1\');\n\n    expect(h1.textContent).to.equal(\'Hello world!\');';
           } else {
-            throw new Error('No default text for component test');
+            return '';
           }
 
         case 'cYear':
@@ -337,6 +337,8 @@ var _class = function (_Base) {
             return 'import {shallow} from \'enzyme\';';
           } else if (this.has('React')) {
             return 'import TestUtils from \'react-dom/test-utils\';';
+          } else {
+            return '';
           }
 
         case 'importPreTestTask':
