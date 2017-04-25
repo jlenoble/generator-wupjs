@@ -315,6 +315,10 @@ export default class extends Base {
       return stringify(joinGlobs(this.get('srcDir'), this.compute('glob')),
         {space: 2}).replace(/"/g, `'`);
 
+    case 'testBundleGlob':
+      return path.join(path.relative(this.get('buildDir'),
+        this.get('testDir')), this.compute('testBundleName'));
+
     case 'testBundleName':
       return 'test-bundle.js';
 

@@ -34,7 +34,7 @@ var _class = function (_Base) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
-    _this.promptIfMissing(['gulpDir', 'testDir', 'addons']);
+    _this.promptIfMissing(['gulpDir', 'testDir', 'buildDir', 'addons']);
     _this.addDevDeps({ 'mocha': '*' });
     _this.composeWith('write-gulp-test-bundle');
     return _this;
@@ -45,7 +45,7 @@ var _class = function (_Base) {
     value: function writing() {
       var props = this.getProps();
       props.browserMocha = this.compute('browserMocha');
-      props.testBundleName = this.compute('testBundleName');
+      props.testBundleGlob = this.compute('testBundleGlob');
 
       this.fs.copyTpl(this.templatePath('runner.ejs'), this.destinationPath(_path2.default.join(props.testDir, 'runner.html')), props);
     }

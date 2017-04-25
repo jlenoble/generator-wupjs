@@ -9,7 +9,7 @@ export default class extends Base {
 
     super(args, options);
 
-    this.promptIfMissing(['gulpDir', 'testDir', 'addons']);
+    this.promptIfMissing(['gulpDir', 'testDir', 'buildDir', 'addons']);
     this.addDevDeps({'mocha': '*'});
     this.composeWith('write-gulp-test-bundle');
   }
@@ -17,7 +17,7 @@ export default class extends Base {
   writing () {
     const props = this.getProps();
     props.browserMocha = this.compute('browserMocha');
-    props.testBundleName = this.compute('testBundleName');
+    props.testBundleGlob = this.compute('testBundleGlob');
 
     this.fs.copyTpl(
       this.templatePath('runner.ejs'),
