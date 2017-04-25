@@ -306,7 +306,7 @@ export default class extends Base {
       }
 
     case 'preTestTask':
-      return this.has('React') ? 'bundle' : 'build';
+      return this.has('React') ? 'test-bundle' : 'build';
 
     case 'runnerFile':
       return 'runner.html';
