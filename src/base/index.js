@@ -146,6 +146,10 @@ export default class extends Base {
         return dep.match(/babel-plugin/);
       }).map(dep => '"' + dep.replace('babel-plugin-', '') + '"').join(', ');
 
+    case 'browserMocha':
+      return path.join(path.relative(this.get('buildDir'),
+        this.compute('nodeDir')), 'mocha/mocha.js');
+
     case 'classFileName':
       return this.compute('fileStem') + '.js';
 
@@ -259,6 +263,9 @@ export default class extends Base {
 
     case 'name':
       return this.appname;
+
+    case 'nodeDir':
+      return 'node_modules';
 
     case 'peerDependencies':
       return stringify(this.get('peerDeps'), {space: 2})

@@ -213,6 +213,9 @@ var _class = function (_Base) {
             return '"' + dep.replace('babel-plugin-', '') + '"';
           }).join(', ');
 
+        case 'browserMocha':
+          return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.compute('nodeDir')), 'mocha/mocha.js');
+
         case 'classFileName':
           return this.compute('fileStem') + '.js';
 
@@ -318,6 +321,9 @@ var _class = function (_Base) {
 
         case 'name':
           return this.appname;
+
+        case 'nodeDir':
+          return 'node_modules';
 
         case 'peerDependencies':
           return (0, _jsonStableStringify2.default)(this.get('peerDeps'), { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
