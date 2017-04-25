@@ -47,8 +47,13 @@ var _class = function (_Base) {
   }
 
   _createClass(_class, [{
-    key: 'end',
-    value: function end() {}
+    key: 'configuring',
+    value: function configuring() {
+      if (this.has('React')) {
+        this.composeWith('write-gulp-test-bundle');
+        this.composeWith('write-gulp-test-html');
+      }
+    }
   }]);
 
   return _class;

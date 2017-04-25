@@ -1,7 +1,7 @@
 import {testGenerator} from './helpers';
 
 testGenerator('write-gulp-test-html', undefined, {
-  'build/runner.html': [
+  'test/runner.html': [
     /<script src="\.\.\/node_modules\/mocha\/mocha\.js"><\/script>/,
     /mocha.setup\('bdd'\);/,
     /<script src="test-bundle\.js"><\/script>/,
@@ -17,7 +17,7 @@ testGenerator('write-gulp-test-html', undefined, {
 });
 
 testGenerator('write-gulp-test-html', {addons: ['React']}, {
-  'build/runner.html': [
+  'test/runner.html': [
     /<script src="\.\.\/node_modules\/mocha\/mocha\.js"><\/script>/,
     /mocha.setup\('bdd'\);/,
     /<script src="test-bundle\.js"><\/script>/,
