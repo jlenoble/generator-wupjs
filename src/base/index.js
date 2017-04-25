@@ -168,6 +168,13 @@ export default class extends Base {
       return path.join(path.relative(this.get('buildDir'),
         this.compute('nodeDir')), 'mocha/mocha.js');
 
+    case 'bundleName':
+      return 'bundle.js';
+
+    case 'bundleRoot':
+      return path.join(this.get('buildDir'), this.get('srcDir'),
+        'demo.js');
+
     case 'classFileName':
       return this.compute('fileStem') + '.js';
 

@@ -230,6 +230,12 @@ var _class = function (_Base) {
         case 'browserMocha':
           return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.compute('nodeDir')), 'mocha/mocha.js');
 
+        case 'bundleName':
+          return 'bundle.js';
+
+        case 'bundleRoot':
+          return _path2.default.join(this.get('buildDir'), this.get('srcDir'), 'demo.js');
+
         case 'classFileName':
           return this.compute('fileStem') + '.js';
 
