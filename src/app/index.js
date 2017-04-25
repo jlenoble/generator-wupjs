@@ -14,6 +14,7 @@ export default class extends Base {
     this.composeWith('license');
     this.composeWith('babel');
     this.composeWith('lint');
+    this.composeWith('addons');
     this.composeWith('test');
     this.composeWith('write-gulpfile');
     this.composeWith('write-gulp-build');
