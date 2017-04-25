@@ -59,7 +59,6 @@ testGenerator('write-gulp-build', {
     /"gulp-sourcemaps": "\*"/,
     /"react": "\*"/,
     /"react-dom": "\*"/,
-    /"react-addons-test-utils": "\*"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/build';/,
@@ -86,7 +85,6 @@ testGenerator('write-gulp-build', {
     /"gulp-sourcemaps": "\*"/,
     /"react": "\*"/,
     /"react-dom": "\*"/,
-    /"react-addons-test-utils": "\*"/,
   ],
   'gulp/lint.js': false,
   '.babelrc': [

@@ -64,7 +64,6 @@ var _class = function (_Base) {
         });
         this.addDevDeps({
           'babel-preset-react': '*',
-          'react-addons-test-utils': '*',
           'babel-plugin-add-module-exports': '*',
           'gulp-babel': '*'
         });
