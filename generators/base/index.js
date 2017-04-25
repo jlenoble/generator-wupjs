@@ -238,6 +238,15 @@ var _class = function (_Base) {
         case 'componentTestFileName':
           return this.compute('fileStem') + '.test.jsx';
 
+        case 'componentTestText':
+          if (this.has('Enzyme')) {
+            return '    const wrapper = shallow(\n      <' + this.compute('className') + '/>\n    );\n\n    expect(wrapper.find(\'h1\').text()).to.equal(\'Hello!\');';
+          } else if (this.has('React')) {
+            return '    const component = TestUtils.renderIntoDocument(<' + this.compute('className') + '/>);\n    const h1 = TestUtils.findRenderedDOMComponentWithTag(component, \'h1\');\n\n    expect(h1.textContent).to.equal(\'Hello world!\');';
+          } else {
+            throw new Error('No default text for component test');
+          }
+
         case 'cYear':
           {
             var created = this.get('created').getFullYear();
@@ -322,6 +331,13 @@ var _class = function (_Base) {
 
         case 'importBabel':
           return this.has('Babel') ? 'import babel from \'gulp-babel\';\n' : '';
+
+        case 'importComponentTestLib':
+          if (this.has('Enzyme')) {
+            return 'import {shallow} from \'enzyme\';';
+          } else if (this.has('React')) {
+            return 'import TestUtils from \'react-dom/test-utils\';';
+          }
 
         case 'importPreTestTask':
           return './' + this.compute('preTestTask');

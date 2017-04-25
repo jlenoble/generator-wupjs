@@ -30,6 +30,8 @@ export default class extends Base {
 
     props.Component = this.className;
     props.module = this.compute('module');
+    props.componentTestText = this.compute('componentTestText');
+    props.importComponentTestLib = this.compute('importComponentTestLib');
 
     this.fs.copyTpl(
       this.templatePath('component.ejs'),

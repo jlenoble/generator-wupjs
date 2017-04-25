@@ -60,6 +60,8 @@ var _class = function (_Base) {
 
       props.Component = this.className;
       props.module = this.compute('module');
+      props.componentTestText = this.compute('componentTestText');
+      props.importComponentTestLib = this.compute('importComponentTestLib');
 
       this.fs.copyTpl(this.templatePath('component.ejs'), this.destinationPath(_path2.default.join(props.srcDir, filename)), props);
 
