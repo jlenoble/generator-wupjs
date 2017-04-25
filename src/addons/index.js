@@ -52,6 +52,7 @@ export default class extends Base {
         'enzyme': '*',
         'chai': '*',
         'chai-enzyme': '*',
+        'react-test-renderer': '*',
       });
     }
   }

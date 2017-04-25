@@ -25,6 +25,7 @@ testGenerator('addons', {addons: ['Enzyme']}, {
     /"react-dom": "\*"/,
     /"chai-enzyme": "\*"/,
     /"enzyme": "\*"/,
+    /"react-test-renderer": "\*"/,
   ],
   'package.json': [
     /"babel-preset-react": "\*"/,
@@ -32,5 +33,6 @@ testGenerator('addons', {addons: ['Enzyme']}, {
     /"react-dom": "\*"/,
     /"chai-enzyme": "\*"/,
     /"enzyme": "\*"/,
+    /"react-test-renderer": "\*"/,
   ],
 });

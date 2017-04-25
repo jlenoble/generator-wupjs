@@ -78,7 +78,8 @@ var _class = function (_Base) {
         this.addDevDeps({
           'enzyme': '*',
           'chai': '*',
-          'chai-enzyme': '*'
+          'chai-enzyme': '*',
+          'react-test-renderer': '*'
         });
       }
     }
