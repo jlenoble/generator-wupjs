@@ -15,6 +15,7 @@ testGenerator('component', {name: 'Compo', addons: ['React']}, {
     /import Compo from '\.\.\/src\/compo';/,
     /const component = TestUtils\.renderIntoDocument/,
   ],
+  'test/index.test.js': true,
 });
 
 testGenerator('component', {name: 'Compo', addons: ['Enzyme']}, {
@@ -27,4 +28,5 @@ testGenerator('component', {name: 'Compo', addons: ['Enzyme']}, {
     /import Compo from '\.\.\/src\/compo';/,
     /const wrapper = shallow\(\s+<Compo\/>/,
   ],
+  'test/index.test.js': true,
 });

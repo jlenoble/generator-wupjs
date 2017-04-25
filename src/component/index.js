@@ -10,6 +10,7 @@ export default class extends Base {
     super(args, options);
 
     this.promptIfMissing(['srcDir', 'testDir', 'name', 'addons']);
+    this.composeWith('write-test-index');
   }
 
   initializing () {

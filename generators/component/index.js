@@ -35,6 +35,7 @@ var _class = function (_Base) {
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
     _this.promptIfMissing(['srcDir', 'testDir', 'name', 'addons']);
+    _this.composeWith('write-test-index');
     return _this;
   }
 
