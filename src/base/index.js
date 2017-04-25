@@ -191,6 +191,8 @@ export default class extends Base {
         return '';
       }
 
+    case 'cssDir':
+      return path.join(this.get('buildDir'), 'css');
 
     case 'cYear':
       {
@@ -347,9 +349,22 @@ export default class extends Base {
     case 'runnerFile':
       return 'runner.html';
 
+    case 'sassDir':
+      return path.join(this.compute('staticDir'), 'scss');
+
+    case 'sassGlob':
+      return stringify(joinGlobs(this.compute('sassDir'), '*.scss'),
+        {space: 2}).replace(/"/g, `'`);
+
+    case 'sassImportDir':
+      return this.compute('nodeDir');
+
     case 'srcGlob':
       return stringify(joinGlobs(this.get('srcDir'), this.compute('glob')),
         {space: 2}).replace(/"/g, `'`);
+
+    case 'staticDir':
+      return path.join(this.get('srcDir'), 'static');
 
     case 'testBundleGlob':
       return path.join(path.relative(this.get('buildDir'),

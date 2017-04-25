@@ -1,0 +1,27 @@
+import gulp from 'gulp';
+import path from 'path';
+import compass from 'gulp-compass';
+import sourcemaps from 'gulp-sourcemaps';
+
+const sassGlob = <%- sassGlob %>;
+const sassDir = '<%- sassDir %>';
+const cssDir = '<%- cssDir %>';
+const sassImportDir = '<%- sassImportDir %>';
+
+export const sass = () => {
+  return gulp.src(sassGlob, {
+    base: process.cwd(),
+    since: gulp.lastRun(sass),
+  })
+  .pipe(sourcemaps.init())
+  .pipe(compass({
+    project: path.join(__dirname, '..'),
+    css: cssDir,
+    sass: sassDir,
+    import_path: sassImportDir,
+  }))
+  .pipe(sourcemaps.write())
+  .pipe(gulp.dest(cssDir));
+};
+
+gulp.task('sass', sass);

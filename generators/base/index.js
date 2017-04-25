@@ -247,6 +247,9 @@ var _class = function (_Base) {
             return '';
           }
 
+        case 'cssDir':
+          return _path2.default.join(this.get('buildDir'), 'css');
+
         case 'cYear':
           {
             var created = this.get('created').getFullYear();
@@ -395,8 +398,20 @@ var _class = function (_Base) {
         case 'runnerFile':
           return 'runner.html';
 
+        case 'sassDir':
+          return _path2.default.join(this.compute('staticDir'), 'scss');
+
+        case 'sassGlob':
+          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.compute('sassDir'), '*.scss'), { space: 2 }).replace(/"/g, '\'');
+
+        case 'sassImportDir':
+          return this.compute('nodeDir');
+
         case 'srcGlob':
           return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
+
+        case 'staticDir':
+          return _path2.default.join(this.get('srcDir'), 'static');
 
         case 'testBundleGlob':
           return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.get('testDir')), this.compute('testBundleName'));

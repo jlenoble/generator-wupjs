@@ -30,6 +30,9 @@ const getGenerator = name => {
   case 'srcDir': case 'testDir': case 'buildDir': case 'libDir': case 'gulpDir':
     return 'paths';
 
+  case 'preprocessors':
+    return 'preprocessors';
+
   case 'testRunners':
     return 'test';
 
