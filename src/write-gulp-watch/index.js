@@ -9,10 +9,7 @@ export default class extends Base {
 
     super(args, options);
 
-    this.promptIfMissing(['gulpDir']);
-    this.addDevDeps({
-
-    });
+    this.promptIfMissing(['gulpDir', 'addons']);
     this.addGulpIncludes(['watch']);
   }
 
