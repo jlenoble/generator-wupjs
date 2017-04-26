@@ -10,7 +10,13 @@ export default class extends Base {
     super(args, options);
 
     this.promptIfMissing(['gulpDir']);
-    this.addDevDeps({gulp: 'git://github.com/gulpjs/gulp.git#4.0'});
+    this.addDevDeps({
+      'gulp': 'git://github.com/gulpjs/gulp.git#4.0',
+      'plumb-gulp': '*',
+      'autoreload-gulp': '*',
+    });
+    this.composeWith('write-gulp-test');
+    this.composeWith('write-gulp-build');
   }
 
   initializing () {

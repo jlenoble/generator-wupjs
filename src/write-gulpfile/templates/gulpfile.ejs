@@ -1,5 +1,9 @@
 import gulp from 'gulp';
+import {usePlumbedGulpSrc} from 'plumb-gulp';
+import autoreload from 'autoreload-gulp';
 <% for (let i = 0, l = gulpIncludes.length; i < l; i++) { %>
 import './<%- gulpDir %>/<%- gulpIncludes[i] %>';<% } %>
 
-gulp.task('default', gulp.parallel('build'));
+usePlumbedGulpSrc();
+
+gulp.task('default', autoreload('tdd'));

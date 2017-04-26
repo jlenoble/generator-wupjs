@@ -32,7 +32,13 @@ var _class = function (_Base) {
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
     _this.promptIfMissing(['gulpDir']);
-    _this.addDevDeps({ gulp: 'git://github.com/gulpjs/gulp.git#4.0' });
+    _this.addDevDeps({
+      'gulp': 'git://github.com/gulpjs/gulp.git#4.0',
+      'plumb-gulp': '*',
+      'autoreload-gulp': '*'
+    });
+    _this.composeWith('write-gulp-test');
+    _this.composeWith('write-gulp-build');
     return _this;
   }
 
