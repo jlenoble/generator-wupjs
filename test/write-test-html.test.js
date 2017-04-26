@@ -1,6 +1,6 @@
 import {testGenerator} from './helpers';
 
-testGenerator('write-gulp-test-html', undefined, {
+testGenerator('write-test-html', undefined, {
   'test/runner.html': [
     /<script src="\.\.\/node_modules\/mocha\/mocha\.js"><\/script>/,
     /mocha.setup\('bdd'\);/,
@@ -16,7 +16,7 @@ testGenerator('write-gulp-test-html', undefined, {
   ],
 });
 
-testGenerator('write-gulp-test-html', {addons: ['React']}, {
+testGenerator('write-test-html', {addons: ['React']}, {
   'test/runner.html': [
     /<script src="\.\.\/node_modules\/mocha\/mocha\.js"><\/script>/,
     /mocha.setup\('bdd'\);/,

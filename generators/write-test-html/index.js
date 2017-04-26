@@ -29,7 +29,7 @@ var _class = function (_Base) {
     _classCallCheck(this, _class);
 
     var options = Object.assign({
-      generator: 'write-gulp-test-html'
+      generator: 'write-test-html'
     }, opts);
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));

@@ -4,7 +4,7 @@ import path from 'path';
 export default class extends Base {
   constructor (args, opts) {
     const options = Object.assign({
-      generator: 'write-gulp-test-html',
+      generator: 'write-test-html',
     }, opts);
 
     super(args, options);
