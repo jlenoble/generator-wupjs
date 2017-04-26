@@ -218,7 +218,7 @@ var _class = function (_Base) {
     value: function compute(propName) {
       switch (propName) {
         case 'allBuildGlob':
-          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), [this.get('srcDir'), this.get('testDir')], this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
+          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), [this.get('srcDir'), this.get('testDir')], '**/*.js'), { space: 2 }).replace(/"/g, '\'');
 
         case 'allSrcGlob':
           return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)([this.get('srcDir'), this.get('testDir')], this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
@@ -351,8 +351,20 @@ var _class = function (_Base) {
         case 'gulpMocha':
           return this.has('React') || this.has('Compass') ? 'gulp-mocha-phantomjs' : 'gulp-mocha';
 
+        case 'gulpMochaCallback':
+          return this.has('React') || this.has('Compass') ? 'done' : '()';
+
+        case 'gulpWatchBundles':
+          return this.has('React') || this.has('Compass') ? 'gulp.watch(srcBuildGlob, bundle);\n  gulp.watch(allBuildGlob, testBundle);\n' : '';
+
+        case 'gulpWatchTest':
+          return this.has('React') || this.has('Compass') ? '  gulp.watch(testBundleGlob, test);\n' : '  gulp.watch(allBuildGlob, test);\n';
+
         case 'importBabel':
           return this.has('Babel') ? 'import babel from \'gulp-babel\';\n' : '';
+
+        case 'importBundles':
+          return this.has('Compass') || this.has('React') ? 'import {bundle} from \'./bundle\';\nimport {testBundle} from \'./test-bundle\';\n\nconst srcBuildGlob = ' + this.compute('srcBuildGlob') + ';\nconst testBundleGlob = \'' + _path2.default.join(this.get('buildDir'), 'test-bundle.js') + '\';' : '';
 
         case 'importComponentTestLib':
           if (this.has('Enzyme')) {
@@ -384,6 +396,9 @@ var _class = function (_Base) {
 
         case 'nodeDir':
           return 'node_modules';
+
+        case 'onMochaEnd':
+          return this.has('React') || this.has('Compass') ? '\n    .on(\'end\', done)' : '';
 
         case 'peerDependencies':
           return (0, _jsonStableStringify2.default)(this.get('peerDeps'), { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
@@ -442,6 +457,9 @@ var _class = function (_Base) {
 
         case 'sassImportDir':
           return this.compute('nodeDir');
+
+        case 'srcBuildGlob':
+          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
 
         case 'srcGlob':
           return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');

@@ -33,6 +33,8 @@ export default class extends Base {
     const props = this.getProps();
     props.testGlob = this.compute('testGlob');
     props.gulpMocha = this.compute('gulpMocha');
+    props.gulpMochaCallback = this.compute('gulpMochaCallback');
+    props.onMochaEnd = this.compute('onMochaEnd');
     props.importPreTestTask = this.compute('importPreTestTask');
     props.preTestTask = this.compute('preTestTask');
 

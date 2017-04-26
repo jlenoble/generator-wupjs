@@ -5,9 +5,9 @@ import mocha from '<%- gulpMocha %>';
 
 const testGlob = <%- testGlob %>;
 
-export const test = () => {
+export const test = <%- gulpMochaCallback %> => {
   return gulp.src(testGlob)
-    .pipe(mocha());
+    .pipe(mocha())<%- onMochaEnd %>;
 };
 
 gulp.task('test', gulp.series(<%- preTestTask %>, test));

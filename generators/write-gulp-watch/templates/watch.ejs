@@ -2,14 +2,13 @@ import gulp from 'gulp';
 
 import {build} from './build';
 import {test} from './test';
-
+<%- importBundles %>
 const allSrcGlob = <%- allSrcGlob %>;
 const allBuildGlob = <%- allBuildGlob %>;
 
 export const watch = done => {
   gulp.watch(allSrcGlob, build);
-  gulp.watch(allBuildGlob, test);
-  done();
+  <%- gulpWatchBundles %><%- gulpWatchTest %>  done();
 };
 
 gulp.task('watch', watch);

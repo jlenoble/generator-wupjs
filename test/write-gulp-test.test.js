@@ -24,6 +24,7 @@ testGenerator('write-gulp-test', {preprocessors: ['Compass']}, {
     /import '\.\/sass'/,
     /const testGlob = 'test\/runner.html'/,
     /\.pipe\(mocha\(\)\)/,
+    /\.on\('end', done\)/,
     /gulp\.task\('test', gulp.series\(gulp.parallel\('build', 'sass'\), test\)\);/,
   ],
   'package.json': [
@@ -42,6 +43,7 @@ testGenerator('write-gulp-test', {addons: ['React']}, {
     /import '\.\/test-bundle'/,
     /const testGlob = 'test\/runner.html'/,
     /\.pipe\(mocha\(\)\)/,
+    /\.on\('end', done\)/,
     /gulp\.task\('test', gulp.series\('test-bundle', test\)\);/,
   ],
   'package.json': [
@@ -63,6 +65,7 @@ testGenerator('write-gulp-test', {
     /import '\.\/sass'/,
     /const testGlob = 'test\/runner.html'/,
     /\.pipe\(mocha\(\)\)/,
+    /\.on\('end', done\)/,
     /gulp\.task\('test', gulp\.series\(gulp\.parallel\('test-bundle', 'sass'\), test\)\);/,
   ],
   'package.json': [

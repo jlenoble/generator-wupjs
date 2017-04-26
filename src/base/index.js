@@ -157,8 +157,7 @@ export default class extends Base {
     switch (propName) {
     case 'allBuildGlob':
       return stringify(joinGlobs(this.get('buildDir'), [this.get('srcDir'),
-        this.get('testDir')], this.compute('glob')), {space: 2}).replace(/"/g,
-        `'`);
+        this.get('testDir')], '**/*.js'), {space: 2}).replace(/"/g, `'`);
 
     case 'allSrcGlob':
       return stringify(joinGlobs([this.get('srcDir'), this.get('testDir')],
@@ -316,8 +315,30 @@ export default class extends Base {
       return this.has('React') || this.has('Compass') ? 'gulp-mocha-phantomjs' :
         'gulp-mocha';
 
+    case 'gulpMochaCallback':
+      return this.has('React') || this.has('Compass') ? 'done' : '()';
+
+    case 'gulpWatchBundles':
+      return this.has('React') || this.has('Compass') ?
+        `gulp.watch(srcBuildGlob, bundle);
+  gulp.watch(allBuildGlob, testBundle);\n` : '';
+
+    case 'gulpWatchTest':
+      return this.has('React') || this.has('Compass') ?
+        `  gulp.watch(testBundleGlob, test);\n` :
+        `  gulp.watch(allBuildGlob, test);\n`;
+
     case 'importBabel':
       return this.has('Babel') ? `import babel from 'gulp-babel';\n` : '';
+
+    case 'importBundles':
+      return this.has('Compass') || this.has('React') ?
+        `import {bundle} from './bundle';
+import {testBundle} from './test-bundle';
+
+const srcBuildGlob = ${this.compute('srcBuildGlob')};
+const testBundleGlob = '${path.join(this.get('buildDir'),
+  'test-bundle.js')}';` : '';
 
     case 'importComponentTestLib':
       if (this.has('Enzyme')) {
@@ -350,6 +371,10 @@ import './sass';`;
 
     case 'nodeDir':
       return 'node_modules';
+
+    case 'onMochaEnd':
+      return this.has('React') || this.has('Compass') ? `
+    .on('end', done)` : '';
 
     case 'peerDependencies':
       return stringify(this.get('peerDeps'), {space: 2})
@@ -410,6 +435,10 @@ import './sass';`;
 
     case 'sassImportDir':
       return this.compute('nodeDir');
+
+    case 'srcBuildGlob':
+      return stringify(joinGlobs(this.get('buildDir'), this.get('srcDir'),
+        this.compute('glob')), {space: 2}).replace(/"/g, `'`);
 
     case 'srcGlob':
       return stringify(joinGlobs(this.get('srcDir'), this.compute('glob')),

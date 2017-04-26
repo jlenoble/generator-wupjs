@@ -10,6 +10,34 @@ testGenerator('write-gulp-watch', undefined, {
     /const allBuildGlob = \[/,
     /  'build\/src\/\*\*\/\*\.js'/,
     /  'build\/test\/\*\*\/\*\.js'/,
+    /gulp\.watch\(allSrcGlob, build\);/,
+    /gulp\.watch\(allBuildGlob, test\);/,
+    /gulp\.task\('watch', watch\);/,
+  ],
+  'gulpfile.babel.js': [
+    /import '\.\/gulp\/watch';/,
+  ],
+});
+
+testGenerator('write-gulp-watch', {addons: ['React']}, {
+  'gulp/watch.js': [
+    /import \{build\} from '\.\/build'/,
+    /import \{bundle\} from '\.\/bundle'/,
+    /import \{testBundle\} from '\.\/test-bundle'/,
+    /import \{test\} from '\.\/test'/,
+    /const testBundleGlob = 'build\/test-bundle.js'/,
+    /const allSrcGlob = \[/,
+    /  'src\/\*\*\/\*\.js'/,
+    /  'src\/\*\*\/\*\.jsx'/,
+    /  'test\/\*\*\/\*\.js'/,
+    /  'test\/\*\*\/\*\.jsx'/,
+    /const allBuildGlob = \[/,
+    /  'build\/src\/\*\*\/\*\.js'/,
+    /  'build\/test\/\*\*\/\*\.js'/,
+    /gulp\.watch\(allSrcGlob, build\);/,
+    /gulp\.watch\(srcBuildGlob, bundle\);/,
+    /gulp\.watch\(allBuildGlob, testBundle\);/,
+    /gulp\.watch\(testBundleGlob, test\)/,
     /gulp\.task\('watch', watch\);/,
   ],
   'gulpfile.babel.js': [

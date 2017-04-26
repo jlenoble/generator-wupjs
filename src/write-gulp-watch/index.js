@@ -9,7 +9,7 @@ export default class extends Base {
 
     super(args, options);
 
-    this.promptIfMissing(['gulpDir', 'addons']);
+    this.promptIfMissing(['gulpDir', 'addons', 'preprocessors']);
     this.addGulpIncludes(['watch']);
   }
 
@@ -17,6 +17,9 @@ export default class extends Base {
     const props = this.getProps();
     props.allSrcGlob = this.compute('allSrcGlob');
     props.allBuildGlob = this.compute('allBuildGlob');
+    props.importBundles = this.compute('importBundles');
+    props.gulpWatchTest = this.compute('gulpWatchTest');
+    props.gulpWatchBundles = this.compute('gulpWatchBundles');
 
     this.fs.copyTpl(
       this.templatePath('watch.ejs'),

@@ -34,7 +34,7 @@ var _class = function (_Base) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
-    _this.promptIfMissing(['gulpDir', 'addons']);
+    _this.promptIfMissing(['gulpDir', 'addons', 'preprocessors']);
     _this.addGulpIncludes(['watch']);
     return _this;
   }
@@ -45,6 +45,9 @@ var _class = function (_Base) {
       var props = this.getProps();
       props.allSrcGlob = this.compute('allSrcGlob');
       props.allBuildGlob = this.compute('allBuildGlob');
+      props.importBundles = this.compute('importBundles');
+      props.gulpWatchTest = this.compute('gulpWatchTest');
+      props.gulpWatchBundles = this.compute('gulpWatchBundles');
 
       this.fs.copyTpl(this.templatePath('watch.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'watch.js')), props);
     }
