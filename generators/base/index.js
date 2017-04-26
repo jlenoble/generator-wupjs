@@ -363,6 +363,9 @@ var _class = function (_Base) {
         case 'importPreTestTask':
           return './' + this.compute('preTestTask');
 
+        case 'importSass':
+          return '\nimport \'./sass\';';
+
         case 'main':
           return _path2.default.join(this.get('libDir'), this.compute('module')) + '.js';
 
@@ -407,6 +410,9 @@ var _class = function (_Base) {
               return '"' + preset + '"';
             }).join(', ');
           }
+
+        case 'preServeTask':
+          return this.has('Compass') ? 'gulp.parallel(\'bundle\', \'sass\')' : '\'bundle\'';
 
         case 'preTestTask':
           return this.has('React') ? 'test-bundle' : 'build';

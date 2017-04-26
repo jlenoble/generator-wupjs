@@ -2,7 +2,7 @@ import gulp from 'gulp';
 import path from 'path';
 import browserSync from 'browser-sync';
 
-import './bundle';
+import './bundle';<%- importSass %>
 
 const buildDir = '<%- buildDir %>';
 const staticDir = '<%- staticDir %>';
@@ -25,4 +25,4 @@ export const serve = done => {
     });
 };
 
-gulp.task('serve', serve);
+gulp.task('serve', gulp.series(<%- preServeTask %>, serve));

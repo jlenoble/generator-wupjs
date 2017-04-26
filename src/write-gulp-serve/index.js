@@ -9,10 +9,16 @@ export default class extends Base {
 
     super(args, options);
 
-    this.promptIfMissing(['gulpDir', 'srcDir', 'buildDir']);
+    this.promptIfMissing(['gulpDir', 'srcDir', 'buildDir', 'preprocessors']);
     this.addGulpIncludes(['serve']);
     this.addDevDeps({'browser-sync': '*'});
-    this.composeWith('write-gulpfile');
+    this.composeWith('write-gulp-bundle');
+  }
+
+  configuring () {
+    if (this.has('Compass')) {
+      this.composeWith('write-gulp-sass');
+    }
   }
 
   writing () {
@@ -20,6 +26,8 @@ export default class extends Base {
     props.nodeDir = this.compute('nodeDir');
     props.staticDir = this.compute('staticDir');
     props.bsWatchGlob = this.compute('bsWatchGlob');
+    props.importSass = this.compute('importSass');
+    props.preServeTask = this.compute('preServeTask');
 
     this.fs.copyTpl(
       this.templatePath('serve.ejs'),

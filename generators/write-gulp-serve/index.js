@@ -34,20 +34,29 @@ var _class = function (_Base) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
-    _this.promptIfMissing(['gulpDir', 'srcDir', 'buildDir']);
+    _this.promptIfMissing(['gulpDir', 'srcDir', 'buildDir', 'preprocessors']);
     _this.addGulpIncludes(['serve']);
     _this.addDevDeps({ 'browser-sync': '*' });
-    _this.composeWith('write-gulpfile');
+    _this.composeWith('write-gulp-bundle');
     return _this;
   }
 
   _createClass(_class, [{
+    key: 'configuring',
+    value: function configuring() {
+      if (this.has('Compass')) {
+        this.composeWith('write-gulp-sass');
+      }
+    }
+  }, {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
       props.nodeDir = this.compute('nodeDir');
       props.staticDir = this.compute('staticDir');
       props.bsWatchGlob = this.compute('bsWatchGlob');
+      props.importSass = this.compute('importSass');
+      props.preServeTask = this.compute('preServeTask');
 
       this.fs.copyTpl(this.templatePath('serve.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'serve.js')), props);
     }

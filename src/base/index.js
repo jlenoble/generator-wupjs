@@ -320,6 +320,9 @@ export default class extends Base {
     case 'importPreTestTask':
       return './' + this.compute('preTestTask');
 
+    case 'importSass':
+      return `\nimport './sass';`;
+
     case 'main':
       return path.join(this.get('libDir'), this.compute('module')) + '.js';
 
@@ -363,6 +366,10 @@ export default class extends Base {
         presets.sort();
         return presets.map(preset => `"${preset}"`).join(', ');
       }
+
+    case 'preServeTask':
+      return this.has('Compass') ? `gulp.parallel('bundle', 'sass')` :
+        `'bundle'`;
 
     case 'preTestTask':
       return this.has('React') ? 'test-bundle' : 'build';
