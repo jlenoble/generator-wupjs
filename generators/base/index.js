@@ -411,6 +411,9 @@ var _class = function (_Base) {
         case 'runnerFile':
           return 'runner.html';
 
+        case 'sassCache':
+          return this.has('Compass') ? '.sass-cache' : '';
+
         case 'sassDir':
           return _path2.default.join(this.compute('staticDir'), 'scss');
 

@@ -365,6 +365,9 @@ export default class extends Base {
     case 'runnerFile':
       return 'runner.html';
 
+    case 'sassCache':
+      return this.has('Compass') ? '.sass-cache' : '';
+
     case 'sassDir':
       return path.join(this.compute('staticDir'), 'scss');
 
