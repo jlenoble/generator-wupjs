@@ -27,6 +27,7 @@ export default class extends Base {
 
   configuring () {
     if (this.has('React')) {
+      this.composeWith('write-gulp-serve');
       this.composeWith('write-gulp-bundle');
       this.composeWith('write-gulp-test-bundle');
       this.composeWith('write-src-html');

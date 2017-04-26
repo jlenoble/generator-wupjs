@@ -10,6 +10,10 @@ var _base = require('../base');
 
 var _base2 = _interopRequireDefault(_base);
 
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25,41 +29,27 @@ var _class = function (_Base) {
     _classCallCheck(this, _class);
 
     var options = Object.assign({
-      generator: 'app'
+      generator: 'write-gulp-serve'
     }, opts);
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
-    _this.composeWith('module');
-    _this.composeWith('who');
-    _this.composeWith('github');
-    _this.composeWith('license');
-    _this.composeWith('babel');
-    _this.composeWith('lint');
-    _this.composeWith('addons');
-    _this.composeWith('preprocessors');
-    _this.composeWith('test');
+    _this.promptIfMissing(['gulpDir', 'srcDir', 'buildDir']);
+    _this.addGulpIncludes(['serve']);
+    _this.addDevDeps({ 'browser-sync': '*' });
     _this.composeWith('write-gulpfile');
-    _this.composeWith('write-gulp-build');
-    _this.composeWith('write-gulp-clean');
-    _this.composeWith('write-gulp-distclean');
-    _this.composeWith('write-gulp-dist');
-    _this.composeWith('write-src');
     return _this;
   }
 
   _createClass(_class, [{
-    key: 'configuring',
-    value: function configuring() {
-      if (this.has('React')) {
-        this.composeWith('write-gulp-serve');
-        this.composeWith('write-gulp-bundle');
-        this.composeWith('write-gulp-test-bundle');
-        this.composeWith('write-src-html');
-        this.composeWith('write-test-html');
-        this.composeWith('write-test-index');
-        this.composeWith('write-demo');
-      }
+    key: 'writing',
+    value: function writing() {
+      var props = this.getProps();
+      props.nodeDir = this.compute('nodeDir');
+      props.staticDir = this.compute('staticDir');
+      props.bsWatchGlob = this.compute('bsWatchGlob');
+
+      this.fs.copyTpl(this.templatePath('serve.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'serve.js')), props);
     }
   }]);
 

@@ -1,0 +1,28 @@
+import gulp from 'gulp';
+import path from 'path';
+import browserSync from 'browser-sync';
+
+import './bundle';
+
+const buildDir = '<%- buildDir %>';
+const staticDir = '<%- staticDir %>';
+const nodeDir = '<%- nodeDir %>';
+const bsWatchGlob = <%- bsWatchGlob %>;
+
+export const serve = done => {
+  var bs = browserSync.create('server');
+
+  bs.init({
+    ui: false,
+    port: 3000,
+    server: {
+      baseDir: [buildDir, staticDir, nodeDir],
+    },
+  }, done);
+
+  gulp.watch(bsWatchGlob).on('change', (...args) => {
+      bs.reload(...args);
+    });
+};
+
+gulp.task('serve', serve);

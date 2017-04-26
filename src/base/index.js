@@ -168,6 +168,11 @@ export default class extends Base {
       return path.join(path.relative(this.get('buildDir'),
         this.compute('nodeDir')), 'mocha/mocha.js');
 
+    case 'bsWatchGlob':
+      return stringify([path.join(this.compute('staticDir'), 'index.html'),
+        path.join(this.get('buildDir'), this.compute('bundleName'))],
+        {space: 2}).replace(/"/g, `'`);
+
     case 'bundleName':
       return 'bundle.js';
 
