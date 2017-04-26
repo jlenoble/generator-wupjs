@@ -231,7 +231,7 @@ var _class = function (_Base) {
           return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.compute('nodeDir')), 'mocha/mocha.js');
 
         case 'bsWatchGlob':
-          return (0, _jsonStableStringify2.default)([_path2.default.join(this.compute('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName'))], { space: 2 }).replace(/"/g, '\'');
+          return this.has('Compass') ? (0, _jsonStableStringify2.default)([_path2.default.join(this.compute('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName')), _path2.default.join(this.compute('cssDir'), '**/*.scss')], { space: 2 }).replace(/"/g, '\'') : (0, _jsonStableStringify2.default)([_path2.default.join(this.compute('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName'))], { space: 2 }).replace(/"/g, '\'');
 
         case 'bundleName':
           return 'bundle.js';

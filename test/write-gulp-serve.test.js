@@ -28,6 +28,7 @@ testGenerator('write-gulp-serve', {preprocessors: ['Compass']}, {
     /const bsWatchGlob = \[/,
     /  'src\/static\/index\.html'/,
     /  'build\/bundle\.js'/,
+    /  'build\/css\/\*\*\/\*\.scss'/,
     /baseDir: \[buildDir, staticDir, nodeDir\],/,
     /gulp\.task\('serve', gulp.series\(gulp.parallel\('bundle', 'sass'\), serve\)\);/,
   ],

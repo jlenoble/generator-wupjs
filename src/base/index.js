@@ -169,9 +169,14 @@ export default class extends Base {
         this.compute('nodeDir')), 'mocha/mocha.js');
 
     case 'bsWatchGlob':
-      return stringify([path.join(this.compute('staticDir'), 'index.html'),
-        path.join(this.get('buildDir'), this.compute('bundleName'))],
-        {space: 2}).replace(/"/g, `'`);
+      return this.has('Compass') ?
+        stringify([path.join(this.compute('staticDir'), 'index.html'),
+          path.join(this.get('buildDir'), this.compute('bundleName')),
+          path.join(this.compute('cssDir'), '**/*.scss')],
+          {space: 2}).replace(/"/g, `'`) :
+        stringify([path.join(this.compute('staticDir'), 'index.html'),
+          path.join(this.get('buildDir'), this.compute('bundleName'))],
+          {space: 2}).replace(/"/g, `'`);
 
     case 'bundleName':
       return 'bundle.js';
