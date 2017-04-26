@@ -4,7 +4,7 @@ testGenerator('write-test-html', undefined, {
   'test/runner.html': [
     /<script src="\.\.\/node_modules\/mocha\/mocha\.js"><\/script>/,
     /mocha.setup\('bdd'\);/,
-    /<script src="\.\.\/test\/test-bundle\.js"><\/script>/,
+    /<script src="\.\.\/build\/test-bundle\.js"><\/script>/,
     /mocha.run\(\);/,
   ],
   'package.json': [
@@ -20,7 +20,7 @@ testGenerator('write-test-html', {addons: ['React']}, {
   'test/runner.html': [
     /<script src="\.\.\/node_modules\/mocha\/mocha\.js"><\/script>/,
     /mocha.setup\('bdd'\);/,
-    /<script src="\.\.\/test\/test-bundle\.js"><\/script>/,
+    /<script src="\.\.\/build\/test-bundle\.js"><\/script>/,
     /mocha.run\(\);/,
   ],
   'package.json': [

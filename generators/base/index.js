@@ -430,7 +430,7 @@ var _class = function (_Base) {
           return _path2.default.join(this.get('srcDir'), 'static');
 
         case 'testBundleGlob':
-          return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.get('testDir')), this.compute('testBundleName'));
+          return _path2.default.join(_path2.default.relative(this.get('testDir'), this.get('buildDir')), this.compute('testBundleName'));
 
         case 'testBundleName':
           return 'test-bundle.js';
@@ -439,7 +439,7 @@ var _class = function (_Base) {
           return _path2.default.join(this.get('buildDir'), this.get('testDir'), 'index.test.js');
 
         case 'testGlob':
-          return this.has('React') ? '\'' + _path2.default.join(this.get('buildDir'), this.compute('runnerFile')) + '\'' : (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
+          return this.has('React') ? '\'' + _path2.default.join(this.get('testDir'), this.compute('runnerFile')) + '\'' : (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
       }
     }
   }, {

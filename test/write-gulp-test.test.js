@@ -22,7 +22,7 @@ testGenerator('write-gulp-test', {addons: ['React']}, {
   'gulp/test.js': [
     /import mocha from 'gulp-mocha-phantomjs';/,
     /import '\.\/test-bundle'/,
-    /const testGlob = 'build\/runner.html'/,
+    /const testGlob = 'test\/runner.html'/,
     /\.pipe\(mocha\(\)\)/,
     /gulp\.task\('test', gulp.series\('test-bundle', test\)\);/,
   ],

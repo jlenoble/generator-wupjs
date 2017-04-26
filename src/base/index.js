@@ -386,8 +386,8 @@ export default class extends Base {
       return path.join(this.get('srcDir'), 'static');
 
     case 'testBundleGlob':
-      return path.join(path.relative(this.get('buildDir'),
-        this.get('testDir')), this.compute('testBundleName'));
+      return path.join(path.relative(this.get('testDir'),
+        this.get('buildDir')), this.compute('testBundleName'));
 
     case 'testBundleName':
       return 'test-bundle.js';
@@ -397,7 +397,7 @@ export default class extends Base {
         'index.test.js');
 
     case 'testGlob':
-      return this.has('React') ? `'${path.join(this.get('buildDir'),
+      return this.has('React') ? `'${path.join(this.get('testDir'),
         this.compute('runnerFile'))}'` : stringify(joinGlobs(
         this.get('buildDir'), this.get('testDir'), '**/*.test.js'),
         {space: 2}).replace(/"/g, `'`);
