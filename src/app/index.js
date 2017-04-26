@@ -22,6 +22,8 @@ export default class extends Base {
     this.composeWith('write-gulp-clean');
     this.composeWith('write-gulp-distclean');
     this.composeWith('write-gulp-dist');
+    this.composeWith('write-gulp-tdd');
+    this.composeWith('write-gulp-watch');
     this.composeWith('write-src');
   }
 

@@ -15,8 +15,6 @@ export default class extends Base {
       'plumb-gulp': '*',
       'autoreload-gulp': '*',
     });
-    this.composeWith('write-gulp-test');
-    this.composeWith('write-gulp-build');
   }
 
   initializing () {

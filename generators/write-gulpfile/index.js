@@ -37,8 +37,6 @@ var _class = function (_Base) {
       'plumb-gulp': '*',
       'autoreload-gulp': '*'
     });
-    _this.composeWith('write-gulp-test');
-    _this.composeWith('write-gulp-build');
     return _this;
   }
 
