@@ -8,6 +8,8 @@ export default class extends Base {
     }, opts);
 
     super(args, options);
+
+    this.composeWith('write-gitignore');
   }
 
   prompting () {

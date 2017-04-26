@@ -29,7 +29,10 @@ var _class = function (_Base) {
       generator: 'github'
     }, opts);
 
-    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
+
+    _this.composeWith('write-gitignore');
+    return _this;
   }
 
   _createClass(_class, [{
