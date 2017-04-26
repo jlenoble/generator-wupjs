@@ -50,6 +50,10 @@ var _class = function (_Base) {
         if (_this2.has('Compass')) {
           _this2.composeWith('write-gulp-sass');
           _this2.composeWith('write-scss');
+          _this2.addDevDeps({
+            'mocha': '*',
+            'gulp-mocha-phantomjs': '*'
+          });
         }
       });
     }

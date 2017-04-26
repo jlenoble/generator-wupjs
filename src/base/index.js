@@ -308,7 +308,8 @@ export default class extends Base {
       return this.has('React') ? ['**/*.js', '**/*.jsx'] : '**/*.js';
 
     case 'gulpMocha':
-      return this.has('React') ? 'gulp-mocha-phantomjs' : 'gulp-mocha';
+      return this.has('React') || this.has('Compass') ? 'gulp-mocha-phantomjs' :
+        'gulp-mocha';
 
     case 'importBabel':
       return this.has('Babel') ? `import babel from 'gulp-babel';\n` : '';
@@ -323,7 +324,12 @@ export default class extends Base {
       }
 
     case 'importPreTestTask':
-      return './' + this.compute('preTestTask');
+      if (this.has('Compass')) {
+        return `import '${this.has('React') ? './test-bundle' : './build'}';
+import './sass';`;
+      } else {
+        return `import '${this.has('React') ? './test-bundle' : './build'}';`;
+      }
 
     case 'importSass':
       return `\nimport './sass';`;
@@ -377,7 +383,12 @@ export default class extends Base {
         `'bundle'`;
 
     case 'preTestTask':
-      return this.has('React') ? 'test-bundle' : 'build';
+      if (this.has('Compass')) {
+        return this.has('React') ? `gulp.parallel('test-bundle', 'sass')` :
+          `gulp.parallel('build', 'sass')`;
+      } else {
+        return `'${this.has('React') ? 'test-bundle' : 'build'}'`;
+      }
 
     case 'runnerFile':
       return 'runner.html';
@@ -414,10 +425,10 @@ export default class extends Base {
         'index.test.js');
 
     case 'testGlob':
-      return this.has('React') ? `'${path.join(this.get('testDir'),
-        this.compute('runnerFile'))}'` : stringify(joinGlobs(
-        this.get('buildDir'), this.get('testDir'), '**/*.test.js'),
-        {space: 2}).replace(/"/g, `'`);
+      return this.has('React') || this.has('Compass' ) ?
+        `'${path.join(this.get('testDir'), this.compute('runnerFile'))}'` :
+        stringify(joinGlobs(this.get('buildDir'), this.get('testDir'),
+        '**/*.test.js'), {space: 2}).replace(/"/g, `'`);
     }
   }
 

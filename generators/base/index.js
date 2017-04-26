@@ -346,7 +346,7 @@ var _class = function (_Base) {
           return this.has('React') ? ['**/*.js', '**/*.jsx'] : '**/*.js';
 
         case 'gulpMocha':
-          return this.has('React') ? 'gulp-mocha-phantomjs' : 'gulp-mocha';
+          return this.has('React') || this.has('Compass') ? 'gulp-mocha-phantomjs' : 'gulp-mocha';
 
         case 'importBabel':
           return this.has('Babel') ? 'import babel from \'gulp-babel\';\n' : '';
@@ -361,7 +361,11 @@ var _class = function (_Base) {
           }
 
         case 'importPreTestTask':
-          return './' + this.compute('preTestTask');
+          if (this.has('Compass')) {
+            return 'import \'' + (this.has('React') ? './test-bundle' : './build') + '\';\nimport \'./sass\';';
+          } else {
+            return 'import \'' + (this.has('React') ? './test-bundle' : './build') + '\';';
+          }
 
         case 'importSass':
           return '\nimport \'./sass\';';
@@ -415,7 +419,11 @@ var _class = function (_Base) {
           return this.has('Compass') ? 'gulp.parallel(\'bundle\', \'sass\')' : '\'bundle\'';
 
         case 'preTestTask':
-          return this.has('React') ? 'test-bundle' : 'build';
+          if (this.has('Compass')) {
+            return this.has('React') ? 'gulp.parallel(\'test-bundle\', \'sass\')' : 'gulp.parallel(\'build\', \'sass\')';
+          } else {
+            return '\'' + (this.has('React') ? 'test-bundle' : 'build') + '\'';
+          }
 
         case 'runnerFile':
           return 'runner.html';
@@ -448,7 +456,7 @@ var _class = function (_Base) {
           return _path2.default.join(this.get('buildDir'), this.get('testDir'), 'index.test.js');
 
         case 'testGlob':
-          return this.has('React') ? '\'' + _path2.default.join(this.get('testDir'), this.compute('runnerFile')) + '\'' : (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
+          return this.has('React') || this.has('Compass') ? '\'' + _path2.default.join(this.get('testDir'), this.compute('runnerFile')) + '\'' : (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
       }
     }
   }, {

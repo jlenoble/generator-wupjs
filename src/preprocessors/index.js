@@ -24,6 +24,10 @@ export default class extends Base {
       if (this.has('Compass')) {
         this.composeWith('write-gulp-sass');
         this.composeWith('write-scss');
+        this.addDevDeps({
+          'mocha': '*',
+          'gulp-mocha-phantomjs': '*',
+        });
       }
     });
   }

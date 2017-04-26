@@ -9,7 +9,8 @@ export default class extends Base {
 
     super(args, options);
 
-    this.promptIfMissing(['gulpDir', 'testDir', 'buildDir', 'addons']);
+    this.promptIfMissing(['gulpDir', 'testDir', 'buildDir', 'addons',
+      'preprocessors']);
     this.addDevDeps({'chai': '*'});
     this.addGulpIncludes(['test']);
     this.composeWith('write-gulpfile');
