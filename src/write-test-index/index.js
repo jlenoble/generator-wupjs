@@ -23,10 +23,12 @@ export default class extends Base {
     const props = this.getProps();
     props.fileStem = this.compute('fileStem');
 
-    this.fs.copyTpl(
-      this.templatePath('index.test.ejs'),
-      this.destinationPath(path.join(props.testDir, 'index.test.js')),
-      props
-    );
+    if (this.has('React')) {
+      this.fs.copyTpl(
+        this.templatePath('index.test.ejs'),
+        this.destinationPath(path.join(props.testDir, 'index.test.js')),
+        props
+      );
+    }
   }
 }

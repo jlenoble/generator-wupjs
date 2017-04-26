@@ -52,7 +52,9 @@ var _class = function (_Base) {
       var props = this.getProps();
       props.fileStem = this.compute('fileStem');
 
-      this.fs.copyTpl(this.templatePath('index.test.ejs'), this.destinationPath(_path2.default.join(props.testDir, 'index.test.js')), props);
+      if (this.has('React')) {
+        this.fs.copyTpl(this.templatePath('index.test.ejs'), this.destinationPath(_path2.default.join(props.testDir, 'index.test.js')), props);
+      }
     }
   }]);
 
