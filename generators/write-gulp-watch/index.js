@@ -44,6 +44,8 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
+      props.allSrcGlob = this.compute('allSrcGlob');
+      props.allBuildGlob = this.compute('allBuildGlob');
 
       this.fs.copyTpl(this.templatePath('watch.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'watch.js')), props);
     }

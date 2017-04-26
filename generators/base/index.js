@@ -217,6 +217,9 @@ var _class = function (_Base) {
     key: 'compute',
     value: function compute(propName) {
       switch (propName) {
+        case 'allBuildGlob':
+          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), [this.get('srcDir'), this.get('testDir')], this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
+
         case 'allSrcGlob':
           return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)([this.get('srcDir'), this.get('testDir')], this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
 

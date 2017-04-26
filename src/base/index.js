@@ -155,6 +155,11 @@ export default class extends Base {
 
   compute (propName) {
     switch (propName) {
+    case 'allBuildGlob':
+      return stringify(joinGlobs(this.get('buildDir'), [this.get('srcDir'),
+        this.get('testDir')], this.compute('glob')), {space: 2}).replace(/"/g,
+        `'`);
+
     case 'allSrcGlob':
       return stringify(joinGlobs([this.get('srcDir'), this.get('testDir')],
         this.compute('glob')), {space: 2}).replace(/"/g, `'`);
