@@ -44,3 +44,34 @@ testGenerator('write-gulp-watch', {addons: ['React']}, {
     /import '\.\/gulp\/watch';/,
   ],
 });
+
+testGenerator('write-gulp-watch', {
+  addons: ['React'],
+  preprocessors: ['Compass'],
+}, {
+  'gulp/watch.js': [
+    /import \{build\} from '\.\/build'/,
+    /import \{bundle\} from '\.\/bundle'/,
+    /import \{testBundle\} from '\.\/test-bundle'/,
+    /import \{test\} from '\.\/test'/,
+    /import \{sass\} from '\.\/sass'/,
+    /const testBundleGlob = 'build\/test-bundle.js'/,
+    /const allSrcGlob = \[/,
+    /  'src\/\*\*\/\*\.js'/,
+    /  'src\/\*\*\/\*\.jsx'/,
+    /  'test\/\*\*\/\*\.js'/,
+    /  'test\/\*\*\/\*\.jsx'/,
+    /const allBuildGlob = \[/,
+    /  'build\/src\/\*\*\/\*\.js'/,
+    /  'build\/test\/\*\*\/\*\.js'/,
+    /gulp\.watch\(allSrcGlob, build\);/,
+    /gulp\.watch\(srcBuildGlob, bundle\);/,
+    /gulp\.watch\(allBuildGlob, testBundle\);/,
+    /gulp\.watch\(testBundleGlob, test\)/,
+    /gulp\.watch\(allSassGlob, sass\)/,
+    /gulp\.task\('watch', watch\);/,
+  ],
+  'gulpfile.babel.js': [
+    /import '\.\/gulp\/watch';/,
+  ],
+});

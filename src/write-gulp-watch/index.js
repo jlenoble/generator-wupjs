@@ -18,7 +18,9 @@ export default class extends Base {
     props.allSrcGlob = this.compute('allSrcGlob');
     props.allBuildGlob = this.compute('allBuildGlob');
     props.importBundles = this.compute('importBundles');
+    props.importSassFromSass = this.compute('importSassFromSass');
     props.gulpWatchTest = this.compute('gulpWatchTest');
+    props.gulpWatchSass = this.compute('gulpWatchSass');
     props.gulpWatchBundles = this.compute('gulpWatchBundles');
 
     this.fs.copyTpl(

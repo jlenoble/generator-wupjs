@@ -159,6 +159,10 @@ export default class extends Base {
       return stringify(joinGlobs(this.get('buildDir'), [this.get('srcDir'),
         this.get('testDir')], '**/*.js'), {space: 2}).replace(/"/g, `'`);
 
+    case 'allSassGlob':
+      return stringify(joinGlobs(this.compute('sassDir'), '**/*.scss'),
+        {space: 2}).replace(/"/g, `'`);
+
     case 'allSrcGlob':
       return stringify(joinGlobs([this.get('srcDir'), this.get('testDir')],
         this.compute('glob')), {space: 2}).replace(/"/g, `'`);
@@ -323,6 +327,10 @@ export default class extends Base {
         `gulp.watch(srcBuildGlob, bundle);
   gulp.watch(allBuildGlob, testBundle);\n` : '';
 
+    case 'gulpWatchSass':
+      return this.has('Compass') ?
+        `  gulp.watch(allSassGlob, sass);\n` : '';
+
     case 'gulpWatchTest':
       return this.has('React') || this.has('Compass') ?
         `  gulp.watch(testBundleGlob, test);\n` :
@@ -359,6 +367,9 @@ import './sass';`;
 
     case 'importSass':
       return `\nimport './sass';`;
+
+    case 'importSassFromSass':
+      return `\nimport {sass} from './sass';`;
 
     case 'main':
       return path.join(this.get('libDir'), this.compute('module')) + '.js';

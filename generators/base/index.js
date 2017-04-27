@@ -220,6 +220,9 @@ var _class = function (_Base) {
         case 'allBuildGlob':
           return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), [this.get('srcDir'), this.get('testDir')], '**/*.js'), { space: 2 }).replace(/"/g, '\'');
 
+        case 'allSassGlob':
+          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.compute('sassDir'), '**/*.scss'), { space: 2 }).replace(/"/g, '\'');
+
         case 'allSrcGlob':
           return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)([this.get('srcDir'), this.get('testDir')], this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
 
@@ -357,6 +360,9 @@ var _class = function (_Base) {
         case 'gulpWatchBundles':
           return this.has('React') || this.has('Compass') ? 'gulp.watch(srcBuildGlob, bundle);\n  gulp.watch(allBuildGlob, testBundle);\n' : '';
 
+        case 'gulpWatchSass':
+          return this.has('Compass') ? '  gulp.watch(allSassGlob, sass);\n' : '';
+
         case 'gulpWatchTest':
           return this.has('React') || this.has('Compass') ? '  gulp.watch(testBundleGlob, test);\n' : '  gulp.watch(allBuildGlob, test);\n';
 
@@ -384,6 +390,9 @@ var _class = function (_Base) {
 
         case 'importSass':
           return '\nimport \'./sass\';';
+
+        case 'importSassFromSass':
+          return '\nimport {sass} from \'./sass\';';
 
         case 'main':
           return _path2.default.join(this.get('libDir'), this.compute('module')) + '.js';
