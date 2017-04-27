@@ -49,4 +49,13 @@ Object.defineProperty(exports, 'property', {
   }
 });
 
+var _stems = require('./stems');
+
+Object.defineProperty(exports, 'dirs', {
+  enumerable: true,
+  get: function get() {
+    return _stems.dirs;
+  }
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

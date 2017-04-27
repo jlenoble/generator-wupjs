@@ -223,7 +223,7 @@ var _class = function (_Base) {
           return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.compute('nodeDir')), 'mocha/mocha.js');
 
         case 'bsWatchGlob':
-          return this.has('Compass') ? (0, _jsonStableStringify2.default)([_path2.default.join(this.compute('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName')), _path2.default.join(this.compute('cssDir'), '**/*.scss')], { space: 2 }).replace(/"/g, '\'') : (0, _jsonStableStringify2.default)([_path2.default.join(this.compute('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName'))], { space: 2 }).replace(/"/g, '\'');
+          return this.has('Compass') ? (0, _jsonStableStringify2.default)([_path2.default.join((0, _index.dirs)('staticDir', this), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName')), _path2.default.join(this.compute('cssDir'), '**/*.scss')], { space: 2 }).replace(/"/g, '\'') : (0, _jsonStableStringify2.default)([_path2.default.join((0, _index.dirs)('staticDir', this), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName'))], { space: 2 }).replace(/"/g, '\'');
 
         case 'bundleName':
           return 'bundle.js';
@@ -445,7 +445,7 @@ var _class = function (_Base) {
           return this.has('Compass') ? '.sass-cache' : '';
 
         case 'sassDir':
-          return _path2.default.join(this.compute('staticDir'), 'scss');
+          return _path2.default.join((0, _index.dirs)('staticDir', this), 'scss');
 
         case 'sassGlob':
           return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.compute('sassDir'), '*.scss'), { space: 2 }).replace(/"/g, '\'');
@@ -458,9 +458,6 @@ var _class = function (_Base) {
 
         case 'srcGlob':
           return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
-
-        case 'staticDir':
-          return _path2.default.join(this.get('srcDir'), 'static');
 
         case 'testBundleGlob':
           return _path2.default.join(_path2.default.relative(this.get('testDir'), this.get('buildDir')), this.compute('testBundleName'));
@@ -483,7 +480,15 @@ var _class = function (_Base) {
   }, {
     key: 'getProps',
     value: function getProps() {
-      return conf.getProps();
+      var _this4 = this;
+
+      var props = conf.getProps();
+
+      props.dirs = function (dir) {
+        return (0, _index.dirs)(dir, _this4);
+      };
+
+      return props;
     }
   }, {
     key: 'set',

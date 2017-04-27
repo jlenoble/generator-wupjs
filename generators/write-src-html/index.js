@@ -43,10 +43,9 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.staticDir = this.compute('staticDir');
       props.bundleGlob = this.compute('bundleGlob');
 
-      this.fs.copyTpl(this.templatePath('index.ejs'), this.destinationPath(_path2.default.join(props.staticDir, 'index.html')), props);
+      this.fs.copyTpl(this.templatePath('index.ejs'), this.destinationPath(_path2.default.join(props.dirs('staticDir'), 'index.html')), props);
     }
   }]);
 

@@ -15,12 +15,11 @@ export default class extends Base {
 
   writing () {
     const props = this.getProps();
-    props.staticDir = this.compute('staticDir');
     props.bundleGlob = this.compute('bundleGlob');
 
     this.fs.copyTpl(
       this.templatePath('index.ejs'),
-      this.destinationPath(path.join(props.staticDir, 'index.html')),
+      this.destinationPath(path.join(props.dirs('staticDir'), 'index.html')),
       props
     );
   }

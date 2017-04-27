@@ -5,7 +5,7 @@ import browserSync from 'browser-sync';
 import './bundle';<%- importSass %>
 
 const buildDir = '<%- buildDir %>';
-const staticDir = '<%- staticDir %>';
+const staticDir = '<%- dirs('staticDir') %>';
 const nodeDir = '<%- nodeDir %>';
 const bsWatchGlob = <%- bsWatchGlob %>;
 

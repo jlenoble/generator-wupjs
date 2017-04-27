@@ -3,7 +3,8 @@ import path from 'path';
 import slug from 'slug';
 import upperCamelCase from 'uppercamelcase';
 import stringify from 'json-stable-stringify';
-import {Config, getGenerator, getWriteGenerators, joinGlobs} from '../index';
+import {Config, getGenerator, getWriteGenerators, joinGlobs,
+  dirs} from '../index';
 
 const appDir = __dirname;
 const conf = new Config();
@@ -175,11 +176,11 @@ export default class extends Base {
 
     case 'bsWatchGlob':
       return this.has('Compass') ?
-        stringify([path.join(this.compute('staticDir'), 'index.html'),
+        stringify([path.join(dirs('staticDir', this), 'index.html'),
           path.join(this.get('buildDir'), this.compute('bundleName')),
           path.join(this.compute('cssDir'), '**/*.scss')],
           {space: 2}).replace(/"/g, `'`) :
-        stringify([path.join(this.compute('staticDir'), 'index.html'),
+        stringify([path.join(dirs('staticDir', this), 'index.html'),
           path.join(this.get('buildDir'), this.compute('bundleName'))],
           {space: 2}).replace(/"/g, `'`);
 
@@ -435,7 +436,7 @@ import './sass';`;
       return this.has('Compass') ? '.sass-cache' : '';
 
     case 'sassDir':
-      return path.join(this.compute('staticDir'), 'scss');
+      return path.join(dirs('staticDir', this), 'scss');
 
     case 'sassGlob':
       return stringify(joinGlobs(this.compute('sassDir'), '*.scss'),
@@ -451,9 +452,6 @@ import './sass';`;
     case 'srcGlob':
       return stringify(joinGlobs(this.get('srcDir'), this.compute('glob')),
         {space: 2}).replace(/"/g, `'`);
-
-    case 'staticDir':
-      return path.join(this.get('srcDir'), 'static');
 
     case 'testBundleGlob':
       return path.join(path.relative(this.get('testDir'),
@@ -479,7 +477,11 @@ import './sass';`;
   }
 
   getProps () {
-    return conf.getProps();
+    const props = conf.getProps();
+
+    props.dirs = dir => dirs(dir, this);
+
+    return props;
   }
 
   set (name, value) {
