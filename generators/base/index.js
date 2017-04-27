@@ -220,7 +220,7 @@ var _class = function (_Base) {
           }).join(', ');
 
         case 'browserMocha':
-          return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.compute('nodeDir')), 'mocha/mocha.js');
+          return _path2.default.join(_path2.default.relative(this.get('buildDir'), (0, _index.dirs)('nodeDir', this)), 'mocha/mocha.js');
 
         case 'bsWatchGlob':
           return this.has('Compass') ? (0, _jsonStableStringify2.default)([_path2.default.join((0, _index.dirs)('staticDir', this), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName')), _path2.default.join((0, _index.dirs)('cssDir', this), '**/*.scss')], { space: 2 }).replace(/"/g, '\'') : (0, _jsonStableStringify2.default)([_path2.default.join((0, _index.dirs)('staticDir', this), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName'))], { space: 2 }).replace(/"/g, '\'');
@@ -386,9 +386,6 @@ var _class = function (_Base) {
         case 'name':
           return this.appname;
 
-        case 'nodeDir':
-          return 'node_modules';
-
         case 'onMochaEnd':
           return this.has('React') || this.has('Compass') ? '\n    .on(\'end\', done)' : '';
 
@@ -448,7 +445,7 @@ var _class = function (_Base) {
           return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.compute('sassDir'), '*.scss'), { space: 2 }).replace(/"/g, '\'');
 
         case 'sassImportDir':
-          return this.compute('nodeDir');
+          return (0, _index.dirs)('nodeDir', this);
 
         case 'srcBuildGlob':
           return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.get('buildDir'), this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');

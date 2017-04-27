@@ -172,7 +172,7 @@ export default class extends Base {
 
     case 'browserMocha':
       return path.join(path.relative(this.get('buildDir'),
-        this.compute('nodeDir')), 'mocha/mocha.js');
+        dirs('nodeDir', this)), 'mocha/mocha.js');
 
     case 'bsWatchGlob':
       return this.has('Compass') ?
@@ -375,9 +375,6 @@ import './sass';`;
     case 'name':
       return this.appname;
 
-    case 'nodeDir':
-      return 'node_modules';
-
     case 'onMochaEnd':
       return this.has('React') || this.has('Compass') ? `
     .on('end', done)` : '';
@@ -440,7 +437,7 @@ import './sass';`;
         {space: 2}).replace(/"/g, `'`);
 
     case 'sassImportDir':
-      return this.compute('nodeDir');
+      return dirs('nodeDir', this);
 
     case 'srcBuildGlob':
       return stringify(joinGlobs(this.get('buildDir'), this.get('srcDir'),

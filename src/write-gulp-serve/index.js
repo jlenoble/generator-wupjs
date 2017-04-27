@@ -23,7 +23,6 @@ export default class extends Base {
 
   writing () {
     const props = this.getProps();
-    props.nodeDir = this.compute('nodeDir');
     props.bsWatchGlob = this.compute('bsWatchGlob');
     props.importSass = this.compute('importSass');
     props.preServeTask = this.compute('preServeTask');

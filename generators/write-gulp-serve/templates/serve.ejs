@@ -6,7 +6,7 @@ import './bundle';<%- importSass %>
 
 const buildDir = '<%- buildDir %>';
 const staticDir = '<%- dirs('staticDir') %>';
-const nodeDir = '<%- nodeDir %>';
+const nodeDir = '<%- dirs('nodeDir') %>';
 const bsWatchGlob = <%- bsWatchGlob %>;
 
 export const serve = done => {

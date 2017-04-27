@@ -15,6 +15,8 @@ var dirs = function dirs(dir, gen) {
   switch (dir) {
     case 'cssDir':
       return _path2.default.join(gen.get('buildDir'), 'css');
+    case 'nodeDir':
+      return 'node_modules';
     case 'staticDir':
       return _path2.default.join(gen.get('srcDir'), 'static');
   }

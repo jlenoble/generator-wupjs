@@ -52,7 +52,6 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.nodeDir = this.compute('nodeDir');
       props.bsWatchGlob = this.compute('bsWatchGlob');
       props.importSass = this.compute('importSass');
       props.preServeTask = this.compute('preServeTask');
