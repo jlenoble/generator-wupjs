@@ -45,6 +45,7 @@ var _class = function (_Base) {
       var props = this.getProps();
       props.allSrcGlob = this.compute('allSrcGlob');
       props.allBuildGlob = this.compute('allBuildGlob');
+      props.allSassGlob = this.compute('allSassGlob');
       props.importBundles = this.compute('importBundles');
       props.importSassFromSass = this.compute('importSassFromSass');
       props.gulpWatchTest = this.compute('gulpWatchTest');

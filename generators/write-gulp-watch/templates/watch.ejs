@@ -5,6 +5,7 @@ import {test} from './test';<%- importSassFromSass %>
 <%- importBundles %>
 const allSrcGlob = <%- allSrcGlob %>;
 const allBuildGlob = <%- allBuildGlob %>;
+const allSassGlob = <%- allSassGlob %>;
 
 export const watch = done => {
   gulp.watch(allSrcGlob, build);

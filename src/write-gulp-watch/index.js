@@ -17,6 +17,7 @@ export default class extends Base {
     const props = this.getProps();
     props.allSrcGlob = this.compute('allSrcGlob');
     props.allBuildGlob = this.compute('allBuildGlob');
+    props.allSassGlob = this.compute('allSassGlob');
     props.importBundles = this.compute('importBundles');
     props.importSassFromSass = this.compute('importSassFromSass');
     props.gulpWatchTest = this.compute('gulpWatchTest');
