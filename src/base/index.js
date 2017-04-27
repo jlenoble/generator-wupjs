@@ -178,7 +178,7 @@ export default class extends Base {
       return this.has('Compass') ?
         stringify([path.join(dirs('staticDir', this), 'index.html'),
           path.join(this.get('buildDir'), this.compute('bundleName')),
-          path.join(this.compute('cssDir'), '**/*.scss')],
+          path.join(dirs('cssDir', this), '**/*.scss')],
           {space: 2}).replace(/"/g, `'`) :
         stringify([path.join(dirs('staticDir', this), 'index.html'),
           path.join(this.get('buildDir'), this.compute('bundleName'))],
@@ -222,9 +222,6 @@ export default class extends Base {
       } else {
         return '';
       }
-
-    case 'cssDir':
-      return path.join(this.get('buildDir'), 'css');
 
     case 'cYear':
       {

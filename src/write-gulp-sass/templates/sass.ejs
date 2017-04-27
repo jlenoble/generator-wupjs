@@ -5,7 +5,7 @@ import sourcemaps from 'gulp-sourcemaps';
 
 const sassGlob = <%- sassGlob %>;
 const sassDir = '<%- sassDir %>';
-const cssDir = '<%- cssDir %>';
+const cssDir = '<%- dirs('cssDir') %>';
 const sassImportDir = '<%- sassImportDir %>';
 
 export const sass = () => {
