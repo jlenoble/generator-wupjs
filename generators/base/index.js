@@ -26,21 +26,7 @@ var _jsonStableStringify = require('json-stable-stringify');
 
 var _jsonStableStringify2 = _interopRequireDefault(_jsonStableStringify);
 
-var _config = require('../config');
-
-var _config2 = _interopRequireDefault(_config);
-
-var _getGenerator = require('../get-generator');
-
-var _getGenerator2 = _interopRequireDefault(_getGenerator);
-
-var _getWriteGenerators = require('../get-write-generators');
-
-var _getWriteGenerators2 = _interopRequireDefault(_getWriteGenerators);
-
-var _joinGlobs = require('../join-globs');
-
-var _joinGlobs2 = _interopRequireDefault(_joinGlobs);
+var _index = require('../index');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -55,7 +41,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var appDir = __dirname;
-var conf = new _config2.default();
+var conf = new _index.Config();
 
 var _class = function (_Base) {
   _inherits(_class, _Base);
@@ -124,7 +110,7 @@ var _class = function (_Base) {
 
       propNames.forEach(function (propName) {
         if (!_this2.get(propName)) {
-          var genName = (0, _getGenerator2.default)(propName);
+          var genName = (0, _index.getGenerator)(propName);
           if (genName) {
             generators[genName] = true;
           }
@@ -140,7 +126,7 @@ var _class = function (_Base) {
     value: function writeIfChanged(propName) {
       var _this3 = this;
 
-      var generators = (0, _getWriteGenerators2.default)(propName);
+      var generators = (0, _index.getWriteGenerators)(propName);
 
       generators.forEach(function (gen) {
         _this3.composeWith(gen);
@@ -218,13 +204,13 @@ var _class = function (_Base) {
     value: function compute(propName) {
       switch (propName) {
         case 'allBuildGlob':
-          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), [this.get('srcDir'), this.get('testDir')], '**/*.js'), { space: 2 }).replace(/"/g, '\'');
+          return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.get('buildDir'), [this.get('srcDir'), this.get('testDir')], '**/*.js'), { space: 2 }).replace(/"/g, '\'');
 
         case 'allSassGlob':
-          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.compute('sassDir'), '**/*.scss'), { space: 2 }).replace(/"/g, '\'');
+          return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.compute('sassDir'), '**/*.scss'), { space: 2 }).replace(/"/g, '\'');
 
         case 'allSrcGlob':
-          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)([this.get('srcDir'), this.get('testDir')], this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
+          return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)([this.get('srcDir'), this.get('testDir')], this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
 
         case 'babelPlugins':
           return Object.keys(this.get('devDeps')).filter(function (dep) {
@@ -462,16 +448,16 @@ var _class = function (_Base) {
           return _path2.default.join(this.compute('staticDir'), 'scss');
 
         case 'sassGlob':
-          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.compute('sassDir'), '*.scss'), { space: 2 }).replace(/"/g, '\'');
+          return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.compute('sassDir'), '*.scss'), { space: 2 }).replace(/"/g, '\'');
 
         case 'sassImportDir':
           return this.compute('nodeDir');
 
         case 'srcBuildGlob':
-          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
+          return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.get('buildDir'), this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
 
         case 'srcGlob':
-          return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
+          return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
 
         case 'staticDir':
           return _path2.default.join(this.get('srcDir'), 'static');
@@ -486,7 +472,7 @@ var _class = function (_Base) {
           return _path2.default.join(this.get('buildDir'), this.get('testDir'), 'index.test.js');
 
         case 'testGlob':
-          return this.has('React') || this.has('Compass') ? '\'' + _path2.default.join(this.get('testDir'), this.compute('runnerFile')) + '\'' : (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
+          return this.has('React') || this.has('Compass') ? '\'' + _path2.default.join(this.get('testDir'), this.compute('runnerFile')) + '\'' : (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
       }
     }
   }, {

@@ -3,10 +3,7 @@ import path from 'path';
 import slug from 'slug';
 import upperCamelCase from 'uppercamelcase';
 import stringify from 'json-stable-stringify';
-import Config from '../config';
-import getGenerator from '../get-generator';
-import getWriteGenerators from '../get-write-generators';
-import joinGlobs from '../join-globs';
+import {Config, getGenerator, getWriteGenerators, joinGlobs} from '../index';
 
 const appDir = __dirname;
 const conf = new Config();
