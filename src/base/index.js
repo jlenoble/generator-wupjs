@@ -125,31 +125,35 @@ export default class extends Base {
       return this.get('babel') !== 'none' || this.has('React');
 
     case 'compass':
-      try {
-        return this.get('preprocessors').includes('Compass');
-      } catch (e) {
-        throw new Error(
-          `Property 'preprocessors' is undefined: You should add a
-     this.promptIfMissing(['preprocessors']) in the ctor of this generator`);
-      }
+      return this.hasPreprocessor(libname);
 
-    case 'enzyme':
-      try {
-        return this.get('addons').includes('Enzyme');
-      } catch (e) {
-        throw new Error(
-          `Property 'addons' is undefined: You should add a
-     this.promptIfMissing(['addons']) in the ctor of this generator`);
-      }
+    case 'enzyme': case 'react':
+      return this.hasAddon(libname);
 
-    case 'react':
-      try {
-        return this.get('addons').includes('React');
-      } catch (e) {
-        throw new Error(
-          `Property 'addons' is undefined: You should add a
-     this.promptIfMissing(['addons']) in the ctor of this generator`);
-      }
+    default:
+      return false;
+    }
+  }
+
+  hasAddon (name) {
+    try {
+      return this.get('addons').map(str => str.toLowerCase())
+        .includes(name.toLowerCase());
+    } catch (e) {
+      throw new Error(
+        `Property 'addons' is undefined: You should add a
+   this.promptIfMissing(['addons']) in the ctor of this generator`);
+    }
+  }
+
+  hasPreprocessor (name) {
+    try {
+      return this.get('preprocessors').map(str => str.toLowerCase())
+        .includes(name.toLowerCase());
+    } catch (e) {
+      throw new Error(
+        `Property 'preprocessors' is undefined: You should add a
+   this.promptIfMissing(['preprocessors']) in the ctor of this generator`);
     }
   }
 

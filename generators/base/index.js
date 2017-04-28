@@ -180,25 +180,35 @@ var _class = function (_Base) {
           return this.get('babel') !== 'none' || this.has('React');
 
         case 'compass':
-          try {
-            return this.get('preprocessors').includes('Compass');
-          } catch (e) {
-            throw new Error('Property \'preprocessors\' is undefined: You should add a\n     this.promptIfMissing([\'preprocessors\']) in the ctor of this generator');
-          }
+          return this.hasPreprocessor(libname);
 
-        case 'enzyme':
-          try {
-            return this.get('addons').includes('Enzyme');
-          } catch (e) {
-            throw new Error('Property \'addons\' is undefined: You should add a\n     this.promptIfMissing([\'addons\']) in the ctor of this generator');
-          }
+        case 'enzyme':case 'react':
+          return this.hasAddon(libname);
 
-        case 'react':
-          try {
-            return this.get('addons').includes('React');
-          } catch (e) {
-            throw new Error('Property \'addons\' is undefined: You should add a\n     this.promptIfMissing([\'addons\']) in the ctor of this generator');
-          }
+        default:
+          return false;
+      }
+    }
+  }, {
+    key: 'hasAddon',
+    value: function hasAddon(name) {
+      try {
+        return this.get('addons').map(function (str) {
+          return str.toLowerCase();
+        }).includes(name.toLowerCase());
+      } catch (e) {
+        throw new Error('Property \'addons\' is undefined: You should add a\n   this.promptIfMissing([\'addons\']) in the ctor of this generator');
+      }
+    }
+  }, {
+    key: 'hasPreprocessor',
+    value: function hasPreprocessor(name) {
+      try {
+        return this.get('preprocessors').map(function (str) {
+          return str.toLowerCase();
+        }).includes(name.toLowerCase());
+      } catch (e) {
+        throw new Error('Property \'preprocessors\' is undefined: You should add a\n   this.promptIfMissing([\'preprocessors\']) in the ctor of this generator');
       }
     }
   }, {
