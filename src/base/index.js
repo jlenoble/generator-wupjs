@@ -4,7 +4,7 @@ import slug from 'slug';
 import upperCamelCase from 'uppercamelcase';
 import stringify from 'json-stable-stringify';
 import {Config, getGenerator, getWriteGenerators, joinGlobs,
-  extendProps, extendedProps, deps} from '../index';
+  extendProps, extendedProps} from '../index';
 
 const appDir = __dirname;
 const conf = new Config();
@@ -234,12 +234,6 @@ export default class extends Base {
         return cYear;
       }
 
-    case 'dependencies':
-      return deps('deps', this);
-
-    case 'devDependencies':
-      return deps('devDeps', this);
-
     case 'ecmaFeatures':
       return stringify(this.has('React') ? {jsx: true} : {}, {space: 2})
       .replace(/\n/g, '\n    ');
@@ -378,9 +372,6 @@ import './sass';`;
     case 'onMochaEnd':
       return this.has('React') || this.has('Compass') ? `
     .on('end', done)` : '';
-
-    case 'peerDependencies':
-      return deps('peerDeps', this);
 
     case 'pipeBabel':
       return this.has('Babel') ? '\n    .pipe(babel())' : '';

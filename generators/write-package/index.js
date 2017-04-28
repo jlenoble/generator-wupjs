@@ -40,9 +40,6 @@ var _class = function (_Base) {
       var props = this.getProps();
 
       props.main = this.compute('main');
-      props.dependencies = this.compute('dependencies');
-      props.devDependencies = this.compute('devDependencies');
-      props.peerDependencies = this.compute('peerDependencies');
 
       this.fs.copyTpl(this.templatePath('package.ejs'), this.destinationPath('package.json'), props);
     }

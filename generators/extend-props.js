@@ -5,15 +5,28 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.extendedProps = undefined;
 
-var _index = require('./index');
+var _compute = require('./compute');
+
+var _stems = require('./stems');
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var makeMethod = function makeMethod(fn, gen) {
+  return function (arg) {
+    return fn(arg, gen);
+  };
+};
+
+var funcs = [_stems.dirs, _compute.nodeDeps];
+
+var extendedProps = exports.extendedProps = funcs.map(function (fn) {
+  return fn.name;
+});
 
 var extendProps = function extendProps(gen) {
-  Object.assign(gen, {
-    dirs: function dirs(dir) {
-      return (0, _index.dirs)(dir, gen);
-    }
+  funcs.forEach(function (fn) {
+    Object.assign(gen, _defineProperty({}, fn.name, makeMethod(fn, gen)));
   });
 };
 
 exports.default = extendProps;
-var extendedProps = exports.extendedProps = ['dirs'];

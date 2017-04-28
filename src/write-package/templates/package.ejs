@@ -11,7 +11,7 @@
     "email": "<%= email %>"
   },
   "license": "<%= license %>",
-  "dependencies": <%- dependencies %>,
-  "devDependencies": <%- devDependencies %>,
-  "peerDependencies": <%- peerDependencies %>
+  "dependencies": <%- nodeDeps('deps') %>,
+  "devDependencies": <%- nodeDeps('devDeps') %>,
+  "peerDependencies": <%- nodeDeps('peerDeps') %>
 }

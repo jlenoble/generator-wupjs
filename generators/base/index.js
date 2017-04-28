@@ -266,12 +266,6 @@ var _class = function (_Base) {
             return cYear;
           }
 
-        case 'dependencies':
-          return (0, _index.deps)('deps', this);
-
-        case 'devDependencies':
-          return (0, _index.deps)('devDeps', this);
-
         case 'ecmaFeatures':
           return (0, _jsonStableStringify2.default)(this.has('React') ? { jsx: true } : {}, { space: 2 }).replace(/\n/g, '\n    ');
 
@@ -390,9 +384,6 @@ var _class = function (_Base) {
 
         case 'onMochaEnd':
           return this.has('React') || this.has('Compass') ? '\n    .on(\'end\', done)' : '';
-
-        case 'peerDependencies':
-          return (0, _index.deps)('peerDeps', this);
 
         case 'pipeBabel':
           return this.has('Babel') ? '\n    .pipe(babel())' : '';
