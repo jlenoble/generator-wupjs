@@ -4,7 +4,7 @@ import slug from 'slug';
 import upperCamelCase from 'uppercamelcase';
 import stringify from 'json-stable-stringify';
 import {Config, getGenerator, getWriteGenerators, joinGlobs,
-  extendProps, extendedProps} from '../index';
+  extendProps, extendedProps} from '../helpers';
 
 const appDir = __dirname;
 const conf = new Config();

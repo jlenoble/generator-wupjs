@@ -26,7 +26,7 @@ var _jsonStableStringify = require('json-stable-stringify');
 
 var _jsonStableStringify2 = _interopRequireDefault(_jsonStableStringify);
 
-var _index = require('../index');
+var _helpers = require('../helpers');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41,7 +41,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var appDir = __dirname;
-var conf = new _index.Config();
+var conf = new _helpers.Config();
 
 var _class = function (_Base) {
   _inherits(_class, _Base);
@@ -89,7 +89,7 @@ var _class = function (_Base) {
     _this.composeWith('gen-version');
     _this.composeWith('date');
 
-    (0, _index.extendProps)(_this);
+    (0, _helpers.extendProps)(_this);
     return _this;
   }
 
@@ -112,7 +112,7 @@ var _class = function (_Base) {
 
       propNames.forEach(function (propName) {
         if (!_this2.get(propName)) {
-          var genName = (0, _index.getGenerator)(propName);
+          var genName = (0, _helpers.getGenerator)(propName);
           if (genName) {
             generators[genName] = true;
           }
@@ -128,7 +128,7 @@ var _class = function (_Base) {
     value: function writeIfChanged(propName) {
       var _this3 = this;
 
-      var generators = (0, _index.getWriteGenerators)(propName);
+      var generators = (0, _helpers.getWriteGenerators)(propName);
 
       generators.forEach(function (gen) {
         _this3.composeWith(gen);
@@ -206,10 +206,10 @@ var _class = function (_Base) {
     value: function compute(propName) {
       switch (propName) {
         case 'allBuildGlob':
-          return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.get('buildDir'), [this.get('srcDir'), this.get('testDir')], '**/*.js'), { space: 2 }).replace(/"/g, '\'');
+          return (0, _jsonStableStringify2.default)((0, _helpers.joinGlobs)(this.get('buildDir'), [this.get('srcDir'), this.get('testDir')], '**/*.js'), { space: 2 }).replace(/"/g, '\'');
 
         case 'allSrcGlob':
-          return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)([this.get('srcDir'), this.get('testDir')], this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
+          return (0, _jsonStableStringify2.default)((0, _helpers.joinGlobs)([this.get('srcDir'), this.get('testDir')], this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
 
         case 'babelPlugins':
           return Object.keys(this.get('devDeps')).filter(function (dep) {
@@ -390,7 +390,7 @@ var _class = function (_Base) {
           return this.has('Compass') ? '.sass-cache' : '';
 
         case 'srcBuildGlob':
-          return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.get('buildDir'), this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
+          return (0, _jsonStableStringify2.default)((0, _helpers.joinGlobs)(this.get('buildDir'), this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
 
         case 'testBundleGlob':
           return _path2.default.join(_path2.default.relative(this.get('testDir'), this.get('buildDir')), this.compute('testBundleName'));
@@ -402,7 +402,7 @@ var _class = function (_Base) {
           return _path2.default.join(this.get('buildDir'), this.get('testDir'), 'index.test.js');
 
         case 'testGlob':
-          return this.has('React') || this.has('Compass') ? '\'' + _path2.default.join(this.get('testDir'), this.compute('runnerFile')) + '\'' : (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
+          return this.has('React') || this.has('Compass') ? '\'' + _path2.default.join(this.get('testDir'), this.compute('runnerFile')) + '\'' : (0, _jsonStableStringify2.default)((0, _helpers.joinGlobs)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
       }
     }
   }, {
@@ -417,7 +417,7 @@ var _class = function (_Base) {
 
       var props = conf.getProps();
 
-      _index.extendedProps.forEach(function (func) {
+      _helpers.extendedProps.forEach(function (func) {
         props[func] = _this4[func];
       });
 
