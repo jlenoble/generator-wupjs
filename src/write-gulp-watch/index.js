@@ -32,7 +32,7 @@ const allBuildGlob = ${this.compute('allBuildGlob')};
 const allSassGlob = ${this.globs('sass:**')};\n`;
 
     if (this.has('PhantomJS')) {
-      consts += `const srcBuildGlob = ${this.compute('srcBuildGlob')};
+      consts += `const srcBuildGlob = ${this.globs('build#src:**:js')};
 const testBundleGlob = '${path.join(this.get('buildDir'),
 'test-bundle.js')}';\n`;
     }

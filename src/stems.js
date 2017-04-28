@@ -22,8 +22,15 @@ const dirs = (dir, gen) => {
 };
 
 const fullDir = (dir, gen) => {
-  const dirs = dir.split(',');
-  return dirs.map(dir => gen.dirs(dir + 'Dir'));
+  let [rel, dirs] = dir.split('#');
+  if (!dirs) {
+    dirs = rel;
+    rel = undefined;
+  }
+
+  return dirs.split(',').map(dir => rel ?
+    path.join(rel, gen.dirs(dir + 'Dir')) :
+    gen.dirs(dir + 'Dir'));
 };
 
 const pattern = pat => pat === '**' ? '**/*' : '*';

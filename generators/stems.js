@@ -41,9 +41,18 @@ var dirs = function dirs(dir, gen) {
 };
 
 var fullDir = function fullDir(dir, gen) {
-  var dirs = dir.split(',');
-  return dirs.map(function (dir) {
-    return gen.dirs(dir + 'Dir');
+  var _dir$split = dir.split('#'),
+      _dir$split2 = _slicedToArray(_dir$split, 2),
+      rel = _dir$split2[0],
+      dirs = _dir$split2[1];
+
+  if (!dirs) {
+    dirs = rel;
+    rel = undefined;
+  }
+
+  return dirs.split(',').map(function (dir) {
+    return rel ? _path2.default.join(rel, gen.dirs(dir + 'Dir')) : gen.dirs(dir + 'Dir');
   });
 };
 

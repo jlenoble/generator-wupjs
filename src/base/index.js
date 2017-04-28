@@ -353,10 +353,6 @@ import './sass';`;
     case 'sassCache':
       return this.has('Compass') ? '.sass-cache' : '';
 
-    case 'srcBuildGlob':
-      return stringify(joinGlobs(this.get('buildDir'), this.get('srcDir'),
-        this.compute('glob')), {space: 2}).replace(/"/g, `'`);
-
     case 'testBundleGlob':
       return path.join(path.relative(this.get('testDir'),
         this.get('buildDir')), this.compute('testBundleName'));

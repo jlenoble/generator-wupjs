@@ -55,7 +55,7 @@ var _class = function (_Base) {
       var consts = 'const allSrcGlob = ' + this.globs('src,test:**:js') + ';\nconst allBuildGlob = ' + this.compute('allBuildGlob') + ';\nconst allSassGlob = ' + this.globs('sass:**') + ';\n';
 
       if (this.has('PhantomJS')) {
-        consts += 'const srcBuildGlob = ' + this.compute('srcBuildGlob') + ';\nconst testBundleGlob = \'' + _path2.default.join(this.get('buildDir'), 'test-bundle.js') + '\';\n';
+        consts += 'const srcBuildGlob = ' + this.globs('build#src:**:js') + ';\nconst testBundleGlob = \'' + _path2.default.join(this.get('buildDir'), 'test-bundle.js') + '\';\n';
       }
 
       return consts;

@@ -393,9 +393,6 @@ var _class = function (_Base) {
         case 'sassCache':
           return this.has('Compass') ? '.sass-cache' : '';
 
-        case 'srcBuildGlob':
-          return (0, _jsonStableStringify2.default)((0, _helpers.joinGlobs)(this.get('buildDir'), this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
-
         case 'testBundleGlob':
           return _path2.default.join(_path2.default.relative(this.get('testDir'), this.get('buildDir')), this.compute('testBundleName'));
 
