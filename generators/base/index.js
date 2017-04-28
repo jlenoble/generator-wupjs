@@ -474,9 +474,9 @@ var _class = function (_Base) {
 
       var props = conf.getProps();
 
-      props.dirs = function (dir) {
-        return _this4.dirs(dir);
-      };
+      _index.extendedProps.forEach(function (func) {
+        props[func] = _this4[func];
+      });
 
       return props;
     }

@@ -30,6 +30,12 @@ Object.defineProperty(exports, 'extendProps', {
     return _interopRequireDefault(_extendProps).default;
   }
 });
+Object.defineProperty(exports, 'extendedProps', {
+  enumerable: true,
+  get: function get() {
+    return _extendProps.extendedProps;
+  }
+});
 
 var _getGenerator = require('./get-generator');
 

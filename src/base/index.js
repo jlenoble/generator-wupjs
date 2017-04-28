@@ -4,7 +4,7 @@ import slug from 'slug';
 import upperCamelCase from 'uppercamelcase';
 import stringify from 'json-stable-stringify';
 import {Config, getGenerator, getWriteGenerators, joinGlobs,
-  extendProps, deps} from '../index';
+  extendProps, extendedProps, deps} from '../index';
 
 const appDir = __dirname;
 const conf = new Config();
@@ -466,7 +466,9 @@ import './sass';`;
   getProps () {
     const props = conf.getProps();
 
-    props.dirs = dir => this.dirs(dir);
+    extendedProps.forEach(func => {
+      props[func] = this[func];
+    });
 
     return props;
   }
