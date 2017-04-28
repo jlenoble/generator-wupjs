@@ -1,6 +1,5 @@
 import Base from '../base';
 import path from 'path';
-import stringify from 'json-stable-stringify';
 
 export default class extends Base {
   constructor (args, opts) {
@@ -42,14 +41,12 @@ const nodeDir = '${this.dirs('nodeDir')}';
 const bsWatchGlob = `;
 
     if (this.has('Compass')) {
-      consts += stringify([path.join(this.dirs('staticDir'), 'index.html'),
+      consts += this.stringify([path.join(this.dirs('staticDir'), 'index.html'),
         path.join(this.get('buildDir'), this.compute('bundleName')),
-        path.join(this.dirs('cssDir'), '**/*.scss')],
-        {space: 2}).replace(/"/g, `'`);
+        path.join(this.dirs('cssDir'), '**/*.scss')]);
     } else {
-      consts += stringify([path.join(this.dirs('staticDir'), 'index.html'),
-        path.join(this.get('buildDir'), this.compute('bundleName'))],
-        {space: 2}).replace(/"/g, `'`);
+      consts += this.stringify([path.join(this.dirs('staticDir'), 'index.html'),
+        path.join(this.get('buildDir'), this.compute('bundleName'))]);
     }
 
     consts += ';';
