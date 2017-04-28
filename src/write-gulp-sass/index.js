@@ -17,9 +17,6 @@ export default class extends Base {
 
   writing () {
     const props = this.getProps();
-    props.sassDir = this.compute('sassDir');
-    props.sassImportDir = this.compute('sassImportDir');
-    props.sassGlob = this.compute('sassGlob');
 
     this.fs.copyTpl(
       this.templatePath('sass.ejs'),

@@ -1,11 +1,11 @@
 import {nodeDeps} from './compute';
-import {dirs} from './stems';
+import {dirs, globs} from './stems';
 
 const makeMethod = (fn, gen) => function (arg) {
   return fn(arg, gen);
 };
 
-const funcs = [dirs, nodeDeps];
+const funcs = [dirs, globs, nodeDeps];
 
 export const extendedProps = funcs.map(fn => fn.name);
 

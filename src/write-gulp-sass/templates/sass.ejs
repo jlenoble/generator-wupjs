@@ -3,7 +3,7 @@ import path from 'path';
 import compass from 'gulp-compass';
 import sourcemaps from 'gulp-sourcemaps';
 
-const sassGlob = <%- sassGlob %>;
+const sassGlob = <%- globs('sass:*') %>;
 const sassDir = '<%- dirs('sassDir') %>';
 const cssDir = '<%- dirs('cssDir') %>';
 const sassImportDir = '<%- dirs('sassImportDir') %>';

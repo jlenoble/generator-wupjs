@@ -431,9 +431,6 @@ var _class = function (_Base) {
         case 'sassCache':
           return this.has('Compass') ? '.sass-cache' : '';
 
-        case 'sassGlob':
-          return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.dirs('sassDir'), '*.scss'), { space: 2 }).replace(/"/g, '\'');
-
         case 'srcBuildGlob':
           return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.get('buildDir'), this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
 

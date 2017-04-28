@@ -81,5 +81,11 @@ Object.defineProperty(exports, 'dirs', {
     return _stems.dirs;
   }
 });
+Object.defineProperty(exports, 'globs', {
+  enumerable: true,
+  get: function get() {
+    return _stems.globs;
+  }
+});
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
