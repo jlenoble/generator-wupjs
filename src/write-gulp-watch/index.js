@@ -28,7 +28,7 @@ export default class extends Base {
 
   _consts () {
     let consts = `const allSrcGlob = ${this.globs('src,test:**:js')};
-const allBuildGlob = ${this.compute('allBuildGlob')};
+const allBuildGlob = ${this.globs('build#src,test:**:js')};
 const allSassGlob = ${this.globs('sass:**')};\n`;
 
     if (this.has('PhantomJS')) {

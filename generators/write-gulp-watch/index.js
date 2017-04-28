@@ -52,7 +52,7 @@ var _class = function (_Base) {
   }, {
     key: '_consts',
     value: function _consts() {
-      var consts = 'const allSrcGlob = ' + this.globs('src,test:**:js') + ';\nconst allBuildGlob = ' + this.compute('allBuildGlob') + ';\nconst allSassGlob = ' + this.globs('sass:**') + ';\n';
+      var consts = 'const allSrcGlob = ' + this.globs('src,test:**:js') + ';\nconst allBuildGlob = ' + this.globs('build#src,test:**:js') + ';\nconst allSassGlob = ' + this.globs('sass:**') + ';\n';
 
       if (this.has('PhantomJS')) {
         consts += 'const srcBuildGlob = ' + this.globs('build#src:**:js') + ';\nconst testBundleGlob = \'' + _path2.default.join(this.get('buildDir'), 'test-bundle.js') + '\';\n';

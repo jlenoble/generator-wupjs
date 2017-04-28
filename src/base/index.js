@@ -3,7 +3,7 @@ import path from 'path';
 import slug from 'slug';
 import upperCamelCase from 'uppercamelcase';
 import stringify from 'json-stable-stringify';
-import {Config, getGenerator, getWriteGenerators, joinGlobs,
+import {Config, getGenerator, getWriteGenerators,
   extendProps, extendedProps} from '../helpers';
 
 const appDir = __dirname;
@@ -162,10 +162,6 @@ export default class extends Base {
 
   compute (propName) {
     switch (propName) {
-    case 'allBuildGlob':
-      return stringify(joinGlobs(this.get('buildDir'), [this.get('srcDir'),
-        this.get('testDir')], '**/*.js'), {space: 2}).replace(/"/g, `'`);
-
     case 'babelPlugins':
       return Object.keys(this.get('devDeps')).filter(dep => {
         return dep.match(/babel-plugin/);
