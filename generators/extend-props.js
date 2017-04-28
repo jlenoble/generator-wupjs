@@ -17,7 +17,7 @@ var makeMethod = function makeMethod(fn, gen) {
   };
 };
 
-var funcs = [_stems.dirs, _compute.fullDir, _compute.fullExt, _stems.globs, _compute.nodeDeps, _compute.stringify];
+var funcs = [_stems.dirs, _stems.filenames, _compute.fullDir, _compute.fullExt, _stems.globs, _compute.nodeDeps, _compute.stringify];
 
 var extendedProps = exports.extendedProps = funcs.map(function (fn) {
   return fn.name;

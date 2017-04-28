@@ -64,9 +64,9 @@ var _class = function (_Base) {
       var consts = 'const buildDir = \'' + this.dirs('buildDir') + '\';\nconst staticDir = \'' + this.dirs('staticDir') + '\';\nconst nodeDir = \'' + this.dirs('nodeDir') + '\';\nconst bsWatchGlob = ';
 
       if (this.has('Compass')) {
-        consts += this.stringify([_path2.default.join(this.dirs('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName')), _path2.default.join(this.dirs('cssDir'), '**/*.scss')]);
+        consts += this.stringify([_path2.default.join(this.dirs('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.filenames('bundle')), _path2.default.join(this.dirs('cssDir'), '**/*.scss')]);
       } else {
-        consts += this.stringify([_path2.default.join(this.dirs('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName'))]);
+        consts += this.stringify([_path2.default.join(this.dirs('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.filenames('bundle'))]);
       }
 
       consts += ';';

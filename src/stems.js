@@ -20,6 +20,19 @@ const dirs = (dir, gen) => {
   }
 };
 
+const filenames = (file, gen) => {
+  switch (file) {
+  case 'bundle':
+    return 'bundle.js';
+
+  case 'testBundle':
+    return 'test-bundle.js';
+
+  case 'runnerPage':
+    return 'runner.html';
+  }
+};
+
 const globs = (globHint, gen) => {
   let [rel, hint] = globHint.split('#');
   if (!hint) {
@@ -32,4 +45,4 @@ const globs = (globHint, gen) => {
   return gen.stringify(joinGlobs(gen.fullDir(hints), gen.fullExt(hints)));
 };
 
-export {dirs, globs};
+export {dirs, filenames, globs};

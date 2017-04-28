@@ -221,9 +221,6 @@ var _class = function (_Base) {
         case 'browserMocha':
           return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.dirs('nodeDir')), 'mocha/mocha.js');
 
-        case 'bundleName':
-          return 'bundle.js';
-
         case 'bundleRoot':
           return _path2.default.join(this.get('buildDir'), this.get('srcDir'), 'demo.js');
 
@@ -341,23 +338,17 @@ var _class = function (_Base) {
             return '\'' + (this.has('React') ? 'test-bundle' : 'build') + '\'';
           }
 
-        case 'runnerFile':
-          return 'runner.html';
-
         case 'sassCache':
           return this.has('Compass') ? '.sass-cache' : '';
 
         case 'testBundleGlob':
-          return _path2.default.join(_path2.default.relative(this.get('testDir'), this.get('buildDir')), this.compute('testBundleName'));
-
-        case 'testBundleName':
-          return 'test-bundle.js';
+          return _path2.default.join(_path2.default.relative(this.get('testDir'), this.get('buildDir')), this.filenames('testBundle'));
 
         case 'testBundleRoot':
           return _path2.default.join(this.get('buildDir'), this.get('testDir'), 'index.test.js');
 
         case 'testGlob':
-          return this.has('PhantomJS') ? '\'' + _path2.default.join(this.get('testDir'), this.compute('runnerFile')) + '\'' : this.globs('build#test:**:test.js');
+          return this.has('PhantomJS') ? '\'' + _path2.default.join(this.get('testDir'), this.filenames('runnerPage')) + '\'' : this.globs('build#test:**:test.js');
       }
     }
   }, {

@@ -30,7 +30,7 @@ export default class extends Base {
   writing () {
     const props = this.getProps();
     props.testBundleRoot = this.compute('testBundleRoot');
-    props.testBundleName = this.compute('testBundleName');
+    props.testBundleName = this.filenames('testBundle');
     props.externalReact = this.compute('externalReact');
 
     this.fs.copyTpl(

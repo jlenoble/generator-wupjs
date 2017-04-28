@@ -59,7 +59,7 @@ var _class = function (_Base) {
     value: function writing() {
       var props = this.getProps();
       props.testBundleRoot = this.compute('testBundleRoot');
-      props.testBundleName = this.compute('testBundleName');
+      props.testBundleName = this.filenames('testBundle');
       props.externalReact = this.compute('externalReact');
 
       this.fs.copyTpl(this.templatePath('test-bundle.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'test-bundle.js')), props);

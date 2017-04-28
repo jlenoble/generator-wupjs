@@ -42,11 +42,11 @@ const bsWatchGlob = `;
 
     if (this.has('Compass')) {
       consts += this.stringify([path.join(this.dirs('staticDir'), 'index.html'),
-        path.join(this.get('buildDir'), this.compute('bundleName')),
+        path.join(this.get('buildDir'), this.filenames('bundle')),
         path.join(this.dirs('cssDir'), '**/*.scss')]);
     } else {
       consts += this.stringify([path.join(this.dirs('staticDir'), 'index.html'),
-        path.join(this.get('buildDir'), this.compute('bundleName'))]);
+        path.join(this.get('buildDir'), this.filenames('bundle'))]);
     }
 
     consts += ';';

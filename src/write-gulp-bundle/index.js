@@ -22,7 +22,7 @@ export default class extends Base {
   writing () {
     const props = this.getProps();
     props.bundleRoot = this.compute('bundleRoot');
-    props.bundleName = this.compute('bundleName');
+    props.bundleName = this.filenames('bundle');
     props.externalReact = this.compute('externalReact');
 
     this.fs.copyTpl(

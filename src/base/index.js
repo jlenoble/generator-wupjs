@@ -166,9 +166,6 @@ export default class extends Base {
       return path.join(path.relative(this.get('buildDir'),
         this.dirs('nodeDir')), 'mocha/mocha.js');
 
-    case 'bundleName':
-      return 'bundle.js';
-
     case 'bundleRoot':
       return path.join(this.get('buildDir'), this.get('srcDir'),
         'demo.js');
@@ -296,18 +293,12 @@ import './sass';`;
         return `'${this.has('React') ? 'test-bundle' : 'build'}'`;
       }
 
-    case 'runnerFile':
-      return 'runner.html';
-
     case 'sassCache':
       return this.has('Compass') ? '.sass-cache' : '';
 
     case 'testBundleGlob':
       return path.join(path.relative(this.get('testDir'),
-        this.get('buildDir')), this.compute('testBundleName'));
-
-    case 'testBundleName':
-      return 'test-bundle.js';
+        this.get('buildDir')), this.filenames('testBundle'));
 
     case 'testBundleRoot':
       return path.join(this.get('buildDir'), this.get('testDir'),
@@ -315,7 +306,7 @@ import './sass';`;
 
     case 'testGlob':
       return this.has('PhantomJS') ?
-        `'${path.join(this.get('testDir'), this.compute('runnerFile'))}'` :
+        `'${path.join(this.get('testDir'), this.filenames('runnerPage'))}'` :
         this.globs('build#test:**:test.js');
     }
   }

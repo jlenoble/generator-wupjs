@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.globs = exports.dirs = undefined;
+exports.globs = exports.filenames = exports.dirs = undefined;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -36,6 +36,19 @@ var dirs = function dirs(dir, gen) {
   }
 };
 
+var filenames = function filenames(file, gen) {
+  switch (file) {
+    case 'bundle':
+      return 'bundle.js';
+
+    case 'testBundle':
+      return 'test-bundle.js';
+
+    case 'runnerPage':
+      return 'runner.html';
+  }
+};
+
 var globs = function globs(globHint, gen) {
   var _globHint$split = globHint.split('#'),
       _globHint$split2 = _slicedToArray(_globHint$split, 2),
@@ -59,4 +72,5 @@ var globs = function globs(globHint, gen) {
 };
 
 exports.dirs = dirs;
+exports.filenames = filenames;
 exports.globs = globs;
