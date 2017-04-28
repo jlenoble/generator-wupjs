@@ -56,10 +56,10 @@ var _class = function (_Base) {
     value: function writing() {
       var props = this.getProps();
 
-      var filename = this.compute('classFileName');
-      var testFilename = this.compute('classTestFileName');
+      var filename = this.compute('fileStem') + '.js';
+      var testFilename = this.compute('fileStem') + '.test.js';
 
-      props.Class = this.className;
+      props.Class = this.compute('className');
       props.module = this.compute('module');
 
       this.fs.copyTpl(this.templatePath('class.ejs'), this.destinationPath(_path2.default.join(props.srcDir, filename)), props);

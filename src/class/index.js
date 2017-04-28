@@ -26,10 +26,10 @@ export default class extends Base {
   writing () {
     const props = this.getProps();
 
-    const filename = this.compute('classFileName');
-    const testFilename = this.compute('classTestFileName');
+    const filename = this.compute('fileStem') + '.js';
+    const testFilename = this.compute('fileStem') + '.test.js';
 
-    props.Class = this.className;
+    props.Class = this.compute('className');
     props.module = this.compute('module');
 
     this.fs.copyTpl(

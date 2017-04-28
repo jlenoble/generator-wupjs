@@ -189,14 +189,8 @@ export default class extends Base {
       return path.join(this.get('buildDir'), this.get('srcDir'),
         'demo.js');
 
-    case 'classFileName':
-      return this.compute('fileStem') + '.js';
-
     case 'className':
       return upperCamelCase(this.get('name'));
-
-    case 'classTestFileName':
-      return this.compute('fileStem') + '.test.js';
 
     case 'cYear':
       {

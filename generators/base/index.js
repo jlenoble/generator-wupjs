@@ -230,14 +230,8 @@ var _class = function (_Base) {
         case 'bundleRoot':
           return _path2.default.join(this.get('buildDir'), this.get('srcDir'), 'demo.js');
 
-        case 'classFileName':
-          return this.compute('fileStem') + '.js';
-
         case 'className':
           return (0, _uppercamelcase2.default)(this.get('name'));
-
-        case 'classTestFileName':
-          return this.compute('fileStem') + '.test.js';
 
         case 'cYear':
           {
