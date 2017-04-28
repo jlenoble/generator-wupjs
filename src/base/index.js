@@ -281,15 +281,6 @@ export default class extends Base {
     case 'importBabel':
       return this.has('Babel') ? `import babel from 'gulp-babel';\n` : '';
 
-    case 'importBundles':
-      return this.has('Compass') || this.has('React') ?
-        `import {bundle} from './bundle';
-import {testBundle} from './test-bundle';
-
-const srcBuildGlob = ${this.compute('srcBuildGlob')};
-const testBundleGlob = '${path.join(this.get('buildDir'),
-  'test-bundle.js')}';` : '';
-
     case 'importPreTestTask':
       if (this.has('Compass')) {
         return `import '${this.has('React') ? './test-bundle' : './build'}';
@@ -300,9 +291,6 @@ import './sass';`;
 
     case 'importSass':
       return `\nimport './sass';`;
-
-    case 'importSassFromSass':
-      return `\nimport {sass} from './sass';`;
 
     case 'main':
       return path.join(this.get('libDir'), this.compute('module')) + '.js';

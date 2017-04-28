@@ -315,9 +315,6 @@ var _class = function (_Base) {
         case 'importBabel':
           return this.has('Babel') ? 'import babel from \'gulp-babel\';\n' : '';
 
-        case 'importBundles':
-          return this.has('Compass') || this.has('React') ? 'import {bundle} from \'./bundle\';\nimport {testBundle} from \'./test-bundle\';\n\nconst srcBuildGlob = ' + this.compute('srcBuildGlob') + ';\nconst testBundleGlob = \'' + _path2.default.join(this.get('buildDir'), 'test-bundle.js') + '\';' : '';
-
         case 'importPreTestTask':
           if (this.has('Compass')) {
             return 'import \'' + (this.has('React') ? './test-bundle' : './build') + '\';\nimport \'./sass\';';
@@ -327,9 +324,6 @@ var _class = function (_Base) {
 
         case 'importSass':
           return '\nimport \'./sass\';';
-
-        case 'importSassFromSass':
-          return '\nimport {sass} from \'./sass\';';
 
         case 'main':
           return _path2.default.join(this.get('libDir'), this.compute('module')) + '.js';

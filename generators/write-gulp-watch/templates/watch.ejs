@@ -1,11 +1,6 @@
-import gulp from 'gulp';
+<%- imports %>
 
-import {build} from './build';
-import {test} from './test';<%- importSassFromSass %>
-<%- importBundles %>
-const allSrcGlob = <%- allSrcGlob %>;
-const allBuildGlob = <%- allBuildGlob %>;
-const allSassGlob = <%- globs('sass:**') %>;
+<%- consts %>
 
 export const watch = done => {
   <%- gulpWatchTasks %>done();

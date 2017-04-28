@@ -15,10 +15,8 @@ export default class extends Base {
 
   writing () {
     const props = this.getProps();
-    props.allSrcGlob = this.compute('allSrcGlob');
-    props.allBuildGlob = this.compute('allBuildGlob');
-    props.importBundles = this.compute('importBundles');
-    props.importSassFromSass = this.compute('importSassFromSass');
+    props.consts = this._consts();
+    props.imports = this._imports();
     props.gulpWatchTasks = this._gulpWatchTasks();
 
     this.fs.copyTpl(
@@ -26,6 +24,20 @@ export default class extends Base {
       this.destinationPath(path.join(props.gulpDir, 'watch.js')),
       props
     );
+  }
+
+  _consts () {
+    let consts = `const allSrcGlob = ${this.compute('allSrcGlob')};
+const allBuildGlob = ${this.compute('allBuildGlob')};
+const allSassGlob = ${this.globs('sass:**')};\n`;
+
+    if (this.has('React') || this.has('Compass')) {
+      consts += `const srcBuildGlob = ${this.compute('srcBuildGlob')};
+const testBundleGlob = '${path.join(this.get('buildDir'),
+'test-bundle.js')}';\n`;
+    }
+
+    return consts;
   }
 
   _gulpWatchTasks () {
@@ -44,5 +56,19 @@ export default class extends Base {
     }
 
     return tasks.replace(/\n/g, '\n  ');
+  }
+
+  _imports () {
+    let imports = `import gulp from 'gulp';
+import {build} from './build';
+import {test} from './test';\n`;
+
+    if (this.has('Compass') || this.has('React')) {
+      imports += `import {sass} from './sass';\n`;
+      imports += `import {bundle} from './bundle';
+import {testBundle} from './test-bundle';\n`;
+    }
+
+    return imports;
   }
 }

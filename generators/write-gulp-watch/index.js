@@ -43,13 +43,22 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.allSrcGlob = this.compute('allSrcGlob');
-      props.allBuildGlob = this.compute('allBuildGlob');
-      props.importBundles = this.compute('importBundles');
-      props.importSassFromSass = this.compute('importSassFromSass');
+      props.consts = this._consts();
+      props.imports = this._imports();
       props.gulpWatchTasks = this._gulpWatchTasks();
 
       this.fs.copyTpl(this.templatePath('watch.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'watch.js')), props);
+    }
+  }, {
+    key: '_consts',
+    value: function _consts() {
+      var consts = 'const allSrcGlob = ' + this.compute('allSrcGlob') + ';\nconst allBuildGlob = ' + this.compute('allBuildGlob') + ';\nconst allSassGlob = ' + this.globs('sass:**') + ';\n';
+
+      if (this.has('React') || this.has('Compass')) {
+        consts += 'const srcBuildGlob = ' + this.compute('srcBuildGlob') + ';\nconst testBundleGlob = \'' + _path2.default.join(this.get('buildDir'), 'test-bundle.js') + '\';\n';
+      }
+
+      return consts;
     }
   }, {
     key: '_gulpWatchTasks',
@@ -69,6 +78,18 @@ var _class = function (_Base) {
       }
 
       return tasks.replace(/\n/g, '\n  ');
+    }
+  }, {
+    key: '_imports',
+    value: function _imports() {
+      var imports = 'import gulp from \'gulp\';\nimport {build} from \'./build\';\nimport {test} from \'./test\';\n';
+
+      if (this.has('Compass') || this.has('React')) {
+        imports += 'import {sass} from \'./sass\';\n';
+        imports += 'import {bundle} from \'./bundle\';\nimport {testBundle} from \'./test-bundle\';\n';
+      }
+
+      return imports;
     }
   }]);
 
