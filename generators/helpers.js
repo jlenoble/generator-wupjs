@@ -4,15 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _compute = require('./compute');
-
-Object.defineProperty(exports, 'deps', {
-  enumerable: true,
-  get: function get() {
-    return _compute.deps;
-  }
-});
-
 var _config = require('./config');
 
 Object.defineProperty(exports, 'Config', {
@@ -55,36 +46,12 @@ Object.defineProperty(exports, 'getWriteGenerators', {
   }
 });
 
-var _joinGlobs = require('./join-globs');
-
-Object.defineProperty(exports, 'joinGlobs', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_joinGlobs).default;
-  }
-});
-
 var _property = require('./property');
 
 Object.defineProperty(exports, 'property', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_property).default;
-  }
-});
-
-var _stems = require('./stems');
-
-Object.defineProperty(exports, 'dirs', {
-  enumerable: true,
-  get: function get() {
-    return _stems.dirs;
-  }
-});
-Object.defineProperty(exports, 'globs', {
-  enumerable: true,
-  get: function get() {
-    return _stems.globs;
   }
 });
 
