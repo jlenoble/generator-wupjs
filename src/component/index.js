@@ -26,13 +26,13 @@ export default class extends Base {
   writing () {
     const props = this.getProps();
 
-    const filename = this.compute('componentFileName');
-    const testFilename = this.compute('componentTestFileName');
+    const filename = this.compute('fileStem') + '.jsx';
+    const testFilename = this.compute('fileStem') + '.test.jsx';
 
-    props.Component = this.className;
+    props.Component = this.compute('className');
     props.module = this.compute('module');
-    props.componentTestText = this.compute('componentTestText');
-    props.importComponentTestLib = this.compute('importComponentTestLib');
+    props.testText = this._testText();
+    props.importTestLib = this._importTestLib();
 
     this.fs.copyTpl(
       this.templatePath('component.ejs'),
@@ -45,5 +45,37 @@ export default class extends Base {
       this.destinationPath(path.join(props.testDir, testFilename)),
       props
     );
+  }
+
+  _component () {
+    return `<${this.compute('className')}/>`;
+  }
+
+  _importTestLib () {
+    if (this.has('Enzyme')) {
+      return `import {shallow} from 'enzyme';`;
+    } else if (this.has('React')) {
+      return `import TestUtils from 'react-dom/test-utils';`;
+    } else {
+      return '';
+    }
+  }
+
+  _testText () {
+    if (this.has('Enzyme')) {
+      return `const wrapper = shallow(
+      ${this._component()}
+    );
+
+    expect(wrapper.find('h1').text()).to.equal('Hello world!');`;
+    } else if (this.has('React')) {
+      return `const component = TestUtils.renderIntoDocument(${
+        this._component()});
+    const h1 = TestUtils.findRenderedDOMComponentWithTag(component, 'h1');
+
+    expect(h1.textContent).to.equal('Hello world!');`;
+    } else {
+      return '';
+    }
   }
 }

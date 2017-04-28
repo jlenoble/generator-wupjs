@@ -239,21 +239,6 @@ var _class = function (_Base) {
         case 'classTestFileName':
           return this.compute('fileStem') + '.test.js';
 
-        case 'componentFileName':
-          return this.compute('fileStem') + '.jsx';
-
-        case 'componentTestFileName':
-          return this.compute('fileStem') + '.test.jsx';
-
-        case 'componentTestText':
-          if (this.has('Enzyme')) {
-            return 'const wrapper = shallow(\n      <' + this.compute('className') + '/>\n    );\n\n    expect(wrapper.find(\'h1\').text()).to.equal(\'Hello world!\');';
-          } else if (this.has('React')) {
-            return 'const component = TestUtils.renderIntoDocument(<' + this.compute('className') + '/>);\n    const h1 = TestUtils.findRenderedDOMComponentWithTag(component, \'h1\');\n\n    expect(h1.textContent).to.equal(\'Hello world!\');';
-          } else {
-            return '';
-          }
-
         case 'cYear':
           {
             var created = this.get('created').getFullYear();
@@ -347,15 +332,6 @@ var _class = function (_Base) {
 
         case 'importBundles':
           return this.has('Compass') || this.has('React') ? 'import {bundle} from \'./bundle\';\nimport {testBundle} from \'./test-bundle\';\n\nconst srcBuildGlob = ' + this.compute('srcBuildGlob') + ';\nconst testBundleGlob = \'' + _path2.default.join(this.get('buildDir'), 'test-bundle.js') + '\';' : '';
-
-        case 'importComponentTestLib':
-          if (this.has('Enzyme')) {
-            return 'import {shallow} from \'enzyme\';';
-          } else if (this.has('React')) {
-            return 'import TestUtils from \'react-dom/test-utils\';';
-          } else {
-            return '';
-          }
 
         case 'importPreTestTask':
           if (this.has('Compass')) {

@@ -1,10 +1,10 @@
 import React from 'react';
-<%- importComponentTestLib %>
+<%- importTestLib %>
 import {expect} from 'chai';
 import <%= Component %> from '../src/<%= module %>';
 
 describe('Testing <<%= Component %>/>', function () {
   it(`Component <<%= Component %>/> says 'Hello world!'`, function () {
-    <%- componentTestText %>
+    <%- testText %>
   });
 });

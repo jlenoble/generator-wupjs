@@ -56,17 +56,44 @@ var _class = function (_Base) {
     value: function writing() {
       var props = this.getProps();
 
-      var filename = this.compute('componentFileName');
-      var testFilename = this.compute('componentTestFileName');
+      var filename = this.compute('fileStem') + '.jsx';
+      var testFilename = this.compute('fileStem') + '.test.jsx';
 
-      props.Component = this.className;
+      props.Component = this.compute('className');
       props.module = this.compute('module');
-      props.componentTestText = this.compute('componentTestText');
-      props.importComponentTestLib = this.compute('importComponentTestLib');
+      props.testText = this._testText();
+      props.importTestLib = this._importTestLib();
 
       this.fs.copyTpl(this.templatePath('component.ejs'), this.destinationPath(_path2.default.join(props.srcDir, filename)), props);
 
       this.fs.copyTpl(this.templatePath('component.test.ejs'), this.destinationPath(_path2.default.join(props.testDir, testFilename)), props);
+    }
+  }, {
+    key: '_component',
+    value: function _component() {
+      return '<' + this.compute('className') + '/>';
+    }
+  }, {
+    key: '_importTestLib',
+    value: function _importTestLib() {
+      if (this.has('Enzyme')) {
+        return 'import {shallow} from \'enzyme\';';
+      } else if (this.has('React')) {
+        return 'import TestUtils from \'react-dom/test-utils\';';
+      } else {
+        return '';
+      }
+    }
+  }, {
+    key: '_testText',
+    value: function _testText() {
+      if (this.has('Enzyme')) {
+        return 'const wrapper = shallow(\n      ' + this._component() + '\n    );\n\n    expect(wrapper.find(\'h1\').text()).to.equal(\'Hello world!\');';
+      } else if (this.has('React')) {
+        return 'const component = TestUtils.renderIntoDocument(' + this._component() + ');\n    const h1 = TestUtils.findRenderedDOMComponentWithTag(component, \'h1\');\n\n    expect(h1.textContent).to.equal(\'Hello world!\');';
+      } else {
+        return '';
+      }
     }
   }]);
 
