@@ -19,6 +19,8 @@ var dirs = function dirs(dir, gen) {
       return 'node_modules';
     case 'staticDir':
       return _path2.default.join(gen.get('srcDir'), 'static');
+    default:
+      return gen.get(dir);
   }
 };
 

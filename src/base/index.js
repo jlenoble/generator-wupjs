@@ -4,7 +4,7 @@ import slug from 'slug';
 import upperCamelCase from 'uppercamelcase';
 import stringify from 'json-stable-stringify';
 import {Config, getGenerator, getWriteGenerators, joinGlobs,
-  dirs} from '../index';
+  extendProps} from '../index';
 
 const appDir = __dirname;
 const conf = new Config();
@@ -47,6 +47,8 @@ export default class extends Base {
 
     this.composeWith('gen-version');
     this.composeWith('date');
+
+    extendProps(this);
   }
 
   composeWith (genDir) {
@@ -172,15 +174,15 @@ export default class extends Base {
 
     case 'browserMocha':
       return path.join(path.relative(this.get('buildDir'),
-        dirs('nodeDir', this)), 'mocha/mocha.js');
+        this.dirs('nodeDir')), 'mocha/mocha.js');
 
     case 'bsWatchGlob':
       return this.has('Compass') ?
-        stringify([path.join(dirs('staticDir', this), 'index.html'),
+        stringify([path.join(this.dirs('staticDir'), 'index.html'),
           path.join(this.get('buildDir'), this.compute('bundleName')),
-          path.join(dirs('cssDir', this), '**/*.scss')],
+          path.join(this.dirs('cssDir'), '**/*.scss')],
           {space: 2}).replace(/"/g, `'`) :
-        stringify([path.join(dirs('staticDir', this), 'index.html'),
+        stringify([path.join(this.dirs('staticDir'), 'index.html'),
           path.join(this.get('buildDir'), this.compute('bundleName'))],
           {space: 2}).replace(/"/g, `'`);
 
@@ -430,14 +432,14 @@ import './sass';`;
       return this.has('Compass') ? '.sass-cache' : '';
 
     case 'sassDir':
-      return path.join(dirs('staticDir', this), 'scss');
+      return path.join(this.dirs('staticDir'), 'scss');
 
     case 'sassGlob':
       return stringify(joinGlobs(this.compute('sassDir'), '*.scss'),
         {space: 2}).replace(/"/g, `'`);
 
     case 'sassImportDir':
-      return dirs('nodeDir', this);
+      return this.dirs('nodeDir');
 
     case 'srcBuildGlob':
       return stringify(joinGlobs(this.get('buildDir'), this.get('srcDir'),
@@ -473,7 +475,7 @@ import './sass';`;
   getProps () {
     const props = conf.getProps();
 
-    props.dirs = dir => dirs(dir, this);
+    props.dirs = dir => this.dirs(dir);
 
     return props;
   }

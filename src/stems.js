@@ -8,6 +8,8 @@ const dirs = (dir, gen) => {
     return 'node_modules';
   case 'staticDir':
     return path.join(gen.get('srcDir'), 'static');
+  default:
+    return gen.get(dir);
   }
 };
 

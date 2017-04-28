@@ -13,6 +13,15 @@ Object.defineProperty(exports, 'Config', {
   }
 });
 
+var _extendProps = require('./extend-props');
+
+Object.defineProperty(exports, 'extendProps', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_extendProps).default;
+  }
+});
+
 var _getGenerator = require('./get-generator');
 
 Object.defineProperty(exports, 'getGenerator', {

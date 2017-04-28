@@ -88,6 +88,8 @@ var _class = function (_Base) {
 
     _this.composeWith('gen-version');
     _this.composeWith('date');
+
+    (0, _index.extendProps)(_this);
     return _this;
   }
 
@@ -220,10 +222,10 @@ var _class = function (_Base) {
           }).join(', ');
 
         case 'browserMocha':
-          return _path2.default.join(_path2.default.relative(this.get('buildDir'), (0, _index.dirs)('nodeDir', this)), 'mocha/mocha.js');
+          return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.dirs('nodeDir')), 'mocha/mocha.js');
 
         case 'bsWatchGlob':
-          return this.has('Compass') ? (0, _jsonStableStringify2.default)([_path2.default.join((0, _index.dirs)('staticDir', this), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName')), _path2.default.join((0, _index.dirs)('cssDir', this), '**/*.scss')], { space: 2 }).replace(/"/g, '\'') : (0, _jsonStableStringify2.default)([_path2.default.join((0, _index.dirs)('staticDir', this), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName'))], { space: 2 }).replace(/"/g, '\'');
+          return this.has('Compass') ? (0, _jsonStableStringify2.default)([_path2.default.join(this.dirs('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName')), _path2.default.join(this.dirs('cssDir'), '**/*.scss')], { space: 2 }).replace(/"/g, '\'') : (0, _jsonStableStringify2.default)([_path2.default.join(this.dirs('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName'))], { space: 2 }).replace(/"/g, '\'');
 
         case 'bundleName':
           return 'bundle.js';
@@ -439,13 +441,13 @@ var _class = function (_Base) {
           return this.has('Compass') ? '.sass-cache' : '';
 
         case 'sassDir':
-          return _path2.default.join((0, _index.dirs)('staticDir', this), 'scss');
+          return _path2.default.join(this.dirs('staticDir'), 'scss');
 
         case 'sassGlob':
           return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.compute('sassDir'), '*.scss'), { space: 2 }).replace(/"/g, '\'');
 
         case 'sassImportDir':
-          return (0, _index.dirs)('nodeDir', this);
+          return this.dirs('nodeDir');
 
         case 'srcBuildGlob':
           return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.get('buildDir'), this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
@@ -479,7 +481,7 @@ var _class = function (_Base) {
       var props = conf.getProps();
 
       props.dirs = function (dir) {
-        return (0, _index.dirs)(dir, _this4);
+        return _this4.dirs(dir);
       };
 
       return props;
