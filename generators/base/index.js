@@ -431,9 +431,6 @@ var _class = function (_Base) {
         case 'srcBuildGlob':
           return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.get('buildDir'), this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
 
-        case 'srcGlob':
-          return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.get('srcDir'), this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
-
         case 'testBundleGlob':
           return _path2.default.join(_path2.default.relative(this.get('testDir'), this.get('buildDir')), this.compute('testBundleName'));
 

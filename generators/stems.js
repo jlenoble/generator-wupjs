@@ -56,6 +56,10 @@ var fullExt = function fullExt(_ref, gen) {
   var _pat = pattern(pat) + '.';
 
   if (ext) {
+    if (/js$/.test(ext) && gen.has('React')) {
+      return [_pat + ext, _pat + 'jsx'];
+    }
+
     return _pat + ext;
   }
 

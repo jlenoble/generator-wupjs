@@ -419,10 +419,6 @@ import './sass';`;
       return stringify(joinGlobs(this.get('buildDir'), this.get('srcDir'),
         this.compute('glob')), {space: 2}).replace(/"/g, `'`);
 
-    case 'srcGlob':
-      return stringify(joinGlobs(this.get('srcDir'), this.compute('glob')),
-        {space: 2}).replace(/"/g, `'`);
-
     case 'testBundleGlob':
       return path.join(path.relative(this.get('testDir'),
         this.get('buildDir')), this.compute('testBundleName'));

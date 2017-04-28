@@ -31,6 +31,10 @@ const fullExt = ({ext, dir, pat}, gen) => {
   const _pat = pattern(pat) + '.';
 
   if (ext) {
+    if (/js$/.test(ext) && gen.has('React')) {
+      return [_pat + ext, _pat + 'jsx'];
+    }
+
     return _pat + ext;
   }
 
