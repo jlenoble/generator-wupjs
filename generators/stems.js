@@ -14,7 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var dirs = function dirs(dir, gen) {
   switch (dir) {
     case 'cssDir':
-      return _path2.default.join(gen.get('buildDir'), 'css');
+      return _path2.default.join(gen.dirs('buildDir'), 'css');
 
     case 'nodeDir':case 'sassImportDir':
       return 'node_modules';
@@ -23,7 +23,7 @@ var dirs = function dirs(dir, gen) {
       return _path2.default.join(gen.dirs('staticDir'), 'scss');
 
     case 'staticDir':
-      return _path2.default.join(gen.get('srcDir'), 'static');
+      return _path2.default.join(gen.dirs('srcDir'), 'static');
 
     default:
       return gen.get(dir);
