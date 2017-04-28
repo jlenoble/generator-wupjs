@@ -4,7 +4,7 @@ import slug from 'slug';
 import upperCamelCase from 'uppercamelcase';
 import stringify from 'json-stable-stringify';
 import {Config, getGenerator, getWriteGenerators, joinGlobs,
-  extendProps} from '../index';
+  extendProps, deps} from '../index';
 
 const appDir = __dirname;
 const conf = new Config();
@@ -235,12 +235,10 @@ export default class extends Base {
       }
 
     case 'dependencies':
-      return stringify(this.get('deps'), {space: 2})
-      .replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+      return deps('deps', this);
 
     case 'devDependencies':
-      return stringify(this.get('devDeps'), {space: 2})
-      .replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+      return deps('devDeps', this);
 
     case 'ecmaFeatures':
       return stringify(this.has('React') ? {jsx: true} : {}, {space: 2})
@@ -382,8 +380,7 @@ import './sass';`;
     .on('end', done)` : '';
 
     case 'peerDependencies':
-      return stringify(this.get('peerDeps'), {space: 2})
-      .replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+      return deps('peerDeps', this);
 
     case 'pipeBabel':
       return this.has('Babel') ? '\n    .pipe(babel())' : '';

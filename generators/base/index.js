@@ -267,10 +267,10 @@ var _class = function (_Base) {
           }
 
         case 'dependencies':
-          return (0, _jsonStableStringify2.default)(this.get('deps'), { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+          return (0, _index.deps)('deps', this);
 
         case 'devDependencies':
-          return (0, _jsonStableStringify2.default)(this.get('devDeps'), { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+          return (0, _index.deps)('devDeps', this);
 
         case 'ecmaFeatures':
           return (0, _jsonStableStringify2.default)(this.has('React') ? { jsx: true } : {}, { space: 2 }).replace(/\n/g, '\n    ');
@@ -392,7 +392,7 @@ var _class = function (_Base) {
           return this.has('React') || this.has('Compass') ? '\n    .on(\'end\', done)' : '';
 
         case 'peerDependencies':
-          return (0, _jsonStableStringify2.default)(this.get('peerDeps'), { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
+          return (0, _index.deps)('peerDeps', this);
 
         case 'pipeBabel':
           return this.has('Babel') ? '\n    .pipe(babel())' : '';

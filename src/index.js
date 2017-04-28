@@ -1,3 +1,4 @@
+export {deps} from './compute';
 export {default as Config} from './config';
 export {default as extendProps} from './extend-props';
 export {default as getGenerator} from './get-generator';

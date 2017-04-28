@@ -4,6 +4,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _compute = require('./compute');
+
+Object.defineProperty(exports, 'deps', {
+  enumerable: true,
+  get: function get() {
+    return _compute.deps;
+  }
+});
+
 var _config = require('./config');
 
 Object.defineProperty(exports, 'Config', {
