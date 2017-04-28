@@ -40,18 +40,13 @@ var dirs = function dirs(dir, gen) {
   }
 };
 
-var fullDir = function fullDir(dir, gen) {
-  var _dir$split = dir.split('#'),
-      _dir$split2 = _slicedToArray(_dir$split, 2),
-      rel = _dir$split2[0],
-      dirs = _dir$split2[1];
+var fullDir = function fullDir(_ref, gen) {
+  var rel = _ref.rel,
+      ext = _ref.ext,
+      dir = _ref.dir,
+      pat = _ref.pat;
 
-  if (!dirs) {
-    dirs = rel;
-    rel = undefined;
-  }
-
-  return dirs.split(',').map(function (dir) {
+  return dir.split(',').map(function (dir) {
     return rel ? _path2.default.join(rel, gen.dirs(dir + 'Dir')) : gen.dirs(dir + 'Dir');
   });
 };
@@ -60,14 +55,15 @@ var pattern = function pattern(pat) {
   return pat === '**' ? '**/*' : '*';
 };
 
-var fullExt = function fullExt(_ref, gen) {
-  var ext = _ref.ext,
-      dir = _ref.dir,
-      pat = _ref.pat;
+var fullExt = function fullExt(_ref2, gen) {
+  var rel = _ref2.rel,
+      ext = _ref2.ext,
+      dir = _ref2.dir,
+      pat = _ref2.pat;
 
   var _pat = pattern(pat) + '.';
 
-  if (ext) {
+  if (ext && !rel) {
     if (/js$/.test(ext) && gen.has('React')) {
       return [_pat + ext, _pat + 'jsx'];
     }
@@ -85,13 +81,25 @@ var fullExt = function fullExt(_ref, gen) {
 };
 
 var globs = function globs(globHint, gen) {
-  var _globHint$split = globHint.split(':'),
-      _globHint$split2 = _slicedToArray(_globHint$split, 3),
-      dir = _globHint$split2[0],
-      pat = _globHint$split2[1],
-      ext = _globHint$split2[2];
+  var _globHint$split = globHint.split('#'),
+      _globHint$split2 = _slicedToArray(_globHint$split, 2),
+      rel = _globHint$split2[0],
+      hint = _globHint$split2[1];
 
-  return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(fullDir(dir, gen), fullExt({ dir: dir, ext: ext, pat: pat }, gen)), { space: 2 }).replace(/"/g, '\'');
+  if (!hint) {
+    hint = rel;
+    rel = undefined;
+  }
+
+  var _hint$split = hint.split(':'),
+      _hint$split2 = _slicedToArray(_hint$split, 3),
+      dir = _hint$split2[0],
+      pat = _hint$split2[1],
+      ext = _hint$split2[2];
+
+  var hints = { rel: rel, dir: dir, pat: pat, ext: ext };
+
+  return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(fullDir(hints, gen), fullExt(hints, gen)), { space: 2 }).replace(/"/g, '\'');
 };
 
 exports.dirs = dirs;
