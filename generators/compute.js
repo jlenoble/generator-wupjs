@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.nodeDeps = exports.fullExt = exports.fullDir = undefined;
+exports.stringify = exports.nodeDeps = exports.fullExt = exports.fullDir = undefined;
 
 var _jsonStableStringify = require('json-stable-stringify');
 
@@ -57,6 +57,11 @@ var nodeDeps = function nodeDeps(hint, gen) {
   return (0, _jsonStableStringify2.default)(gen.get(hint), { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
 };
 
+var stringify = function stringify(obj, gen) {
+  return (0, _jsonStableStringify2.default)(obj, { space: 2 }).replace(/"/g, '\'');
+};
+
 exports.fullDir = fullDir;
 exports.fullExt = fullExt;
 exports.nodeDeps = nodeDeps;
+exports.stringify = stringify;

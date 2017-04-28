@@ -1,5 +1,4 @@
 import path from 'path';
-import stringify from 'json-stable-stringify';
 import joinGlobs from './join-globs';
 
 const dirs = (dir, gen) => {
@@ -30,12 +29,7 @@ const globs = (globHint, gen) => {
   const [dir, pat, ext] = hint.split(':');
   const hints = {rel, dir, pat, ext};
 
-  return stringify(
-    joinGlobs(
-      gen.fullDir(hints),
-      gen.fullExt(hints)),
-    {space: 2}
-  ).replace(/"/g, `'`);
+  return gen.stringify(joinGlobs(gen.fullDir(hints), gen.fullExt(hints)));
 };
 
 export {dirs, globs};

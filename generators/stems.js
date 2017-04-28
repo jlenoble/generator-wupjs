@@ -11,10 +11,6 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
-var _jsonStableStringify = require('json-stable-stringify');
-
-var _jsonStableStringify2 = _interopRequireDefault(_jsonStableStringify);
-
 var _joinGlobs = require('./join-globs');
 
 var _joinGlobs2 = _interopRequireDefault(_joinGlobs);
@@ -59,7 +55,7 @@ var globs = function globs(globHint, gen) {
 
   var hints = { rel: rel, dir: dir, pat: pat, ext: ext };
 
-  return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(gen.fullDir(hints), gen.fullExt(hints)), { space: 2 }).replace(/"/g, '\'');
+  return gen.stringify((0, _joinGlobs2.default)(gen.fullDir(hints), gen.fullExt(hints)));
 };
 
 exports.dirs = dirs;

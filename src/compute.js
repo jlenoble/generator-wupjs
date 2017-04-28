@@ -1,4 +1,4 @@
-import stringify from 'json-stable-stringify';
+import strgfy from 'json-stable-stringify';
 import path from 'path';
 
 const pattern = pat => pat === '**' ? '**/*' : '*';
@@ -31,8 +31,12 @@ const fullExt = ({rel, ext, dir, pat}, gen) => {
 };
 
 const nodeDeps = (hint, gen) => {
-  return stringify(gen.get(hint), {space: 2})
+  return strgfy(gen.get(hint), {space: 2})
     .replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
 };
 
-export {fullDir, fullExt, nodeDeps};
+const stringify = (obj, gen) => {
+  return strgfy(obj, {space: 2}).replace(/"/g, `'`);
+};
+
+export {fullDir, fullExt, nodeDeps, stringify};
