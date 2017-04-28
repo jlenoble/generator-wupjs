@@ -32,9 +32,10 @@ const pattern = pat => pat === '**' ? '**/*' : '*';
 const fullExt = ({rel, ext, dir, pat}, gen) => {
   const _pat = pattern(pat) + '.';
 
-  if (ext && rel !== dirs('buildDir', gen)) {
-    if (/js$/.test(ext) && gen.has('React')) {
-      return [_pat + ext, _pat + 'jsx'];
+  if (ext) {
+    if (/.*js$/.test(ext) && gen.has('React') &&
+      rel !== dirs('buildDir', gen)) {
+      return [_pat + ext, _pat + ext + 'x'];
     }
 
     return _pat + ext;

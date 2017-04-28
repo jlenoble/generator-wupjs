@@ -63,9 +63,9 @@ var fullExt = function fullExt(_ref2, gen) {
 
   var _pat = pattern(pat) + '.';
 
-  if (ext && !rel) {
-    if (/js$/.test(ext) && gen.has('React')) {
-      return [_pat + ext, _pat + 'jsx'];
+  if (ext) {
+    if (/.*js$/.test(ext) && gen.has('React') && rel !== dirs('buildDir', gen)) {
+      return [_pat + ext, _pat + ext + 'x'];
     }
 
     return _pat + ext;

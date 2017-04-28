@@ -367,8 +367,7 @@ import './sass';`;
     case 'testGlob':
       return this.has('PhantomJS') ?
         `'${path.join(this.get('testDir'), this.compute('runnerFile'))}'` :
-        stringify(joinGlobs(this.get('buildDir'), this.get('testDir'),
-        '**/*.test.js'), {space: 2}).replace(/"/g, `'`);
+        this.globs('build#test:**:test.js');
     }
   }
 

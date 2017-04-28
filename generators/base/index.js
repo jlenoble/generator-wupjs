@@ -403,7 +403,7 @@ var _class = function (_Base) {
           return _path2.default.join(this.get('buildDir'), this.get('testDir'), 'index.test.js');
 
         case 'testGlob':
-          return this.has('PhantomJS') ? '\'' + _path2.default.join(this.get('testDir'), this.compute('runnerFile')) + '\'' : (0, _jsonStableStringify2.default)((0, _helpers.joinGlobs)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
+          return this.has('PhantomJS') ? '\'' + _path2.default.join(this.get('testDir'), this.compute('runnerFile')) + '\'' : this.globs('build#test:**:test.js');
       }
     }
   }, {
