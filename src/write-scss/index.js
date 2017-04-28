@@ -17,7 +17,7 @@ export default class extends Base {
 
     this.fs.copyTpl(
       this.templatePath('style.ejs'),
-      this.destinationPath(path.join(this.compute('sassDir'), 'style.scss')),
+      this.destinationPath(path.join(this.dirs('sassDir'), 'style.scss')),
       props
     );
   }

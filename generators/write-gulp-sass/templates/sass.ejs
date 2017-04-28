@@ -4,9 +4,9 @@ import compass from 'gulp-compass';
 import sourcemaps from 'gulp-sourcemaps';
 
 const sassGlob = <%- sassGlob %>;
-const sassDir = '<%- sassDir %>';
+const sassDir = '<%- dirs('sassDir') %>';
 const cssDir = '<%- dirs('cssDir') %>';
-const sassImportDir = '<%- sassImportDir %>';
+const sassImportDir = '<%- dirs('sassImportDir') %>';
 
 export const sass = () => {
   return gulp.src(sassGlob, {

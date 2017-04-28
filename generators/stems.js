@@ -15,10 +15,16 @@ var dirs = function dirs(dir, gen) {
   switch (dir) {
     case 'cssDir':
       return _path2.default.join(gen.get('buildDir'), 'css');
-    case 'nodeDir':
+
+    case 'nodeDir':case 'sassImportDir':
       return 'node_modules';
+
+    case 'sassDir':
+      return _path2.default.join(gen.dirs('staticDir'), 'scss');
+
     case 'staticDir':
       return _path2.default.join(gen.get('srcDir'), 'static');
+
     default:
       return gen.get(dir);
   }

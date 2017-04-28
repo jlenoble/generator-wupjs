@@ -43,7 +43,7 @@ var _class = function (_Base) {
     value: function writing() {
       var props = this.getProps();
 
-      this.fs.copyTpl(this.templatePath('style.ejs'), this.destinationPath(_path2.default.join(this.compute('sassDir'), 'style.scss')), props);
+      this.fs.copyTpl(this.templatePath('style.ejs'), this.destinationPath(_path2.default.join(this.dirs('sassDir'), 'style.scss')), props);
     }
   }]);
 

@@ -160,7 +160,7 @@ export default class extends Base {
         this.get('testDir')], '**/*.js'), {space: 2}).replace(/"/g, `'`);
 
     case 'allSassGlob':
-      return stringify(joinGlobs(this.compute('sassDir'), '**/*.scss'),
+      return stringify(joinGlobs(this.dirs('sassDir'), '**/*.scss'),
         {space: 2}).replace(/"/g, `'`);
 
     case 'allSrcGlob':
@@ -431,15 +431,9 @@ import './sass';`;
     case 'sassCache':
       return this.has('Compass') ? '.sass-cache' : '';
 
-    case 'sassDir':
-      return path.join(this.dirs('staticDir'), 'scss');
-
     case 'sassGlob':
-      return stringify(joinGlobs(this.compute('sassDir'), '*.scss'),
+      return stringify(joinGlobs(this.dirs('sassDir'), '*.scss'),
         {space: 2}).replace(/"/g, `'`);
-
-    case 'sassImportDir':
-      return this.dirs('nodeDir');
 
     case 'srcBuildGlob':
       return stringify(joinGlobs(this.get('buildDir'), this.get('srcDir'),
