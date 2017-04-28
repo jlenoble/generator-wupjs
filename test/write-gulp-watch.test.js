@@ -64,6 +64,8 @@ testGenerator('write-gulp-watch', {
     /const allBuildGlob = \[/,
     /  'build\/src\/\*\*\/\*\.js'/,
     /  'build\/test\/\*\*\/\*\.js'/,
+    /const allSassGlob = \[/,
+    /  'src\/static\/scss\/\*\*\/\*\.scss'/,
     /gulp\.watch\(allSrcGlob, build\);/,
     /gulp\.watch\(srcBuildGlob, bundle\);/,
     /gulp\.watch\(allBuildGlob, testBundle\);/,

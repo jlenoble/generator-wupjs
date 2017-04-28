@@ -208,9 +208,6 @@ var _class = function (_Base) {
         case 'allBuildGlob':
           return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.get('buildDir'), [this.get('srcDir'), this.get('testDir')], '**/*.js'), { space: 2 }).replace(/"/g, '\'');
 
-        case 'allSassGlob':
-          return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)(this.dirs('sassDir'), '**/*.scss'), { space: 2 }).replace(/"/g, '\'');
-
         case 'allSrcGlob':
           return (0, _jsonStableStringify2.default)((0, _index.joinGlobs)([this.get('srcDir'), this.get('testDir')], this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
 

@@ -159,10 +159,6 @@ export default class extends Base {
       return stringify(joinGlobs(this.get('buildDir'), [this.get('srcDir'),
         this.get('testDir')], '**/*.js'), {space: 2}).replace(/"/g, `'`);
 
-    case 'allSassGlob':
-      return stringify(joinGlobs(this.dirs('sassDir'), '**/*.scss'),
-        {space: 2}).replace(/"/g, `'`);
-
     case 'allSrcGlob':
       return stringify(joinGlobs([this.get('srcDir'), this.get('testDir')],
         this.compute('glob')), {space: 2}).replace(/"/g, `'`);
