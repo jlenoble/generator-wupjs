@@ -27,7 +27,7 @@ export default class extends Base {
   }
 
   _consts () {
-    let consts = `const allSrcGlob = ${this.compute('allSrcGlob')};
+    let consts = `const allSrcGlob = ${this.globs('src,test:**:js')};
 const allBuildGlob = ${this.compute('allBuildGlob')};
 const allSassGlob = ${this.globs('sass:**')};\n`;
 

@@ -41,7 +41,10 @@ var dirs = function dirs(dir, gen) {
 };
 
 var fullDir = function fullDir(dir, gen) {
-  return gen.dirs(dir + 'Dir');
+  var dirs = dir.split(',');
+  return dirs.map(function (dir) {
+    return gen.dirs(dir + 'Dir');
+  });
 };
 
 var pattern = function pattern(pat) {
@@ -73,11 +76,11 @@ var fullExt = function fullExt(_ref, gen) {
 };
 
 var globs = function globs(globHint, gen) {
-  var _globHint$match = globHint.match(/(\w+):(\*+):?(.*)/),
-      _globHint$match2 = _slicedToArray(_globHint$match, 4),
-      dir = _globHint$match2[1],
-      pat = _globHint$match2[2],
-      ext = _globHint$match2[3];
+  var _globHint$split = globHint.split(':'),
+      _globHint$split2 = _slicedToArray(_globHint$split, 3),
+      dir = _globHint$split2[0],
+      pat = _globHint$split2[1],
+      ext = _globHint$split2[2];
 
   return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(fullDir(dir, gen), fullExt({ dir: dir, ext: ext, pat: pat }, gen)), { space: 2 }).replace(/"/g, '\'');
 };

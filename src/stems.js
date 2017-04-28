@@ -22,7 +22,8 @@ const dirs = (dir, gen) => {
 };
 
 const fullDir = (dir, gen) => {
-  return gen.dirs(dir + 'Dir');
+  const dirs = dir.split(',');
+  return dirs.map(dir => gen.dirs(dir + 'Dir'));
 };
 
 const pattern = pat => pat === '**' ? '**/*' : '*';
@@ -48,7 +49,7 @@ const fullExt = ({ext, dir, pat}, gen) => {
 };
 
 const globs = (globHint, gen) => {
-  const [, dir, pat, ext] = globHint.match(/(\w+):(\*+):?(.*)/);
+  const [dir, pat, ext] = globHint.split(':');
 
   return stringify(
     joinGlobs(

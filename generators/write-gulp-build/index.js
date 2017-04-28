@@ -45,7 +45,6 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.allSrcGlob = this.compute('allSrcGlob');
       props.importBabel = this.compute('importBabel');
       props.pipeBabel = this.compute('pipeBabel');
 

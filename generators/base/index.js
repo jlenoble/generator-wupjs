@@ -221,9 +221,6 @@ var _class = function (_Base) {
         case 'allBuildGlob':
           return (0, _jsonStableStringify2.default)((0, _helpers.joinGlobs)(this.get('buildDir'), [this.get('srcDir'), this.get('testDir')], '**/*.js'), { space: 2 }).replace(/"/g, '\'');
 
-        case 'allSrcGlob':
-          return (0, _jsonStableStringify2.default)((0, _helpers.joinGlobs)([this.get('srcDir'), this.get('testDir')], this.compute('glob')), { space: 2 }).replace(/"/g, '\'');
-
         case 'babelPlugins':
           return Object.keys(this.get('devDeps')).filter(function (dep) {
             return dep.match(/babel-plugin/);

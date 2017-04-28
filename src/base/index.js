@@ -166,10 +166,6 @@ export default class extends Base {
       return stringify(joinGlobs(this.get('buildDir'), [this.get('srcDir'),
         this.get('testDir')], '**/*.js'), {space: 2}).replace(/"/g, `'`);
 
-    case 'allSrcGlob':
-      return stringify(joinGlobs([this.get('srcDir'), this.get('testDir')],
-        this.compute('glob')), {space: 2}).replace(/"/g, `'`);
-
     case 'babelPlugins':
       return Object.keys(this.get('devDeps')).filter(dep => {
         return dep.match(/babel-plugin/);

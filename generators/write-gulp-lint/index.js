@@ -45,7 +45,6 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.allSrcGlob = this.compute('allSrcGlob');
 
       this.fs.copyTpl(this.templatePath('lint.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'lint.js')), props);
     }

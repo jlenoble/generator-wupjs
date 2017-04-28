@@ -3,7 +3,7 @@ import gulp from 'gulp';
 import sourcemaps from 'gulp-sourcemaps';
 
 const buildDir = '<%- buildDir %>';
-const allSrcGlob = <%- allSrcGlob %>;
+const allSrcGlob = <%- globs('src,test:**:js') %>;
 
 export const build = () => {
   return gulp.src(allSrcGlob, {
