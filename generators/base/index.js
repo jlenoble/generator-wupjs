@@ -185,6 +185,9 @@ var _class = function (_Base) {
         case 'enzyme':case 'react':
           return this.hasAddon(libname);
 
+        case 'phantomjs':
+          return this.has('React') || this.has('Compass');
+
         default:
           return false;
       }
@@ -317,10 +320,10 @@ var _class = function (_Base) {
           return this.has('React') ? ['**/*.js', '**/*.jsx'] : '**/*.js';
 
         case 'gulpMocha':
-          return this.has('React') || this.has('Compass') ? 'gulp-mocha-phantomjs' : 'gulp-mocha';
+          return this.has('PhantomJS') ? 'gulp-mocha-phantomjs' : 'gulp-mocha';
 
         case 'gulpMochaCallback':
-          return this.has('React') || this.has('Compass') ? 'done' : '()';
+          return this.has('PhantomJS') ? 'done' : '()';
 
         case 'importBabel':
           return this.has('Babel') ? 'import babel from \'gulp-babel\';\n' : '';
@@ -345,7 +348,7 @@ var _class = function (_Base) {
           return this.appname;
 
         case 'onMochaEnd':
-          return this.has('React') || this.has('Compass') ? '\n    .on(\'end\', done)' : '';
+          return this.has('PhantomJS') ? '\n    .on(\'end\', done)' : '';
 
         case 'pipeBabel':
           return this.has('Babel') ? '\n    .pipe(babel())' : '';
@@ -406,7 +409,7 @@ var _class = function (_Base) {
           return _path2.default.join(this.get('buildDir'), this.get('testDir'), 'index.test.js');
 
         case 'testGlob':
-          return this.has('React') || this.has('Compass') ? '\'' + _path2.default.join(this.get('testDir'), this.compute('runnerFile')) + '\'' : (0, _jsonStableStringify2.default)((0, _helpers.joinGlobs)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
+          return this.has('PhantomJS') ? '\'' + _path2.default.join(this.get('testDir'), this.compute('runnerFile')) + '\'' : (0, _jsonStableStringify2.default)((0, _helpers.joinGlobs)(this.get('buildDir'), this.get('testDir'), '**/*.test.js'), { space: 2 }).replace(/"/g, '\'');
       }
     }
   }, {

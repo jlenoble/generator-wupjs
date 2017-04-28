@@ -31,7 +31,7 @@ export default class extends Base {
 const allBuildGlob = ${this.compute('allBuildGlob')};
 const allSassGlob = ${this.globs('sass:**')};\n`;
 
-    if (this.has('React') || this.has('Compass')) {
+    if (this.has('PhantomJS')) {
       consts += `const srcBuildGlob = ${this.compute('srcBuildGlob')};
 const testBundleGlob = '${path.join(this.get('buildDir'),
 'test-bundle.js')}';\n`;
@@ -43,7 +43,7 @@ const testBundleGlob = '${path.join(this.get('buildDir'),
   _gulpWatchTasks () {
     let tasks = 'gulp.watch(allSrcGlob, build);\n';
 
-    if (this.has('React') || this.has('Compass')) {
+    if (this.has('PhantomJS')) {
       tasks += 'gulp.watch(srcBuildGlob, bundle);\n';
       tasks += 'gulp.watch(allBuildGlob, testBundle);\n';
       tasks += 'gulp.watch(testBundleGlob, test);\n';
@@ -63,7 +63,7 @@ const testBundleGlob = '${path.join(this.get('buildDir'),
 import {build} from './build';
 import {test} from './test';\n`;
 
-    if (this.has('Compass') || this.has('React')) {
+    if (this.has('PhantomJS')) {
       imports += `import {sass} from './sass';\n`;
       imports += `import {bundle} from './bundle';
 import {testBundle} from './test-bundle';\n`;

@@ -54,7 +54,7 @@ var _class = function (_Base) {
     value: function _consts() {
       var consts = 'const allSrcGlob = ' + this.compute('allSrcGlob') + ';\nconst allBuildGlob = ' + this.compute('allBuildGlob') + ';\nconst allSassGlob = ' + this.globs('sass:**') + ';\n';
 
-      if (this.has('React') || this.has('Compass')) {
+      if (this.has('PhantomJS')) {
         consts += 'const srcBuildGlob = ' + this.compute('srcBuildGlob') + ';\nconst testBundleGlob = \'' + _path2.default.join(this.get('buildDir'), 'test-bundle.js') + '\';\n';
       }
 
@@ -65,7 +65,7 @@ var _class = function (_Base) {
     value: function _gulpWatchTasks() {
       var tasks = 'gulp.watch(allSrcGlob, build);\n';
 
-      if (this.has('React') || this.has('Compass')) {
+      if (this.has('PhantomJS')) {
         tasks += 'gulp.watch(srcBuildGlob, bundle);\n';
         tasks += 'gulp.watch(allBuildGlob, testBundle);\n';
         tasks += 'gulp.watch(testBundleGlob, test);\n';
@@ -84,7 +84,7 @@ var _class = function (_Base) {
     value: function _imports() {
       var imports = 'import gulp from \'gulp\';\nimport {build} from \'./build\';\nimport {test} from \'./test\';\n';
 
-      if (this.has('Compass') || this.has('React')) {
+      if (this.has('PhantomJS')) {
         imports += 'import {sass} from \'./sass\';\n';
         imports += 'import {bundle} from \'./bundle\';\nimport {testBundle} from \'./test-bundle\';\n';
       }

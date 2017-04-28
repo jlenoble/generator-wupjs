@@ -130,6 +130,9 @@ export default class extends Base {
     case 'enzyme': case 'react':
       return this.hasAddon(libname);
 
+    case 'phantomjs':
+      return this.has('React') || this.has('Compass');
+
     default:
       return false;
     }
@@ -276,11 +279,10 @@ export default class extends Base {
       return this.has('React') ? ['**/*.js', '**/*.jsx'] : '**/*.js';
 
     case 'gulpMocha':
-      return this.has('React') || this.has('Compass') ? 'gulp-mocha-phantomjs' :
-        'gulp-mocha';
+      return this.has('PhantomJS') ? 'gulp-mocha-phantomjs' : 'gulp-mocha';
 
     case 'gulpMochaCallback':
-      return this.has('React') || this.has('Compass') ? 'done' : '()';
+      return this.has('PhantomJS') ? 'done' : '()';
 
     case 'importBabel':
       return this.has('Babel') ? `import babel from 'gulp-babel';\n` : '';
@@ -306,7 +308,7 @@ import './sass';`;
       return this.appname;
 
     case 'onMochaEnd':
-      return this.has('React') || this.has('Compass') ? `
+      return this.has('PhantomJS') ? `
     .on('end', done)` : '';
 
     case 'pipeBabel':
@@ -371,7 +373,7 @@ import './sass';`;
         'index.test.js');
 
     case 'testGlob':
-      return this.has('React') || this.has('Compass' ) ?
+      return this.has('PhantomJS') ?
         `'${path.join(this.get('testDir'), this.compute('runnerFile'))}'` :
         stringify(joinGlobs(this.get('buildDir'), this.get('testDir'),
         '**/*.test.js'), {space: 2}).replace(/"/g, `'`);
