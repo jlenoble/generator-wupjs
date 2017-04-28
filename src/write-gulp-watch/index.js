@@ -17,17 +17,32 @@ export default class extends Base {
     const props = this.getProps();
     props.allSrcGlob = this.compute('allSrcGlob');
     props.allBuildGlob = this.compute('allBuildGlob');
-    props.allSassGlob = this.compute('allSassGlob');
     props.importBundles = this.compute('importBundles');
     props.importSassFromSass = this.compute('importSassFromSass');
-    props.gulpWatchTest = this.compute('gulpWatchTest');
-    props.gulpWatchSass = this.compute('gulpWatchSass');
-    props.gulpWatchBundles = this.compute('gulpWatchBundles');
+    props.gulpWatchTasks = this._gulpWatchTasks();
 
     this.fs.copyTpl(
       this.templatePath('watch.ejs'),
       this.destinationPath(path.join(props.gulpDir, 'watch.js')),
       props
     );
+  }
+
+  _gulpWatchTasks () {
+    let tasks = 'gulp.watch(allSrcGlob, build);\n';
+
+    if (this.has('React') || this.has('Compass')) {
+      tasks += 'gulp.watch(srcBuildGlob, bundle);\n';
+      tasks += 'gulp.watch(allBuildGlob, testBundle);\n';
+      tasks += 'gulp.watch(testBundleGlob, test);\n';
+    } else {
+      tasks += 'gulp.watch(allBuildGlob, test);\n';
+    }
+
+    if (this.has('Compass')) {
+      tasks += 'gulp.watch(allSassGlob, sass);\n';
+    }
+
+    return tasks.replace(/\n/g, '\n  ');
   }
 }

@@ -8,8 +8,7 @@ const allBuildGlob = <%- allBuildGlob %>;
 const allSassGlob = <%- globs('sass:**') %>;
 
 export const watch = done => {
-  gulp.watch(allSrcGlob, build);
-  <%- gulpWatchBundles %><%- gulpWatchTest %><%- gulpWatchSass %>  done();
+  <%- gulpWatchTasks %>done();
 };
 
 gulp.task('watch', watch);

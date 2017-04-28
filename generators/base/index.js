@@ -312,15 +312,6 @@ var _class = function (_Base) {
         case 'gulpMochaCallback':
           return this.has('React') || this.has('Compass') ? 'done' : '()';
 
-        case 'gulpWatchBundles':
-          return this.has('React') || this.has('Compass') ? 'gulp.watch(srcBuildGlob, bundle);\n  gulp.watch(allBuildGlob, testBundle);\n' : '';
-
-        case 'gulpWatchSass':
-          return this.has('Compass') ? '  gulp.watch(allSassGlob, sass);\n' : '';
-
-        case 'gulpWatchTest':
-          return this.has('React') || this.has('Compass') ? '  gulp.watch(testBundleGlob, test);\n' : '  gulp.watch(allBuildGlob, test);\n';
-
         case 'importBabel':
           return this.has('Babel') ? 'import babel from \'gulp-babel\';\n' : '';
 
