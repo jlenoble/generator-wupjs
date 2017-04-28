@@ -40,46 +40,6 @@ var dirs = function dirs(dir, gen) {
   }
 };
 
-var fullDir = function fullDir(_ref, gen) {
-  var rel = _ref.rel,
-      ext = _ref.ext,
-      dir = _ref.dir,
-      pat = _ref.pat;
-
-  return dir.split(',').map(function (dir) {
-    return rel ? _path2.default.join(rel, gen.dirs(dir + 'Dir')) : gen.dirs(dir + 'Dir');
-  });
-};
-
-var pattern = function pattern(pat) {
-  return pat === '**' ? '**/*' : '*';
-};
-
-var fullExt = function fullExt(_ref2, gen) {
-  var rel = _ref2.rel,
-      ext = _ref2.ext,
-      dir = _ref2.dir,
-      pat = _ref2.pat;
-
-  var _pat = pattern(pat) + '.';
-
-  if (ext) {
-    if (/.*js$/.test(ext) && gen.has('React') && rel !== dirs('buildDir', gen)) {
-      return [_pat + ext, _pat + ext + 'x'];
-    }
-
-    return _pat + ext;
-  }
-
-  switch (dir) {
-    case 'sass':
-      return _pat + 'scss';
-
-    default:
-      return _pat + dir;
-  }
-};
-
 var globs = function globs(globHint, gen) {
   var _globHint$split = globHint.split('#'),
       _globHint$split2 = _slicedToArray(_globHint$split, 2),
@@ -99,7 +59,7 @@ var globs = function globs(globHint, gen) {
 
   var hints = { rel: rel, dir: dir, pat: pat, ext: ext };
 
-  return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(fullDir(hints, gen), fullExt(hints, gen)), { space: 2 }).replace(/"/g, '\'');
+  return (0, _jsonStableStringify2.default)((0, _joinGlobs2.default)(gen.fullDir(hints), gen.fullExt(hints)), { space: 2 }).replace(/"/g, '\'');
 };
 
 exports.dirs = dirs;

@@ -21,35 +21,6 @@ const dirs = (dir, gen) => {
   }
 };
 
-const fullDir = ({rel, ext, dir, pat}, gen) => {
-  return dir.split(',').map(dir => rel ?
-    path.join(rel, gen.dirs(dir + 'Dir')) :
-    gen.dirs(dir + 'Dir'));
-};
-
-const pattern = pat => pat === '**' ? '**/*' : '*';
-
-const fullExt = ({rel, ext, dir, pat}, gen) => {
-  const _pat = pattern(pat) + '.';
-
-  if (ext) {
-    if (/.*js$/.test(ext) && gen.has('React') &&
-      rel !== dirs('buildDir', gen)) {
-      return [_pat + ext, _pat + ext + 'x'];
-    }
-
-    return _pat + ext;
-  }
-
-  switch(dir) {
-  case 'sass':
-    return _pat + 'scss';
-
-  default:
-    return _pat + dir;
-  }
-};
-
 const globs = (globHint, gen) => {
   let [rel, hint] = globHint.split('#');
   if (!hint) {
@@ -61,8 +32,8 @@ const globs = (globHint, gen) => {
 
   return stringify(
     joinGlobs(
-      fullDir(hints, gen),
-      fullExt(hints, gen)),
+      gen.fullDir(hints),
+      gen.fullExt(hints)),
     {space: 2}
   ).replace(/"/g, `'`);
 };
