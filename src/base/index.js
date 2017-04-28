@@ -162,11 +162,6 @@ export default class extends Base {
 
   compute (propName) {
     switch (propName) {
-    case 'babelPlugins':
-      return Object.keys(this.get('devDeps')).filter(dep => {
-        return dep.match(/babel-plugin/);
-      }).map(dep => '"' + dep.replace('babel-plugin-', '') + '"').join(', ');
-
     case 'browserMocha':
       return path.join(path.relative(this.get('buildDir'),
         this.dirs('nodeDir')), 'mocha/mocha.js');
@@ -305,31 +300,6 @@ import './sass';`;
 
     case 'pipeBabel':
       return this.has('Babel') ? '\n    .pipe(babel())' : '';
-
-    case 'presets':
-      {
-        const presets = [];
-
-        switch (this.get('babel')) {
-        case 'es2017':
-          presets.push('es2017');
-          // FALL THROUGH
-
-        case 'es2016':
-          presets.push('es2016');
-          // FALL THROUGH
-
-        case 'es2015':
-          presets.push('es2015');
-        }
-
-        if (this.has('React')) {
-          presets.push('react');
-        }
-
-        presets.sort();
-        return presets.map(preset => `"${preset}"`).join(', ');
-      }
 
     case 'preServeTask':
       return this.has('Compass') ? `gulp.parallel('bundle', 'sass')` :

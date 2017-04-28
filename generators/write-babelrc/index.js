@@ -40,11 +40,47 @@ var _class = function (_Base) {
       var props = this.getProps();
 
       if (this.has('Babel')) {
-        props.presets = this.compute('presets');
-        props.babelPlugins = this.compute('babelPlugins');
+        props.presets = this._presets();
+        props.plugins = this._plugins();
 
         this.fs.copyTpl(this.templatePath('babelrc.ejs'), this.destinationPath('.babelrc'), props);
       }
+    }
+  }, {
+    key: '_plugins',
+    value: function _plugins() {
+      return Object.keys(this.get('devDeps')).filter(function (dep) {
+        return dep.match(/babel-plugin/);
+      }).map(function (dep) {
+        return '"' + dep.replace('babel-plugin-', '') + '"';
+      }).join(', ');
+    }
+  }, {
+    key: '_presets',
+    value: function _presets() {
+      var presets = [];
+
+      switch (this.get('babel')) {
+        case 'es2017':
+          presets.push('es2017');
+        // FALL THROUGH
+
+        case 'es2016':
+          presets.push('es2016');
+        // FALL THROUGH
+
+        case 'es2015':
+          presets.push('es2015');
+      }
+
+      if (this.has('React')) {
+        presets.push('react');
+      }
+
+      presets.sort();
+      return presets.map(function (preset) {
+        return '"' + preset + '"';
+      }).join(', ');
     }
   }]);
 

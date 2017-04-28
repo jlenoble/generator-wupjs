@@ -218,13 +218,6 @@ var _class = function (_Base) {
     key: 'compute',
     value: function compute(propName) {
       switch (propName) {
-        case 'babelPlugins':
-          return Object.keys(this.get('devDeps')).filter(function (dep) {
-            return dep.match(/babel-plugin/);
-          }).map(function (dep) {
-            return '"' + dep.replace('babel-plugin-', '') + '"';
-          }).join(', ');
-
         case 'browserMocha':
           return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.dirs('nodeDir')), 'mocha/mocha.js');
 
@@ -346,33 +339,6 @@ var _class = function (_Base) {
 
         case 'pipeBabel':
           return this.has('Babel') ? '\n    .pipe(babel())' : '';
-
-        case 'presets':
-          {
-            var presets = [];
-
-            switch (this.get('babel')) {
-              case 'es2017':
-                presets.push('es2017');
-              // FALL THROUGH
-
-              case 'es2016':
-                presets.push('es2016');
-              // FALL THROUGH
-
-              case 'es2015':
-                presets.push('es2015');
-            }
-
-            if (this.has('React')) {
-              presets.push('react');
-            }
-
-            presets.sort();
-            return presets.map(function (preset) {
-              return '"' + preset + '"';
-            }).join(', ');
-          }
 
         case 'preServeTask':
           return this.has('Compass') ? 'gulp.parallel(\'bundle\', \'sass\')' : '\'bundle\'';
