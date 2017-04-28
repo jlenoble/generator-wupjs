@@ -1,5 +1,6 @@
 import Base from '../base';
 import path from 'path';
+import stringify from 'json-stable-stringify';
 
 export default class extends Base {
   constructor (args, opts) {
@@ -23,14 +24,45 @@ export default class extends Base {
 
   writing () {
     const props = this.getProps();
-    props.bsWatchGlob = this.compute('bsWatchGlob');
-    props.importSass = this.compute('importSass');
-    props.preServeTask = this.compute('preServeTask');
+    props.imports = this._imports();
+    props.consts = this._consts();
+    props.preServeTask = this._preServeTask();
 
     this.fs.copyTpl(
       this.templatePath('serve.ejs'),
       this.destinationPath(path.join(props.gulpDir, 'serve.js')),
       props
     );
+  }
+
+  _consts () {
+    let consts = `const buildDir = '${this.dirs('buildDir')}';
+const staticDir = '${this.dirs('staticDir')}';
+const nodeDir = '${this.dirs('nodeDir')}';
+const bsWatchGlob = `;
+
+    if (this.has('Compass')) {
+      consts += stringify([path.join(this.dirs('staticDir'), 'index.html'),
+        path.join(this.get('buildDir'), this.compute('bundleName')),
+        path.join(this.dirs('cssDir'), '**/*.scss')],
+        {space: 2}).replace(/"/g, `'`);
+    } else {
+      consts += stringify([path.join(this.dirs('staticDir'), 'index.html'),
+        path.join(this.get('buildDir'), this.compute('bundleName'))],
+        {space: 2}).replace(/"/g, `'`);
+    }
+
+    consts += ';';
+
+    return consts;
+  }
+
+  _imports () {
+    return `import './bundle';${this.has('Compass') ? '\nimport \'./sass\';' :
+      ''}`;
+  }
+
+  _preServeTask () {
+    return this.has('Compass') ? `gulp.parallel('bundle', 'sass')` : `'bundle'`;
   }
 }

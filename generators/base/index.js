@@ -221,9 +221,6 @@ var _class = function (_Base) {
         case 'browserMocha':
           return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.dirs('nodeDir')), 'mocha/mocha.js');
 
-        case 'bsWatchGlob':
-          return this.has('Compass') ? (0, _jsonStableStringify2.default)([_path2.default.join(this.dirs('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName')), _path2.default.join(this.dirs('cssDir'), '**/*.scss')], { space: 2 }).replace(/"/g, '\'') : (0, _jsonStableStringify2.default)([_path2.default.join(this.dirs('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName'))], { space: 2 }).replace(/"/g, '\'');
-
         case 'bundleName':
           return 'bundle.js';
 
@@ -322,9 +319,6 @@ var _class = function (_Base) {
             return 'import \'' + (this.has('React') ? './test-bundle' : './build') + '\';';
           }
 
-        case 'importSass':
-          return '\nimport \'./sass\';';
-
         case 'main':
           return _path2.default.join(this.get('libDir'), this.compute('module')) + '.js';
 
@@ -339,9 +333,6 @@ var _class = function (_Base) {
 
         case 'pipeBabel':
           return this.has('Babel') ? '\n    .pipe(babel())' : '';
-
-        case 'preServeTask':
-          return this.has('Compass') ? 'gulp.parallel(\'bundle\', \'sass\')' : '\'bundle\'';
 
         case 'preTestTask':
           if (this.has('Compass')) {

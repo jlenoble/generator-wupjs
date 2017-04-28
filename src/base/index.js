@@ -166,16 +166,6 @@ export default class extends Base {
       return path.join(path.relative(this.get('buildDir'),
         this.dirs('nodeDir')), 'mocha/mocha.js');
 
-    case 'bsWatchGlob':
-      return this.has('Compass') ?
-        stringify([path.join(this.dirs('staticDir'), 'index.html'),
-          path.join(this.get('buildDir'), this.compute('bundleName')),
-          path.join(this.dirs('cssDir'), '**/*.scss')],
-          {space: 2}).replace(/"/g, `'`) :
-        stringify([path.join(this.dirs('staticDir'), 'index.html'),
-          path.join(this.get('buildDir'), this.compute('bundleName'))],
-          {space: 2}).replace(/"/g, `'`);
-
     case 'bundleName':
       return 'bundle.js';
 
@@ -282,9 +272,6 @@ import './sass';`;
         return `import '${this.has('React') ? './test-bundle' : './build'}';`;
       }
 
-    case 'importSass':
-      return `\nimport './sass';`;
-
     case 'main':
       return path.join(this.get('libDir'), this.compute('module')) + '.js';
 
@@ -300,10 +287,6 @@ import './sass';`;
 
     case 'pipeBabel':
       return this.has('Babel') ? '\n    .pipe(babel())' : '';
-
-    case 'preServeTask':
-      return this.has('Compass') ? `gulp.parallel('bundle', 'sass')` :
-        `'bundle'`;
 
     case 'preTestTask':
       if (this.has('Compass')) {

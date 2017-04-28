@@ -2,12 +2,9 @@ import gulp from 'gulp';
 import path from 'path';
 import browserSync from 'browser-sync';
 
-import './bundle';<%- importSass %>
+<%- imports %>
 
-const buildDir = '<%- buildDir %>';
-const staticDir = '<%- dirs('staticDir') %>';
-const nodeDir = '<%- dirs('nodeDir') %>';
-const bsWatchGlob = <%- bsWatchGlob %>;
+<%- consts %>
 
 export const serve = done => {
   var bs = browserSync.create('server');

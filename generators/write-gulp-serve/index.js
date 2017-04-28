@@ -14,6 +14,10 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _jsonStableStringify = require('json-stable-stringify');
+
+var _jsonStableStringify2 = _interopRequireDefault(_jsonStableStringify);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -52,11 +56,36 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.bsWatchGlob = this.compute('bsWatchGlob');
-      props.importSass = this.compute('importSass');
-      props.preServeTask = this.compute('preServeTask');
+      props.imports = this._imports();
+      props.consts = this._consts();
+      props.preServeTask = this._preServeTask();
 
       this.fs.copyTpl(this.templatePath('serve.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'serve.js')), props);
+    }
+  }, {
+    key: '_consts',
+    value: function _consts() {
+      var consts = 'const buildDir = \'' + this.dirs('buildDir') + '\';\nconst staticDir = \'' + this.dirs('staticDir') + '\';\nconst nodeDir = \'' + this.dirs('nodeDir') + '\';\nconst bsWatchGlob = ';
+
+      if (this.has('Compass')) {
+        consts += (0, _jsonStableStringify2.default)([_path2.default.join(this.dirs('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName')), _path2.default.join(this.dirs('cssDir'), '**/*.scss')], { space: 2 }).replace(/"/g, '\'');
+      } else {
+        consts += (0, _jsonStableStringify2.default)([_path2.default.join(this.dirs('staticDir'), 'index.html'), _path2.default.join(this.get('buildDir'), this.compute('bundleName'))], { space: 2 }).replace(/"/g, '\'');
+      }
+
+      consts += ';';
+
+      return consts;
+    }
+  }, {
+    key: '_imports',
+    value: function _imports() {
+      return 'import \'./bundle\';' + (this.has('Compass') ? '\nimport \'./sass\';' : '');
+    }
+  }, {
+    key: '_preServeTask',
+    value: function _preServeTask() {
+      return this.has('Compass') ? 'gulp.parallel(\'bundle\', \'sass\')' : '\'bundle\'';
     }
   }]);
 
