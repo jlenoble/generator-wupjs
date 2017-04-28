@@ -236,55 +236,6 @@ var _class = function (_Base) {
             return cYear;
           }
 
-        case 'ecmaFeatures':
-          return (0, _jsonStableStringify2.default)(this.has('React') ? { jsx: true } : {}, { space: 2 }).replace(/\n/g, '\n    ');
-
-        case 'ecmaVersion':
-          {
-            var babel = this.get('babel');
-            switch (babel) {
-              case 'es2015':case 'es2016':case 'es2017':
-                return babel.substring(2);
-
-              default:
-                return 5;
-            }
-          }
-
-        case 'esLintPlugins':
-          return (0, _jsonStableStringify2.default)(this.has('React') ? ['react'] : []);
-
-        case 'esLintRules':
-          {
-            var rules = {
-              'arrow-parens': ['error', 'as-needed'],
-              'func-names': ['error', 'never'],
-              'indent': ['error', 2],
-              'max-len': ['error', { ignoreRegExpLiterals: true }],
-              'no-param-reassign': ['error', { props: true }],
-              'one-var': ['error', 'never'],
-              'quotes': ['error', 'single', { allowTemplateLiterals: true }],
-              'require-jsdoc': ['off'],
-              'space-before-function-paren': ['error', 'always']
-            };
-
-            if (this.has('React')) {
-              Object.assign(rules, {
-                'react/jsx-uses-react': ['error'],
-                'react/jsx-uses-vars': ['error']
-              });
-            }
-
-            var keys = Object.keys(rules).sort();
-            var str = '{';
-            keys.forEach(function (key, i) {
-              str += '\n    "' + key + '": ' + (0, _jsonStableStringify2.default)(rules[key]).replace(/,/g, ', ').replace(/:/g, ': ') + (i < keys.length - 1 ? ',' : '');
-            });
-            str += '\n  }';
-
-            return str;
-          }
-
         case 'externalReact':
           return this.has('React') ? '\n    .external(\'react/addons\')\n    .external(\'react/lib/ReactContext\')\n    .external(\'react/lib/ExecutionEnvironment\')' : '';
 
