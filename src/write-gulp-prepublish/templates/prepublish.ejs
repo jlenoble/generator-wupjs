@@ -1,0 +1,7 @@
+import gulp from 'gulp';
+
+import './test';
+import './distclean';
+import './dist';
+
+gulp.task('prepublish', gulp.series('test', 'distclean', 'dist'));

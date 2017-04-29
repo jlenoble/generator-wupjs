@@ -38,11 +38,11 @@ export const distSass = () => {
   })
   .pipe(compass({
     project: path.join(__dirname, '..'),
-    css: ${this.dirs('libDir')},
-    sass: ${this.dirs('sassDir')},
-    import_path: ${this.dirs('nodeDir')},
+    css: '${this.dirs('libDir')}',
+    sass: '${this.dirs('sassDir')}',
+    import_path: '${this.dirs('nodeDir')}',
   }))
-  .pipe(gulp.dest(${this.dirs('libDir')}));
+  .pipe(gulp.dest('${this.dirs('libDir')}'));
 };
 ` : '';
   }
@@ -60,6 +60,7 @@ export const distSass = () => {
 
     if (this.has('Compass')) {
       imports += `import compass from 'gulp-compass';\n`;
+      imports += `import path from 'path';\n`;
     }
 
     return imports;
