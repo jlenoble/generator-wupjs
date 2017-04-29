@@ -1,4 +1,5 @@
 import Base from '../base';
+import path from 'path';
 
 export default class extends Base {
   constructor (args, opts) {
@@ -15,13 +16,23 @@ export default class extends Base {
 
   writing () {
     const props = this.getProps();
-    props.browserMocha = this.compute('browserMocha');
-    props.testBundleGlob = this.compute('testBundleGlob');
+    props.browserMocha = this._browserMocha();
+    props.testBundleGlob = this._testBundleGlob();
 
     this.fs.copyTpl(
       this.templatePath('runner.ejs'),
       this.destinationPath(this.filepaths('runnerPage')),
       props
     );
+  }
+
+  _browserMocha () {
+    return path.join(path.relative(this.get('buildDir'),
+      this.dirs('nodeDir')), 'mocha/mocha.js');
+  }
+
+  _testBundleGlob () {
+    return path.join(path.relative(this.get('testDir'),
+      this.get('buildDir')), this.filenames('testBundle'));
   }
 }

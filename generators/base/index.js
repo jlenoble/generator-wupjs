@@ -214,9 +214,6 @@ var _class = function (_Base) {
     key: 'compute',
     value: function compute(propName) {
       switch (propName) {
-        case 'browserMocha':
-          return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.dirs('nodeDir')), 'mocha/mocha.js');
-
         case 'className':
           return (0, _uppercamelcase2.default)(this.get('name'));
 
@@ -255,9 +252,6 @@ var _class = function (_Base) {
 
         case 'pipeBabel':
           return this.has('Babel') ? '\n    .pipe(babel())' : '';
-
-        case 'testBundleGlob':
-          return _path2.default.join(_path2.default.relative(this.get('testDir'), this.get('buildDir')), this.filenames('testBundle'));
       }
     }
   }, {

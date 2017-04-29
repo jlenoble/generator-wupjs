@@ -10,6 +10,10 @@ var _base = require('../base');
 
 var _base2 = _interopRequireDefault(_base);
 
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40,10 +44,20 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.browserMocha = this.compute('browserMocha');
-      props.testBundleGlob = this.compute('testBundleGlob');
+      props.browserMocha = this._browserMocha();
+      props.testBundleGlob = this._testBundleGlob();
 
       this.fs.copyTpl(this.templatePath('runner.ejs'), this.destinationPath(this.filepaths('runnerPage')), props);
+    }
+  }, {
+    key: '_browserMocha',
+    value: function _browserMocha() {
+      return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.dirs('nodeDir')), 'mocha/mocha.js');
+    }
+  }, {
+    key: '_testBundleGlob',
+    value: function _testBundleGlob() {
+      return _path2.default.join(_path2.default.relative(this.get('testDir'), this.get('buildDir')), this.filenames('testBundle'));
     }
   }]);
 

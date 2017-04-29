@@ -161,10 +161,6 @@ export default class extends Base {
 
   compute (propName) {
     switch (propName) {
-    case 'browserMocha':
-      return path.join(path.relative(this.get('buildDir'),
-        this.dirs('nodeDir')), 'mocha/mocha.js');
-
     case 'className':
       return upperCamelCase(this.get('name'));
 
@@ -206,10 +202,6 @@ export default class extends Base {
 
     case 'pipeBabel':
       return this.has('Babel') ? '\n    .pipe(babel())' : '';
-
-    case 'testBundleGlob':
-      return path.join(path.relative(this.get('testDir'),
-        this.get('buildDir')), this.filenames('testBundle'));
     }
   }
 
