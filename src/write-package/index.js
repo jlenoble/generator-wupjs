@@ -9,7 +9,7 @@ export default class extends Base {
     super(args, options);
 
     this.promptIfMissing(['name', 'description', 'author', 'email', 'github',
-      'license', 'libDir', 'deps', 'devDeps', 'peerDeps']);
+      'license', 'libDir', 'deps', 'devDeps', 'peerDeps', 'version']);
   }
 
   writing () {
@@ -18,6 +18,9 @@ export default class extends Base {
     props.main = this.compute('main');
     props.module = this.compute('module');
     props.nodeVersion = this.compute('nodeVersion');
+
+    props.contributors = this.stringify([]);
+    props.keywords = this.stringify([]);
 
     this.fs.copyTpl(
       this.templatePath('package.ejs'),

@@ -36,6 +36,9 @@ const getGenerator = name => {
   case 'testRunners':
     return 'test';
 
+  case 'version':
+    return 'version';
+
   case 'author': case 'email':
     return 'who';
   }
