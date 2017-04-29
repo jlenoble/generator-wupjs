@@ -11,6 +11,9 @@ var getGenerator = function getGenerator(name) {
     case 'babel':
       return 'babel';
 
+    case 'contributors':
+      return 'contributors';
+
     case 'created':case 'updated':
       return 'date';
 

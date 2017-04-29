@@ -62,6 +62,14 @@ const rel = (hint, gen) => {
 };
 
 const stringify = (obj, gen) => {
+  if (Array.isArray(obj) && obj.length === 0) {
+    return '[]';
+  }
+
+  if (Object.keys(obj).length === 0) {
+    return '{}';
+  }
+
   return strgfy(obj, {space: 2}).replace(/"/g, `'`);
 };
 

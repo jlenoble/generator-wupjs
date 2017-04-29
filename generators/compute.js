@@ -97,6 +97,14 @@ var rel = function rel(hint, gen) {
 };
 
 var stringify = function stringify(obj, gen) {
+  if (Array.isArray(obj) && obj.length === 0) {
+    return '[]';
+  }
+
+  if (Object.keys(obj).length === 0) {
+    return '{}';
+  }
+
   return (0, _jsonStableStringify2.default)(obj, { space: 2 }).replace(/"/g, '\'');
 };
 
