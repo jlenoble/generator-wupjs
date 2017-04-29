@@ -40,7 +40,7 @@ export const distSass = () => {
     project: path.join(__dirname, '..'),
     css: '${this.dirs('libDir')}',
     sass: '${this.dirs('sassDir')}',
-    import_path: '${this.dirs('nodeDir')}',
+    import_path: '${this.dirs('sassImportDir')}',
   }))
   .pipe(gulp.dest('${this.dirs('libDir')}'));
 };

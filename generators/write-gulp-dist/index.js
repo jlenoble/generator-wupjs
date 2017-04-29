@@ -54,7 +54,7 @@ var _class = function (_Base) {
   }, {
     key: '_distSass',
     value: function _distSass() {
-      return this.has('Compass') ? '\nexport const distSass = () => {\n  return gulp.src(' + this.globs('sass:*') + ', {\n    base: process.cwd(),\n    since: gulp.lastRun(distSass),\n  })\n  .pipe(compass({\n    project: path.join(__dirname, \'..\'),\n    css: \'' + this.dirs('libDir') + '\',\n    sass: \'' + this.dirs('sassDir') + '\',\n    import_path: \'' + this.dirs('nodeDir') + '\',\n  }))\n  .pipe(gulp.dest(\'' + this.dirs('libDir') + '\'));\n};\n' : '';
+      return this.has('Compass') ? '\nexport const distSass = () => {\n  return gulp.src(' + this.globs('sass:*') + ', {\n    base: process.cwd(),\n    since: gulp.lastRun(distSass),\n  })\n  .pipe(compass({\n    project: path.join(__dirname, \'..\'),\n    css: \'' + this.dirs('libDir') + '\',\n    sass: \'' + this.dirs('sassDir') + '\',\n    import_path: \'' + this.dirs('sassImportDir') + '\',\n  }))\n  .pipe(gulp.dest(\'' + this.dirs('libDir') + '\'));\n};\n' : '';
     }
   }, {
     key: '_distTask',
