@@ -1,5 +1,5 @@
-import gulp from 'gulp';
-<%- importBabel  %>
+<%- imports %>
+
 const libDir = '<%- libDir %>';
 const srcGlob = <%- globs('src:**:js') %>;
 
@@ -9,5 +9,5 @@ export const dist = () => {
   })<%- pipeBabel %>
     .pipe(gulp.dest(libDir));
 };
-
-gulp.task('dist', dist);
+<%- distSass %>
+gulp.task('dist', <%- distTask %>);

@@ -34,7 +34,7 @@ var _class = function (_Base) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
-    _this.promptIfMissing(['babel', 'gulpDir', 'buildDir', 'srcDir', 'linters']);
+    _this.promptIfMissing(['babel', 'gulpDir', 'buildDir', 'srcDir', 'linters', 'preprocessors']);
     _this.addGulpIncludes(['dist']);
     _this.composeWith('write-gulpfile');
     return _this;
@@ -44,10 +44,37 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.importBabel = this.compute('importBabel');
+      props.imports = this._imports();
       props.pipeBabel = this.compute('pipeBabel');
+      props.distSass = this._distSass();
+      props.distTask = this._distTask();
 
       this.fs.copyTpl(this.templatePath('dist.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'dist.js')), props);
+    }
+  }, {
+    key: '_distSass',
+    value: function _distSass() {
+      return this.has('Compass') ? '\nexport const distSass = () => {\n  return gulp.src(' + this.globs('sass:*') + ', {\n    base: process.cwd(),\n    since: gulp.lastRun(distSass),\n  })\n  .pipe(compass({\n    project: path.join(__dirname, \'..\'),\n    css: ' + this.dirs('libDir') + ',\n    sass: ' + this.dirs('sassDir') + ',\n    import_path: ' + this.dirs('nodeDir') + ',\n  }))\n  .pipe(gulp.dest(' + this.dirs('libDir') + '));\n};\n' : '';
+    }
+  }, {
+    key: '_distTask',
+    value: function _distTask() {
+      return this.has('Compass') ? 'gulp.parallel(dist, distSass)' : 'dist';
+    }
+  }, {
+    key: '_imports',
+    value: function _imports() {
+      var imports = 'import gulp from \'gulp\';\n';
+
+      if (this.has('Babel')) {
+        imports += 'import babel from \'gulp-babel\';\n';
+      }
+
+      if (this.has('Compass')) {
+        imports += 'import compass from \'gulp-compass\';\n';
+      }
+
+      return imports;
     }
   }]);
 
