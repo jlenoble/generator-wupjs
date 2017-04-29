@@ -27,12 +27,10 @@ export default class extends Base {
   }
 
   _browserMocha () {
-    return path.join(path.relative(this.get('buildDir'),
-      this.dirs('nodeDir')), 'mocha/mocha.js');
+    return path.join(this.rel('build:node'), 'mocha/mocha.js');
   }
 
   _testBundleGlob () {
-    return path.join(path.relative(this.get('testDir'),
-      this.get('buildDir')), this.filenames('testBundle'));
+    return path.join(this.rel('test:build'), this.filenames('testBundle'));
   }
 }

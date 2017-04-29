@@ -54,8 +54,15 @@ const nodeDeps = (hint, gen) => {
     .replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
 };
 
+const rel = (hint, gen) => {
+  let [fromDir, toDir] = hint.split(':');
+  fromDir = gen.dirs(fromDir + 'Dir');
+  toDir = gen.dirs(toDir + 'Dir');
+  return path.relative(fromDir, toDir);
+};
+
 const stringify = (obj, gen) => {
   return strgfy(obj, {space: 2}).replace(/"/g, `'`);
 };
 
-export {fullDir, fullExt, fullPaths, nodeDeps, stringify};
+export {fullDir, fullExt, fullPaths, nodeDeps, rel, stringify};

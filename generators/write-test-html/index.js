@@ -52,12 +52,12 @@ var _class = function (_Base) {
   }, {
     key: '_browserMocha',
     value: function _browserMocha() {
-      return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.dirs('nodeDir')), 'mocha/mocha.js');
+      return _path2.default.join(this.rel('build:node'), 'mocha/mocha.js');
     }
   }, {
     key: '_testBundleGlob',
     value: function _testBundleGlob() {
-      return _path2.default.join(_path2.default.relative(this.get('testDir'), this.get('buildDir')), this.filenames('testBundle'));
+      return _path2.default.join(this.rel('test:build'), this.filenames('testBundle'));
     }
   }]);
 
