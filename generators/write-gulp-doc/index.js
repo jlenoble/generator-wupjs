@@ -29,17 +29,21 @@ var _class = function (_Base) {
     _classCallCheck(this, _class);
 
     var options = Object.assign({
-      generator: 'write-gulp-prepublish'
+      generator: 'write-gulp-doc'
     }, opts);
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
 
-    _this.promptIfMissing(['gulpDir']);
-    _this.addGulpIncludes(['prepublish']);
-    _this.composeWith('write-gulp-test');
-    _this.composeWith('write-gulp-dist');
-    _this.composeWith('write-gulp-doc');
-    _this.composeWith('write-gulp-distclean');
+    _this.promptIfMissing(['gulpDir', 'addons', 'buildDir', 'name', 'description']);
+    _this.addGulpIncludes(['doc']);
+    _this.addDevDeps({
+      'gulp-rename': '*',
+      'gulp-replace': '*',
+      'gulp-wrap': '*',
+      'markdown-include': '*'
+    });
+    _this.composeWith('who');
+    _this.composeWith('license');
     _this.composeWith('write-gulpfile');
     return _this;
   }
@@ -48,8 +52,21 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
+      props.contents = this._contents();
+      props.docConf = this.filepaths('docConf');
+      props.name = this.get('name');
+      props.cYear = this.compute('cYear');
 
-      this.fs.copyTpl(this.templatePath('prepublish.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'prepublish.js')), props);
+      this.fs.copyTpl(this.templatePath('doc.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'doc.js')), props);
+
+      this.fs.copyTpl(this.templatePath('index.ejs'), this.destinationPath(_path2.default.join(this.dirs('docDir'), 'index.md')), props);
+
+      this.fs.copyTpl(this.templatePath('markdown.ejs'), this.destinationPath('markdown.json'), props);
+    }
+  }, {
+    key: '_contents',
+    value: function _contents() {
+      return '<%= contents %>';
     }
   }]);
 

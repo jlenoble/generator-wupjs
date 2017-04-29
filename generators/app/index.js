@@ -44,6 +44,8 @@ var _class = function (_Base) {
     _this.composeWith('write-gulp-clean');
     _this.composeWith('write-gulp-distclean');
     _this.composeWith('write-gulp-dist');
+    _this.composeWith('write-gulp-doc');
+    _this.composeWith('write-gulp-prepublish');
     _this.composeWith('write-gulp-tdd');
     _this.composeWith('write-gulp-watch');
     _this.composeWith('write-src');

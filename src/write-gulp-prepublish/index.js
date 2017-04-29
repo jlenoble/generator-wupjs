@@ -13,6 +13,7 @@ export default class extends Base {
     this.addGulpIncludes(['prepublish']);
     this.composeWith('write-gulp-test');
     this.composeWith('write-gulp-dist');
+    this.composeWith('write-gulp-doc');
     this.composeWith('write-gulp-distclean');
     this.composeWith('write-gulpfile');
   }

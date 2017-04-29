@@ -22,6 +22,12 @@ var dirs = function dirs(dir, gen) {
     case 'cssDir':
       return _path2.default.join(gen.dirs('buildDir'), 'css');
 
+    case 'docDir':
+      return 'docs';
+
+    case 'examplesDir':
+      return _path2.default.join(gen.dirs('docDir'), 'examples');
+
     case 'nodeDir':case 'sassImportDir':
       return 'node_modules';
 
@@ -55,6 +61,9 @@ var filenames = function filenames(file, gen) {
 
     case 'runnerPage':
       return 'runner.html';
+
+    case 'docConf':
+      return 'markdown.json';
   }
 };
 
@@ -74,6 +83,9 @@ var filepaths = function filepaths(pathHint, gen) {
 
     case 'runnerPage':
       return gen.fullPaths('test:runnerPage');
+
+    case 'docConf':
+      return gen.filenames('docConf');
   }
 };
 
