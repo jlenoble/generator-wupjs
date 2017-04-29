@@ -25,27 +25,19 @@ var _class = function (_Base) {
     _classCallCheck(this, _class);
 
     var options = Object.assign({
-      generator: 'write-package'
+      props: ['keywords'],
+      generator: 'keywords'
     }, opts);
 
-    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
-
-    _this.promptIfMissing(['name', 'description', 'author', 'email', 'github', 'license', 'libDir', 'deps', 'devDeps', 'peerDeps', 'version', 'contributors', 'keywords']);
-    return _this;
+    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
   }
 
   _createClass(_class, [{
-    key: 'writing',
-    value: function writing() {
-      var props = this.getProps();
-
-      props.main = this.compute('main');
-      props.module = this.compute('module');
-      props.nodeVersion = this.compute('nodeVersion');
-      props.contributors = this.stringify(this.get('contributors'));
-      props.keywords = this.stringify(this.get('keywords'));
-
-      this.fs.copyTpl(this.templatePath('package.ejs'), this.destinationPath('package.json'), props);
+    key: 'initializing',
+    value: function initializing() {
+      if (!this.get('keywords')) {
+        this.set({ keywords: [] });
+      }
     }
   }]);
 

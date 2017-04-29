@@ -26,6 +26,9 @@ var getGenerator = function getGenerator(name) {
     case 'gulpIncludes':
       return 'write-gulpfile';
 
+    case 'keywords':
+      return 'keywords';
+
     case 'license':
       return 'license';
 

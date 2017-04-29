@@ -5,6 +5,7 @@ testGenerator('write-package', undefined, {
   'package.json': [
     /"version": "0.0.0"/,
     /"contributors": \[\]/,
+    /"keywords": \[\]/,
     /"node": ">=\d+\.\d+\.\d+"/,
   ],
 });
