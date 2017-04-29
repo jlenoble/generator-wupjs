@@ -1,5 +1,4 @@
 import Base from '../base';
-import path from 'path';
 
 export default class extends Base {
   constructor (args, opts) {
@@ -21,7 +20,7 @@ export default class extends Base {
 
     this.fs.copyTpl(
       this.templatePath('runner.ejs'),
-      this.destinationPath(path.join(props.testDir, 'runner.html')),
+      this.destinationPath(this.filepaths('runnerPage')),
       props
     );
   }

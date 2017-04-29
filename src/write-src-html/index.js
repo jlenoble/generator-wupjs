@@ -1,5 +1,4 @@
 import Base from '../base';
-import path from 'path';
 
 export default class extends Base {
   constructor (args, opts) {
@@ -19,7 +18,7 @@ export default class extends Base {
 
     this.fs.copyTpl(
       this.templatePath('index.ejs'),
-      this.destinationPath(path.join(props.dirs('staticDir'), 'index.html')),
+      this.destinationPath(this.filepaths('indexPage')),
       props
     );
   }

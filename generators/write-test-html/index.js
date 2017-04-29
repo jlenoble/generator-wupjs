@@ -10,10 +10,6 @@ var _base = require('../base');
 
 var _base2 = _interopRequireDefault(_base);
 
-var _path = require('path');
-
-var _path2 = _interopRequireDefault(_path);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -47,7 +43,7 @@ var _class = function (_Base) {
       props.browserMocha = this.compute('browserMocha');
       props.testBundleGlob = this.compute('testBundleGlob');
 
-      this.fs.copyTpl(this.templatePath('runner.ejs'), this.destinationPath(_path2.default.join(props.testDir, 'runner.html')), props);
+      this.fs.copyTpl(this.templatePath('runner.ejs'), this.destinationPath(this.filepaths('runnerPage')), props);
     }
   }]);
 

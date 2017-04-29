@@ -53,6 +53,9 @@ const filepaths = (pathHint, gen) => {
   case 'testBundle':
     return gen.fullPaths('build:testBundle');
 
+  case 'indexPage':
+    return gen.fullPaths('static:indexPage');
+
   case 'runnerPage':
     return gen.fullPaths('test:runnerPage');
   }
