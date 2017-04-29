@@ -59,14 +59,53 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.testGlob = this.compute('testGlob');
-      props.gulpMocha = this.compute('gulpMocha');
-      props.gulpMochaCallback = this.compute('gulpMochaCallback');
-      props.onMochaEnd = this.compute('onMochaEnd');
-      props.importPreTestTask = this.compute('importPreTestTask');
-      props.preTestTask = this.compute('preTestTask');
+      props.imports = this._imports();
+      props.testGlob = this._testGlob();
+      props.gulpMochaCallback = this._gulpMochaCallback();
+      props.onMochaEnd = this._onMochaEnd();
+      props.preTestTask = this._preTestTask();
 
       this.fs.copyTpl(this.templatePath('test.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'test.js')), props);
+    }
+  }, {
+    key: '_gulpMocha',
+    value: function _gulpMocha() {
+      return this.has('PhantomJS') ? 'gulp-mocha-phantomjs' : 'gulp-mocha';
+    }
+  }, {
+    key: '_gulpMochaCallback',
+    value: function _gulpMochaCallback() {
+      return this.has('PhantomJS') ? 'done' : '()';
+    }
+  }, {
+    key: '_imports',
+    value: function _imports() {
+      var imports = 'import gulp from \'gulp\';\nimport mocha from \'' + this._gulpMocha() + '\';\nimport \'' + (this.has('React') ? './test-bundle' : './build') + '\'';
+
+      if (this.has('Compass')) {
+        imports += '\nimport \'./sass\';';
+      }
+
+      return imports;
+    }
+  }, {
+    key: '_onMochaEnd',
+    value: function _onMochaEnd() {
+      return this.has('PhantomJS') ? '\n      .on(\'end\', done)' : '';
+    }
+  }, {
+    key: '_preTestTask',
+    value: function _preTestTask() {
+      if (this.has('Compass')) {
+        return this.has('React') ? 'gulp.parallel(\'test-bundle\', \'sass\')' : 'gulp.parallel(\'build\', \'sass\')';
+      } else {
+        return '\'' + (this.has('React') ? 'test-bundle' : 'build') + '\'';
+      }
+    }
+  }, {
+    key: '_testGlob',
+    value: function _testGlob() {
+      return this.has('PhantomJS') ? '\'' + this.filepaths('runnerPage') + '\'' : this.globs('build#test:**:test.js');
     }
   }]);
 

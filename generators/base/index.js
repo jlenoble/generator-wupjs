@@ -244,21 +244,8 @@ var _class = function (_Base) {
         case 'glob':
           return this.has('React') ? ['**/*.js', '**/*.jsx'] : '**/*.js';
 
-        case 'gulpMocha':
-          return this.has('PhantomJS') ? 'gulp-mocha-phantomjs' : 'gulp-mocha';
-
-        case 'gulpMochaCallback':
-          return this.has('PhantomJS') ? 'done' : '()';
-
         case 'importBabel':
           return this.has('Babel') ? 'import babel from \'gulp-babel\';\n' : '';
-
-        case 'importPreTestTask':
-          if (this.has('Compass')) {
-            return 'import \'' + (this.has('React') ? './test-bundle' : './build') + '\';\nimport \'./sass\';';
-          } else {
-            return 'import \'' + (this.has('React') ? './test-bundle' : './build') + '\';';
-          }
 
         case 'main':
           return _path2.default.join(this.get('libDir'), this.compute('module')) + '.js';
@@ -269,27 +256,14 @@ var _class = function (_Base) {
         case 'name':
           return this.appname;
 
-        case 'onMochaEnd':
-          return this.has('PhantomJS') ? '\n    .on(\'end\', done)' : '';
-
         case 'pipeBabel':
           return this.has('Babel') ? '\n    .pipe(babel())' : '';
-
-        case 'preTestTask':
-          if (this.has('Compass')) {
-            return this.has('React') ? 'gulp.parallel(\'test-bundle\', \'sass\')' : 'gulp.parallel(\'build\', \'sass\')';
-          } else {
-            return '\'' + (this.has('React') ? 'test-bundle' : 'build') + '\'';
-          }
 
         case 'sassCache':
           return this.has('Compass') ? '.sass-cache' : '';
 
         case 'testBundleGlob':
           return _path2.default.join(_path2.default.relative(this.get('testDir'), this.get('buildDir')), this.filenames('testBundle'));
-
-        case 'testGlob':
-          return this.has('PhantomJS') ? '\'' + this.filepaths('runnerPage') + '\'' : this.globs('build#test:**:test.js');
       }
     }
   }, {
