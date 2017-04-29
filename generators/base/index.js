@@ -250,6 +250,9 @@ var _class = function (_Base) {
         case 'name':
           return this.appname;
 
+        case 'nodeVersion':
+          return '>=' + process.version.substring(1);
+
         case 'pipeBabel':
           return this.has('Babel') ? '\n    .pipe(babel())' : '';
       }
