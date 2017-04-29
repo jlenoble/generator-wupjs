@@ -30,6 +30,25 @@ const fullExt = ({rel, ext, dir, pat}, gen) => {
   }
 };
 
+const fullPaths = (pathHint, gen) => {
+  let [rel, hint] = pathHint.split('#');
+
+  if (!hint) {
+    hint = rel;
+    rel = undefined;
+  }
+
+  let [dir, file] = hint.split(':');
+  dir += 'Dir';
+
+  if (rel) {
+    rel += 'Dir';
+    return path.join(gen.dirs(rel), gen.dirs(dir), gen.filenames(file));
+  }
+
+  return path.join(gen.dirs(dir), gen.filenames(file));
+};
+
 const nodeDeps = (hint, gen) => {
   return strgfy(gen.get(hint), {space: 2})
     .replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
@@ -39,4 +58,4 @@ const stringify = (obj, gen) => {
   return strgfy(obj, {space: 2}).replace(/"/g, `'`);
 };
 
-export {fullDir, fullExt, nodeDeps, stringify};
+export {fullDir, fullExt, fullPaths, nodeDeps, stringify};

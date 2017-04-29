@@ -22,14 +22,39 @@ const dirs = (dir, gen) => {
 
 const filenames = (file, gen) => {
   switch (file) {
+  case 'bundleRoot':
+    return 'demo.js';
+
+  case 'testBundleRoot':
+    return 'index.test.js';
+
   case 'bundle':
     return 'bundle.js';
 
   case 'testBundle':
     return 'test-bundle.js';
 
+  case 'indexPage':
+    return 'index.html';
+
   case 'runnerPage':
     return 'runner.html';
+  }
+};
+
+const filepaths = (pathHint, gen) => {
+  switch (pathHint) {
+  case 'bundleRoot':
+    return gen.fullPaths('build#src:bundleRoot');
+
+  case 'testBundleRoot':
+    return gen.fullPaths('build#test:testBundleRoot');
+
+  case 'testBundle':
+    return gen.fullPaths('build:testBundle');
+
+  case 'runnerPage':
+    return gen.fullPaths('test:runnerPage');
   }
 };
 
@@ -45,4 +70,4 @@ const globs = (globHint, gen) => {
   return gen.stringify(joinGlobs(gen.fullDir(hints), gen.fullExt(hints)));
 };
 
-export {dirs, filenames, globs};
+export {dirs, filenames, filepaths, globs};

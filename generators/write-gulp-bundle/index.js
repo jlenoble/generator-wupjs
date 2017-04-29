@@ -49,7 +49,7 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.bundleRoot = this.compute('bundleRoot');
+      props.bundleRoot = this.filepaths('bundleRoot');
       props.bundleName = this.filenames('bundle');
       props.externalReact = this.compute('externalReact');
 

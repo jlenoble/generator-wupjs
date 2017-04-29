@@ -21,7 +21,7 @@ export default class extends Base {
 
   writing () {
     const props = this.getProps();
-    props.bundleRoot = this.compute('bundleRoot');
+    props.bundleRoot = this.filepaths('bundleRoot');
     props.bundleName = this.filenames('bundle');
     props.externalReact = this.compute('externalReact');
 

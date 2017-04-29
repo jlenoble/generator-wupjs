@@ -22,10 +22,6 @@ var _uppercamelcase = require('uppercamelcase');
 
 var _uppercamelcase2 = _interopRequireDefault(_uppercamelcase);
 
-var _jsonStableStringify = require('json-stable-stringify');
-
-var _jsonStableStringify2 = _interopRequireDefault(_jsonStableStringify);
-
 var _helpers = require('../helpers');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -221,9 +217,6 @@ var _class = function (_Base) {
         case 'browserMocha':
           return _path2.default.join(_path2.default.relative(this.get('buildDir'), this.dirs('nodeDir')), 'mocha/mocha.js');
 
-        case 'bundleRoot':
-          return _path2.default.join(this.get('buildDir'), this.get('srcDir'), 'demo.js');
-
         case 'className':
           return (0, _uppercamelcase2.default)(this.get('name'));
 
@@ -295,11 +288,8 @@ var _class = function (_Base) {
         case 'testBundleGlob':
           return _path2.default.join(_path2.default.relative(this.get('testDir'), this.get('buildDir')), this.filenames('testBundle'));
 
-        case 'testBundleRoot':
-          return _path2.default.join(this.get('buildDir'), this.get('testDir'), 'index.test.js');
-
         case 'testGlob':
-          return this.has('PhantomJS') ? '\'' + _path2.default.join(this.get('testDir'), this.filenames('runnerPage')) + '\'' : this.globs('build#test:**:test.js');
+          return this.has('PhantomJS') ? '\'' + this.filepaths('runnerPage') + '\'' : this.globs('build#test:**:test.js');
       }
     }
   }, {

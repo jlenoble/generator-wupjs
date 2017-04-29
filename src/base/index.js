@@ -2,7 +2,6 @@ import {Base} from 'yeoman-generator';
 import path from 'path';
 import slug from 'slug';
 import upperCamelCase from 'uppercamelcase';
-import stringify from 'json-stable-stringify';
 import {Config, getGenerator, getWriteGenerators,
   extendProps, extendedProps} from '../helpers';
 
@@ -166,10 +165,6 @@ export default class extends Base {
       return path.join(path.relative(this.get('buildDir'),
         this.dirs('nodeDir')), 'mocha/mocha.js');
 
-    case 'bundleRoot':
-      return path.join(this.get('buildDir'), this.get('srcDir'),
-        'demo.js');
-
     case 'className':
       return upperCamelCase(this.get('name'));
 
@@ -248,13 +243,9 @@ import './sass';`;
       return path.join(path.relative(this.get('testDir'),
         this.get('buildDir')), this.filenames('testBundle'));
 
-    case 'testBundleRoot':
-      return path.join(this.get('buildDir'), this.get('testDir'),
-        'index.test.js');
-
     case 'testGlob':
       return this.has('PhantomJS') ?
-        `'${path.join(this.get('testDir'), this.filenames('runnerPage'))}'` :
+        `'${this.filepaths('runnerPage')}'` :
         this.globs('build#test:**:test.js');
     }
   }

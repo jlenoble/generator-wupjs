@@ -58,7 +58,7 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.testBundleRoot = this.compute('testBundleRoot');
+      props.testBundleRoot = this.filepaths('testBundleRoot');
       props.testBundleName = this.filenames('testBundle');
       props.externalReact = this.compute('externalReact');
 
