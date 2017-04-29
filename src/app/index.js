@@ -1,4 +1,6 @@
 import Base from '../base';
+import chalk from 'chalk';
+import yosay from 'yosay';
 
 export default class extends Base {
   constructor (args, opts) {
@@ -29,6 +31,13 @@ export default class extends Base {
     this.composeWith('write-src');
   }
 
+  initializing () {
+    this.log(yosay(
+      'Welcome to our ' + chalk.red('generator-wupjs') +
+        ' generator!'
+    ));
+  }
+
   configuring () {
     if (this.has('React')) {
       this.composeWith('write-gulp-serve');
@@ -39,5 +48,9 @@ export default class extends Base {
       this.composeWith('write-test-index');
       this.composeWith('write-demo');
     }
+  }
+
+  install () {
+    this.installDependencies();
   }
 }

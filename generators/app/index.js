@@ -10,6 +10,14 @@ var _base = require('../base');
 
 var _base2 = _interopRequireDefault(_base);
 
+var _chalk = require('chalk');
+
+var _chalk2 = _interopRequireDefault(_chalk);
+
+var _yosay = require('yosay');
+
+var _yosay2 = _interopRequireDefault(_yosay);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53,6 +61,11 @@ var _class = function (_Base) {
   }
 
   _createClass(_class, [{
+    key: 'initializing',
+    value: function initializing() {
+      this.log((0, _yosay2.default)('Welcome to our ' + _chalk2.default.red('generator-wupjs') + ' generator!'));
+    }
+  }, {
     key: 'configuring',
     value: function configuring() {
       if (this.has('React')) {
@@ -64,6 +77,11 @@ var _class = function (_Base) {
         this.composeWith('write-test-index');
         this.composeWith('write-demo');
       }
+    }
+  }, {
+    key: 'install',
+    value: function install() {
+      this.installDependencies();
     }
   }]);
 
