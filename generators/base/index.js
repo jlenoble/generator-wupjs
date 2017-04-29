@@ -241,9 +241,6 @@ var _class = function (_Base) {
             return (0, _slug2.default)(filestem, { lower: true });
           }
 
-        case 'glob':
-          return this.has('React') ? ['**/*.js', '**/*.jsx'] : '**/*.js';
-
         case 'importBabel':
           return this.has('Babel') ? 'import babel from \'gulp-babel\';\n' : '';
 

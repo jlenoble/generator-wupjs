@@ -192,9 +192,6 @@ export default class extends Base {
         return slug(filestem, {lower: true});
       }
 
-    case 'glob':
-      return this.has('React') ? ['**/*.js', '**/*.jsx'] : '**/*.js';
-
     case 'importBabel':
       return this.has('Babel') ? `import babel from 'gulp-babel';\n` : '';
 
