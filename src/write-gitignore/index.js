@@ -14,12 +14,16 @@ export default class extends Base {
 
   writing () {
     const props = this.getProps();
-    props.sassCache = this.compute('sassCache');
+    props.sassCache = this._sassCache();
 
     this.fs.copyTpl(
       this.templatePath('gitignore'),
       this.destinationPath('.gitignore'),
       props
     );
+  }
+
+  _sassCache () {
+    return this.has('Compass') ? '.sass-cache' : '';
   }
 }

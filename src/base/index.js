@@ -207,9 +207,6 @@ export default class extends Base {
     case 'pipeBabel':
       return this.has('Babel') ? '\n    .pipe(babel())' : '';
 
-    case 'sassCache':
-      return this.has('Compass') ? '.sass-cache' : '';
-
     case 'testBundleGlob':
       return path.join(path.relative(this.get('testDir'),
         this.get('buildDir')), this.filenames('testBundle'));

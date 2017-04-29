@@ -39,9 +39,14 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.sassCache = this.compute('sassCache');
+      props.sassCache = this._sassCache();
 
       this.fs.copyTpl(this.templatePath('gitignore'), this.destinationPath('.gitignore'), props);
+    }
+  }, {
+    key: '_sassCache',
+    value: function _sassCache() {
+      return this.has('Compass') ? '.sass-cache' : '';
     }
   }]);
 

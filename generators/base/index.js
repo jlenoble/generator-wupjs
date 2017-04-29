@@ -256,9 +256,6 @@ var _class = function (_Base) {
         case 'pipeBabel':
           return this.has('Babel') ? '\n    .pipe(babel())' : '';
 
-        case 'sassCache':
-          return this.has('Compass') ? '.sass-cache' : '';
-
         case 'testBundleGlob':
           return _path2.default.join(_path2.default.relative(this.get('testDir'), this.get('buildDir')), this.filenames('testBundle'));
       }
