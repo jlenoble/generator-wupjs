@@ -28,11 +28,17 @@ var dirs = function dirs(dir, gen) {
     case 'examplesDir':
       return _path2.default.join(gen.dirs('docDir'), 'examples');
 
+    case 'gulpfilesDir':
+      return _path2.default.join(gen.dirs('testDir'), 'gulpfiles');
+
     case 'nodeDir':case 'sassImportDir':
       return 'node_modules';
 
     case 'sassDir':
       return _path2.default.join(gen.dirs('staticDir'), 'scss');
+
+    case 'sourcesDir':
+      return _path2.default.join(gen.dirs('testDir'), 'sources');
 
     case 'staticDir':
       return _path2.default.join(gen.dirs('srcDir'), 'static');

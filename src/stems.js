@@ -12,11 +12,17 @@ const dirs = (dir, gen) => {
   case 'examplesDir':
     return path.join(gen.dirs('docDir'), 'examples');
 
+  case 'gulpfilesDir':
+    return path.join(gen.dirs('testDir'), 'gulpfiles');
+
   case 'nodeDir': case 'sassImportDir':
     return 'node_modules';
 
   case 'sassDir':
     return path.join(gen.dirs('staticDir'), 'scss');
+
+  case 'sourcesDir':
+    return path.join(gen.dirs('testDir'), 'sources');
 
   case 'staticDir':
     return path.join(gen.dirs('srcDir'), 'static');

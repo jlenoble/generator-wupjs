@@ -40,16 +40,18 @@
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
-    "json-stable-stringify": "^1.0.1",
     "minimist": "^1.2.0",
     "plumb-gulp": "^0.1.0",
-    "slug": "^0.9.1",
     "yeoman-assert": "^2.2.1",
     "yeoman-test": "^1.5.1"
   },
   "dependencies": {
+    "camelcase": "^4.1.0",
     "config": "^1.24.0",
-    "uppercamelcase": "^1.1.0",
+    "decamelize": "^1.2.0",
+    "json-stable-stringify": "^1.0.1",
+    "slug": "^0.9.1",
+    "uppercamelcase": "^3.0.0",
     "yosay": "^1.2.1"
   }
 }

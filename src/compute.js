@@ -49,6 +49,12 @@ const fullPaths = (pathHint, gen) => {
   return path.join(gen.dirs(dir), gen.filenames(file));
 };
 
+const indent = ([str, n], gen) => {
+  const indent = new Array(n);
+  indent.fill(' ');
+  return str.replace(/\n/g, '\n' + indent.join(''));
+};
+
 const nodeDeps = (hint, gen) => {
   return strgfy(gen.get(hint), {space: 2})
     .replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
@@ -73,4 +79,4 @@ const stringify = (obj, gen) => {
   return strgfy(obj, {space: 2}).replace(/"/g, `'`);
 };
 
-export {fullDir, fullExt, fullPaths, nodeDeps, rel, stringify};
+export {fullDir, fullExt, fullPaths, indent, nodeDeps, rel, stringify};

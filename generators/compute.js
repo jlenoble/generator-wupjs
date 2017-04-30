@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.stringify = exports.rel = exports.nodeDeps = exports.fullPaths = exports.fullExt = exports.fullDir = undefined;
+exports.stringify = exports.rel = exports.nodeDeps = exports.indent = exports.fullPaths = exports.fullExt = exports.fullDir = undefined;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -81,6 +81,16 @@ var fullPaths = function fullPaths(pathHint, gen) {
   return _path2.default.join(gen.dirs(dir), gen.filenames(file));
 };
 
+var indent = function indent(_ref3, gen) {
+  var _ref4 = _slicedToArray(_ref3, 2),
+      str = _ref4[0],
+      n = _ref4[1];
+
+  var indent = new Array(n);
+  indent.fill(' ');
+  return str.replace(/\n/g, '\n' + indent.join(''));
+};
+
 var nodeDeps = function nodeDeps(hint, gen) {
   return (0, _jsonStableStringify2.default)(gen.get(hint), { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
 };
@@ -111,6 +121,7 @@ var stringify = function stringify(obj, gen) {
 exports.fullDir = fullDir;
 exports.fullExt = fullExt;
 exports.fullPaths = fullPaths;
+exports.indent = indent;
 exports.nodeDeps = nodeDeps;
 exports.rel = rel;
 exports.stringify = stringify;

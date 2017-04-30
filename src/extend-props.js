@@ -1,4 +1,5 @@
-import {fullDir, fullExt, fullPaths, nodeDeps, rel, stringify} from './compute';
+import {fullDir, fullExt, fullPaths, indent, nodeDeps, rel, stringify}
+  from './compute';
 import {dirs, filenames, filepaths, globs} from './stems';
 
 const makeMethod = (fn, gen) => function (arg) {
@@ -6,7 +7,7 @@ const makeMethod = (fn, gen) => function (arg) {
 };
 
 const funcs = [dirs, filenames, filepaths, fullDir, fullExt, fullPaths,
-  globs, nodeDeps, rel, stringify];
+  indent, globs, nodeDeps, rel, stringify];
 
 export const extendedProps = funcs.map(fn => fn.name);
 
