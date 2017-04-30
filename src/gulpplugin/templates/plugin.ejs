@@ -4,7 +4,7 @@ import through from 'through2';
 const PLUGIN_NAME = '<%= pluginName %>';
 
 export default function () {
-  return through.obj(function(file, encoding, callback) {
+  return through.obj(function (file, encoding, callback) {
     if (file.isNull()) {
       return callback(null, file);
     }

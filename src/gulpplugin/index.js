@@ -45,8 +45,7 @@ export default class extends Base {
     const filename = fileStem + '.js';
     const testFilename = fileStem + '.test.js';
 
-    props.pluginPath = path.join(this.rel('test:src'), filename);
-    props.pluginPath2 = path.join(this.rel('gulpfiles:src'), filename);
+    props.pluginPath = path.join(this.rel('gulpfiles:src'), filename);
 
     const gulpfilesDir = this.dirs('gulpfilesDir');
     props.gulpfileName = 'gulpfile.babel.js';

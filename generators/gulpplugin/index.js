@@ -78,8 +78,7 @@ var _class = function (_Base) {
       var filename = fileStem + '.js';
       var testFilename = fileStem + '.test.js';
 
-      props.pluginPath = _path2.default.join(this.rel('test:src'), filename);
-      props.pluginPath2 = _path2.default.join(this.rel('gulpfiles:src'), filename);
+      props.pluginPath = _path2.default.join(this.rel('gulpfiles:src'), filename);
 
       var gulpfilesDir = this.dirs('gulpfilesDir');
       props.gulpfileName = 'gulpfile.babel.js';

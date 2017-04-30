@@ -35,7 +35,7 @@ export const testGenerator = (_name, _prompt = {}, assertContent = []) => {
 
     const tests = {
       '.yo-rc.json': [
-        /"genVersion": "0.2.16"/,
+        /"genVersion": "0.3.0"/,
         /"created": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/,
         /"updated": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/,
       ],
