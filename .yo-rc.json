@@ -10,7 +10,7 @@
     "addons": [],
     "updated": "2017-04-30T15:31:43.161Z",
     "created": "2016-08-07T12:38:59.000Z",
-    "version": "0.2.16",
+    "version": "0.3.0",
     "devDeps": {
       "gulp": "git://github.com/gulpjs/gulp.git#4.0",
       "plumb-gulp": "*",
@@ -30,7 +30,7 @@
       "gulp-mocha": "*",
       "muter": "*"
     },
-    "genVersion": "0.2.16",
+    "genVersion": "0.3.0",
     "contributors": [],
     "keywords": [],
     "deps": {},
