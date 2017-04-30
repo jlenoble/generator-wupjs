@@ -1,12 +1,4 @@
-# generator-wupjs
-
-A custom Yeoman generator to reduce boiler-plate in JS dev
-
-  * [Usage](#usage)
-  * [License](#license)
-
-
-## Usage
+## Usage !heading
 
 * `yo wupjs [projectName]`: Is the agregate of many sub-generators; Running it prompts you, then sets up a full web development environment using `Gulp` and optionally `Babel`, `Mocha`, `React`, `Enzyme`, `Compass`, etc.
 
@@ -16,7 +8,7 @@ A custom Yeoman generator to reduce boiler-plate in JS dev
 
 * `yo wupjs:gulpplugin [pluginName]`: Generates source file and unit testing file for `Gulp` pluginName.
 
-## License
+## License !heading
 
 generator-wupjs is [MIT licensed](./LICENSE).
 

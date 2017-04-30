@@ -8,6 +8,7 @@ describe('Testing Gulp plugin <%- pluginFunc %>', function () {
   it(`Running gulpfile '<%- gulpfilePath %>'`, function () {
     const test = makeSingleTest({
       childProcess: ['gulp', ['--gulpfile', '<%- gulpfilePath %>']],
+
       checkResults (results) {
         expect(results.out()).to.match(
           /Requiring external module babel-register/);
@@ -21,6 +22,7 @@ describe('Testing Gulp plugin <%- pluginFunc %>', function () {
           /Finished 'default' after/);
       },
     });
+
     return test();
   })
 });
