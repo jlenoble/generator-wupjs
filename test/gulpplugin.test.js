@@ -7,7 +7,7 @@ testGenerator('gulpplugin MyPlugin', undefined, {
   'test/gulp-my-plugin.test.js': [
     /describe\('Testing Gulp plugin myPlugin'/,
     /it\(`Running gulpfile 'test\/gulpfiles\/gulpfile.babel.js'`/,
-    /childProcess: \['gulp', \['--gulpfile', 'test\/gulpfiles\/gulpfile.babel.js'\]\],/,
+    /childProcess: \['gulp', \['--gulpfile',\s+'test\/gulpfiles\/gulpfile.babel.js'\]\],/,
   ],
   'test/gulpfiles/gulpfile.babel.js': [
     /import myPlugin from '\.\.\/\.\.\/src\/gulp-my-plugin\.js';/,
