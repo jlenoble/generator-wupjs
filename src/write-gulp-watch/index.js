@@ -28,8 +28,11 @@ export default class extends Base {
 
   _consts () {
     let consts = `const allSrcGlob = ${this.globs('src,test:**:js')};
-const allBuildGlob = ${this.globs('build#src,test:**:js')};
-const allSassGlob = ${this.globs('sass:**')};\n`;
+const allBuildGlob = ${this.globs('build#src,test:**:js')};\n`;
+
+    if (this.has('Compass')) {
+      consts += `const allSassGlob = ${this.globs('sass:**')};\n`;
+    }
 
     if (this.has('PhantomJS')) {
       consts += `const srcBuildGlob = ${this.globs('build#src:**:js')};
@@ -63,7 +66,9 @@ import {build} from './build';
 import {test} from './test';\n`;
 
     if (this.has('PhantomJS')) {
-      imports += `import {sass} from './sass';\n`;
+      if (this.has('Compass')) {
+        imports += `import {sass} from './sass';\n`;
+      }
       imports += `import {bundle} from './bundle';
 import {testBundle} from './test-bundle';\n`;
     }

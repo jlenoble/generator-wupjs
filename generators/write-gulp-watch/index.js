@@ -52,7 +52,11 @@ var _class = function (_Base) {
   }, {
     key: '_consts',
     value: function _consts() {
-      var consts = 'const allSrcGlob = ' + this.globs('src,test:**:js') + ';\nconst allBuildGlob = ' + this.globs('build#src,test:**:js') + ';\nconst allSassGlob = ' + this.globs('sass:**') + ';\n';
+      var consts = 'const allSrcGlob = ' + this.globs('src,test:**:js') + ';\nconst allBuildGlob = ' + this.globs('build#src,test:**:js') + ';\n';
+
+      if (this.has('Compass')) {
+        consts += 'const allSassGlob = ' + this.globs('sass:**') + ';\n';
+      }
 
       if (this.has('PhantomJS')) {
         consts += 'const srcBuildGlob = ' + this.globs('build#src:**:js') + ';\nconst testBundleGlob = \'' + this.filepaths('testBundle') + '\';\n';
@@ -85,7 +89,9 @@ var _class = function (_Base) {
       var imports = 'import gulp from \'gulp\';\nimport {build} from \'./build\';\nimport {test} from \'./test\';\n';
 
       if (this.has('PhantomJS')) {
-        imports += 'import {sass} from \'./sass\';\n';
+        if (this.has('Compass')) {
+          imports += 'import {sass} from \'./sass\';\n';
+        }
         imports += 'import {bundle} from \'./bundle\';\nimport {testBundle} from \'./test-bundle\';\n';
       }
 

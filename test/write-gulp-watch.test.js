@@ -48,8 +48,12 @@ testGenerator('write-gulp-watch', {addons: ['React']}, {
     /gulp\.task\('watch', watch\);/,
   ],
   '!gulp/watch.js': [
+    /import \{sass\} from '\.\/sass'/,
     /'build\/src\/\*\*\/\*\.jsx'/,
     /'build\/test\/\*\*\/\*\.jsx'/,
+    /const allSassGlob = \[/,
+    /'src\/static\/scss\/\*\*\/\*\.scss'/,
+    /gulp\.watch\(allSassGlob, sass\)/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/watch';/,
