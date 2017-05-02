@@ -44,6 +44,8 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
+      var grammarDir = this.dirs('grammarDir');
+      var dataDir = this.dirs('dataDir');
 
       props.parserDir = this.dirs('parserDir');
       props.listenerDir = this.dirs('listenerDir');
@@ -54,6 +56,10 @@ var _class = function (_Base) {
       props.grammar = this.get('grammar');
 
       this.fs.copyTpl(this.templatePath('parse.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'parse.js')), props);
+
+      this.fs.copyTpl(this.templatePath('grammar.ejs'), this.destinationPath(_path2.default.join(grammarDir, 'Calc.g4')), props);
+
+      this.fs.copyTpl(this.templatePath('parse.ejs'), this.destinationPath(_path2.default.join(dataDir, 'data.txt')), props);
     }
   }]);
 

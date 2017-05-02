@@ -16,6 +16,8 @@ export default class extends Base {
 
   writing () {
     const props = this.getProps();
+    const grammarDir = this.dirs('grammarDir');
+    const dataDir = this.dirs('dataDir');
 
     props.parserDir = this.dirs('parserDir');
     props.listenerDir = this.dirs('listenerDir');
@@ -28,6 +30,18 @@ export default class extends Base {
     this.fs.copyTpl(
       this.templatePath('parse.ejs'),
       this.destinationPath(path.join(props.gulpDir, 'parse.js')),
+      props
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('grammar.ejs'),
+      this.destinationPath(path.join(grammarDir, 'Calc.g4')),
+      props
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('parse.ejs'),
+      this.destinationPath(path.join(dataDir, 'data.txt')),
       props
     );
   }
