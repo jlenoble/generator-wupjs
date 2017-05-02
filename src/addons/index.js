@@ -15,7 +15,7 @@ export default class extends Base {
       type: 'checkbox',
       name: 'addons',
       message: 'Use vendor libraries:',
-      choices: ['React', 'Enzyme'],
+      choices: ['React', 'Enzyme', 'ANTLR4'],
       default: this.get('addons'),
     }];
 
@@ -53,6 +53,15 @@ export default class extends Base {
         'chai': '*',
         'chai-enzyme': '*',
         'react-test-renderer': '*',
+      });
+    }
+
+    if (addons.includes('ANTLR4')) {
+      this.addDeps({
+        'antlr4': '*',
+      });
+      this.addDevDeps({
+        'gulp-antlr4': '*',
       });
     }
   }

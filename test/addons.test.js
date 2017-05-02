@@ -36,3 +36,15 @@ testGenerator('addons', {addons: ['Enzyme']}, {
     /"react-test-renderer": "\*"/,
   ],
 });
+
+testGenerator('addons', {addons: ['ANTLR4']}, {
+  '.yo-rc.json': [
+    /"addons"/,
+    /"antlr4"/,
+    /"gulp-antlr4"/,
+  ],
+  'package.json': [
+    /"antlr4"/,
+    /"gulp-antlr4"/,
+  ],
+});
