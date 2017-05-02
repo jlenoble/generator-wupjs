@@ -6,17 +6,29 @@ const dirs = (dir, gen) => {
   case 'cssDir':
     return path.join(gen.dirs('buildDir'), 'css');
 
+  case 'dataDir':
+    return path.join(gen.dirs('staticDir'), 'data');
+
   case 'docDir':
     return 'docs';
 
   case 'examplesDir':
     return path.join(gen.dirs('docDir'), 'examples');
 
+  case 'grammarDir':
+    return path.join(gen.dirs('listenerDir'), 'grammars');
+
   case 'gulpfilesDir':
     return path.join(gen.dirs('testDir'), 'gulpfiles');
 
+  case 'listenerDir':
+    return path.join(gen.dirs('staticDir'), 'antlr4');
+
   case 'nodeDir': case 'sassImportDir':
     return 'node_modules';
+
+  case 'parserDir':
+    return path.join(gen.dirs('listenerDir'), 'parsers');
 
   case 'sassDir':
     return path.join(gen.dirs('staticDir'), 'scss');

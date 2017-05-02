@@ -23,6 +23,9 @@ var getGenerator = function getGenerator(name) {
     case 'github':
       return 'github';
 
+    case 'grammar':case 'listener':case 'rule':
+      return 'parser';
+
     case 'gulpIncludes':
       return 'write-gulpfile';
 

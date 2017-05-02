@@ -37,7 +37,12 @@ testGenerator('addons', {addons: ['Enzyme']}, {
   ],
 });
 
-testGenerator('addons', {addons: ['ANTLR4']}, {
+testGenerator('addons', {
+  addons: ['ANTLR4'],
+  grammar: 'MyGrammar',
+  listener: 'MyListener',
+  rule: 'init',
+}, {
   '.yo-rc.json': [
     /"addons"/,
     /"antlr4"/,

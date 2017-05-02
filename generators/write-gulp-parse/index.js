@@ -10,6 +10,10 @@ var _base = require('../base');
 
 var _base2 = _interopRequireDefault(_base);
 
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25,67 +29,31 @@ var _class = function (_Base) {
     _classCallCheck(this, _class);
 
     var options = Object.assign({
-      props: ['addons'],
-      generator: 'addons'
+      generator: 'write-gulp-parse'
     }, opts);
 
-    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
+
+    _this.promptIfMissing(['gulpDir', 'addons', 'listener', 'rule', 'grammar']);
+    _this.addGulpIncludes(['parse']);
+    _this.composeWith('write-gulpfile');
+    return _this;
   }
 
   _createClass(_class, [{
-    key: 'prompting',
-    value: function prompting() {
-      var _this2 = this;
+    key: 'writing',
+    value: function writing() {
+      var props = this.getProps();
 
-      var prompts = [{
-        type: 'checkbox',
-        name: 'addons',
-        message: 'Use vendor libraries:',
-        choices: ['React', 'Enzyme', 'ANTLR4'],
-        default: this.get('addons')
-      }];
+      props.parserDir = this.dirs('parserDir');
+      props.listenerDir = this.dirs('listenerDir');
+      props.grammarGlob = this.globs('grammar:**:g4');
+      props.dataGlob = this.globs('data:**:*');
+      props.listener = this.get('listener');
+      props.rule = this.get('rule');
+      props.grammar = this.get('grammar');
 
-      return this.prompt(prompts).then(function (props) {
-        _this2.set(props);
-        if (_this2.has('Enzyme') && !_this2.has('React')) {
-          var addons = _this2.get('addons');
-          addons.push('React');
-          _this2.set({ addons: addons });
-        }
-
-        if (_this2.has('ANTLR4')) {
-          _this2.composeWith('parser');
-        }
-      });
-    }
-  }, {
-    key: 'configuring',
-    value: function configuring() {
-      var addons = this.get('addons');
-      if (addons.length === 0) {
-        return;
-      }
-
-      if (addons.includes('React')) {
-        this.addDeps({
-          'react': '*',
-          'react-dom': '*'
-        });
-        this.addDevDeps({
-          'babel-preset-react': '*',
-          'babel-plugin-add-module-exports': '*',
-          'gulp-babel': '*'
-        });
-      }
-
-      if (addons.includes('Enzyme')) {
-        this.addDevDeps({
-          'enzyme': '*',
-          'chai': '*',
-          'chai-enzyme': '*',
-          'react-test-renderer': '*'
-        });
-      }
+      this.fs.copyTpl(this.templatePath('parse.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'parse.js')), props);
     }
   }]);
 

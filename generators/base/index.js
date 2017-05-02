@@ -178,7 +178,7 @@ var _class = function (_Base) {
         case 'compass':
           return this.hasPreprocessor(libname);
 
-        case 'enzyme':case 'react':
+        case 'enzyme':case 'react':case 'antlr4':
           return this.hasAddon(libname);
 
         case 'phantomjs':

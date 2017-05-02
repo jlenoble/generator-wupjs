@@ -26,6 +26,10 @@ export default class extends Base {
         addons.push('React');
         this.set({addons});
       }
+
+      if (this.has('ANTLR4')) {
+        this.composeWith('parser');
+      }
     });
   }
 
@@ -53,15 +57,6 @@ export default class extends Base {
         'chai': '*',
         'chai-enzyme': '*',
         'react-test-renderer': '*',
-      });
-    }
-
-    if (addons.includes('ANTLR4')) {
-      this.addDeps({
-        'antlr4': '*',
-      });
-      this.addDevDeps({
-        'gulp-antlr4': '*',
       });
     }
   }

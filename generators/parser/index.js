@@ -25,11 +25,20 @@ var _class = function (_Base) {
     _classCallCheck(this, _class);
 
     var options = Object.assign({
-      props: ['addons'],
-      generator: 'addons'
+      props: ['grammar', 'listener', 'rule'],
+      generator: 'parser'
     }, opts);
 
-    return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, args, options));
+
+    _this.composeWith('write-gulp-parse');
+    _this.addDeps({
+      'antlr4': '*'
+    });
+    _this.addDevDeps({
+      'gulp-antlr4': '*'
+    });
+    return _this;
   }
 
   _createClass(_class, [{
@@ -38,54 +47,25 @@ var _class = function (_Base) {
       var _this2 = this;
 
       var prompts = [{
-        type: 'checkbox',
-        name: 'addons',
-        message: 'Use vendor libraries:',
-        choices: ['React', 'Enzyme', 'ANTLR4'],
-        default: this.get('addons')
+        type: 'input',
+        name: 'grammar',
+        message: 'Grammar name:',
+        default: this.get('grammar')
+      }, {
+        type: 'input',
+        name: 'rule',
+        message: 'Parser\'s starting rule:',
+        default: this.get('rule')
+      }, {
+        type: 'input',
+        name: 'listener',
+        message: 'Translator/interpreter name:',
+        default: this.get('listener')
       }];
 
       return this.prompt(prompts).then(function (props) {
         _this2.set(props);
-        if (_this2.has('Enzyme') && !_this2.has('React')) {
-          var addons = _this2.get('addons');
-          addons.push('React');
-          _this2.set({ addons: addons });
-        }
-
-        if (_this2.has('ANTLR4')) {
-          _this2.composeWith('parser');
-        }
       });
-    }
-  }, {
-    key: 'configuring',
-    value: function configuring() {
-      var addons = this.get('addons');
-      if (addons.length === 0) {
-        return;
-      }
-
-      if (addons.includes('React')) {
-        this.addDeps({
-          'react': '*',
-          'react-dom': '*'
-        });
-        this.addDevDeps({
-          'babel-preset-react': '*',
-          'babel-plugin-add-module-exports': '*',
-          'gulp-babel': '*'
-        });
-      }
-
-      if (addons.includes('Enzyme')) {
-        this.addDevDeps({
-          'enzyme': '*',
-          'chai': '*',
-          'chai-enzyme': '*',
-          'react-test-renderer': '*'
-        });
-      }
     }
   }]);
 

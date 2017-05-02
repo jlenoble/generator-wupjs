@@ -126,7 +126,7 @@ export default class extends Base {
     case 'compass':
       return this.hasPreprocessor(libname);
 
-    case 'enzyme': case 'react':
+    case 'enzyme': case 'react': case 'antlr4':
       return this.hasAddon(libname);
 
     case 'phantomjs':
