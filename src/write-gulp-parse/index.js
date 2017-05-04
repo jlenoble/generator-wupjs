@@ -40,8 +40,15 @@ export default class extends Base {
     );
 
     this.fs.copyTpl(
-      this.templatePath('parse.ejs'),
+      this.templatePath('data.ejs'),
       this.destinationPath(path.join(dataDir, 'data.txt')),
+      props
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('interpreter.ejs'),
+      this.destinationPath(path.join(props.listenerDir,
+        props.listener + '.js')),
       props
     );
   }

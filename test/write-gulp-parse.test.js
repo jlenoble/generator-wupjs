@@ -25,5 +25,10 @@ testGenerator('write-gulp-parse', {
     /import '\.\/gulp\/parse';/,
   ],
   'src/static/antlr4/grammars/Calc.g4': true,
+  'src/static/antlr4/MyListener.js': [
+    /const rel = path\.relative\(base, 'src\/static\/antlr4\/parsers'\);/,
+    /const \{CalcListener\} = require\(path\.join\(base, rel,\s+'CalcListener'\)\);/,
+    /export class MyListener extends CalcListener \{/,
+  ],
   'src/static/data/data.txt': true,
 });

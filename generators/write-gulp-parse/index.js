@@ -59,7 +59,9 @@ var _class = function (_Base) {
 
       this.fs.copyTpl(this.templatePath('grammar.ejs'), this.destinationPath(_path2.default.join(grammarDir, 'Calc.g4')), props);
 
-      this.fs.copyTpl(this.templatePath('parse.ejs'), this.destinationPath(_path2.default.join(dataDir, 'data.txt')), props);
+      this.fs.copyTpl(this.templatePath('data.ejs'), this.destinationPath(_path2.default.join(dataDir, 'data.txt')), props);
+
+      this.fs.copyTpl(this.templatePath('interpreter.ejs'), this.destinationPath(_path2.default.join(props.listenerDir, props.listener + '.js')), props);
     }
   }]);
 
