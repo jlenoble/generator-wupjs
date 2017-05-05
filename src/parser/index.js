@@ -15,6 +15,9 @@ export default class extends Base {
     });
     this.addDevDeps({
       'gulp-antlr4': '*',
+      'gulp-util': '*',
+      'through2': '*',
+      'child-process-data': '*',
     });
   }
 

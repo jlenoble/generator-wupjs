@@ -20,6 +20,9 @@ testGenerator('write-gulp-parse', {
   'package.json': [
     /"gulp-antlr4": "\*"/,
     /"antlr4": "\*"/,
+    /"gulp-util": "\*"/,
+    /"through2": "\*"/,
+    /"child-process-data": "\*"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/parse';/,

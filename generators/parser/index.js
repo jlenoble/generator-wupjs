@@ -36,7 +36,10 @@ var _class = function (_Base) {
       'antlr4': '*'
     });
     _this.addDevDeps({
-      'gulp-antlr4': '*'
+      'gulp-antlr4': '*',
+      'gulp-util': '*',
+      'through2': '*',
+      'child-process-data': '*'
     });
     return _this;
   }
