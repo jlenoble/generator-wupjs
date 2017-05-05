@@ -80,10 +80,14 @@ var _class = function (_Base) {
   }, {
     key: '_imports',
     value: function _imports() {
-      var imports = 'import gulp from \'gulp\';\nimport mocha from \'' + this._gulpMocha() + '\';\nimport \'' + (this.has('React') ? './test-bundle' : './build') + '\'';
+      var imports = 'import gulp from \'gulp\';\nimport mocha from \'' + this._gulpMocha() + '\';\nimport \'' + (this.has('React') ? './test-bundle' : './build') + '\';\n';
 
       if (this.has('Compass')) {
-        imports += '\nimport \'./sass\';';
+        imports += '\nimport \'./sass\';\n';
+      }
+
+      if (this.has('ANTLR4')) {
+        imports += 'import \'./parse\';\n';
       }
 
       return imports;
@@ -96,11 +100,31 @@ var _class = function (_Base) {
   }, {
     key: '_preTestTask',
     value: function _preTestTask() {
-      if (this.has('Compass')) {
-        return this.has('React') ? 'gulp.parallel(\'test-bundle\', \'sass\')' : 'gulp.parallel(\'build\', \'sass\')';
-      } else {
-        return '\'' + (this.has('React') ? 'test-bundle' : 'build') + '\'';
+      var pretasks = [];
+
+      if (this.has('ANTLR4')) {
+        pretasks.push('parse');
       }
+
+      pretasks.push(this.has('PhantomJS') ? 'test-bundle' : 'build');
+
+      if (this.has('Compass')) {
+        pretasks.push('sass');
+      }
+
+      pretasks = pretasks.map(function (task) {
+        return '\'' + task + '\'';
+      });
+
+      if (pretasks.length > 1) {
+        pretasks = 'gulp.parallel(' + pretasks.join(', ') + ')';
+      } else if (pretasks.length === 1) {
+        pretasks = pretasks[0];
+      } else {
+        pretasks = '\'build\'';
+      }
+
+      return pretasks;
     }
   }, {
     key: '_testGlob',

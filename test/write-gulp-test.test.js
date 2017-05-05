@@ -25,7 +25,7 @@ testGenerator('write-gulp-test', {preprocessors: ['Compass']}, {
     /const testGlob = 'test\/runner.html'/,
     /\.pipe\(mocha\(\)\)/,
     /\.on\('end', done\)/,
-    /gulp\.task\('test', gulp.series\(gulp.parallel\('build', 'sass'\), test\)\);/,
+    /gulp\.task\('test', gulp.series\(gulp.parallel\('test-bundle', 'sass'\), test\)\);/,
   ],
   'package.json': [
     /"gulp-mocha-phantomjs": "\*"/,
@@ -72,6 +72,26 @@ testGenerator('write-gulp-test', {
     /"gulp-mocha-phantomjs": "\*"/,
     /"chai": "\*"/,
     /"mocha": "\*"/,
+  ],
+  'gulpfile.babel.js': [
+    /import '\.\/gulp\/test';/,
+  ],
+});
+
+testGenerator('write-gulp-test', {
+  addons: ['ANTLR4'],
+  grammar: 'Calc',
+  listener: 'MyListener',
+  rule: 'init',
+}, {
+  'gulp/test.js': [
+    /import mocha from 'gulp-mocha';/,
+    /import '\.\/parse'/,
+    /gulp\.task\('test', gulp\.series\(gulp\.parallel\('parse', 'build'\), test\)\);/,
+  ],
+  'package.json': [
+    /"gulp-mocha": "\*"/,
+    /"chai": "\*"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/test';/,

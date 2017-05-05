@@ -134,3 +134,39 @@ testGenerator('write-gulp-watch', {
     /import '\.\/gulp\/watch';/,
   ],
 });
+
+testGenerator('write-gulp-watch', {
+  addons: ['ANTLR4'],
+  grammar: 'Calc',
+  listener: 'MyListener',
+  rule: 'init',
+}, {
+  'gulp/watch.js': [
+    /import \{build\} from '\.\/build'/,
+    /import \{makeParser, parse\} from '\.\/parse'/,
+    /import \{test\} from '\.\/test'/,
+    /const allSrcGlob = \[/,
+    /  'src\/\*\*\/\*\.js'/,
+    /  'test\/\*\*\/\*\.js'/,
+    /const allBuildGlob = \[/,
+    /  'build\/src\/\*\*\/\*\.js'/,
+    /  'build\/test\/\*\*\/\*\.js'/,
+    /const grammarGlob = \[/,
+    /  'src\/static\/antlr4\/grammars\/\*\*\/\*\.g4'/,
+    /const dataGlob = \[/,
+    /  'src\/static\/data\/\*\*\/\*\.\*'/,
+    /gulp\.watch\(allSrcGlob, build\);/,
+    /gulp\.watch\(grammarGlob, makeParser\)/,
+    /gulp\.watch\(dataGlob, parse\)/,
+    /gulp\.task\('watch', watch\);/,
+  ],
+  '!gulp/watch.js': [
+    /'src\/\*\*\/\*\.jsx'/,
+    /'test\/\*\*\/\*\.jsx'/,
+    /'build\/src\/\*\*\/\*\.jsx'/,
+    /'build\/test\/\*\*\/\*\.jsx'/,
+  ],
+  'gulpfile.babel.js': [
+    /import '\.\/gulp\/watch';/,
+  ],
+});

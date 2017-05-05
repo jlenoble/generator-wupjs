@@ -39,6 +39,11 @@ const allBuildGlob = ${this.globs('build#src,test:**:js')};\n`;
 const testBundleGlob = '${this.filepaths('testBundle')}';\n`;
     }
 
+    if (this.has('ANTLR4')) {
+      consts += `const grammarGlob = ${this.globs('grammar:**:g4')};\n`;
+      consts += `const dataGlob = ${this.globs('data:**:*')};\n`;
+    }
+
     return consts;
   }
 
@@ -57,6 +62,11 @@ const testBundleGlob = '${this.filepaths('testBundle')}';\n`;
       tasks += 'gulp.watch(allSassGlob, sass);\n';
     }
 
+    if (this.has('ANTLR4')) {
+      tasks += 'gulp.watch(grammarGlob, makeParser);\n';
+      tasks += 'gulp.watch(dataGlob, parse);\n';
+    }
+
     return tasks.replace(/\n/g, '\n  ');
   }
 
@@ -71,6 +81,10 @@ import {test} from './test';\n`;
       }
       imports += `import {bundle} from './bundle';
 import {testBundle} from './test-bundle';\n`;
+    }
+
+    if (this.has('ANTLR4')) {
+      imports += `import {makeParser, parse} from './parse';\n`;
     }
 
     return imports;

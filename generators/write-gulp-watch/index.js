@@ -62,6 +62,11 @@ var _class = function (_Base) {
         consts += 'const srcBuildGlob = ' + this.globs('build#src:**:js') + ';\nconst testBundleGlob = \'' + this.filepaths('testBundle') + '\';\n';
       }
 
+      if (this.has('ANTLR4')) {
+        consts += 'const grammarGlob = ' + this.globs('grammar:**:g4') + ';\n';
+        consts += 'const dataGlob = ' + this.globs('data:**:*') + ';\n';
+      }
+
       return consts;
     }
   }, {
@@ -81,6 +86,11 @@ var _class = function (_Base) {
         tasks += 'gulp.watch(allSassGlob, sass);\n';
       }
 
+      if (this.has('ANTLR4')) {
+        tasks += 'gulp.watch(grammarGlob, makeParser);\n';
+        tasks += 'gulp.watch(dataGlob, parse);\n';
+      }
+
       return tasks.replace(/\n/g, '\n  ');
     }
   }, {
@@ -93,6 +103,10 @@ var _class = function (_Base) {
           imports += 'import {sass} from \'./sass\';\n';
         }
         imports += 'import {bundle} from \'./bundle\';\nimport {testBundle} from \'./test-bundle\';\n';
+      }
+
+      if (this.has('ANTLR4')) {
+        imports += 'import {makeParser, parse} from \'./parse\';\n';
       }
 
       return imports;

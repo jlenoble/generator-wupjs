@@ -55,10 +55,14 @@ export default class extends Base {
   _imports () {
     let imports = `import gulp from 'gulp';
 import mocha from '${this._gulpMocha()}';
-import '${this.has('React') ? './test-bundle' : './build'}'`;
+import '${this.has('React') ? './test-bundle' : './build'}';\n`;
 
     if (this.has('Compass')) {
-      imports += `\nimport './sass';`;
+      imports += `\nimport './sass';\n`;
+    }
+
+    if (this.has('ANTLR4')) {
+      imports += `import './parse';\n`;
     }
 
     return imports;
@@ -70,12 +74,29 @@ import '${this.has('React') ? './test-bundle' : './build'}'`;
   }
 
   _preTestTask () {
-    if (this.has('Compass')) {
-      return this.has('React') ? `gulp.parallel('test-bundle', 'sass')` :
-        `gulp.parallel('build', 'sass')`;
-    } else {
-      return `'${this.has('React') ? 'test-bundle' : 'build'}'`;
+    let pretasks = [];
+
+    if (this.has('ANTLR4')) {
+      pretasks.push('parse');
     }
+
+    pretasks.push(this.has('PhantomJS') ? 'test-bundle' : 'build');
+
+    if (this.has('Compass')) {
+      pretasks.push('sass');
+    }
+
+    pretasks = pretasks.map(task => `'${task}'`);
+
+    if (pretasks.length > 1) {
+      pretasks = 'gulp.parallel(' + pretasks.join(', ') + ')';
+    } else if (pretasks.length === 1) {
+      pretasks = pretasks[0];
+    } else {
+      pretasks = `'build'`;
+    }
+
+    return pretasks;
   }
 
   _testGlob () {
