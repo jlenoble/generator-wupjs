@@ -39,6 +39,10 @@ const dirs = (dir, gen) => {
   case 'staticDir':
     return path.join(gen.dirs('srcDir'), 'static');
 
+  case 'visitorDir':
+    return path.join(gen.dirs('staticDir'), 'antlr4');
+
+
   default:
     return gen.get(dir);
   }

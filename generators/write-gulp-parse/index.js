@@ -47,13 +47,19 @@ var _class = function (_Base) {
       var grammarDir = this.dirs('grammarDir');
       var dataDir = this.dirs('dataDir');
 
+      props.parsers = this.get('parsers');
       props.parserDir = this.dirs('parserDir');
       props.listenerDir = this.dirs('listenerDir');
+      props.visitorDir = this.dirs('visitorDir');
       props.grammarGlob = this.globs('grammar:**:g4');
       props.dataGlob = this.globs('data:**:*');
       props.listener = this.get('listener');
+      props.visitor = this.get('visitor');
       props.rule = this.get('rule');
       props.grammar = this.get('grammar');
+
+      props.consts = this._consts(props);
+      props.options = this._antlr4Options(props);
 
       this.fs.copyTpl(this.templatePath('parse.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'parse.js')), props);
 
@@ -61,7 +67,43 @@ var _class = function (_Base) {
 
       this.fs.copyTpl(this.templatePath('data.ejs'), this.destinationPath(_path2.default.join(dataDir, 'data.txt')), props);
 
-      this.fs.copyTpl(this.templatePath('interpreter.ejs'), this.destinationPath(_path2.default.join(props.listenerDir, props.listener + '.js')), props);
+      if (props.parsers.includes('Listener')) {
+        this.fs.copyTpl(this.templatePath('listener.ejs'), this.destinationPath(_path2.default.join(props.listenerDir, props.listener + '.js')), props);
+      }
+
+      if (props.parsers.includes('Visitor')) {
+        this.fs.copyTpl(this.templatePath('visitor.ejs'), this.destinationPath(_path2.default.join(props.visitorDir, props.visitor + '.js')), props);
+      }
+    }
+  }, {
+    key: '_consts',
+    value: function _consts(props) {
+      var consts = 'const grammarGlob = ' + props.grammarGlob + ';\nconst parserDir = \'' + props.parserDir + '\';\nconst dataGlob = ' + props.dataGlob + ';\nconst grammar = \'' + props.grammar + '\';\nconst rule = \'' + props.rule + '\';\n';
+
+      if (props.parsers.includes('Listener')) {
+        consts += 'const listener = \'' + props.listener + '\';\n  const listenerDir = \'' + props.listenerDir + '\';\n';
+      }
+
+      if (props.parsers.includes('Visitor')) {
+        consts += 'const visitor = \'' + props.visitor + '\';\n  const visitorDir = \'' + props.visitorDir + '\';\n';
+      }
+
+      return consts;
+    }
+  }, {
+    key: '_antlr4Options',
+    value: function _antlr4Options(props) {
+      var options = '';
+
+      if (props.parsers.includes('Listener')) {
+        options += 'listener, listenerDir, ';
+      }
+
+      if (props.parsers.includes('Visitor')) {
+        options += 'visitor, visitorDir, ';
+      }
+
+      return options;
     }
   }]);
 

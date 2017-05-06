@@ -55,6 +55,9 @@ var dirs = function dirs(dir, gen) {
     case 'staticDir':
       return _path2.default.join(gen.dirs('srcDir'), 'static');
 
+    case 'visitorDir':
+      return _path2.default.join(gen.dirs('staticDir'), 'antlr4');
+
     default:
       return gen.get(dir);
   }

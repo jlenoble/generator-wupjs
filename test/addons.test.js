@@ -53,3 +53,21 @@ testGenerator('addons', {
     /"gulp-antlr4"/,
   ],
 });
+
+testGenerator('addons', {
+  addons: ['ANTLR4'],
+  parsers: ['Visitor'],
+  grammar: 'MyGrammar',
+  visitor: 'MyVisitor',
+  rule: 'init',
+}, {
+  '.yo-rc.json': [
+    /"addons"/,
+    /"antlr4"/,
+    /"gulp-antlr4"/,
+  ],
+  'package.json': [
+    /"antlr4"/,
+    /"gulp-antlr4"/,
+  ],
+});

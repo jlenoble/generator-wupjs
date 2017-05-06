@@ -18,7 +18,7 @@ const getGenerator = name => {
   case 'github':
     return 'github';
 
-  case 'grammar': case 'listener': case 'rule':
+  case 'grammar': case 'parsers': case 'listener': case 'visitor': case 'rule':
     return 'parser';
 
   case 'gulpIncludes':

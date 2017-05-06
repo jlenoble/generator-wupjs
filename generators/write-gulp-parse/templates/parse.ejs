@@ -1,14 +1,7 @@
 import gulp from 'gulp';
 import antlr4 from 'gulp-antlr4';
 
-const grammarGlob = <%- grammarGlob %>;
-const parserDir = '<%- parserDir %>';
-const dataGlob = <%- dataGlob %>;
-const grammar = '<%- grammar %>';
-const listener = '<%- listener %>';
-const listenerDir = '<%- listenerDir %>';
-const rule = '<%- rule %>';
-
+<%- consts %>
 export const makeParser = () => {
   return gulp.src(grammarGlob, {
     since: gulp.lastRun(makeParser),
@@ -21,7 +14,7 @@ export const parse = () => {
     since: gulp.lastRun(parse),
   })
     .pipe(antlr4({
-      grammar, parserDir, listener, listenerDir, rule,
+      grammar, parserDir, <%- options %>rule,
     }));
 };
 

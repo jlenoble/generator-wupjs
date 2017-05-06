@@ -1,0 +1,12 @@
+import path from 'path';
+
+const base = process.cwd();
+const rel = path.relative(base, '<%- parserDir %>');
+const {<%- grammar %>Visitor} = require(path.join(base, rel,
+  '<%- grammar %>Visitor'));
+
+export class <%- visitor %> extends <%- grammar %>Visitor {
+  visitExpr () {
+    process.stdout.write('hello, bye');
+  }
+}

@@ -25,7 +25,7 @@ var _class = function (_Base) {
     _classCallCheck(this, _class);
 
     var options = Object.assign({
-      props: ['grammar', 'listener', 'rule'],
+      props: ['grammar', 'parsers', 'listener', 'visitor', 'rule'],
       generator: 'parser'
     }, opts);
 
@@ -60,14 +60,40 @@ var _class = function (_Base) {
         message: 'Parser\'s starting rule:',
         default: this.get('rule')
       }, {
-        type: 'input',
-        name: 'listener',
-        message: 'Translator/interpreter name:',
-        default: this.get('listener')
+        type: 'checkbox',
+        name: 'parsers',
+        message: 'Generated parser files:',
+        choices: ['Listener', 'Visitor'],
+        default: this.get('parsers') || ['Listener']
       }];
 
       return this.prompt(prompts).then(function (props) {
         _this2.set(props);
+
+        var parsers = _this2.get('parsers');
+        var prompts = [];
+
+        if (parsers.includes('Listener')) {
+          prompts.push({
+            type: 'input',
+            name: 'listener',
+            message: 'Listener name:',
+            default: _this2.get('listener')
+          });
+        }
+
+        if (parsers.includes('Visitor')) {
+          prompts.push({
+            type: 'input',
+            name: 'visitor',
+            message: 'Visitor name:',
+            default: _this2.get('visitor')
+          });
+        }
+
+        return _this2.prompt(prompts).then(function (props) {
+          _this2.set(props);
+        });
       });
     }
   }]);
