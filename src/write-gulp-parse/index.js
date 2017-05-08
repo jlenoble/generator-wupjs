@@ -31,7 +31,7 @@ export default class extends Base {
     props.grammar = this.get('grammar');
 
     props.consts = this._consts(props);
-    props.options = this._antlr4Options(props);
+    props.parseTasks = this._parseTasks(props);
 
     this.fs.copyTpl(
       this.templatePath('parse.ejs'),
@@ -79,28 +79,69 @@ const rule = '${props.rule}';\n`;
 
     if(props.parsers.includes('Listener')) {
       consts += `const listener = '${props.listener}';
-  const listenerDir = '${props.listenerDir}';\n`;
+const listenerDir = '${props.listenerDir}';\n`;
     }
 
     if(props.parsers.includes('Visitor')) {
       consts += `const visitor = '${props.visitor}';
-  const visitorDir = '${props.visitorDir}';\n`;
+const visitorDir = '${props.visitorDir}';\n`;
     }
 
     return consts;
   }
 
-  _antlr4Options (props) {
-    let options = '';
+  _parseTasks (props) {
+    let parseTasks = '';
 
     if(props.parsers.includes('Listener')) {
-      options += 'listener, listenerDir, ';
+      parseTasks += `
+export const translate = () => {
+  return gulp.src(dataGlob, {
+    since: gulp.lastRun(translate),
+  })
+    .pipe(antlr4({
+      grammar, parserDir, listener, listenerDir, rule,
+    }));
+};
+
+gulp.task('translate', gulp.series(makeParser, translate));
+`;
+
+      if(!props.parsers.includes('Visitor')) {
+        parseTasks += `
+gulp.task('parse', gulp.series(makeParser, translate));
+`;
+        return parseTasks;
+      }
     }
 
     if(props.parsers.includes('Visitor')) {
-      options += 'visitor, visitorDir, ';
+      parseTasks += `
+export const interprete = () => {
+  return gulp.src(dataGlob, {
+    since: gulp.lastRun(interprete),
+  })
+    .pipe(antlr4({
+      grammar, parserDir, visitor, visitorDir, rule,
+    }));
+};
+
+gulp.task('interprete', gulp.series(makeParser, interprete));
+`;
+
+      if(!props.parsers.includes('Listener')) {
+        parseTasks += `
+gulp.task('parse', gulp.series(makeParser, interprete));
+`;
+        return parseTasks;
+      }
     }
 
-    return options;
+    parseTasks +=`
+gulp.task('parse', gulp.series(makeParser, gulp.parallel(
+  translate, interprete)));
+`;
+
+    return parseTasks;
   }
 }

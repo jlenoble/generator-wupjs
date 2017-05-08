@@ -8,14 +8,4 @@ export const makeParser = () => {
   })
     .pipe(antlr4(parserDir));
 };
-
-export const parse = () => {
-  return gulp.src(dataGlob, {
-    since: gulp.lastRun(parse),
-  })
-    .pipe(antlr4({
-      grammar, parserDir, <%- options %>rule,
-    }));
-};
-
-gulp.task('parse', gulp.series(makeParser, parse));
+<%- parseTasks %>

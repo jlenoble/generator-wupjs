@@ -16,6 +16,7 @@ testGenerator('write-gulp-parse', {
     /const rule = 'init';/,
     /\.pipe\(antlr4\(parserDir\)\);/,
     /\.pipe\(antlr4\(\{\s+grammar, parserDir, listener, listenerDir, rule/,
+    /gulp\.task\('translate', gulp\.series\(makeParser, translate\)\);/,
   ],
   'package.json': [
     /"gulp-antlr4": "\*"/,
@@ -53,6 +54,7 @@ testGenerator('write-gulp-parse', {
     /const rule = 'init';/,
     /\.pipe\(antlr4\(parserDir\)\);/,
     /\.pipe\(antlr4\(\{\s+grammar, parserDir, visitor, visitorDir, rule/,
+    /gulp\.task\('interprete', gulp\.series\(makeParser, interprete\)\);/,
   ],
   'package.json': [
     /"gulp-antlr4": "\*"/,

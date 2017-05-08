@@ -59,7 +59,7 @@ var _class = function (_Base) {
       props.grammar = this.get('grammar');
 
       props.consts = this._consts(props);
-      props.options = this._antlr4Options(props);
+      props.parseTasks = this._parseTasks(props);
 
       this.fs.copyTpl(this.templatePath('parse.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'parse.js')), props);
 
@@ -81,29 +81,41 @@ var _class = function (_Base) {
       var consts = 'const grammarGlob = ' + props.grammarGlob + ';\nconst parserDir = \'' + props.parserDir + '\';\nconst dataGlob = ' + props.dataGlob + ';\nconst grammar = \'' + props.grammar + '\';\nconst rule = \'' + props.rule + '\';\n';
 
       if (props.parsers.includes('Listener')) {
-        consts += 'const listener = \'' + props.listener + '\';\n  const listenerDir = \'' + props.listenerDir + '\';\n';
+        consts += 'const listener = \'' + props.listener + '\';\nconst listenerDir = \'' + props.listenerDir + '\';\n';
       }
 
       if (props.parsers.includes('Visitor')) {
-        consts += 'const visitor = \'' + props.visitor + '\';\n  const visitorDir = \'' + props.visitorDir + '\';\n';
+        consts += 'const visitor = \'' + props.visitor + '\';\nconst visitorDir = \'' + props.visitorDir + '\';\n';
       }
 
       return consts;
     }
   }, {
-    key: '_antlr4Options',
-    value: function _antlr4Options(props) {
-      var options = '';
+    key: '_parseTasks',
+    value: function _parseTasks(props) {
+      var parseTasks = '';
 
       if (props.parsers.includes('Listener')) {
-        options += 'listener, listenerDir, ';
+        parseTasks += '\nexport const translate = () => {\n  return gulp.src(dataGlob, {\n    since: gulp.lastRun(translate),\n  })\n    .pipe(antlr4({\n      grammar, parserDir, listener, listenerDir, rule,\n    }));\n};\n\ngulp.task(\'translate\', gulp.series(makeParser, translate));\n';
+
+        if (!props.parsers.includes('Visitor')) {
+          parseTasks += '\ngulp.task(\'parse\', gulp.series(makeParser, translate));\n';
+          return parseTasks;
+        }
       }
 
       if (props.parsers.includes('Visitor')) {
-        options += 'visitor, visitorDir, ';
+        parseTasks += '\nexport const interprete = () => {\n  return gulp.src(dataGlob, {\n    since: gulp.lastRun(interprete),\n  })\n    .pipe(antlr4({\n      grammar, parserDir, visitor, visitorDir, rule,\n    }));\n};\n\ngulp.task(\'interprete\', gulp.series(makeParser, interprete));\n';
+
+        if (!props.parsers.includes('Listener')) {
+          parseTasks += '\ngulp.task(\'parse\', gulp.series(makeParser, interprete));\n';
+          return parseTasks;
+        }
       }
 
-      return options;
+      parseTasks += '\ngulp.task(\'parse\', gulp.series(makeParser, gulp.parallel(\n  translate, interprete)));\n';
+
+      return parseTasks;
     }
   }]);
 
