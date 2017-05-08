@@ -31,6 +31,7 @@ export default class extends Base {
     props.grammar = this.get('grammar');
 
     props.consts = this._consts(props);
+    props.makeParserOptions = this._makeParserOptions(props);
     props.parseTasks = this._parseTasks(props);
 
     this.fs.copyTpl(
@@ -88,6 +89,14 @@ const visitorDir = '${props.visitorDir}';\n`;
     }
 
     return consts;
+  }
+
+  _makeParserOptions (props) {
+    return this.stringify({
+      parserDir: props.parserDir,
+      listener: props.parsers.includes('Listener'),
+      visitor: props.parsers.includes('Visitor'),
+    }).replace(/\n/g, '\n    ');
   }
 
   _parseTasks (props) {

@@ -59,6 +59,7 @@ var _class = function (_Base) {
       props.grammar = this.get('grammar');
 
       props.consts = this._consts(props);
+      props.makeParserOptions = this._makeParserOptions(props);
       props.parseTasks = this._parseTasks(props);
 
       this.fs.copyTpl(this.templatePath('parse.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'parse.js')), props);
@@ -89,6 +90,15 @@ var _class = function (_Base) {
       }
 
       return consts;
+    }
+  }, {
+    key: '_makeParserOptions',
+    value: function _makeParserOptions(props) {
+      return this.stringify({
+        parserDir: props.parserDir,
+        listener: props.parsers.includes('Listener'),
+        visitor: props.parsers.includes('Visitor')
+      }).replace(/\n/g, '\n    ');
     }
   }, {
     key: '_parseTasks',

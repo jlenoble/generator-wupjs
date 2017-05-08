@@ -6,6 +6,6 @@ export const makeParser = () => {
   return gulp.src(grammarGlob, {
     since: gulp.lastRun(makeParser),
   })
-    .pipe(antlr4(parserDir));
+    .pipe(antlr4(<%- makeParserOptions %>));
 };
 <%- parseTasks %>
