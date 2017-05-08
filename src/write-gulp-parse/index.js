@@ -105,9 +105,7 @@ const visitorDir = '${props.visitorDir}';\n`;
     if(props.parsers.includes('Listener')) {
       parseTasks += `
 export const translate = () => {
-  return gulp.src(dataGlob, {
-    since: gulp.lastRun(translate),
-  })
+  return gulp.src(dataGlob)
     .pipe(antlr4({
       grammar, parserDir, listener, listenerDir, rule,
     }));
@@ -118,6 +116,8 @@ gulp.task('translate', gulp.series(makeParser, translate));
 
       if(!props.parsers.includes('Visitor')) {
         parseTasks += `
+export const parse = translate;
+
 gulp.task('parse', gulp.series(makeParser, translate));
 `;
         return parseTasks;
@@ -127,9 +127,7 @@ gulp.task('parse', gulp.series(makeParser, translate));
     if(props.parsers.includes('Visitor')) {
       parseTasks += `
 export const interprete = () => {
-  return gulp.src(dataGlob, {
-    since: gulp.lastRun(interprete),
-  })
+  return gulp.src(dataGlob)
     .pipe(antlr4({
       grammar, parserDir, visitor, visitorDir, rule,
     }));
@@ -140,6 +138,8 @@ gulp.task('interprete', gulp.series(makeParser, interprete));
 
       if(!props.parsers.includes('Listener')) {
         parseTasks += `
+export const parse = interprete;
+
 gulp.task('parse', gulp.series(makeParser, interprete));
 `;
         return parseTasks;
@@ -147,6 +147,8 @@ gulp.task('parse', gulp.series(makeParser, interprete));
     }
 
     parseTasks +=`
+export const parse = gulp.parallel(translate, interprete);
+
 gulp.task('parse', gulp.series(makeParser, gulp.parallel(
   translate, interprete)));
 `;

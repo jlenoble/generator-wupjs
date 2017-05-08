@@ -106,24 +106,24 @@ var _class = function (_Base) {
       var parseTasks = '';
 
       if (props.parsers.includes('Listener')) {
-        parseTasks += '\nexport const translate = () => {\n  return gulp.src(dataGlob, {\n    since: gulp.lastRun(translate),\n  })\n    .pipe(antlr4({\n      grammar, parserDir, listener, listenerDir, rule,\n    }));\n};\n\ngulp.task(\'translate\', gulp.series(makeParser, translate));\n';
+        parseTasks += '\nexport const translate = () => {\n  return gulp.src(dataGlob)\n    .pipe(antlr4({\n      grammar, parserDir, listener, listenerDir, rule,\n    }));\n};\n\ngulp.task(\'translate\', gulp.series(makeParser, translate));\n';
 
         if (!props.parsers.includes('Visitor')) {
-          parseTasks += '\ngulp.task(\'parse\', gulp.series(makeParser, translate));\n';
+          parseTasks += '\nexport const parse = translate;\n\ngulp.task(\'parse\', gulp.series(makeParser, translate));\n';
           return parseTasks;
         }
       }
 
       if (props.parsers.includes('Visitor')) {
-        parseTasks += '\nexport const interprete = () => {\n  return gulp.src(dataGlob, {\n    since: gulp.lastRun(interprete),\n  })\n    .pipe(antlr4({\n      grammar, parserDir, visitor, visitorDir, rule,\n    }));\n};\n\ngulp.task(\'interprete\', gulp.series(makeParser, interprete));\n';
+        parseTasks += '\nexport const interprete = () => {\n  return gulp.src(dataGlob)\n    .pipe(antlr4({\n      grammar, parserDir, visitor, visitorDir, rule,\n    }));\n};\n\ngulp.task(\'interprete\', gulp.series(makeParser, interprete));\n';
 
         if (!props.parsers.includes('Listener')) {
-          parseTasks += '\ngulp.task(\'parse\', gulp.series(makeParser, interprete));\n';
+          parseTasks += '\nexport const parse = interprete;\n\ngulp.task(\'parse\', gulp.series(makeParser, interprete));\n';
           return parseTasks;
         }
       }
 
-      parseTasks += '\ngulp.task(\'parse\', gulp.series(makeParser, gulp.parallel(\n  translate, interprete)));\n';
+      parseTasks += '\nexport const parse = gulp.parallel(translate, interprete);\n\ngulp.task(\'parse\', gulp.series(makeParser, gulp.parallel(\n  translate, interprete)));\n';
 
       return parseTasks;
     }

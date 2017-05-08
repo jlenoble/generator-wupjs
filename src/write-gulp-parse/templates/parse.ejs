@@ -3,6 +3,15 @@ import antlr4 from 'gulp-antlr4';
 
 <%- consts %>
 export const makeParser = () => {
+  if (require && require.cache) {
+    // Remove parser files from Babel cache
+    Object.keys(require.cache).filter(key => {
+      return key.includes(parserDir);
+    }).forEach(key => {
+      delete require.cache[key];
+    });
+  }
+
   return gulp.src(grammarGlob, {
     since: gulp.lastRun(makeParser),
   })
