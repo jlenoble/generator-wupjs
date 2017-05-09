@@ -110,7 +110,8 @@ const globs = (_globHint, gen) => {
     return joinGlobs(gen.fullDir(hints), gen.fullExt(hints));
   }).reduce((arr1, arr2) => arr1.concat(arr2), []);
 
-  return gen.stringify(globHint);
+  const hints = new Set(globHint);
+  return gen.stringify([...hints]);
 };
 
 export {dirs, filenames, filepaths, globs};

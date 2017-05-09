@@ -157,6 +157,7 @@ testGenerator('write-gulp-watch', {
     /const dataGlob = \[/,
     /  'src\/static\/data\/\*\*\/\*\.\*'/,
     /  'src\/static\/antlr4\/parsers\/CalcParser.js'/,
+    /  'src\/static\/antlr4\/MyListener.js'/,
     /gulp\.watch\(allSrcGlob, build\);/,
     /gulp\.watch\(grammarGlob, makeParser\)/,
     /gulp\.watch\(dataGlob, parse\)/,

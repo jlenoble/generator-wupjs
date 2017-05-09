@@ -43,7 +43,9 @@ var _class = function (_Base) {
     key: 'writing',
     value: function writing() {
       var props = this.getProps();
-      props.consts = this._consts();
+      props.parsers = this.get('parsers');
+
+      props.consts = this._consts(props);
       props.imports = this._imports();
       props.gulpWatchTasks = this._gulpWatchTasks();
 
@@ -51,7 +53,7 @@ var _class = function (_Base) {
     }
   }, {
     key: '_consts',
-    value: function _consts() {
+    value: function _consts(props) {
       var consts = 'const allSrcGlob = ' + this.globs('src,test,!parser:**:js') + ';\nconst allBuildGlob = ' + this.globs('build#src,test:**:js') + ';\n';
 
       if (this.has('Compass')) {
@@ -63,8 +65,18 @@ var _class = function (_Base) {
       }
 
       if (this.has('ANTLR4')) {
+        var hints = ['data:**:*', 'parser:' + this.get('grammar') + 'Parser.js'];
+
+        if (props.parsers.includes('Listener')) {
+          hints.push('listener:' + this.get('listener') + '.js');
+        }
+
+        if (props.parsers.includes('Visitor')) {
+          hints.push('visitor:' + this.get('visitor') + '.js');
+        }
+
         consts += 'const grammarGlob = ' + this.globs('grammar:**:g4') + ';\n';
-        consts += 'const dataGlob = ' + this.globs(['data:**:*', 'parser:' + this.get('grammar') + 'Parser.js']) + ';\n';
+        consts += 'const dataGlob = ' + this.globs(hints) + ';\n';
       }
 
       return consts;

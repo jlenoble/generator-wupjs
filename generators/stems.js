@@ -17,6 +17,8 @@ var _joinGlobs2 = _interopRequireDefault(_joinGlobs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var dirs = function dirs(dir, gen) {
   switch (dir) {
     case 'cssDir':
@@ -137,7 +139,8 @@ var globs = function globs(_globHint, gen) {
     return arr1.concat(arr2);
   }, []);
 
-  return gen.stringify(globHint);
+  var hints = new Set(globHint);
+  return gen.stringify([].concat(_toConsumableArray(hints)));
 };
 
 exports.dirs = dirs;

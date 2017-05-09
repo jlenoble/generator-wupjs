@@ -15,7 +15,9 @@ export default class extends Base {
 
   writing () {
     const props = this.getProps();
-    props.consts = this._consts();
+    props.parsers = this.get('parsers');
+
+    props.consts = this._consts(props);
     props.imports = this._imports();
     props.gulpWatchTasks = this._gulpWatchTasks();
 
@@ -26,7 +28,7 @@ export default class extends Base {
     );
   }
 
-  _consts () {
+  _consts (props) {
     let consts = `const allSrcGlob = ${this.globs('src,test,!parser:**:js')};
 const allBuildGlob = ${this.globs('build#src,test:**:js')};\n`;
 
@@ -40,9 +42,19 @@ const testBundleGlob = '${this.filepaths('testBundle')}';\n`;
     }
 
     if (this.has('ANTLR4')) {
+      const hints = ['data:**:*', 'parser:' + this.get('grammar') +
+        'Parser.js'];
+
+      if (props.parsers.includes('Listener')) {
+        hints.push('listener:' + this.get('listener') + '.js');
+      }
+
+      if (props.parsers.includes('Visitor')) {
+        hints.push('visitor:' + this.get('visitor') + '.js');
+      }
+
       consts += `const grammarGlob = ${this.globs('grammar:**:g4')};\n`;
-      consts += `const dataGlob = ${this.globs(['data:**:*',
-        'parser:' + this.get('grammar') + 'Parser.js'])};\n`;
+      consts += `const dataGlob = ${this.globs(hints)};\n`;
     }
 
     return consts;
