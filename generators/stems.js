@@ -110,26 +110,34 @@ var filepaths = function filepaths(pathHint, gen) {
   }
 };
 
-var globs = function globs(globHint, gen) {
-  var _globHint$split = globHint.split('#'),
-      _globHint$split2 = _slicedToArray(_globHint$split, 2),
-      rel = _globHint$split2[0],
-      hint = _globHint$split2[1];
+var globs = function globs(_globHint, gen) {
+  var globHint = Array.isArray(_globHint) ? _globHint : [_globHint];
 
-  if (!hint) {
-    hint = rel;
-    rel = undefined;
-  }
+  globHint = globHint.map(function (globHint) {
+    var _globHint$split = globHint.split('#'),
+        _globHint$split2 = _slicedToArray(_globHint$split, 2),
+        rel = _globHint$split2[0],
+        hint = _globHint$split2[1];
 
-  var _hint$split = hint.split(':'),
-      _hint$split2 = _slicedToArray(_hint$split, 3),
-      dir = _hint$split2[0],
-      pat = _hint$split2[1],
-      ext = _hint$split2[2];
+    if (!hint) {
+      hint = rel;
+      rel = undefined;
+    }
 
-  var hints = { rel: rel, dir: dir, pat: pat, ext: ext };
+    var _hint$split = hint.split(':'),
+        _hint$split2 = _slicedToArray(_hint$split, 3),
+        dir = _hint$split2[0],
+        pat = _hint$split2[1],
+        ext = _hint$split2[2];
 
-  return gen.stringify((0, _joinGlobs2.default)(gen.fullDir(hints), gen.fullExt(hints)));
+    var hints = { rel: rel, dir: dir, pat: pat, ext: ext };
+
+    return (0, _joinGlobs2.default)(gen.fullDir(hints), gen.fullExt(hints));
+  }).reduce(function (arr1, arr2) {
+    return arr1.concat(arr2);
+  }, []);
+
+  return gen.stringify(globHint);
 };
 
 exports.dirs = dirs;

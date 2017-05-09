@@ -95,16 +95,22 @@ const filepaths = (pathHint, gen) => {
   }
 };
 
-const globs = (globHint, gen) => {
-  let [rel, hint] = globHint.split('#');
-  if (!hint) {
-    hint = rel;
-    rel = undefined;
-  }
-  const [dir, pat, ext] = hint.split(':');
-  const hints = {rel, dir, pat, ext};
+const globs = (_globHint, gen) => {
+  let globHint = Array.isArray(_globHint) ? _globHint : [_globHint];
 
-  return gen.stringify(joinGlobs(gen.fullDir(hints), gen.fullExt(hints)));
+  globHint = globHint.map(globHint => {
+    let [rel, hint] = globHint.split('#');
+    if (!hint) {
+      hint = rel;
+      rel = undefined;
+    }
+    const [dir, pat, ext] = hint.split(':');
+    const hints = {rel, dir, pat, ext};
+
+    return joinGlobs(gen.fullDir(hints), gen.fullExt(hints));
+  }).reduce((arr1, arr2) => arr1.concat(arr2), []);
+
+  return gen.stringify(globHint);
 };
 
 export {dirs, filenames, filepaths, globs};

@@ -27,7 +27,7 @@ export default class extends Base {
   }
 
   _consts () {
-    let consts = `const allSrcGlob = ${this.globs('src,test:**:js')};
+    let consts = `const allSrcGlob = ${this.globs('src,test,!parser:**:js')};
 const allBuildGlob = ${this.globs('build#src,test:**:js')};\n`;
 
     if (this.has('Compass')) {
@@ -41,7 +41,8 @@ const testBundleGlob = '${this.filepaths('testBundle')}';\n`;
 
     if (this.has('ANTLR4')) {
       consts += `const grammarGlob = ${this.globs('grammar:**:g4')};\n`;
-      consts += `const dataGlob = ${this.globs('data:**:*')};\n`;
+      consts += `const dataGlob = ${this.globs(['data:**:*',
+        'parser:' + this.get('grammar') + 'Parser.js'])};\n`;
     }
 
     return consts;

@@ -4,12 +4,26 @@ import path from 'path';
 const pattern = pat => pat === '**' ? '**/*' : '*';
 
 const fullDir = ({rel, dir}, gen) => {
-  return dir.split(',').map(dir => rel ?
-    path.join(rel, gen.dirs(dir + 'Dir')) :
-    gen.dirs(dir + 'Dir'));
+  return dir.split(',').map(dir => {
+    const neg = dir[0] === '!';
+
+    let _dir = neg ? dir.substring(1) : dir;
+    _dir = gen.dirs(_dir + 'Dir');
+
+    if (rel) {
+      _dir = path.join(rel, _dir);
+    }
+
+    return neg ? '!' + _dir : _dir;
+  });
 };
 
 const fullExt = ({rel, ext, dir, pat}, gen) => {
+  if (!pat.includes('*')) {
+     // Explicit filename, no actual pattern, so just return it
+    return pat;
+  }
+
   const _pat = pattern(pat) + '.';
 
   if (ext) {

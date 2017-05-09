@@ -26,7 +26,16 @@ var fullDir = function fullDir(_ref, gen) {
       dir = _ref.dir;
 
   return dir.split(',').map(function (dir) {
-    return rel ? _path2.default.join(rel, gen.dirs(dir + 'Dir')) : gen.dirs(dir + 'Dir');
+    var neg = dir[0] === '!';
+
+    var _dir = neg ? dir.substring(1) : dir;
+    _dir = gen.dirs(_dir + 'Dir');
+
+    if (rel) {
+      _dir = _path2.default.join(rel, _dir);
+    }
+
+    return neg ? '!' + _dir : _dir;
   });
 };
 
@@ -35,6 +44,11 @@ var fullExt = function fullExt(_ref2, gen) {
       ext = _ref2.ext,
       dir = _ref2.dir,
       pat = _ref2.pat;
+
+  if (!pat.includes('*')) {
+    // Explicit filename, no actual pattern, so just return it
+    return pat;
+  }
 
   var _pat = pattern(pat) + '.';
 

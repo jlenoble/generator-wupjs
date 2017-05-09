@@ -52,7 +52,7 @@ var _class = function (_Base) {
   }, {
     key: '_consts',
     value: function _consts() {
-      var consts = 'const allSrcGlob = ' + this.globs('src,test:**:js') + ';\nconst allBuildGlob = ' + this.globs('build#src,test:**:js') + ';\n';
+      var consts = 'const allSrcGlob = ' + this.globs('src,test,!parser:**:js') + ';\nconst allBuildGlob = ' + this.globs('build#src,test:**:js') + ';\n';
 
       if (this.has('Compass')) {
         consts += 'const allSassGlob = ' + this.globs('sass:**') + ';\n';
@@ -64,7 +64,7 @@ var _class = function (_Base) {
 
       if (this.has('ANTLR4')) {
         consts += 'const grammarGlob = ' + this.globs('grammar:**:g4') + ';\n';
-        consts += 'const dataGlob = ' + this.globs('data:**:*') + ';\n';
+        consts += 'const dataGlob = ' + this.globs(['data:**:*', 'parser:' + this.get('grammar') + 'Parser.js']) + ';\n';
       }
 
       return consts;
