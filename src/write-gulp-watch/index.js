@@ -42,19 +42,20 @@ const testBundleGlob = '${this.filepaths('testBundle')}';\n`;
     }
 
     if (this.has('ANTLR4')) {
-      const hints = ['data:**:*', 'parser:' + this.get('grammar') +
+      const grammarHints = ['grammar:**:g4'];
+      const dataHints = ['data:**:*', 'parser:' + this.get('grammar') +
         'Parser.js'];
 
       if (props.parsers.includes('Listener')) {
-        hints.push('listener:' + this.get('listener') + '.js');
+        grammarHints.push('build#listener:' + this.get('listener') + '.js');
       }
 
       if (props.parsers.includes('Visitor')) {
-        hints.push('visitor:' + this.get('visitor') + '.js');
+        grammarHints.push('build#visitor:' + this.get('visitor') + '.js');
       }
 
-      consts += `const grammarGlob = ${this.globs('grammar:**:g4')};\n`;
-      consts += `const dataGlob = ${this.globs(hints)};\n`;
+      consts += `const grammarGlob = ${this.globs(grammarHints)};\n`;
+      consts += `const dataGlob = ${this.globs(dataHints)};\n`;
     }
 
     return consts;
