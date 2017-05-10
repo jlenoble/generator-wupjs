@@ -123,7 +123,7 @@ var _class = function (_Base) {
         }
       }
 
-      parseTasks += '\nexport const parse = gulp.parallel(translate, interprete);\n\ngulp.task(\'parse\', gulp.series(makeParser, parse));\n';
+      parseTasks += '\nexport const parse = gulp.parallel(translate, interprete);\n\ngulp.task(\'parse\', gulp.series(makeParser, parse));';
 
       return parseTasks;
     }

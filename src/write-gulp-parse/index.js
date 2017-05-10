@@ -149,8 +149,7 @@ gulp.task('parse', gulp.series(makeParser, interprete));
     parseTasks +=`
 export const parse = gulp.parallel(translate, interprete);
 
-gulp.task('parse', gulp.series(makeParser, parse));
-`;
+gulp.task('parse', gulp.series(makeParser, parse));`;
 
     return parseTasks;
   }
