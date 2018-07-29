@@ -8,7 +8,7 @@ var _config = require('./config');
 
 Object.defineProperty(exports, 'Config', {
   enumerable: true,
-  get: function get() {
+  get: function () {
     return _interopRequireDefault(_config).default;
   }
 });
@@ -17,13 +17,13 @@ var _extendProps = require('./extend-props');
 
 Object.defineProperty(exports, 'extendProps', {
   enumerable: true,
-  get: function get() {
+  get: function () {
     return _interopRequireDefault(_extendProps).default;
   }
 });
 Object.defineProperty(exports, 'extendedProps', {
   enumerable: true,
-  get: function get() {
+  get: function () {
     return _extendProps.extendedProps;
   }
 });
@@ -32,7 +32,7 @@ var _getGenerator = require('./get-generator');
 
 Object.defineProperty(exports, 'getGenerator', {
   enumerable: true,
-  get: function get() {
+  get: function () {
     return _interopRequireDefault(_getGenerator).default;
   }
 });
@@ -41,7 +41,7 @@ var _getWriteGenerators = require('./get-write-generators');
 
 Object.defineProperty(exports, 'getWriteGenerators', {
   enumerable: true,
-  get: function get() {
+  get: function () {
     return _interopRequireDefault(_getWriteGenerators).default;
   }
 });
@@ -50,7 +50,7 @@ var _property = require('./property');
 
 Object.defineProperty(exports, 'property', {
   enumerable: true,
-  get: function get() {
+  get: function () {
     return _interopRequireDefault(_property).default;
   }
 });

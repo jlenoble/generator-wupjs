@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.globs = exports.filepaths = exports.filenames = exports.dirs = undefined;
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
@@ -17,9 +15,7 @@ var _joinGlobs2 = _interopRequireDefault(_joinGlobs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-var dirs = function dirs(dir, gen) {
+const dirs = (dir, gen) => {
   switch (dir) {
     case 'cssDir':
       return _path2.default.join(gen.dirs('buildDir'), 'css');
@@ -65,7 +61,7 @@ var dirs = function dirs(dir, gen) {
   }
 };
 
-var filenames = function filenames(file, gen) {
+const filenames = (file, gen) => {
   switch (file) {
     case 'bundleRoot':
       return 'demo.js';
@@ -90,7 +86,7 @@ var filenames = function filenames(file, gen) {
   }
 };
 
-var filepaths = function filepaths(pathHint, gen) {
+const filepaths = (pathHint, gen) => {
   switch (pathHint) {
     case 'bundleRoot':
       return gen.fullPaths('build#src:bundleRoot');
@@ -112,35 +108,23 @@ var filepaths = function filepaths(pathHint, gen) {
   }
 };
 
-var globs = function globs(_globHint, gen) {
-  var globHint = Array.isArray(_globHint) ? _globHint : [_globHint];
+const globs = (_globHint, gen) => {
+  let globHint = Array.isArray(_globHint) ? _globHint : [_globHint];
 
-  globHint = globHint.map(function (globHint) {
-    var _globHint$split = globHint.split('#'),
-        _globHint$split2 = _slicedToArray(_globHint$split, 2),
-        rel = _globHint$split2[0],
-        hint = _globHint$split2[1];
-
+  globHint = globHint.map(globHint => {
+    let [rel, hint] = globHint.split('#');
     if (!hint) {
       hint = rel;
       rel = undefined;
     }
-
-    var _hint$split = hint.split(':'),
-        _hint$split2 = _slicedToArray(_hint$split, 3),
-        dir = _hint$split2[0],
-        pat = _hint$split2[1],
-        ext = _hint$split2[2];
-
-    var hints = { rel: rel, dir: dir, pat: pat, ext: ext };
+    const [dir, pat, ext] = hint.split(':');
+    const hints = { rel, dir, pat, ext };
 
     return (0, _joinGlobs2.default)(gen.fullDir(hints), gen.fullExt(hints));
-  }).reduce(function (arr1, arr2) {
-    return arr1.concat(arr2);
-  }, []);
+  }).reduce((arr1, arr2) => arr1.concat(arr2), []);
 
-  var hints = new Set(globHint);
-  return gen.stringify([].concat(_toConsumableArray(hints)));
+  const hints = new Set(globHint);
+  return gen.stringify([...hints]);
 };
 
 exports.dirs = dirs;

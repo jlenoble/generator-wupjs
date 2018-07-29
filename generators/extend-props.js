@@ -9,23 +9,17 @@ var _compute = require('./compute');
 
 var _stems = require('./stems');
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var makeMethod = function makeMethod(fn, gen) {
-  return function (arg) {
-    return fn(arg, gen);
-  };
+const makeMethod = (fn, gen) => function (arg) {
+  return fn(arg, gen);
 };
 
-var funcs = [_stems.dirs, _stems.filenames, _stems.filepaths, _compute.fullDir, _compute.fullExt, _compute.fullPaths, _compute.indent, _stems.globs, _compute.nodeDeps, _compute.rel, _compute.stringify];
+const funcs = [_stems.dirs, _stems.filenames, _stems.filepaths, _compute.fullDir, _compute.fullExt, _compute.fullPaths, _compute.indent, _stems.globs, _compute.nodeDeps, _compute.rel, _compute.stringify];
 
-var extendedProps = exports.extendedProps = funcs.map(function (fn) {
-  return fn.name;
-});
+const extendedProps = exports.extendedProps = funcs.map(fn => fn.name);
 
-var extendProps = function extendProps(gen) {
-  funcs.forEach(function (fn) {
-    Object.assign(gen, _defineProperty({}, fn.name, makeMethod(fn, gen)));
+const extendProps = gen => {
+  funcs.forEach(fn => {
+    Object.assign(gen, { [fn.name]: makeMethod(fn, gen) });
   });
 };
 

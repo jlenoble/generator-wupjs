@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.stringify = exports.rel = exports.nodeDeps = exports.indent = exports.fullPaths = exports.fullExt = exports.fullDir = undefined;
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 var _jsonStableStringify = require('json-stable-stringify');
 
 var _jsonStableStringify2 = _interopRequireDefault(_jsonStableStringify);
@@ -17,18 +15,13 @@ var _path2 = _interopRequireDefault(_path);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var pattern = function pattern(pat) {
-  return pat === '**' ? '**/*' : '*';
-};
+const pattern = pat => pat === '**' ? '**/*' : '*';
 
-var fullDir = function fullDir(_ref, gen) {
-  var rel = _ref.rel,
-      dir = _ref.dir;
+const fullDir = ({ rel, dir }, gen) => {
+  return dir.split(',').map(dir => {
+    const neg = dir[0] === '!';
 
-  return dir.split(',').map(function (dir) {
-    var neg = dir[0] === '!';
-
-    var _dir = neg ? dir.substring(1) : dir;
+    let _dir = neg ? dir.substring(1) : dir;
     _dir = gen.dirs(_dir + 'Dir');
 
     if (rel) {
@@ -39,18 +32,13 @@ var fullDir = function fullDir(_ref, gen) {
   });
 };
 
-var fullExt = function fullExt(_ref2, gen) {
-  var rel = _ref2.rel,
-      ext = _ref2.ext,
-      dir = _ref2.dir,
-      pat = _ref2.pat;
-
+const fullExt = ({ rel, ext, dir, pat }, gen) => {
   if (!pat.includes('*')) {
     // Explicit filename, no actual pattern, so just return it
     return pat;
   }
 
-  var _pat = pattern(pat) + '.';
+  const _pat = pattern(pat) + '.';
 
   if (ext) {
     if (/.*js$/.test(ext) && gen.has('React') && rel !== gen.dirs('buildDir', gen)) {
@@ -69,22 +57,15 @@ var fullExt = function fullExt(_ref2, gen) {
   }
 };
 
-var fullPaths = function fullPaths(pathHint, gen) {
-  var _pathHint$split = pathHint.split('#'),
-      _pathHint$split2 = _slicedToArray(_pathHint$split, 2),
-      rel = _pathHint$split2[0],
-      hint = _pathHint$split2[1];
+const fullPaths = (pathHint, gen) => {
+  let [rel, hint] = pathHint.split('#');
 
   if (!hint) {
     hint = rel;
     rel = undefined;
   }
 
-  var _hint$split = hint.split(':'),
-      _hint$split2 = _slicedToArray(_hint$split, 2),
-      dir = _hint$split2[0],
-      file = _hint$split2[1];
-
+  let [dir, file] = hint.split(':');
   dir += 'Dir';
 
   if (rel) {
@@ -95,32 +76,24 @@ var fullPaths = function fullPaths(pathHint, gen) {
   return _path2.default.join(gen.dirs(dir), gen.filenames(file));
 };
 
-var indent = function indent(_ref3, gen) {
-  var _ref4 = _slicedToArray(_ref3, 2),
-      str = _ref4[0],
-      n = _ref4[1];
-
-  var indent = new Array(n);
+const indent = ([str, n], gen) => {
+  const indent = new Array(n);
   indent.fill(' ');
   return str.replace(/\n/g, '\n' + indent.join(''));
 };
 
-var nodeDeps = function nodeDeps(hint, gen) {
+const nodeDeps = (hint, gen) => {
   return (0, _jsonStableStringify2.default)(gen.get(hint), { space: 2 }).replace(/\n/g, '\n  ').replace(/\{\s*\}/, '{}');
 };
 
-var rel = function rel(hint, gen) {
-  var _hint$split3 = hint.split(':'),
-      _hint$split4 = _slicedToArray(_hint$split3, 2),
-      fromDir = _hint$split4[0],
-      toDir = _hint$split4[1];
-
+const rel = (hint, gen) => {
+  let [fromDir, toDir] = hint.split(':');
   fromDir = gen.dirs(fromDir + 'Dir');
   toDir = gen.dirs(toDir + 'Dir');
   return _path2.default.relative(fromDir, toDir);
 };
 
-var stringify = function stringify(obj, gen) {
+const stringify = (obj, gen) => {
   if (Array.isArray(obj) && obj.length === 0) {
     return '[]';
   }
@@ -129,7 +102,7 @@ var stringify = function stringify(obj, gen) {
     return '{}';
   }
 
-  return (0, _jsonStableStringify2.default)(obj, { space: 2 }).replace(/"/g, '\'');
+  return (0, _jsonStableStringify2.default)(obj, { space: 2 }).replace(/"/g, `'`);
 };
 
 exports.fullDir = fullDir;

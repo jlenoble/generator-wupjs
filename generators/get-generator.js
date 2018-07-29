@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var getGenerator = function getGenerator(name) {
+const getGenerator = name => {
   switch (name) {
     case 'addons':
       return 'addons';

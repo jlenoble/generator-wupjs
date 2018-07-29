@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
@@ -28,159 +26,128 @@ var _property2 = _interopRequireDefault(_property);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+const genName = 'generator-wupjs';
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var genName = 'generator-wupjs';
-
-var Config = function (_EventEmitter) {
-  _inherits(Config, _EventEmitter);
-
-  function Config() {
-    _classCallCheck(this, Config);
-
-    return _possibleConstructorReturn(this, (Config.__proto__ || Object.getPrototypeOf(Config)).apply(this, arguments));
-  }
-
-  _createClass(Config, [{
-    key: 'initialize',
-    value: function initialize() {
-      var _this4 = this;
-
-      if (this.isInitialized) {
-        return;
-      }
-
-      var appDir = process.cwd();
-      var yoRcJson = _path2.default.join(appDir, '.yo-rc.json');
-
-      var yoConfig = void 0;
-
-      try {
-        yoConfig = JSON.parse(_fs2.default.readFileSync(yoRcJson, 'utf8'));
-      } catch (e) {
-        yoConfig = _defineProperty({}, genName, {});
-      }
-
-      var properties = new Map();
-      var generators = new Map();
-
-      var conf = yoConfig[genName];
-
-      Object.defineProperties(this, {
-        isInitialized: {
-          value: true
-        },
-
-        has: {
-          value: function value(name) {
-            return properties.has(name);
-          }
-        },
-
-        hasGen: {
-          value: function value(name) {
-            return generators.has(name);
-          }
-        },
-
-        get: {
-          value: function value(name) {
-            var prop = properties.get(name);
-
-            if ((prop === undefined || prop.value === undefined) && _config2.default.has(name)) {
-              prop = _config2.default.get(name);
-
-              if (prop !== undefined) {
-                this.add(name, prop);
-                prop = properties.get(name);
-              }
-            }
-
-            return prop ? prop.value : undefined;
-          }
-        },
-
-        getProps: {
-          value: function value() {
-            var props = {};
-
-            properties.forEach(function (_ref) {
-              var name = _ref.name,
-                  value = _ref.value;
-
-              props[name] = value;
-            });
-
-            return props;
-          }
-        },
-
-        add: {
-          value: function value(name, _value) {
-            var _this2 = this;
-
-            if (this.has(name)) {
-              this.set(name, _value);
-              return;
-            }
-
-            var p = new _property2.default({ name: name, value: _value });
-
-            p.on('change', function () {
-              _this2.emit('change', p.name);
-            });
-
-            properties.set(name, p);
-          }
-        },
-
-        addGen: {
-          value: function value(name) {
-            generators.set(name, true);
-          }
-        },
-
-        set: {
-          value: function value(name, _value2) {
-            if (!this.has(name)) {
-              return;
-            }
-
-            var p = properties.get(name);
-            p.value = _value2;
-          }
-        },
-
-        reset: {
-          value: function value() {
-            var _this3 = this;
-
-            this.removeAllListeners();
-
-            properties.clear();
-            generators.clear();
-
-            Object.keys(conf).forEach(function (name) {
-              _this3.add(name, conf[name]);
-            });
-          }
-        }
-      });
-
-      Object.keys(conf).forEach(function (name) {
-        _this4.add(name, conf[name]);
-      });
+class Config extends _events2.default {
+  initialize() {
+    if (this.isInitialized) {
+      return;
     }
-  }]);
 
-  return Config;
-}(_events2.default);
+    const appDir = process.cwd();
+    const yoRcJson = _path2.default.join(appDir, '.yo-rc.json');
 
+    let yoConfig;
+
+    try {
+      yoConfig = JSON.parse(_fs2.default.readFileSync(yoRcJson, 'utf8'));
+    } catch (e) {
+      yoConfig = { [genName]: {} };
+    }
+
+    const properties = new Map();
+    const generators = new Map();
+
+    const conf = yoConfig[genName];
+
+    Object.defineProperties(this, {
+      isInitialized: {
+        value: true
+      },
+
+      has: {
+        value: function (name) {
+          return properties.has(name);
+        }
+      },
+
+      hasGen: {
+        value: function (name) {
+          return generators.has(name);
+        }
+      },
+
+      get: {
+        value: function (name) {
+          let prop = properties.get(name);
+
+          if ((prop === undefined || prop.value === undefined) && _config2.default.has(name)) {
+            prop = _config2.default.get(name);
+
+            if (prop !== undefined) {
+              this.add(name, prop);
+              prop = properties.get(name);
+            }
+          }
+
+          return prop ? prop.value : undefined;
+        }
+      },
+
+      getProps: {
+        value: function () {
+          const props = {};
+
+          properties.forEach(({ name, value }) => {
+            props[name] = value;
+          });
+
+          return props;
+        }
+      },
+
+      add: {
+        value: function (name, value) {
+          if (this.has(name)) {
+            this.set(name, value);
+            return;
+          }
+
+          const p = new _property2.default({ name, value });
+
+          p.on('change', () => {
+            this.emit('change', p.name);
+          });
+
+          properties.set(name, p);
+        }
+      },
+
+      addGen: {
+        value: function (name) {
+          generators.set(name, true);
+        }
+      },
+
+      set: {
+        value: function (name, value) {
+          if (!this.has(name)) {
+            return;
+          }
+
+          const p = properties.get(name);
+          p.value = value;
+        }
+      },
+
+      reset: {
+        value: function () {
+          this.removeAllListeners();
+
+          properties.clear();
+          generators.clear();
+
+          Object.keys(conf).forEach(name => {
+            this.add(name, conf[name]);
+          });
+        }
+      }
+    });
+
+    Object.keys(conf).forEach(name => {
+      this.add(name, conf[name]);
+    });
+  }
+}
 exports.default = Config;
 module.exports = exports['default'];

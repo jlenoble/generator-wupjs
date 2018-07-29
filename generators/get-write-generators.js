@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var getWriteGenerators = function getWriteGenerators(name) {
+const getWriteGenerators = name => {
   switch (name) {
     case 'updated':case 'created':
       return ['write-license'];
