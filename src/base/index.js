@@ -1,4 +1,4 @@
-import {Base} from 'yeoman-generator';
+import Base from 'yeoman-generator';
 import path from 'path';
 import slug from 'slug';
 import upperCamelCase from 'uppercamelcase';
@@ -119,7 +119,7 @@ export default class extends Base {
   has (vendorLibrary) {
     const libname = vendorLibrary.toLowerCase();
 
-    switch(libname) {
+    switch (libname) {
     case 'babel':
       return this.get('babel') !== 'none' || this.has('React');
 
