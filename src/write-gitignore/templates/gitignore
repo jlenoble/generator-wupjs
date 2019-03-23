@@ -1,6 +1,9 @@
 # Build
 build
+scratch
+private
 <%- sassCache %>
+
 # Logs
 logs
 *.log
