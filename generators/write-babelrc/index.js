@@ -41,7 +41,7 @@ exports.default = class extends _base2.default {
   _presets() {
     const presets = [];
 
-    if (this.get('babel') === 'env') {
+    if (this.get('babel').includes('env')) {
       presets.push('env');
     }
 

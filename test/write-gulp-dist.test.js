@@ -1,6 +1,6 @@
 import {testGenerator} from './helpers';
 
-testGenerator('write-gulp-dist', {babel: 'env', linters: ['EsLint']}, {
+testGenerator('write-gulp-dist', {babel: ['env'], linters: ['EsLint']}, {
   'gulp/dist.js': [
     /import babel from 'gulp-babel';/,
     /const libDir = 'lib';/,
@@ -16,7 +16,7 @@ testGenerator('write-gulp-dist', {babel: 'env', linters: ['EsLint']}, {
   ],
 });
 
-testGenerator('write-gulp-dist', {babel: 'env', linters: []}, {
+testGenerator('write-gulp-dist', {babel: ['env'], linters: []}, {
   'gulp/dist.js': [
     /import babel from 'gulp-babel';/,
     /const libDir = 'lib';/,

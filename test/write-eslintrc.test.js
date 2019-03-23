@@ -28,7 +28,7 @@ testGenerator('write-eslintrc', {babel: 'none', linters: ['EsLint']}, {
   ],
 });
 
-testGenerator('write-eslintrc', {babel: 'env', linters: ['EsLint']}, {
+testGenerator('write-eslintrc', {babel: ['env'], linters: ['EsLint']}, {
   '.yo-rc.json': [
     /"gulp-eslint": "\^\d+\.\d+\.\d+"/,
     /"gulp-babel": "\^\d+\.\d+\.\d+"/,
@@ -43,7 +43,7 @@ testGenerator('write-eslintrc', {babel: 'env', linters: ['EsLint']}, {
 });
 
 testGenerator('write-eslintrc', {
-  babel: 'env',
+  babel: ['env'],
   linters: ['EsLint'],
   addons: ['React'],
 }, {

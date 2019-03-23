@@ -1,10 +1,11 @@
 import {testGenerator} from './helpers';
 
-testGenerator('babel', {babel: 'env'}, {
+testGenerator('babel', {babel: ['env']}, {
   '.yo-rc.json': [
-    /"babel": "env"/,
+    /"babel": \[\s*"env"\s*\]/,
   ],
   'package.json': [
+    /"babel-core":\s*"\^\d+\.\d+\.\d+"/,
     /"babel-preset-env":\s*"\^\d+\.\d+\.\d+"/,
     /"gulp-babel":\s*"\^\d+\.\d+\.\d+"/,
   ],
@@ -15,9 +16,10 @@ testGenerator('babel', {babel: 'env'}, {
 
 testGenerator('babel', {babel: 'none'}, {
   '!.yo-rc.json': [
-    /"babel": "env"/,
+    /"babel": \[\s*"env"\s*\]/,
   ],
   '!package.json': [
+    /"babel-core":\s*"\^\d+\.\d+\.\d+"/,
     /"babel-preset-env":\s*"\^\d+\.\d+\.\d+"/,
     /"gulp-babel":\s*"\^\d+\.\d+\.\d+"/,
   ],

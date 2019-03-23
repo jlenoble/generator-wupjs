@@ -1,6 +1,6 @@
 import {testGenerator} from './helpers';
 
-testGenerator('write-gulp-build', {babel: 'env'}, {
+testGenerator('write-gulp-build', {babel: ['env']}, {
   'gulp/build.js': [
     /import babel from 'gulp-babel';/,
     /const buildDir = 'build';/,
@@ -41,7 +41,7 @@ testGenerator('write-gulp-build', {babel: 'none'}, {
 });
 
 testGenerator('write-gulp-build', {
-  babel: 'env',
+  babel: ['env'],
   addons: ['React'],
 }, {
   'gulp/build.js': [

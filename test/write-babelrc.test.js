@@ -1,6 +1,6 @@
 import {testGenerator} from './helpers';
 
-testGenerator('write-babelrc', {babel: 'env'}, {
+testGenerator('write-babelrc', {babel: ['env']}, {
   '.yo-rc.json': [
     /"babel-plugin-add-module-exports": "\^\d+\.\d+\.\d+"/,
   ],
@@ -13,7 +13,7 @@ testGenerator('write-babelrc', {babel: 'env'}, {
   ],
 });
 
-testGenerator('write-babelrc', {babel: 'env', addons: ['React']}, {
+testGenerator('write-babelrc', {babel: ['env'], addons: ['React']}, {
   '.yo-rc.json': [
     /"babel-plugin-add-module-exports": "\^\d+\.\d+\.\d+"/,
     /"react": "\^\d+\.\d+\.\d+"/,

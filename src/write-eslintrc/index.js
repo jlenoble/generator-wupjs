@@ -34,14 +34,7 @@ export default class extends Base {
   }
 
   _ecmaVersion () {
-    const babel = this.get('babel');
-    switch (babel) {
-    case 'env':
-      return 2018;
-
-    default:
-      return 5;
-    }
+    return this.get('babel').includes('env') ? 2018 : 5;
   }
 
   _esLintPlugins () {

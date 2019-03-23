@@ -38,8 +38,9 @@ exports.default = class extends _base2.default {
     const babel = this.get('babel');
     const deps = {};
 
-    if (babel === 'env') {
+    if (babel.includes('env')) {
       Object.assign(deps, {
+        'babel-core': '*',
         'babel-preset-env': '*',
         'babel-plugin-add-module-exports': '*',
         'gulp-babel': '*'

@@ -2,7 +2,7 @@ import {testGenerator} from './helpers';
 
 testGenerator('app', {
   name: 'some-module',
-  babel: 'env',
+  babel: ['env'],
   linters: ['EsLint'],
   testRunners: ['Mocha'],
 }, {
