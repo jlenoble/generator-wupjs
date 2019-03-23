@@ -21,7 +21,7 @@ exports.default = class extends _base2.default {
 
     this.promptIfMissing(['gulpDir']);
     this.addDevDeps({
-      'gulp': 'git://github.com/gulpjs/gulp.git#4.0',
+      'gulp': '*',
       'plumb-gulp': '*',
       'autoreload-gulp': '*'
     });
