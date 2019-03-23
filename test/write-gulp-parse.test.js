@@ -21,7 +21,7 @@ testGenerator('write-gulp-parse', {
   'package.json': [
     /"gulp-antlr4": "\^\d+\.\d+\.\d+"/,
     /"antlr4": "\^\d+\.\d+\.\d+"/,
-    /"gulp-util": "\^\d+\.\d+\.\d+"/,
+    /"plugin-error": "\^\d+\.\d+\.\d+"/,
     /"through2": "\^\d+\.\d+\.\d+"/,
     /"child-process-data": "\^\d+\.\d+\.\d+"/,
   ],
@@ -59,7 +59,7 @@ testGenerator('write-gulp-parse', {
   'package.json': [
     /"gulp-antlr4": "\^\d+\.\d+\.\d+"/,
     /"antlr4": "\^\d+\.\d+\.\d+"/,
-    /"gulp-util": "\^\d+\.\d+\.\d+"/,
+    /"plugin-error": "\^\d+\.\d+\.\d+"/,
     /"through2": "\^\d+\.\d+\.\d+"/,
     /"child-process-data": "\^\d+\.\d+\.\d+"/,
   ],

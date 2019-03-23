@@ -25,7 +25,7 @@ exports.default = class extends _base2.default {
     });
     this.addDevDeps({
       'gulp-antlr4': '*',
-      'gulp-util': '*',
+      'plugin-error': '*',
       'through2': '*',
       'child-process-data': '*'
     });

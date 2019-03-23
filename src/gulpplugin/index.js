@@ -12,7 +12,7 @@ export default class extends Base {
 
     this.promptIfMissing(['srcDir', 'testDir', 'name']);
     this.addDeps({
-      'gulp-util': '*',
+      'plugin-error': '*',
       'through2': '*',
     });
     this.addDevDeps({

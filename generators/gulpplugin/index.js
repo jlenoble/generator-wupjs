@@ -28,7 +28,7 @@ exports.default = class extends _base2.default {
 
     this.promptIfMissing(['srcDir', 'testDir', 'name']);
     this.addDeps({
-      'gulp-util': '*',
+      'plugin-error': '*',
       'through2': '*'
     });
     this.addDevDeps({
