@@ -3,7 +3,7 @@ import path from 'path';
 import slug from 'slug';
 import upperCamelCase from 'uppercamelcase';
 import {Config, getGenerator, getWriteGenerators,
-  extendProps, extendedProps} from '../helpers';
+  extendProps, extendedProps, getPackageVersion} from '../helpers';
 
 const appDir = __dirname;
 const conf = new Config();
@@ -89,6 +89,8 @@ export default class extends Base {
     Object.assign(deps, _deps);
 
     this.promptIfMissing(['deps']);
+    this.fixDepVersions(deps);
+
     this.set({deps});
   }
 
@@ -97,6 +99,8 @@ export default class extends Base {
     Object.assign(devDeps, _devDeps);
 
     this.promptIfMissing(['devDeps']);
+    this.fixDepVersions(devDeps);
+
     this.set({devDeps});
   }
 
@@ -105,6 +109,8 @@ export default class extends Base {
     Object.assign(peerDeps, _peerDeps);
 
     this.promptIfMissing(['peerDeps']);
+    this.fixDepVersions(peerDeps);
+
     this.set({peerDeps});
   }
 
@@ -205,6 +211,15 @@ export default class extends Base {
 
     case 'pipeBabel':
       return this.has('Babel') ? '\n    .pipe(babel())' : '';
+    }
+  }
+
+  fixDepVersions (deps = {}) {
+    for (const dep of Object.keys(deps)) {
+      if (deps[dep] == '*') {
+        // eslint-disable-next-line no-param-reassign
+        deps[dep] = getPackageVersion(dep);
+      }
     }
   }
 

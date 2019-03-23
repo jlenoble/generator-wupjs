@@ -109,6 +109,8 @@ exports.default = class extends _yeomanGenerator2.default {
     Object.assign(deps, _deps);
 
     this.promptIfMissing(['deps']);
+    this.fixDepVersions(deps);
+
     this.set({ deps });
   }
 
@@ -117,6 +119,8 @@ exports.default = class extends _yeomanGenerator2.default {
     Object.assign(devDeps, _devDeps);
 
     this.promptIfMissing(['devDeps']);
+    this.fixDepVersions(devDeps);
+
     this.set({ devDeps });
   }
 
@@ -125,6 +129,8 @@ exports.default = class extends _yeomanGenerator2.default {
     Object.assign(peerDeps, _peerDeps);
 
     this.promptIfMissing(['peerDeps']);
+    this.fixDepVersions(peerDeps);
+
     this.set({ peerDeps });
   }
 
@@ -220,6 +226,14 @@ exports.default = class extends _yeomanGenerator2.default {
 
       case 'pipeBabel':
         return this.has('Babel') ? '\n    .pipe(babel())' : '';
+    }
+  }
+
+  fixDepVersions(deps = {}) {
+    for (const dep of Object.keys(deps)) {
+      if (deps[dep] == '*') {
+        (0, _helpers.getPackageVersion)(dep);
+      }
     }
   }
 

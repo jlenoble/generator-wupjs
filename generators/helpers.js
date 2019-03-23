@@ -37,6 +37,15 @@ Object.defineProperty(exports, 'getGenerator', {
   }
 });
 
+var _getPackageVersion = require('./get-package-version');
+
+Object.defineProperty(exports, 'getPackageVersion', {
+  enumerable: true,
+  get: function () {
+    return _interopRequireDefault(_getPackageVersion).default;
+  }
+});
+
 var _getWriteGenerators = require('./get-write-generators');
 
 Object.defineProperty(exports, 'getWriteGenerators', {
