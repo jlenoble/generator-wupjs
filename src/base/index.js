@@ -218,7 +218,7 @@ export default class extends Base {
     for (const dep of Object.keys(deps)) {
       if (deps[dep] == '*') {
         // eslint-disable-next-line no-param-reassign
-        deps[dep] = getPackageVersion(dep);
+        deps[dep] = '^' + getPackageVersion(dep);
       }
     }
   }

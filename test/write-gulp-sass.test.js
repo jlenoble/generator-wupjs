@@ -10,7 +10,7 @@ testGenerator('write-gulp-sass', {preprocessors: ['Compass']}, {
     /  'src\/static\/scss\/\*\.scss'/,
   ],
   'package.json': [
-    /"gulp-compass": "\d+\.\d+\.\d+"/,
+    /"gulp-compass": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/sass';/,

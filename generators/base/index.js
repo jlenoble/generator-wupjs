@@ -232,7 +232,8 @@ exports.default = class extends _yeomanGenerator2.default {
   fixDepVersions(deps = {}) {
     for (const dep of Object.keys(deps)) {
       if (deps[dep] == '*') {
-        (0, _helpers.getPackageVersion)(dep);
+        // eslint-disable-next-line no-param-reassign
+        deps[dep] = '^' + (0, _helpers.getPackageVersion)(dep);
       }
     }
   }

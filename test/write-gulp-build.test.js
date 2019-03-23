@@ -10,8 +10,8 @@ testGenerator('write-gulp-build', {babel: 'es2015'}, {
     /\.pipe\(babel\(\)\)/,
   ],
   'package.json': [
-    /"gulp-babel": "\d+\.\d+\.\d+"/,
-    /"gulp-sourcemaps": "\d+\.\d+\.\d+"/,
+    /"gulp-babel": "\^\d+\.\d+\.\d+"/,
+    /"gulp-sourcemaps": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/build';/,
@@ -30,10 +30,10 @@ testGenerator('write-gulp-build', {babel: 'none'}, {
     /\.pipe\(babel\(\)\)/,
   ],
   'package.json': [
-    /"gulp-sourcemaps": "\d+\.\d+\.\d+"/,
+    /"gulp-sourcemaps": "\^\d+\.\d+\.\d+"/,
   ],
   '!package.json': [
-    /"gulp-babel": "\d+\.\d+\.\d+"/,
+    /"gulp-babel": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/build';/,
@@ -55,10 +55,10 @@ testGenerator('write-gulp-build', {
     /\.pipe\(babel\(\)\)/,
   ],
   'package.json': [
-    /"gulp-babel": "\d+\.\d+\.\d+"/,
-    /"gulp-sourcemaps": "\d+\.\d+\.\d+"/,
-    /"react": "\d+\.\d+\.\d+"/,
-    /"react-dom": "\d+\.\d+\.\d+"/,
+    /"gulp-babel": "\^\d+\.\d+\.\d+"/,
+    /"gulp-sourcemaps": "\^\d+\.\d+\.\d+"/,
+    /"react": "\^\d+\.\d+\.\d+"/,
+    /"react-dom": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/build';/,
@@ -81,10 +81,10 @@ testGenerator('write-gulp-build', {
     /\n    \.pipe\(babel\(\)\)/,
   ],
   'package.json': [
-    /"gulp-babel": "\d+\.\d+\.\d+"/,
-    /"gulp-sourcemaps": "\d+\.\d+\.\d+"/,
-    /"react": "\d+\.\d+\.\d+"/,
-    /"react-dom": "\d+\.\d+\.\d+"/,
+    /"gulp-babel": "\^\d+\.\d+\.\d+"/,
+    /"gulp-sourcemaps": "\^\d+\.\d+\.\d+"/,
+    /"react": "\^\d+\.\d+\.\d+"/,
+    /"react-dom": "\^\d+\.\d+\.\d+"/,
   ],
   'gulp/lint.js': false,
   '.babelrc': [

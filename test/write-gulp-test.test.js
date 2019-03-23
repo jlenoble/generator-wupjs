@@ -10,8 +10,8 @@ testGenerator('write-gulp-test', undefined, {
     /gulp\.task\('test', gulp.series\('build', test\)\);/,
   ],
   'package.json': [
-    /"gulp-mocha": "\d+\.\d+\.\d+"/,
-    /"chai": "\d+\.\d+\.\d+"/,
+    /"gulp-mocha": "\^\d+\.\d+\.\d+"/,
+    /"chai": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/test';/,
@@ -28,9 +28,9 @@ testGenerator('write-gulp-test', {preprocessors: ['Compass']}, {
     /gulp\.task\('test', gulp.series\(gulp.parallel\('test-bundle', 'sass'\), test\)\);/,
   ],
   'package.json': [
-    /"gulp-mocha-phantomjs": "\d+\.\d+\.\d+"/,
-    /"chai": "\d+\.\d+\.\d+"/,
-    /"mocha": "\d+\.\d+\.\d+"/,
+    /"gulp-mocha-phantomjs": "\^\d+\.\d+\.\d+"/,
+    /"chai": "\^\d+\.\d+\.\d+"/,
+    /"mocha": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/test';/,
@@ -47,9 +47,9 @@ testGenerator('write-gulp-test', {addons: ['React']}, {
     /gulp\.task\('test', gulp.series\('test-bundle', test\)\);/,
   ],
   'package.json': [
-    /"gulp-mocha-phantomjs": "\d+\.\d+\.\d+"/,
-    /"chai": "\d+\.\d+\.\d+"/,
-    /"mocha": "\d+\.\d+\.\d+"/,
+    /"gulp-mocha-phantomjs": "\^\d+\.\d+\.\d+"/,
+    /"chai": "\^\d+\.\d+\.\d+"/,
+    /"mocha": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/test';/,
@@ -69,9 +69,9 @@ testGenerator('write-gulp-test', {
     /gulp\.task\('test', gulp\.series\(gulp\.parallel\('test-bundle', 'sass'\), test\)\);/,
   ],
   'package.json': [
-    /"gulp-mocha-phantomjs": "\d+\.\d+\.\d+"/,
-    /"chai": "\d+\.\d+\.\d+"/,
-    /"mocha": "\d+\.\d+\.\d+"/,
+    /"gulp-mocha-phantomjs": "\^\d+\.\d+\.\d+"/,
+    /"chai": "\^\d+\.\d+\.\d+"/,
+    /"mocha": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/test';/,
@@ -90,8 +90,8 @@ testGenerator('write-gulp-test', {
     /gulp\.task\('test', gulp\.series\(gulp\.parallel\('parse', 'build'\), test\)\);/,
   ],
   'package.json': [
-    /"gulp-mocha": "\d+\.\d+\.\d+"/,
-    /"chai": "\d+\.\d+\.\d+"/,
+    /"gulp-mocha": "\^\d+\.\d+\.\d+"/,
+    /"chai": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/test';/,

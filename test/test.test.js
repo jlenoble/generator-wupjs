@@ -6,8 +6,8 @@ testGenerator('test', {testRunners: ['Mocha']}, {
     /"Mocha"/,
   ],
   'package.json': [
-    /"gulp-mocha": "\d+\.\d+\.\d+"/,
-    /"chai": "\d+\.\d+\.\d+"/,
+    /"gulp-mocha": "\^\d+\.\d+\.\d+"/,
+    /"chai": "\^\d+\.\d+\.\d+"/,
   ],
   'gulp/test.js': [
     /import mocha from 'gulp-mocha';/,

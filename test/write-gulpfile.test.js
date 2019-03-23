@@ -2,10 +2,10 @@ import {testGenerator} from './helpers';
 
 testGenerator('write-gulpfile', undefined, {
   '.yo-rc.json': [
-    /"gulp": "git:\/\/github\.com\/gulpjs\/gulp\.git#4\.0"/,
+    /"gulp": "\^\d+\.\d+\.\d+"/,
   ],
   'package.json': [
-    /gulp":\s*"git:\/\/github\.com\/gulpjs\/gulp\.git#4\.0"/,
+    /gulp":\s*"\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': true,
 });

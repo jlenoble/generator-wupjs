@@ -8,8 +8,8 @@ testGenerator('write-test-html', undefined, {
     /mocha.run\(\);/,
   ],
   'package.json': [
-    /"browserify": "\d+\.\d+\.\d+"/,
-    /"mocha": "\d+\.\d+\.\d+"/,
+    /"browserify": "\^\d+\.\d+\.\d+"/,
+    /"mocha": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/test-bundle';/,
@@ -24,10 +24,10 @@ testGenerator('write-test-html', {addons: ['React']}, {
     /mocha.run\(\);/,
   ],
   'package.json': [
-    /"browserify": "\d+\.\d+\.\d+"/,
-    /"mocha": "\d+\.\d+\.\d+"/,
-    /"react": "\d+\.\d+\.\d+"/,
-    /"react-dom": "\d+\.\d+\.\d+"/,
+    /"browserify": "\^\d+\.\d+\.\d+"/,
+    /"mocha": "\^\d+\.\d+\.\d+"/,
+    /"react": "\^\d+\.\d+\.\d+"/,
+    /"react-dom": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/test-bundle';/,

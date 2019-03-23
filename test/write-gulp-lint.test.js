@@ -10,7 +10,7 @@ testGenerator('write-gulp-lint', undefined, {
     /\.pipe\(eslint\.format\(\)\)/,
   ],
   'package.json': [
-    /"gulp-eslint": "\d+\.\d+\.\d+"/,
+    /"gulp-eslint": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/lint';/,
@@ -29,9 +29,9 @@ testGenerator('write-gulp-lint', {addons: ['React']}, {
     /\.pipe\(eslint\.format\(\)\)/,
   ],
   'package.json': [
-    /"gulp-eslint": "\d+\.\d+\.\d+"/,
-    /"react": "\d+\.\d+\.\d+"/,
-    /"react-dom": "\d+\.\d+\.\d+"/,
+    /"gulp-eslint": "\^\d+\.\d+\.\d+"/,
+    /"react": "\^\d+\.\d+\.\d+"/,
+    /"react-dom": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/lint';/,

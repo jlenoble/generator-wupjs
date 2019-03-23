@@ -8,7 +8,7 @@ testGenerator('write-gulp-distclean', undefined, {
     /gulp\.task\('distclean', gulp\.parallel\('clean', distClean\)\);/,
   ],
   'package.json': [
-    /"del": "\d+\.\d+\.\d+"/,
+    /"del": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/distclean';/,

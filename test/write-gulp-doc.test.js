@@ -15,10 +15,10 @@ testGenerator('write-gulp-doc', {
     /\.pipe\(wrap\('```js\\n<%= contents %>```', \{\}, \{parse: false\}\)\)/,
   ],
   'package.json': [
-    /"markdown-include": "\d+\.\d+\.\d+"/,
-    /"gulp-replace": "\d+\.\d+\.\d+"/,
-    /"gulp-rename": "\d+\.\d+\.\d+"/,
-    /"gulp-wrap": "\d+\.\d+\.\d+"/,
+    /"markdown-include": "\^\d+\.\d+\.\d+"/,
+    /"gulp-replace": "\^\d+\.\d+\.\d+"/,
+    /"gulp-rename": "\^\d+\.\d+\.\d+"/,
+    /"gulp-wrap": "\^\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/doc';/,
