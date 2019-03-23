@@ -112,4 +112,4 @@ import {testBundle} from './test-bundle';\n`;
     return imports;
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

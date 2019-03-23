@@ -49,4 +49,4 @@ exports.default = class extends _base2.default {
     this.fs.copyTpl(this.templatePath('test-bundle.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'test-bundle.js')), props);
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

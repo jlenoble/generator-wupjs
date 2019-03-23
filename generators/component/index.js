@@ -83,4 +83,4 @@ exports.default = class extends _base2.default {
     }
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

@@ -56,4 +56,4 @@ function joinGlobs(...args) {
     throw err;
   }
 }
-module.exports = exports['default'];
+module.exports = exports.default;

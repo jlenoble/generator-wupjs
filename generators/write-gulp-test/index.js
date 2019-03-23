@@ -111,4 +111,4 @@ import '${this.has('React') ? './test-bundle' : './build'}';\n`;
     return this.has('PhantomJS') ? `'${this.filepaths('runnerPage')}'` : this.globs('build#test:**:test.js');
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

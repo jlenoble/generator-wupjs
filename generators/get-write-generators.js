@@ -27,4 +27,4 @@ const getWriteGenerators = name => {
 };
 
 exports.default = getWriteGenerators;
-module.exports = exports['default'];
+module.exports = exports.default;

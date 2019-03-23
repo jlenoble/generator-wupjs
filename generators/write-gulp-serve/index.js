@@ -68,4 +68,4 @@ const bsWatchGlob = `;
     return this.has('Compass') ? `gulp.parallel('bundle', 'sass')` : `'bundle'`;
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

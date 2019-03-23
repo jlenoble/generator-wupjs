@@ -145,4 +145,4 @@ gulp.task('parse', gulp.series(makeParser, parse));`;
     return parseTasks;
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

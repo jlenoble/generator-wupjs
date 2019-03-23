@@ -75,4 +75,4 @@ exports.default = class extends _base2.default {
     this.fs.copyTpl(this.templatePath('gulpfile.babel.ejs'), this.destinationPath(props.gulpfilePath), props);
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

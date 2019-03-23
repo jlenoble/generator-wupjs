@@ -62,4 +62,4 @@ exports.default = class extends _base2.default {
     return presets.map(preset => `"${preset}"`).join(', ');
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

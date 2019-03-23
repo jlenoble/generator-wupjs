@@ -33,4 +33,4 @@ exports.default = class extends _base2.default {
     this.fs.copyTpl(this.templatePath('package.ejs'), this.destinationPath('package.json'), props);
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

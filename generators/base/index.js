@@ -256,4 +256,4 @@ _yeomanGenerator2.default.reset = function () {
     conf.reset();
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

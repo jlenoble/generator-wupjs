@@ -50,4 +50,4 @@ exports.default = class extends _base2.default {
     this.composeWith('write-gulp-test');
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

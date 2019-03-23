@@ -50,4 +50,4 @@ exports.default = class extends _base2.default {
     this.fs.copyTpl(this.templatePath('class.test.ejs'), this.destinationPath(_path2.default.join(props.testDir, testFilename)), props);
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

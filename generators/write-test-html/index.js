@@ -43,4 +43,4 @@ exports.default = class extends _base2.default {
     return _path2.default.join(this.rel('test:build'), this.filenames('testBundle'));
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

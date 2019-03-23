@@ -150,4 +150,4 @@ class Config extends _events2.default {
   }
 }
 exports.default = Config;
-module.exports = exports['default'];
+module.exports = exports.default;

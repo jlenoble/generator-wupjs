@@ -36,4 +36,4 @@ exports.default = class extends _base2.default {
     this.fs.copyTpl(this.templatePath('build.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'build.js')), props);
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

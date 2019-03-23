@@ -37,4 +37,4 @@ exports.default = class extends _base2.default {
     this.fs.copyTpl(this.templatePath('prepublish.ejs'), this.destinationPath(_path2.default.join(props.gulpDir, 'prepublish.js')), props);
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

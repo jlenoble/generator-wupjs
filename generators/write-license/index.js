@@ -28,4 +28,4 @@ exports.default = class extends _base2.default {
     this.fs.copyTpl(this.templatePath('LICENSE_' + props.license), this.destinationPath('LICENSE'), props);
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

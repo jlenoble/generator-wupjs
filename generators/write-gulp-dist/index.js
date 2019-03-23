@@ -74,4 +74,4 @@ export const distSass = () => {
     return imports;
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

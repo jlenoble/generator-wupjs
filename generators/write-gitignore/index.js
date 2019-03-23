@@ -33,4 +33,4 @@ exports.default = class extends _base2.default {
     return this.has('Compass') ? '.sass-cache' : '';
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;

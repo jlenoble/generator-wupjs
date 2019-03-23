@@ -59,4 +59,4 @@ const getGenerator = name => {
 };
 
 exports.default = getGenerator;
-module.exports = exports['default'];
+module.exports = exports.default;

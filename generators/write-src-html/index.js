@@ -29,4 +29,4 @@ exports.default = class extends _base2.default {
     this.fs.copyTpl(this.templatePath('index.ejs'), this.destinationPath(this.filepaths('indexPage')), props);
   }
 };
-module.exports = exports['default'];
+module.exports = exports.default;
