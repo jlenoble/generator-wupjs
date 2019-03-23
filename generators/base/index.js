@@ -178,7 +178,7 @@ exports.default = class extends _yeomanGenerator2.default {
   compute(propName) {
     switch (propName) {
       case 'className':
-        return (0, _uppercamelcase2.default)(this.get('name'));
+        return (0, _uppercamelcase2.default)(this.options.className || this.get('name'));
 
       case 'cYear':
         {

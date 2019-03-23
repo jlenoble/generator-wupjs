@@ -162,16 +162,16 @@ export default class extends Base {
   compute (propName) {
     switch (propName) {
     case 'className':
-      return upperCamelCase(this.get('name'));
+      return upperCamelCase(this.options.className || this.get('name'));
 
     case 'cYear':
-      {
-        const created = this.get('created').getFullYear();
-        const updated = this.get('updated').getFullYear();
-        let cYear = created < updated ? created + '-' : '';
-        cYear += updated;
-        return cYear;
-      }
+    {
+      const created = this.get('created').getFullYear();
+      const updated = this.get('updated').getFullYear();
+      let cYear = created < updated ? created + '-' : '';
+      cYear += updated;
+      return cYear;
+    }
 
     case 'externalReact':
       return this.has('React') ? `\n    .external('react/addons')
@@ -179,14 +179,14 @@ export default class extends Base {
     .external('react/lib/ExecutionEnvironment')` : '';
 
     case 'fileStem':
-      {
-        let filestem = this.className[0].toLowerCase() +
-          this.className.substring(1);
-        filestem = filestem.replace(/[A-Z]/g, function (s) {
-          return '-' + s;
-        });
-        return slug(filestem, {lower: true});
-      }
+    {
+      let filestem = this.className[0].toLowerCase() +
+        this.className.substring(1);
+      filestem = filestem.replace(/[A-Z]/g, function (s) {
+        return '-' + s;
+      });
+      return slug(filestem, {lower: true});
+    }
 
     case 'importBabel':
       return this.has('Babel') ? `import babel from 'gulp-babel';\n` : '';
