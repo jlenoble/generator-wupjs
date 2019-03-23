@@ -4,9 +4,9 @@ testGenerator('preprocessors', {preprocessors: ['Compass']}, {
   '.yo-rc.json': [
     /"preprocessors"/,
     /"Compass"/,
-    /"gulp-compass": "\*"/,
+    /"gulp-compass": "\d+\.\d+\.\d+"/,
   ],
   'package.json': [
-    /"gulp-compass": "\*"/,
+    /"gulp-compass": "\d+\.\d+\.\d+"/,
   ],
 });

@@ -10,9 +10,9 @@ testGenerator('write-gulp-bundle', undefined, {
     /const bundleName = 'bundle.js';/,
   ],
   'package.json': [
-    /"browserify": "\*"/,
-    /"vinyl-buffer": "\*"/,
-    /"vinyl-source-stream": "\*"/,
+    /"browserify": "\d+\.\d+\.\d+"/,
+    /"vinyl-buffer": "\d+\.\d+\.\d+"/,
+    /"vinyl-source-stream": "\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/bundle';/,
@@ -32,11 +32,11 @@ testGenerator('write-gulp-bundle', {addons: ['React']}, {
     /    \.external\('react\/lib\/ExecutionEnvironment'\)/,
   ],
   'package.json': [
-    /"browserify": "\*"/,
-    /"vinyl-buffer": "\*"/,
-    /"vinyl-source-stream": "\*"/,
-    /"react": "\*"/,
-    /"react-dom": "\*"/,
+    /"browserify": "\d+\.\d+\.\d+"/,
+    /"vinyl-buffer": "\d+\.\d+\.\d+"/,
+    /"vinyl-source-stream": "\d+\.\d+\.\d+"/,
+    /"react": "\d+\.\d+\.\d+"/,
+    /"react-dom": "\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/bundle';/,

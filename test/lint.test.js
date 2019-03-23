@@ -6,8 +6,8 @@ testGenerator('lint', {babel: 'none', linters: ['EsLint']}, {
     /"EsLint"/,
   ],
   'package.json': [
-    /"gulp-eslint": "\*"/,
-    /"eslint-config-google": "\*"/,
+    /"gulp-eslint": "\d+\.\d+\.\d+"/,
+    /"eslint-config-google": "\d+\.\d+\.\d+"/,
   ],
   'gulp/lint.js': [
     /import eslint from 'gulp-eslint';/,

@@ -10,9 +10,9 @@ testGenerator('write-gulp-test-bundle', undefined, {
     /const testBundleName = 'test-bundle.js';/,
   ],
   'package.json': [
-    /"browserify": "\*"/,
-    /"vinyl-buffer": "\*"/,
-    /"vinyl-source-stream": "\*"/,
+    /"browserify": "\d+\.\d+\.\d+"/,
+    /"vinyl-buffer": "\d+\.\d+\.\d+"/,
+    /"vinyl-source-stream": "\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/test-bundle';/,
@@ -32,12 +32,12 @@ testGenerator('write-gulp-test-bundle', {addons: ['React']}, {
     /    \.external\('react\/lib\/ExecutionEnvironment'\)/,
   ],
   'package.json': [
-    /"browserify": "\*"/,
-    /"mocha": "\*"/,
-    /"vinyl-buffer": "\*"/,
-    /"vinyl-source-stream": "\*"/,
-    /"react": "\*"/,
-    /"react-dom": "\*"/,
+    /"browserify": "\d+\.\d+\.\d+"/,
+    /"mocha": "\d+\.\d+\.\d+"/,
+    /"vinyl-buffer": "\d+\.\d+\.\d+"/,
+    /"vinyl-source-stream": "\d+\.\d+\.\d+"/,
+    /"react": "\d+\.\d+\.\d+"/,
+    /"react-dom": "\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/test-bundle';/,

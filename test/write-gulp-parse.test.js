@@ -19,11 +19,11 @@ testGenerator('write-gulp-parse', {
     /gulp\.task\('translate', gulp\.series\(makeParser, translate\)\);/,
   ],
   'package.json': [
-    /"gulp-antlr4": "\*"/,
-    /"antlr4": "\*"/,
-    /"gulp-util": "\*"/,
-    /"through2": "\*"/,
-    /"child-process-data": "\*"/,
+    /"gulp-antlr4": "\d+\.\d+\.\d+"/,
+    /"antlr4": "\d+\.\d+\.\d+"/,
+    /"gulp-util": "\d+\.\d+\.\d+"/,
+    /"through2": "\d+\.\d+\.\d+"/,
+    /"child-process-data": "\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/parse';/,
@@ -57,11 +57,11 @@ testGenerator('write-gulp-parse', {
     /gulp\.task\('interprete', gulp\.series\(makeParser, interprete\)\);/,
   ],
   'package.json': [
-    /"gulp-antlr4": "\*"/,
-    /"antlr4": "\*"/,
-    /"gulp-util": "\*"/,
-    /"through2": "\*"/,
-    /"child-process-data": "\*"/,
+    /"gulp-antlr4": "\d+\.\d+\.\d+"/,
+    /"antlr4": "\d+\.\d+\.\d+"/,
+    /"gulp-util": "\d+\.\d+\.\d+"/,
+    /"through2": "\d+\.\d+\.\d+"/,
+    /"child-process-data": "\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/parse';/,

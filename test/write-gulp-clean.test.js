@@ -6,7 +6,7 @@ testGenerator('write-gulp-clean', undefined, {
     /gulp\.task\('clean', clean\);/,
   ],
   'package.json': [
-    /"del": "\*"/,
+    /"del": "\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/clean';/,

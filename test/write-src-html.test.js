@@ -5,7 +5,7 @@ testGenerator('write-src-html', undefined, {
     /<script src="bundle\.js"><\/script>/,
   ],
   'package.json': [
-    /"browserify": "\*"/,
+    /"browserify": "\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/bundle';/,
@@ -17,9 +17,9 @@ testGenerator('write-src-html', {addons: ['React']}, {
     /<script src="bundle\.js"><\/script>/,
   ],
   'package.json': [
-    /"browserify": "\*"/,
-    /"react": "\*"/,
-    /"react-dom": "\*"/,
+    /"browserify": "\d+\.\d+\.\d+"/,
+    /"react": "\d+\.\d+\.\d+"/,
+    /"react-dom": "\d+\.\d+\.\d+"/,
   ],
   'gulpfile.babel.js': [
     /import '\.\/gulp\/bundle';/,

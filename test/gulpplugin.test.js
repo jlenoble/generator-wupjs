@@ -15,7 +15,7 @@ testGenerator('gulpplugin MyPlugin', undefined, {
     /pipe\(myPlugin\(\)\)/,
   ],
   'package.json': [
-    /"gulp-util": "\*"/,
-    /"through2": "\*"/,
+    /"gulp-util": "\d+\.\d+\.\d+"/,
+    /"through2": "\d+\.\d+\.\d+"/,
   ],
 });
