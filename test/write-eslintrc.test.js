@@ -28,7 +28,7 @@ testGenerator('write-eslintrc', {babel: 'none', linters: ['EsLint']}, {
   ],
 });
 
-testGenerator('write-eslintrc', {babel: 'es2016', linters: ['EsLint']}, {
+testGenerator('write-eslintrc', {babel: 'env', linters: ['EsLint']}, {
   '.yo-rc.json': [
     /"gulp-eslint": "\^\d+\.\d+\.\d+"/,
     /"gulp-babel": "\^\d+\.\d+\.\d+"/,
@@ -38,12 +38,12 @@ testGenerator('write-eslintrc', {babel: 'es2016', linters: ['EsLint']}, {
     /"gulp-babel": "\^\d+\.\d+\.\d+"/,
   ],
   '.eslintrc': [
-    /"ecmaVersion": 2016/,
+    /"ecmaVersion": 20\d\d/,
   ],
 });
 
 testGenerator('write-eslintrc', {
-  babel: 'es2016',
+  babel: 'env',
   linters: ['EsLint'],
   addons: ['React'],
 }, {
@@ -62,7 +62,7 @@ testGenerator('write-eslintrc', {
     /"eslint-plugin-react": "\^\d+\.\d+\.\d+"/,
   ],
   '.eslintrc': [
-    /"ecmaVersion": 2016/,
+    /"ecmaVersion": 20\d\d/,
     /"jsx": true/,
     /"plugins": \["react"\]/,
     /"react\/jsx-uses-react": \["error"\]/,

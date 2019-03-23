@@ -41,17 +41,8 @@ exports.default = class extends _base2.default {
   _presets() {
     const presets = [];
 
-    switch (this.get('babel')) {
-      case 'es2017':
-        presets.push('es2017');
-      // FALL THROUGH
-
-      case 'es2016':
-        presets.push('es2016');
-      // FALL THROUGH
-
-      case 'es2015':
-        presets.push('es2015');
+    if (this.get('babel') === 'env') {
+      presets.push('env');
     }
 
     if (this.has('React')) {

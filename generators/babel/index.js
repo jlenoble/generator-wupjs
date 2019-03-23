@@ -22,10 +22,10 @@ exports.default = class extends _base2.default {
 
   prompting() {
     const prompts = [{
-      type: 'list',
+      type: 'checkbox',
       name: 'babel',
       message: 'Ecmascript presets (Babel):',
-      choices: ['none', 'es2015', 'es2016', 'es2017', 'env'],
+      choices: ['env'],
       default: this.get('babel')
     }];
 
@@ -38,23 +38,14 @@ exports.default = class extends _base2.default {
     const babel = this.get('babel');
     const deps = {};
 
-    switch (babel) {
-      case 'es2017':
-        Object.assign(deps, { 'babel-preset-es2017': '*' });
-      // FALL THROUGH
-
-      case 'es2016':
-        Object.assign(deps, { 'babel-preset-es2016': '*' });
-      // FALL THROUGH
-
-      case 'es2015':
-        Object.assign(deps, {
-          'babel-preset-es2015': '*',
-          'babel-plugin-add-module-exports': '*',
-          'gulp-babel': '*'
-        });
-        this.composeWith('write-gulpfile');
-        this.addDevDeps(deps);
+    if (babel === 'env') {
+      Object.assign(deps, {
+        'babel-preset-env': '*',
+        'babel-plugin-add-module-exports': '*',
+        'gulp-babel': '*'
+      });
+      this.composeWith('write-gulpfile');
+      this.addDevDeps(deps);
     }
   }
 };

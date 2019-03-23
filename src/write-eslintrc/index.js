@@ -36,8 +36,8 @@ export default class extends Base {
   _ecmaVersion () {
     const babel = this.get('babel');
     switch (babel) {
-    case 'es2015': case 'es2016': case 'es2017':
-      return babel.substring(2);
+    case 'env':
+      return 2018;
 
     default:
       return 5;

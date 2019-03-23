@@ -1,6 +1,6 @@
 import {testGenerator} from './helpers';
 
-testGenerator('write-babelrc', {babel: 'es2016'}, {
+testGenerator('write-babelrc', {babel: 'env'}, {
   '.yo-rc.json': [
     /"babel-plugin-add-module-exports": "\^\d+\.\d+\.\d+"/,
   ],
@@ -8,11 +8,12 @@ testGenerator('write-babelrc', {babel: 'es2016'}, {
     /"babel-plugin-add-module-exports": "\^\d+\.\d+\.\d+"/,
   ],
   '.babelrc': [
+    /"presets": \["env"\]/,
     /"plugins": \["add-module-exports"\]/,
   ],
 });
 
-testGenerator('write-babelrc', {babel: 'es2016', addons: ['React']}, {
+testGenerator('write-babelrc', {babel: 'env', addons: ['React']}, {
   '.yo-rc.json': [
     /"babel-plugin-add-module-exports": "\^\d+\.\d+\.\d+"/,
     /"react": "\^\d+\.\d+\.\d+"/,
@@ -24,7 +25,7 @@ testGenerator('write-babelrc', {babel: 'es2016', addons: ['React']}, {
     /"react-dom": "\^\d+\.\d+\.\d+"/,
   ],
   '.babelrc': [
-    /"presets": \["es2015", "es2016", "react"\]/,
+    /"presets": \["env", "react"\]/,
     /"plugins": \["add-module-exports"\]/,
   ],
 });
