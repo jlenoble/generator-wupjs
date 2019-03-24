@@ -1,8 +1,17 @@
 # Build
-build
-scratch
-private
+<%- buildDir %>
 <%- sassCache %>
+
+# Test
+tmp
+temp
+scratch
+
+# Dist
+<%- libDir %>
+
+# Hide
+private
 
 # Logs
 logs

@@ -8,7 +8,7 @@ export default class extends Base {
 
     super(args, options);
 
-    this.promptIfMissing(['preprocessors']);
+    this.promptIfMissing(['preprocessors', 'buildDir', 'libDir']);
     this.composeWith('github');
   }
 
