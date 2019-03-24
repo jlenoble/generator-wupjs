@@ -1,6 +1,7 @@
 # Build
 build
-*2
+private
+generators
 
 # Logs
 logs
