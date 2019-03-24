@@ -2,7 +2,8 @@
   "name": "generator-wupjs",
   "version": "0.4.2",
   "description": "A custom Yeoman generator to reduce boiler-plate in JS dev",
-  "main": "index.js",
+  "main": "generators/app/index.js",
+  "files": ["generators"],
   "scripts": {
     "test": "gulp test"
   },
