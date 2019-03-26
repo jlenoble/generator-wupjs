@@ -17,7 +17,7 @@ export default class extends Base {
       'gulp-replace': '*',
       'gulp-wrap': '*',
       'markdown-include': '*',
-    })
+    });
     this.composeWith('who');
     this.composeWith('license');
     this.composeWith('write-gulpfile');
@@ -27,6 +27,7 @@ export default class extends Base {
     const props = this.getProps();
     props.contents = this._contents();
     props.docConf = this.filepaths('docConf');
+    props.docDir = this.dirs('docDir');
     props.name = this.get('name');
     props.cYear = this.compute('cYear');
 
@@ -39,6 +40,12 @@ export default class extends Base {
     this.fs.copyTpl(
       this.templatePath('index.ejs'),
       this.destinationPath(path.join(this.dirs('docDir'), 'index.md')),
+      props
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('license.ejs'),
+      this.destinationPath(path.join(this.dirs('docDir'), 'license.md')),
       props
     );
 

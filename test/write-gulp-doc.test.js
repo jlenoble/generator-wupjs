@@ -27,6 +27,9 @@ testGenerator('write-gulp-doc', {
     /"heading": "# MyModule\\n\\nSome description"/,
   ],
   'docs/index.md': [
+    /#include "docs\/license.md"/,
+  ],
+  'docs/license.md': [
     /MyModule is \[GPL-3.0 licensed\]\(\.\/LICENSE\)\./,
     /© 20\d\d \[Me Me\]\(mailto:me\@there\)/,
   ],
