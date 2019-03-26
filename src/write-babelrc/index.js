@@ -29,21 +29,24 @@ export default class extends Base {
   _plugins () {
     return Object.keys(this.get('devDeps')).filter(dep => {
       return dep.match(/babel-plugin/);
-    }).map(dep => '"' + dep.replace('babel-plugin-', '') + '"').join(', ');
+    }).map(dep => '"' + dep.replace('babel-plugin-', '') + '"').join(',\n    ');
   }
 
   _presets () {
     const presets = [];
 
     if (this.get('babel').includes('env')) {
-      presets.push('@babel/preset-env');
+      presets.push(`["@babel/preset-env", {
+      "targets": {
+        "node": "current"
+      }
+    }]`);
     }
 
     if (this.has('React')) {
-      presets.push('@babel/preset-react');
+      presets.push('"@babel/preset-react"');
     }
 
-    presets.sort();
-    return presets.map(preset => `"${preset}"`).join(', ');
+    return presets.map(preset => `${preset}`).join(',\n    ');
   }
 }

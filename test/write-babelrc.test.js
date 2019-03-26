@@ -8,8 +8,8 @@ testGenerator('write-babelrc', {babel: ['env']}, {
     /"babel-plugin-add-module-exports": "\^\d+\.\d+\.\d+"/,
   ],
   '.babelrc': [
-    /"presets": \["@babel\/preset-env"\]/,
-    /"plugins": \["add-module-exports"\]/,
+    /"presets": \[\s+\["@babel\/preset-env", \{\s+"targets": \{\s+"node": "current"\s+\}\s+\}\]\s+\]/,
+    /"plugins": \[\s+"add-module-exports"\s+\]/,
   ],
   '!.yo-rc.json': [
     /"@babel\/preset-react":\s*"\^\d+\.\d+\.\d+"/,
@@ -22,7 +22,7 @@ testGenerator('write-babelrc', {babel: ['env']}, {
     /"react-dom": "\^\d+\.\d+\.\d+"/,
   ],
   '!.babelrc': [
-    /"presets": \["@babel\/preset-env", "@babel\/preset-react"\]/,
+    /"presets": \[\s+\["@babel\/preset-env", \{\s+"targets": \{\s+"node": "current"\s+\}\s+\}\]\s+,\s+"@babel\/preset-react"\s+\]/,
   ],
 });
 
@@ -40,8 +40,8 @@ testGenerator('write-babelrc', {babel: ['env'], addons: ['React']}, {
     /"react-dom": "\^\d+\.\d+\.\d+"/,
   ],
   '.babelrc': [
-    /"presets": \["@babel\/preset-env", "@babel\/preset-react"\]/,
-    /"plugins": \["add-module-exports"\]/,
+    /"presets": \[\s+\["@babel\/preset-env", \{\s+"targets": \{\s+"node": "current"\s+\}\s+\}\],\s+"@babel\/preset-react"\s+\]/,
+    /"plugins": \[\s+"add-module-exports"\s+\]/,
   ],
 });
 

@@ -88,8 +88,8 @@ testGenerator('write-gulp-build', {
   ],
   'gulp/lint.js': false,
   '.babelrc': [
-    /"presets": \["@babel\/preset-react"\]/,
-    /"plugins": \["add-module-exports"\]/,
+    /"presets": \[\s+"@babel\/preset-react"\s+\]/,
+    /"plugins": \[\s+"add-module-exports"\s+\]/,
   ],
   '.eslintrc': false,
   'gulpfile.babel.js': [

@@ -11,7 +11,7 @@ testGenerator('babel', {babel: ['env']}, {
     /"gulp-babel":\s*"\^\d+\.\d+\.\d+"/,
   ],
   '.babelrc': [
-    /"presets": \["@babel\/preset-env"\]/,
+    /"presets": \[\s+\["@babel\/preset-env", \{\s+"targets": \{\s+"node": "current"\s+\}\s+\}\]\s+\]/,
   ],
 });
 
