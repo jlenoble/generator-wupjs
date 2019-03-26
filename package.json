@@ -60,7 +60,7 @@
     "gulp-wrap": "^0.14.0",
     "markdown-include": "^0.4.3",
     "minimist": "^1.2.0",
-    "muter": "^0.6.0",
+    "muter": "^0.7.0",
     "plumb-gulp": "^0.2.2",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
