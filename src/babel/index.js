@@ -30,8 +30,9 @@ export default class extends Base {
 
     if (babel.includes('env')) {
       Object.assign(deps, {
-        'babel-core': '*',
-        'babel-preset-env': '*',
+        '@babel/core': '*',
+        '@babel/register': '*',
+        '@babel/preset-env': '*',
         'babel-plugin-add-module-exports': '*',
         'gulp-babel': '*',
       });

@@ -18,7 +18,7 @@ testGenerator('write-gulp-build', {babel: ['env']}, {
   ],
 });
 
-testGenerator('write-gulp-build', {babel: 'none'}, {
+testGenerator('write-gulp-build', {babel: []}, {
   'gulp/build.js': [
     /const buildDir = 'build';/,
     /const allSrcGlob = \[/,
@@ -66,7 +66,7 @@ testGenerator('write-gulp-build', {
 });
 
 testGenerator('write-gulp-build', {
-  babel: 'none',
+  babel: [],
   linters: [],
   addons: ['React'],
 }, {
@@ -88,7 +88,7 @@ testGenerator('write-gulp-build', {
   ],
   'gulp/lint.js': false,
   '.babelrc': [
-    /"presets": \["react"\]/,
+    /"presets": \["@babel\/preset-react"\]/,
     /"plugins": \["add-module-exports"\]/,
   ],
   '.eslintrc': false,

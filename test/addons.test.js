@@ -4,12 +4,12 @@ testGenerator('addons', {addons: ['React']}, {
   '.yo-rc.json': [
     /"addons"/,
     /"React"/,
-    /"babel-preset-react": "\^\d+\.\d+\.\d+"/,
+    /"@babel\/preset-react": "\^\d+\.\d+\.\d+"/,
     /"react": "\^\d+\.\d+\.\d+"/,
     /"react-dom": "\^\d+\.\d+\.\d+"/,
   ],
   'package.json': [
-    /"babel-preset-react": "\^\d+\.\d+\.\d+"/,
+    /"@babel\/preset-react": "\^\d+\.\d+\.\d+"/,
     /"react": "\^\d+\.\d+\.\d+"/,
     /"react-dom": "\^\d+\.\d+\.\d+"/,
   ],
@@ -20,7 +20,7 @@ testGenerator('addons', {addons: ['Enzyme']}, {
     /"addons"/,
     /"React"/,
     /"Enzyme"/,
-    /"babel-preset-react": "\^\d+\.\d+\.\d+"/,
+    /"@babel\/preset-react": "\^\d+\.\d+\.\d+"/,
     /"react": "\^\d+\.\d+\.\d+"/,
     /"react-dom": "\^\d+\.\d+\.\d+"/,
     /"chai-enzyme": "\^\d+\.\d+\.\d+(-(beta|alpha).\d+)?"/,
@@ -28,7 +28,7 @@ testGenerator('addons', {addons: ['Enzyme']}, {
     /"react-test-renderer": "\^\d+\.\d+\.\d+"/,
   ],
   'package.json': [
-    /"babel-preset-react": "\^\d+\.\d+\.\d+"/,
+    /"@babel\/preset-react": "\^\d+\.\d+\.\d+"/,
     /"react": "\^\d+\.\d+\.\d+"/,
     /"react-dom": "\^\d+\.\d+\.\d+"/,
     /"chai-enzyme": "\^\d+\.\d+\.\d+(-(beta|alpha).\d+)?"/,

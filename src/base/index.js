@@ -126,8 +126,11 @@ export default class extends Base {
     const libname = vendorLibrary.toLowerCase();
 
     switch (libname) {
-    case 'babel':
-      return this.get('babel') !== 'none' || this.has('React');
+    case 'babel': {
+      const babel = this.get('babel');
+      return (Array.isArray(babel) && babel.includes('env'))
+        || this.has('React');
+    }
 
     case 'compass':
       return this.hasPreprocessor(libname);

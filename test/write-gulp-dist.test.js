@@ -32,7 +32,7 @@ testGenerator('write-gulp-dist', {babel: ['env'], linters: []}, {
   ],
 });
 
-testGenerator('write-gulp-dist', {babel: 'none', linters: []}, {
+testGenerator('write-gulp-dist', {babel: [], linters: []}, {
   'gulp/dist.js': [
     /const libDir = 'lib';/,
     /const srcGlob = \[/,
@@ -51,7 +51,7 @@ testGenerator('write-gulp-dist', {babel: 'none', linters: []}, {
 });
 
 testGenerator('write-gulp-dist', {
-  babel: 'none',
+  babel: [],
   linters: [],
   addons: ['React'],
 }, {
@@ -65,7 +65,7 @@ testGenerator('write-gulp-dist', {
   ],
   'gulp/lint.js': false,
   '.babelrc': [
-    /"presets": \["react"\]/,
+    /"presets": \["@babel\/preset-react"\]/,
     /"plugins": \["add-module-exports"\]/,
   ],
   '.eslintrc': false,
@@ -75,7 +75,7 @@ testGenerator('write-gulp-dist', {
 });
 
 testGenerator('write-gulp-dist', {
-  babel: 'none',
+  babel: [],
   linters: [],
   addons: ['React'],
   preprocessors: ['Compass'],
@@ -98,7 +98,7 @@ testGenerator('write-gulp-dist', {
   ],
   'gulp/lint.js': false,
   '.babelrc': [
-    /"presets": \["react"\]/,
+    /"presets": \["@babel\/preset-react"\]/,
     /"plugins": \["add-module-exports"\]/,
   ],
   '.eslintrc': false,

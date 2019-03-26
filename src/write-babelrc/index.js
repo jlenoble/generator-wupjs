@@ -36,11 +36,11 @@ export default class extends Base {
     const presets = [];
 
     if (this.get('babel').includes('env')) {
-      presets.push('env');
+      presets.push('@babel/preset-env');
     }
 
     if (this.has('React')) {
-      presets.push('react');
+      presets.push('@babel/preset-react');
     }
 
     presets.sort();

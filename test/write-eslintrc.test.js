@@ -1,6 +1,6 @@
 import {testGenerator} from './helpers';
 
-testGenerator('write-eslintrc', {babel: 'none', linters: []}, {
+testGenerator('write-eslintrc', {babel: [], linters: []}, {
   '!.yo-rc.json': [
     /"gulp-eslint": "\^\d+\.\d+\.\d+"/,
   ],
@@ -10,7 +10,7 @@ testGenerator('write-eslintrc', {babel: 'none', linters: []}, {
   '.eslintrc': false,
 });
 
-testGenerator('write-eslintrc', {babel: 'none', linters: ['EsLint']}, {
+testGenerator('write-eslintrc', {babel: [], linters: ['EsLint']}, {
   '.yo-rc.json': [
     /"gulp-eslint": "\^\d+\.\d+\.\d+"/,
   ],

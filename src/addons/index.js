@@ -45,7 +45,7 @@ export default class extends Base {
         'react-dom': '*',
       });
       this.addDevDeps({
-        'babel-preset-react': '*',
+        '@babel/preset-react': '*',
         'babel-plugin-add-module-exports': '*',
         'gulp-babel': '*',
       });

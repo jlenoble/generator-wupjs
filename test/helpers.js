@@ -12,7 +12,7 @@ export const testGenerator = (_name, _prompt = {}, assertContent = []) => {
     const prompt = Object.assign({
       description: 'Dummy description',
       addons: [],
-      babel: 'none',
+      babel: [],
       linters: [],
       preprocessors: [],
     }, _prompt);

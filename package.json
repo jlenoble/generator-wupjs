@@ -3,7 +3,9 @@
   "version": "0.4.2",
   "description": "A custom Yeoman generator to reduce boiler-plate in JS dev",
   "main": "generators/app/index.js",
-  "files": ["generators"],
+  "files": [
+    "generators"
+  ],
   "scripts": {
     "test": "gulp test"
   },
@@ -26,12 +28,13 @@
   },
   "homepage": "https://github.com/jlenoble/generator-wupjs#readme",
   "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.4.0",
     "antlr4": "^4.7.2",
     "autoreload-gulp": "^0.4.1",
-    "babel-core": "^6.26.3",
     "babel-plugin-add-module-exports": "^1.0.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
     "browser-sync": "^2.26.3",
     "browserify": "^16.2.3",
     "chai": "^4.2.0",
@@ -44,7 +47,7 @@
     "eslint-plugin-react": "^7.12.4",
     "gulp": "^4.0.0",
     "gulp-antlr4": "^0.4.5",
-    "gulp-babel": "^7.0.1",
+    "gulp-babel": "^8.0.0",
     "gulp-compass": "^2.1.0",
     "gulp-eslint": "^5.0.0",
     "gulp-if": "^2.0.2",
