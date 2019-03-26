@@ -3,6 +3,11 @@ import path from 'path';
 
 const pattern = pat => pat === '**' ? '**/*' : '*';
 
+const formatArray = array => {
+  return strgfy(array, {space: 2})
+    .replace(/\n/g, '\n  ').replace(/\[\s*\]/, '[]');
+};
+
 const fullDir = ({rel, dir}, gen) => {
   return dir.split(',').map(dir => {
     const neg = dir[0] === '!';
@@ -93,4 +98,5 @@ const stringify = (obj, gen) => {
   return strgfy(obj, {space: 2}).replace(/"/g, `'`);
 };
 
-export {fullDir, fullExt, fullPaths, indent, nodeDeps, rel, stringify};
+export {formatArray, fullDir, fullExt, fullPaths, indent,
+  nodeDeps, rel, stringify};

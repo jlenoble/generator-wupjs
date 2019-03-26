@@ -197,11 +197,15 @@ export default class extends Base {
       return slug(filestem, {lower: true});
     }
 
+    case 'files':
+      return this.get('files') || [this.get('libDir')];
+
     case 'importBabel':
       return this.has('Babel') ? `import babel from 'gulp-babel';\n` : '';
 
     case 'main':
-      return path.join(this.get('libDir'), this.compute('module')) + '.js';
+      return this.get('main') ||
+        path.join(this.get('libDir'), this.compute('module')) + '.js';
 
     case 'module':
       return this.get('name').replace(/\s+/g, '-').toLowerCase();

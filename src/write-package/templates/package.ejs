@@ -13,7 +13,7 @@
     "node": "<%- nodeVersion %>"
   },
   "main": "<%= main %>",
-  "files": ["<%- libDir %>"],
+  "files": <%- formatArray(files) %>,
   "scripts": {
     "test": "gulp test"
   },
