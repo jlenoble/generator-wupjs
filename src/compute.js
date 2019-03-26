@@ -20,7 +20,7 @@ const fullDir = ({rel, dir}, gen) => {
 
 const fullExt = ({rel, ext, dir, pat}, gen) => {
   if (!pat.includes('*')) {
-     // Explicit filename, no actual pattern, so just return it
+    // Explicit filename, no actual pattern, so just return it
     return pat;
   }
 
@@ -35,7 +35,7 @@ const fullExt = ({rel, ext, dir, pat}, gen) => {
     return _pat + ext;
   }
 
-  switch(dir) {
+  switch (dir) {
   case 'sass':
     return _pat + 'scss';
 
