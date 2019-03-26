@@ -51,6 +51,6 @@ export default class extends Base {
   }
 
   install () {
-    this.installDependencies();
+    this.installDependencies({bower: false});
   }
 }
