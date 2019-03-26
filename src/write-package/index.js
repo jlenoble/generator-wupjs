@@ -19,7 +19,7 @@ export default class extends Base {
   configuring () {
     try {
       const {
-        main, files,
+        main, files = [],
         dependencies, devDependencies, peerDependencies,
       } = require(path.join(process.cwd(), 'package.json'));
 

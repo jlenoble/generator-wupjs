@@ -187,8 +187,7 @@ export default class extends Base {
     .external('react/lib/ReactContext')
     .external('react/lib/ExecutionEnvironment')` : '';
 
-    case 'fileStem':
-    {
+    case 'fileStem': {
       let filestem = this.className[0].toLowerCase() +
         this.className.substring(1);
       filestem = filestem.replace(/[A-Z]/g, function (s) {
@@ -197,8 +196,11 @@ export default class extends Base {
       return slug(filestem, {lower: true});
     }
 
-    case 'files':
-      return this.get('files') || [this.get('libDir')];
+    case 'files': {
+      const files = this.get('files');
+      return (Array.isArray(files) && files.length && files) ||
+        [this.get('libDir')];
+    }
 
     case 'importBabel':
       return this.has('Babel') ? `import babel from 'gulp-babel';\n` : '';
