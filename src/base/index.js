@@ -234,6 +234,17 @@ export default class extends Base {
         return;
       }
 
+      if (_dep === 'gulp' && deps[_dep].includes('git://github.com')) {
+        // Upgrade to stable gulp >= 4
+        try {
+          // eslint-disable-next-line no-param-reassign
+          deps[_dep] = '^' + getPackageVersion(_dep);
+          return;
+        } catch (e) {
+          console.warn(`Unknown default version for ${_dep}`);
+        }
+      }
+
       if (dep !== _dep) {
         deps[_dep] = deps[dep]; // eslint-disable-line no-param-reassign
         delete deps[dep]; // eslint-disable-line no-param-reassign
