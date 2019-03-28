@@ -239,7 +239,7 @@ export default class extends Base {
         delete deps[dep]; // eslint-disable-line no-param-reassign
       }
 
-      if (deps[_dep] === '*') {
+      if (deps[_dep] === '*' || _dep !== dep) {
         try {
           // eslint-disable-next-line no-param-reassign
           deps[_dep] = '^' + getPackageVersion(_dep);
