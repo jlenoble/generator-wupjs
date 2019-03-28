@@ -2,8 +2,10 @@ import Base from 'yeoman-generator';
 import path from 'path';
 import slug from 'slug';
 import upperCamelCase from 'uppercamelcase';
-import {Config, getGenerator, getWriteGenerators,
-  extendProps, extendedProps, getPackageVersion} from '../helpers';
+import {
+  Config, getGenerator, getWriteGenerators,
+  extendProps, extendedProps, getPackageVersion, upgradePackage,
+} from '../helpers';
 
 const appDir = __dirname;
 const conf = new Config();
@@ -225,9 +227,25 @@ export default class extends Base {
 
   fixDepVersions (deps = {}) {
     for (const dep of Object.keys(deps)) {
-      if (deps[dep] == '*') {
-        // eslint-disable-next-line no-param-reassign
-        deps[dep] = '^' + getPackageVersion(dep);
+      const _dep = upgradePackage(dep);
+
+      if (!_dep) {
+        delete deps[dep]; // eslint-disable-line no-param-reassign
+        return;
+      }
+
+      if (dep !== _dep) {
+        deps[_dep] = deps[dep]; // eslint-disable-line no-param-reassign
+        delete deps[dep]; // eslint-disable-line no-param-reassign
+      }
+
+      if (deps[_dep] === '*') {
+        try {
+          // eslint-disable-next-line no-param-reassign
+          deps[_dep] = '^' + getPackageVersion(_dep);
+        } catch (e) {
+          console.warn(`Unknown default version for ${_dep}`);
+        }
       }
     }
   }
