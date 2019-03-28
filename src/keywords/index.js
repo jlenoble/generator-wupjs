@@ -1,3 +1,4 @@
+import path from 'path';
 import Base from '../base';
 
 export default class extends Base {
@@ -10,7 +11,12 @@ export default class extends Base {
     super(args, options);
   }
 
-  initializing () {
+  configuring () {
+    try {
+      const {keywords} = require(path.join(process.cwd(), 'package.json'));
+      this.set({keywords});
+    } catch (e) {}
+
     if (!this.get('keywords')) {
       this.set({keywords: []});
     }

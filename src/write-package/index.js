@@ -11,9 +11,10 @@ export default class extends Base {
     super(args, options);
 
     this.composeWith('version');
+    this.composeWith('keywords');
     this.promptIfMissing(['name', 'description', 'author', 'email', 'github',
       'license', 'libDir', 'deps', 'devDeps', 'peerDeps',
-      'contributors', 'keywords']);
+      'contributors']);
   }
 
   configuring () {
@@ -39,7 +40,6 @@ export default class extends Base {
     props.module = this.compute('module');
     props.nodeVersion = this.compute('nodeVersion');
     props.contributors = this.stringify(this.get('contributors'));
-    props.keywords = this.stringify(this.get('keywords'));
 
     this.fs.copyTpl(
       this.templatePath('package.ejs'),
