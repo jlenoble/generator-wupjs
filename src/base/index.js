@@ -20,6 +20,11 @@ export default class extends Base {
       throw new Error('opts.generator must be defined');
     }
 
+    try {
+      const json = require(path.join(process.cwd(), '.yo-rc.json'));
+      this.hasWupYoRc = !!json['generator-wupjs'];
+    } catch (e) {}
+
     conf.addGen(opts.generator);
 
     if (conf.listeners('change').length === 0) {

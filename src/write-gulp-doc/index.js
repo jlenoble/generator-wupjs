@@ -37,11 +37,14 @@ export default class extends Base {
       props
     );
 
-    this.fs.copyTpl(
-      this.templatePath('index.ejs'),
-      this.destinationPath(path.join(this.dirs('docDir'), 'index.md')),
-      props
-    );
+    if (!this.hasWupYoRc) {
+      // Don't overwrite doc index if already exists
+      this.fs.copyTpl(
+        this.templatePath('index.ejs'),
+        this.destinationPath(path.join(this.dirs('docDir'), 'index.md')),
+        props
+      );
+    }
 
     this.fs.copyTpl(
       this.templatePath('license.ejs'),
