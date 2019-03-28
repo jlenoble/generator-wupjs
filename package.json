@@ -1,7 +1,17 @@
 {
   "name": "generator-wupjs",
-  "version": "0.4.2",
   "description": "A custom Yeoman generator to reduce boiler-plate in JS dev",
+  "version": "0.4.2",
+  "keywords": [],
+  "author": {
+    "name": "Jason Lenoble",
+    "email": "jason.lenoble@gmail.com"
+  },
+  "contributors": [],
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.9.0"
+  },
   "main": "generators/app/index.js",
   "files": [
     "generators"
@@ -13,20 +23,19 @@
     "type": "git",
     "url": "git://github.com/jlenoble/generator-wupjs.git"
   },
-  "keywords": [],
-  "author": {
-    "name": "Jason Lenoble",
-    "email": "jason.lenoble@gmail.com"
-  },
-  "contributors": [],
-  "license": "MIT",
-  "engines": {
-    "node": ">=10.9.0"
-  },
   "bugs": {
     "url": "https://github.com/jlenoble/generator-wupjs/issues"
   },
   "homepage": "https://github.com/jlenoble/generator-wupjs#readme",
+  "dependencies": {
+    "camelcase": "^5.2.0",
+    "config": "^3.0.1",
+    "decamelize": "^3.1.1",
+    "json-stable-stringify": "^1.0.1",
+    "slug": "^1.0.0",
+    "uppercamelcase": "^3.0.0",
+    "yosay": "^2.0.2"
+  },
   "devDependencies": {
     "@babel/core": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
@@ -70,13 +79,5 @@
     "yeoman-assert": "^3.1.1",
     "yeoman-test": "^1.9.1"
   },
-  "dependencies": {
-    "camelcase": "^5.2.0",
-    "config": "^3.0.1",
-    "decamelize": "^3.1.1",
-    "json-stable-stringify": "^1.0.1",
-    "slug": "^1.0.0",
-    "uppercamelcase": "^3.0.0",
-    "yosay": "^2.0.2"
-  }
+  "peerDependencies": {}
 }

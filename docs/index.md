@@ -8,8 +8,4 @@
 
 * `yo wupjs:gulpplugin [pluginName]`: Generates source file and unit testing file for `Gulp` pluginName.
 
-## License !heading
-
-generator-wupjs is [MIT licensed](./LICENSE).
-
-© 2016-2017 [Jason Lenoble](mailto:jason.lenoble@gmail.com)
+#include "docs/license.md"
