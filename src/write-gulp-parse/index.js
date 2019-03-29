@@ -78,12 +78,12 @@ const dataGlob = ${props.dataGlob};
 const grammar = '${props.grammar}';
 const rule = '${props.rule}';\n`;
 
-    if(props.parsers.includes('Listener')) {
+    if (props.parsers.includes('Listener')) {
       consts += `const listener = '${props.listener}';
 const listenerDir = '${props.listenerDir}';\n`;
     }
 
-    if(props.parsers.includes('Visitor')) {
+    if (props.parsers.includes('Visitor')) {
       consts += `const visitor = '${props.visitor}';
 const visitorDir = '${props.visitorDir}';\n`;
     }
@@ -102,7 +102,7 @@ const visitorDir = '${props.visitorDir}';\n`;
   _parseTasks (props) {
     let parseTasks = '';
 
-    if(props.parsers.includes('Listener')) {
+    if (props.parsers.includes('Listener')) {
       parseTasks += `
 export const translate = () => {
   return gulp.src(dataGlob)
@@ -114,7 +114,7 @@ export const translate = () => {
 gulp.task('translate', gulp.series(makeParser, translate));
 `;
 
-      if(!props.parsers.includes('Visitor')) {
+      if (!props.parsers.includes('Visitor')) {
         parseTasks += `
 export const parse = translate;
 
@@ -124,7 +124,7 @@ gulp.task('parse', gulp.series(makeParser, translate));
       }
     }
 
-    if(props.parsers.includes('Visitor')) {
+    if (props.parsers.includes('Visitor')) {
       parseTasks += `
 export const interprete = () => {
   return gulp.src(dataGlob)
@@ -136,7 +136,7 @@ export const interprete = () => {
 gulp.task('interprete', gulp.series(makeParser, interprete));
 `;
 
-      if(!props.parsers.includes('Listener')) {
+      if (!props.parsers.includes('Listener')) {
         parseTasks += `
 export const parse = interprete;
 
