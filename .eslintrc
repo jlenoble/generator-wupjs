@@ -1,24 +1,19 @@
 {
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2019,
     "sourceType": "module",
-    "ecmaFeatures": {
-    }
+    "ecmaFeatures": {}
   },
   "plugins": [],
   "extends": [
-    "google"
+    "google",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint"
   ],
   "rules": {
-    "arrow-parens": ["error", "as-needed"],
-    "func-names": ["error", "never"],
-    "indent": ["error", 2],
-    "max-len": ["error", {"ignoreRegExpLiterals": true}],
-    "no-invalid-this": ["off"],
-    "no-param-reassign": ["error", {"props": true}],
-    "one-var": ["error", "never"],
-    "quotes": ["error", "single", {"allowTemplateLiterals": true}],
     "require-jsdoc": ["off"],
-    "space-before-function-paren": ["error", "always"]
+    "prefer-arrow-callback": ["error"]
   }
 }
