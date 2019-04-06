@@ -1,26 +1,26 @@
-import fs from 'fs';
-import path from 'path';
-import EventEmitter from 'events';
-import config from 'config';
-import Property from './property';
+import fs from "fs";
+import path from "path";
+import EventEmitter from "events";
+import config from "config";
+import Property from "./property";
 
-const genName = 'generator-wupjs';
+const genName = "generator-wupjs";
 
 export default class Config extends EventEmitter {
-  initialize () {
+  initialize() {
     if (this.isInitialized) {
       return;
     }
 
     const appDir = process.cwd();
-    const yoRcJson = path.join(appDir, '.yo-rc.json');
+    const yoRcJson = path.join(appDir, ".yo-rc.json");
 
     let yoConfig;
 
     try {
-      yoConfig = JSON.parse(fs.readFileSync(yoRcJson, 'utf8'));
+      yoConfig = JSON.parse(fs.readFileSync(yoRcJson, "utf8"));
     } catch (e) {
-      yoConfig = {[genName]: {}};
+      yoConfig = { [genName]: {} };
     }
 
     const properties = new Map();
@@ -30,27 +30,29 @@ export default class Config extends EventEmitter {
 
     Object.defineProperties(this, {
       isInitialized: {
-        value: true,
+        value: true
       },
 
       has: {
-        value: function (name) {
+        value: function(name) {
           return properties.has(name);
-        },
+        }
       },
 
       hasGen: {
-        value: function (name) {
+        value: function(name) {
           return generators.has(name);
-        },
+        }
       },
 
       get: {
-        value: function (name) {
+        value: function(name) {
           let prop = properties.get(name);
 
-          if ((prop === undefined || prop.value === undefined)
-            && config.has(name)) {
+          if (
+            (prop === undefined || prop.value === undefined) &&
+            config.has(name)
+          ) {
             prop = config.get(name);
 
             if (prop !== undefined) {
@@ -59,58 +61,58 @@ export default class Config extends EventEmitter {
             }
           }
 
-          return prop ? prop.value: undefined;
-        },
+          return prop ? prop.value : undefined;
+        }
       },
 
       getProps: {
-        value: function () {
+        value: function() {
           const props = {};
 
-          properties.forEach(({name, value}) => {
+          properties.forEach(({ name, value }) => {
             props[name] = value;
           });
 
           return props;
-        },
+        }
       },
 
       add: {
-        value: function (name, value) {
+        value: function(name, value) {
           if (this.has(name)) {
             this.set(name, value);
             return;
           }
 
-          const p = new Property({name, value});
+          const p = new Property({ name, value });
 
-          p.on('change', () => {
-            this.emit('change', p.name);
+          p.on("change", () => {
+            this.emit("change", p.name);
           });
 
           properties.set(name, p);
-        },
+        }
       },
 
       addGen: {
-        value: function (name) {
+        value: function(name) {
           generators.set(name, true);
-        },
+        }
       },
 
       set: {
-        value: function (name, value) {
+        value: function(name, value) {
           if (!this.has(name)) {
             return;
           }
 
           const p = properties.get(name);
           p.value = value;
-        },
+        }
       },
 
       reset: {
-        value: function () {
+        value: function() {
           this.removeAllListeners();
 
           properties.clear();
@@ -119,8 +121,8 @@ export default class Config extends EventEmitter {
           Object.keys(conf).forEach(name => {
             this.add(name, conf[name]);
           });
-        },
-      },
+        }
+      }
     });
 
     Object.keys(conf).forEach(name => {
