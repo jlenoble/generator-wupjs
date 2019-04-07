@@ -1,4 +1,4 @@
-import Base from "../generator";
+import Base from "../common/base-generator";
 
 export default class Name extends Base {
   protected readonly generatorName: string = "config:author:name";

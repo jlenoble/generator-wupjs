@@ -1,6 +1,6 @@
 import Base from "yeoman-generator";
 import path from "path";
-import config from "../config";
+import Config from "./config";
 
 type Gen = Wup.Gen;
 type Name = Wup.Name;
@@ -8,7 +8,10 @@ type Value = Wup.Value;
 type Options = Wup.Options;
 type Props = Wup.Props;
 
+const config = new Config();
+
 export default abstract class Generator extends Base {
+  // abstract: Make sure all children define their names
   protected abstract get generatorName(): string;
 
   public composeWith(
