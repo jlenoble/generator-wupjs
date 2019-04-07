@@ -3,6 +3,7 @@ import path from "path";
 import Config from "./config";
 
 type Gen = Wup.Gen;
+type GenName = Wup.GenName;
 type Name = Wup.Name;
 type Value = Wup.Value;
 type Options = Wup.Options;
@@ -19,19 +20,21 @@ export default abstract class Generator extends Base {
     options: Options = {},
     settings?: { local: string; link: "weak" | "strong" }
   ): this {
+    return super.composeWith(this.getGen(generator), options, settings);
+  }
+
+  public get(name: Name): Value | undefined {
+    return config.get(name);
+  }
+
+  public getGen(generator: GenName | Gen): Gen {
     let gen: Gen = generator;
 
     if (typeof generator === "string") {
       gen = path.join(__dirname, "..", generator);
     }
 
-    super.composeWith(gen, options, settings);
-
-    return this;
-  }
-
-  public get(name: Name): Value | undefined {
-    return config.get(name);
+    return gen;
   }
 
   public set(name: Name | Props, value?: Value): void {

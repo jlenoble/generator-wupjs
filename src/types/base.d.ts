@@ -1,5 +1,6 @@
 declare namespace Wup {
   type Gen = string;
+  type GenName = string;
   type Name = string;
   type Option = string | object;
 
