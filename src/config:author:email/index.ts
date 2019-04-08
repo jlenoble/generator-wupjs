@@ -16,11 +16,11 @@ export default class Email extends Base {
         type: "input",
         name: this.generatorName,
         message: "Author's email address:",
-        default: this.get(this.generatorName)
+        default: this.getProp(this.generatorName)
       }
     ];
 
     const props = await this.prompt(prompts);
-    this.set(props);
+    this.setProp(props);
   }
 }

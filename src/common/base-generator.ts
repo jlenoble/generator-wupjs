@@ -43,11 +43,11 @@ export default class BaseGenerator extends Generator
     }
   }
 
-  public get(name: PropName): PropValue | undefined {
+  public getProp(name: PropName): PropValue | undefined {
     return config.get(name);
   }
 
-  public set(name: PropName | Props, value?: PropValue): void {
+  public setProp(name: PropName | Props, value?: PropValue): void {
     let props: Props;
 
     if (typeof name === "object") {

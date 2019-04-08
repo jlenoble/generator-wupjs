@@ -21,8 +21,8 @@ declare namespace Wup {
 
   interface BaseGenerator {
     readonly generatorName: GenName;
-    get(name: PropName): PropValue | undefined;
-    set(name: PropName | Props, value?: PropValue): void;
+    getProp(name: PropName): PropValue | undefined;
+    setProp(name: PropName | Props, value?: PropValue): void;
   }
 
   interface GeneratorNode {
