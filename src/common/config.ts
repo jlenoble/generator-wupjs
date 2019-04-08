@@ -3,16 +3,19 @@ import path from "path";
 import EventEmitter from "events";
 import config from "config";
 import Property from "./property";
+import GeneratorNode from "./generator-node";
 
 const genName = "generator-wupjs";
 
-type Path = Wup.Path;
+type GenName = Wup.GenName;
 type Name = Wup.Name;
-type Value = Wup.Value;
+type Path = Wup.Path;
 type Props = Wup.Props;
+type Value = Wup.Value;
 
 export default class Config extends EventEmitter {
   protected properties: Map<Name, Property> = new Map();
+  protected generatorNodes: Map<GenName, GeneratorNode> = new Map();
 
   public constructor() {
     super();
@@ -53,8 +56,17 @@ export default class Config extends EventEmitter {
     this.properties.set(name, prop);
   }
 
-  public has(name: Name): boolean {
-    return this.properties.has(name);
+  public addGen(name: GenName): void {
+    if (!this.generatorNodes.has(name)) {
+      this.generatorNodes.set(
+        name,
+        new GeneratorNode(name, this.generatorNodes)
+      );
+    }
+  }
+
+  public *generators(): IterableIterator<GeneratorNode> {
+    yield* GeneratorNode.generators(this.generatorNodes.values());
   }
 
   public get(name: Name): Value | undefined {
@@ -70,6 +82,19 @@ export default class Config extends EventEmitter {
     }
 
     return prop ? prop.value : undefined;
+  }
+
+  public has(name: Name): boolean {
+    return this.properties.has(name);
+  }
+
+  public link(parentGen: GenName, childGen: GenName): void {
+    const parent = this.generatorNodes.get(parentGen);
+    const child = this.generatorNodes.get(childGen);
+
+    if (parent && child) {
+      parent.addChild(child.name);
+    }
   }
 
   public set(name: Name, value: Value): void {
