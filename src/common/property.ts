@@ -1,19 +1,19 @@
 import EventEmitter from "events";
 
-type Name = Wup.Name;
-type Value = Wup.Value;
+type PropName = Wup.PropName;
+type PropValue = Wup.PropValue;
 type Prop = Wup.Prop;
 
 export default class Property extends EventEmitter {
-  public readonly name: Name;
+  public readonly name: PropName;
 
-  private _value: Value;
-  private _prevValue: Value;
+  private _value: PropValue;
+  private _prevValue: PropValue;
 
-  public get value(): Value {
+  public get value(): PropValue {
     return this._value;
   }
-  public set value(value: Value) {
+  public set value(value: PropValue) {
     if (value === this._prevValue) {
       return;
     }

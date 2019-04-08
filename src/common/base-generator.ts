@@ -2,8 +2,8 @@ import Generator from "yeoman-generator";
 import Config from "./config";
 
 type GenName = Wup.GenName;
-type Name = Wup.Name;
-type Value = Wup.Value;
+type PropName = Wup.PropName;
+type PropValue = Wup.PropValue;
 type Options = Wup.Options;
 type Props = Wup.Props;
 
@@ -43,11 +43,11 @@ export default class BaseGenerator extends Generator
     }
   }
 
-  public get(name: Name): Value | undefined {
+  public get(name: PropName): PropValue | undefined {
     return config.get(name);
   }
 
-  public set(name: Name | Props, value?: Value): void {
+  public set(name: PropName | Props, value?: PropValue): void {
     let props: Props;
 
     if (typeof name === "object") {

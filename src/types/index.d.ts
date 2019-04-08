@@ -1,28 +1,28 @@
 declare namespace Wup {
   type Gen = string;
   type GenName = string;
-  type Name = string;
+  type PropName = string;
   type Option = string | object;
   type Path = string;
-  type Value = string | object;
+  type PropValue = string | object;
 
   interface Options {
     [key: string]: Option;
   }
 
   interface Prop {
-    name: Name;
-    value: Value;
+    name: PropName;
+    value: PropValue;
   }
 
   interface Props {
-    [key: string]: Value;
+    [key: string]: PropValue;
   }
 
   interface BaseGenerator {
     readonly generatorName: GenName;
-    get(name: Name): Value | undefined;
-    set(name: Name | Props, value?: Value): void;
+    get(name: PropName): PropValue | undefined;
+    set(name: PropName | Props, value?: PropValue): void;
   }
 
   interface GeneratorNode {
@@ -42,12 +42,12 @@ declare namespace Wup {
   }
 
   interface Config {
-    add(name: Name, value: Value): void;
+    add(name: PropName, value: PropValue): void;
     addGen(nameOrGen: GenName | BaseGenerator): void;
     generators(): IterableIterator<GeneratorNode>;
-    get(name: Name): Value | undefined;
-    has(name: Name): boolean;
+    get(name: PropName): PropValue | undefined;
+    has(name: PropName): boolean;
     link(parentGen: GenName, childGen: GenName): void;
-    set(name: Name, value: Value): void;
+    set(name: PropName, value: PropValue): void;
   }
 }
