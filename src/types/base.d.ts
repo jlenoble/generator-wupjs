@@ -1,4 +1,10 @@
 declare namespace Wup {
+  interface BaseGenerator {
+    readonly generatorName: GenName;
+    get(name: Name): Value | undefined;
+    set(name: Name | Props, value?: Value): void;
+  }
+
   type Gen = string;
   type GenName = string;
   type Name = string;

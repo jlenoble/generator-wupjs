@@ -1,8 +1,6 @@
-import Base from "yeoman-generator";
-import path from "path";
+import Generator from "yeoman-generator";
 import Config from "./config";
 
-type Gen = Wup.Gen;
 type GenName = Wup.GenName;
 type Name = Wup.Name;
 type Value = Wup.Value;
@@ -11,30 +9,42 @@ type Props = Wup.Props;
 
 const config = new Config();
 
-export default abstract class Generator extends Base {
-  // abstract: Make sure all children define their names
-  protected abstract get generatorName(): string;
+export default class BaseGenerator extends Generator
+  implements Wup.BaseGenerator {
+  public readonly generatorName: GenName;
 
-  public composeWith(
-    generator: Gen,
-    options: Options = {},
-    settings?: { local: string; link: "weak" | "strong" }
-  ): this {
-    return super.composeWith(this.getGen(generator), options, settings);
+  public constructor(args: string | string[], options: Options = {}) {
+    const {
+      generatorName,
+      willWrite = [],
+      dependsOn = []
+    }: {
+      generatorName?: GenName;
+      willWrite?: GenName[];
+      dependsOn?: GenName[];
+    } = options;
+
+    super(args, options);
+
+    if (generatorName) {
+      this.generatorName = generatorName;
+    } else {
+      throw new Error("You forgot to name your subgenerator");
+    }
+
+    config.addGen(this);
+
+    for (const genName of willWrite) {
+      config.link(generatorName, genName);
+    }
+
+    for (const genName of dependsOn) {
+      config.link(genName, generatorName);
+    }
   }
 
   public get(name: Name): Value | undefined {
     return config.get(name);
-  }
-
-  public getGen(generator: GenName | Gen): Gen {
-    let gen: Gen = generator;
-
-    if (typeof generator === "string") {
-      gen = path.join(__dirname, "..", generator);
-    }
-
-    return gen;
   }
 
   public set(name: Name | Props, value?: Value): void {

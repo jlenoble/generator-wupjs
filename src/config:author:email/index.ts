@@ -1,7 +1,14 @@
 import Base from "../common/base-generator";
 
 export default class Email extends Base {
-  protected readonly generatorName: string = "config:author:email";
+  public constructor(args: string | string[], options: {}) {
+    super(
+      args,
+      Object.assign({}, options, {
+        generatorName: "config:author:email"
+      })
+    );
+  }
 
   public async prompting(): Promise<void> {
     const prompts = [
