@@ -35,16 +35,16 @@ export default class BaseGenerator extends Generator
     config.addGen(this);
 
     for (const genName of willWrite) {
-      config.link(generatorName, genName);
+      config.linkGens(generatorName, genName);
     }
 
     for (const genName of dependsOn) {
-      config.link(genName, generatorName);
+      config.linkGens(genName, generatorName);
     }
   }
 
   public getProp(name: PropName): PropValue | undefined {
-    return config.get(name);
+    return config.getProp(name);
   }
 
   public setProp(name: PropName | Props, value?: PropValue): void {
@@ -60,7 +60,7 @@ export default class BaseGenerator extends Generator
 
     Object.keys(props).forEach(
       (name): void => {
-        config.set(name, props[name]);
+        config.setProp(name, props[name]);
       }
     );
   }

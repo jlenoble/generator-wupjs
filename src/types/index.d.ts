@@ -42,12 +42,12 @@ declare namespace Wup {
   }
 
   interface Config {
-    add(name: PropName, value: PropValue): void;
     addGen(nameOrGen: GenName | BaseGenerator): void;
+    addProp(name: PropName, value: PropValue): void;
     generators(): IterableIterator<GeneratorNode>;
-    get(name: PropName): PropValue | undefined;
-    has(name: PropName): boolean;
-    link(parentGen: GenName, childGen: GenName): void;
-    set(name: PropName, value: PropValue): void;
+    getProp(name: PropName): PropValue | undefined;
+    hasProp(name: PropName): boolean;
+    linkGens(parentGen: GenName, childGen: GenName): void;
+    setProp(name: PropName, value: PropValue): void;
   }
 }
