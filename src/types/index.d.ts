@@ -26,15 +26,15 @@ declare namespace Wup {
   }
 
   interface GeneratorNode {
-    readonly name: GenName;
     readonly generator: BaseGenerator;
+    readonly name: GenName;
+    addChild(name: GenName): this;
+    addParent(name: GenName): this;
+    getFirstAncestors(nodesLeft: Set<GeneratorNode>): Set<GeneratorNode>;
     hasAncestor(name?: GenName): boolean;
     hasChild(name?: GenName): boolean;
     hasDescendant(name?: GenName): boolean;
     hasParent(name?: GenName): boolean;
-    addParent(name: GenName): this;
-    addChild(name: GenName): this;
-    getFirstAncestors(nodesLeft: Set<GeneratorNode>): Set<GeneratorNode>;
   }
 
   interface GeneratorNodes {
