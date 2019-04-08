@@ -37,7 +37,7 @@ declare namespace Wup {
     hasParent(name?: GenName): boolean;
   }
 
-  interface GeneratorNodes {
+  interface GeneratorNodes extends Map<GenName, GeneratorNode> {
     config: Config | undefined;
   }
 
