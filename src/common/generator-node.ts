@@ -1,10 +1,15 @@
-type GenName = Wup.GenName;
+import BaseGenerator from "./base-generator";
 
-export default class GeneratorNode {
+type GenName = Wup.GenName;
+type Options = Wup.Options;
+
+export default class GeneratorNode implements Wup.GeneratorNode {
+  protected readonly children: Set<GeneratorNode> = new Set();
+  public readonly generator: BaseGenerator;
   public readonly name: GenName;
   protected readonly nodes: Map<GenName, GeneratorNode>;
+  protected readonly options: Options;
   protected readonly parents: Set<GeneratorNode> = new Set();
-  protected readonly children: Set<GeneratorNode> = new Set();
 
   private static n: number = 15;
 
@@ -12,12 +17,9 @@ export default class GeneratorNode {
     nodes: IterableIterator<GeneratorNode>
   ): IterableIterator<GeneratorNode> {
     const leftNodes: Set<GeneratorNode> = new Set(nodes);
-    console.log(nodes, leftNodes);
 
     for (const leftNode of leftNodes) {
-      console.log(leftNode.name);
       while (leftNodes.has(leftNode)) {
-        console.log(GeneratorNode.n, ">>", leftNode.name, ">>", leftNodes.size);
         GeneratorNode.n--;
         yield* leftNode.getFirstAncestors(leftNodes);
         if (!GeneratorNode.n) return;
@@ -25,13 +27,99 @@ export default class GeneratorNode {
     }
   }
 
-  public constructor(name: GenName, nodes: Map<GenName, GeneratorNode>) {
+  public constructor(
+    nameOrGen: GenName | BaseGenerator,
+    nodes: Map<GenName, GeneratorNode>,
+    options: Options
+  ) {
+    const name =
+      typeof nameOrGen === "string" ? nameOrGen : nameOrGen.generatorName;
+
     if (nodes.has(name)) {
       throw new Error(`GeneratorNode ${name} is already defined`);
     }
 
     this.name = name;
     this.nodes = nodes;
+    this.options = options;
+    this.generator =
+      nameOrGen instanceof BaseGenerator ? nameOrGen : this.createGen(name);
+  }
+
+  public addChild(name: GenName): this {
+    // No need to add if a descendant already has name as child
+    if (!this.hasDescendant(name)) {
+      let gen: GeneratorNode | undefined = this.nodes.get(name);
+
+      if (!gen) {
+        gen = new GeneratorNode(name, this.nodes, this.options);
+      } else {
+        // Node already defined; Prevent circularity
+        if (this.hasAncestor(name)) {
+          throw new Error(
+            `Cannot add ${name} as child to ${
+              this.name
+            } as it is already an ancestor`
+          );
+        }
+      }
+
+      this.children.add(gen);
+      gen.parents.add(this);
+    }
+
+    return this;
+  }
+
+  public addParent(name: GenName): this {
+    // No need to add if an ancestor already has name as parent
+    if (!this.hasAncestor(name)) {
+      let gen: GeneratorNode | undefined = this.nodes.get(name);
+
+      if (!gen) {
+        gen = new GeneratorNode(name, this.nodes, this.options);
+      } else {
+        // Node already defined; Prevent circularity
+        if (this.hasDescendant(name)) {
+          throw new Error(
+            `Cannot add ${name} as parent to ${
+              this.name
+            } as it is already a descendant`
+          );
+        }
+      }
+
+      this.parents.add(gen);
+      gen.children.add(this);
+    }
+
+    return this;
+  }
+
+  public createGen(name: GenName): BaseGenerator {
+    if (this.nodes.has(name)) {
+      throw new Error(`Creating subgenerator ${name} twice`);
+    }
+
+    // Method .create() does exist; .env is an instance of Yeoman Environment
+    // @ts-ignore
+    return this.options.env.create(`wupjs:${name}`, this.options);
+  }
+
+  public getFirstAncestors(nodesLeft: Set<GeneratorNode>): Set<GeneratorNode> {
+    const ancestors: Set<GeneratorNode> = new Set();
+
+    if (nodesLeft.has(this)) {
+      for (const parent of this.parents.values()) {
+        for (const ancestor of parent.getFirstAncestors(nodesLeft)) {
+          ancestors.add(ancestor);
+        }
+      }
+      ancestors.add(this);
+      nodesLeft.delete(this);
+    }
+
+    return ancestors;
   }
 
   public hasAncestor(name?: GenName): boolean {
@@ -66,69 +154,5 @@ export default class GeneratorNode {
         return parent.name === name;
       }
     );
-  }
-
-  public addParent(name: GenName): this {
-    // No need to add if an ancestor already has name as parent
-    if (!this.hasAncestor(name)) {
-      let gen: GeneratorNode | undefined = this.nodes.get(name);
-
-      if (!gen) {
-        gen = new GeneratorNode(name, this.nodes);
-      } else {
-        // Node already defined; Prevent circularity
-        if (this.hasDescendant(name)) {
-          throw new Error(
-            `Cannot add ${name} as parent to ${
-              this.name
-            } as it is already a descendant`
-          );
-        }
-      }
-
-      this.parents.add(gen);
-      gen.children.add(this);
-    }
-    return this;
-  }
-
-  public addChild(name: GenName): this {
-    // No need to add if a descendant already has name as child
-    if (!this.hasDescendant(name)) {
-      let gen: GeneratorNode | undefined = this.nodes.get(name);
-
-      if (!gen) {
-        gen = new GeneratorNode(name, this.nodes);
-      } else {
-        // Node already defined; Prevent circularity
-        if (this.hasAncestor(name)) {
-          throw new Error(
-            `Cannot add ${name} as child to ${
-              this.name
-            } as it is already an ancestor`
-          );
-        }
-      }
-
-      this.children.add(gen);
-      gen.parents.add(this);
-    }
-    return this;
-  }
-
-  public getFirstAncestors(nodesLeft: Set<GeneratorNode>): Set<GeneratorNode> {
-    const ancestors: Set<GeneratorNode> = new Set();
-
-    if (nodesLeft.has(this)) {
-      for (const parent of this.parents.values()) {
-        for (const ancestor of parent.getFirstAncestors(nodesLeft)) {
-          ancestors.add(ancestor);
-        }
-      }
-      ancestors.add(this);
-      nodesLeft.delete(this);
-    }
-
-    return ancestors;
   }
 }

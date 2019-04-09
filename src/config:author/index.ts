@@ -10,4 +10,9 @@ export default class Author extends Base {
       })
     );
   }
+
+  public initializing(): void {
+    // Do nothing, just avoid AssertionError [ERR_ASSERTION]:
+    // This Generator is empty. Add at least one method for it to run.
+  }
 }

@@ -1,5 +1,4 @@
 declare namespace Wup {
-  type Gen = string;
   type GenName = string;
   type PropName = string;
   type Option = string | object;
@@ -21,8 +20,10 @@ declare namespace Wup {
 
   interface BaseGenerator {
     readonly generatorName: GenName;
+    composeAll(): void;
+    composeWith(): this;
     getProp(name: PropName): PropValue | undefined;
-    setProp(name: PropName | Props, value?: PropValue): void;
+    setProp(name: PropName | Props, value?: PropValue): this;
   }
 
   interface GeneratorNode {
@@ -37,17 +38,13 @@ declare namespace Wup {
     hasParent(name?: GenName): boolean;
   }
 
-  interface GeneratorNodes extends Map<GenName, GeneratorNode> {
-    config: Config | undefined;
-  }
-
   interface Config {
-    addGen(nameOrGen: GenName | BaseGenerator): void;
-    addProp(name: PropName, value: PropValue): void;
+    addGen(nameOrGen: GenName | BaseGenerator): this;
+    addProp(name: PropName, value: PropValue): this;
     generators(): IterableIterator<GeneratorNode>;
     getProp(name: PropName): PropValue | undefined;
     hasProp(name: PropName): boolean;
-    linkGens(parentGen: GenName, childGen: GenName): void;
-    setProp(name: PropName, value: PropValue): void;
+    linkGens(parentGen: GenName, childGen: GenName): this;
+    setProp(name: PropName, value: PropValue): this;
   }
 }
