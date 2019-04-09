@@ -54,6 +54,26 @@ export default class BaseGenerator extends Generator
     this.composeAll();
   }
 
+  public addProp(name: PropName | Props, value?: PropValue): this {
+    let props: Props;
+
+    if (typeof name === "object") {
+      props = name;
+    } else if (value !== undefined) {
+      props = { [name]: value };
+    } else {
+      throw new Error(`Cannot assign value ${value} to key ${name}`);
+    }
+
+    Object.keys(props).forEach(
+      (name): void => {
+        config.addProp(name, props[name]);
+      }
+    );
+
+    return this;
+  }
+
   public composeAll(): void {
     if (BaseGenerator.calledGenerator === this) {
       for (const { generator } of config.generators()) {
