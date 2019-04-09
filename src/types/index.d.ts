@@ -1,12 +1,36 @@
 declare namespace Wup {
+  type Cpu = string;
+  type Description = string;
+  type DotSlashPath = string;
+  type Email = string;
   type GenName = string;
-  type PropName = string;
+  type License = string;
+  type Name = string;
+  type NotCpu = string;
+  type NotOs = string;
   type Option = string | object;
+  type Os = string;
   type Path = string;
+  type PropName = string;
   type PropValue = string | object;
+  type RelGlob = string;
+  type RelPath = string;
+  type Url = string;
+  type Version = string;
+  type VersionRange = string;
+
+  interface Dependencies {
+    [name: string]: VersionRange;
+  }
 
   interface Options {
     [key: string]: Option;
+  }
+
+  interface Person {
+    name: Name;
+    email?: Email;
+    url?: Url;
   }
 
   interface Prop {
