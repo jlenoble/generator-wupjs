@@ -106,19 +106,19 @@ export default class Config extends EventEmitter implements Wup.Config {
     let parent = this.generatorNodes.get(parentGen);
     let child = this.generatorNodes.get(childGen);
 
-    if (parent && !child) {
+    if (!parent && !child) {
+      throw new Error(
+        "To link two subgenerators, one at least must already exist"
+      );
+    } else if (parent && !child) {
       parent.createGen(childGen);
       child = this.generatorNodes.get(childGen) as GeneratorNode;
     } else if (child && !parent) {
       child.createGen(parentGen);
       parent = this.generatorNodes.get(parentGen) as GeneratorNode;
-    } else {
-      throw new Error(
-        "To link two subgenerators, one at least must already exist"
-      );
     }
 
-    parent.addChild(child.name);
+    (parent as GeneratorNode).addChild((child as GeneratorNode).name);
 
     return this;
   }
