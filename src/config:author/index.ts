@@ -6,7 +6,8 @@ export default class Author extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:author",
-        dependsOn: ["config:author:name", "config:author:email"]
+        dependsOn: ["config:author:name", "config:author:email"],
+        willWrite: ["write:package.json"]
       })
     );
   }

@@ -5,9 +5,24 @@ export default class Email extends Base {
     super(
       args,
       Object.assign({}, options, {
-        generatorName: "config:author:email"
+        generatorName: "config:author:email",
+        willWrite: ["write:package.json"]
       })
     );
+  }
+
+  public initializing(): void {
+    try {
+      const author: Wup.Name | Wup.Person = this.fs.readJSON(
+        this.destinationPath("package.json")
+      ).author;
+
+      if (typeof author === "string") {
+        this.addProp(this.generatorName, author);
+      } else {
+        this.addProp(this.generatorName, author.email);
+      }
+    } catch (e) {}
   }
 
   public async prompting(): Promise<void> {
