@@ -1,5 +1,4 @@
-import fs from "fs";
-import path from "path";
+import { Editor } from "mem-fs-editor";
 import EventEmitter from "events";
 import config from "config";
 import Property from "./property";
@@ -20,19 +19,12 @@ export default class Config extends EventEmitter implements Wup.Config {
   protected options: Options = {};
   protected properties: Map<PropName, Property> = new Map();
 
-  public constructor() {
+  public constructor(fs: Editor, destinationPath: (path: Path) => Path) {
     super();
 
-    const appDir: Path = process.cwd();
-    const yoRcJson: Path = path.join(appDir, ".yo-rc.json");
-
-    let yoConfig: Props;
-
-    try {
-      yoConfig = JSON.parse(fs.readFileSync(yoRcJson, "utf8"));
-    } catch (e) {
-      yoConfig = { [genName]: {} };
-    }
+    const yoConfig: Props = fs.readJSON(destinationPath(".yo-rc.json"), {
+      [genName]: {}
+    });
 
     Object.entries(yoConfig[genName]).forEach(
       ([name, value]: [PropName, PropValue]): void => {

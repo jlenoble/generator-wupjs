@@ -1,3 +1,4 @@
+import { Editor } from "mem-fs-editor";
 import Generator from "yeoman-generator";
 import chalk from "chalk";
 import Config from "./config";
@@ -8,7 +9,7 @@ type PropValue = Wup.PropValue;
 type Options = Wup.Options;
 type Props = Wup.Props;
 
-const config = new Config();
+let config: Config;
 
 export default class BaseGenerator extends Generator
   implements Wup.BaseGenerator {
@@ -28,6 +29,10 @@ export default class BaseGenerator extends Generator
     } = options;
 
     super(args, options);
+
+    if (!config) {
+      config = new Config(this.fs as Editor, this.destinationPath.bind(this));
+    }
 
     if (generatorName) {
       this.generatorName = generatorName;
