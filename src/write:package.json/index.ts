@@ -8,18 +8,24 @@ export default class PackageJson extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "write:package.json",
-        dependsOn: ["config:author:name", "config:author:email"]
+        dependsOn: [
+          "config:package:name",
+          "config:author:name",
+          "config:author:email"
+        ]
       })
     );
   }
 
   public configuring(): void {
+    const name = this.getProp("config:package:name");
+
     const author = {
       name: this.getProp("config:author:name"),
       email: this.getProp("config:author:email")
     };
 
-    this.props = { author };
+    this.props = { name, author };
   }
 
   public writing(): void {
