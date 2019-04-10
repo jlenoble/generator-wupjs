@@ -1,6 +1,6 @@
 import Base from "../common/base-generator";
 
-export default class Email extends Base {
+export default class AuthorEmail extends Base {
   public constructor(args: string | string[], options: {}) {
     super(
       args,
