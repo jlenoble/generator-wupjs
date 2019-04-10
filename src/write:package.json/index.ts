@@ -11,6 +11,7 @@ export default class PackageJson extends Base {
         dependsOn: [
           "config:package:name",
           "config:package:version",
+          "config:package:description",
           "config:author:name",
           "config:author:email"
         ]
@@ -21,13 +22,14 @@ export default class PackageJson extends Base {
   public configuring(): void {
     const name = this.getProp("config:package:name");
     const version = this.getProp("config:package:version");
+    const description = this.getProp("config:package:description");
 
     const author = {
       name: this.getProp("config:author:name"),
       email: this.getProp("config:author:email")
     };
 
-    this.props = { name, version, author };
+    this.props = { name, version, description, author };
   }
 
   public writing(): void {
