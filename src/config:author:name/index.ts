@@ -26,16 +26,18 @@ export default class Name extends Base {
   }
 
   public async prompting(): Promise<void> {
-    const prompts = [
-      {
-        type: "input",
-        name: this.generatorName,
-        message: "Author's name:",
-        default: this.getProp(this.generatorName)
-      }
-    ];
+    if (this._mustPrompt) {
+      const prompts = [
+        {
+          type: "input",
+          name: this.generatorName,
+          message: "Author's name:",
+          default: this.getProp(this.generatorName)
+        }
+      ];
 
-    const props = await this.prompt(prompts);
-    this.setProp(props);
+      const props = await this.prompt(prompts);
+      this.setProp(props);
+    }
   }
 }

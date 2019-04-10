@@ -14,6 +14,7 @@ let config: Config;
 export default class BaseGenerator extends Generator
   implements Wup.BaseGenerator {
   public readonly generatorName: GenName;
+  protected _mustPrompt: boolean;
 
   private static calledGenerator: BaseGenerator | null = null;
 
@@ -39,6 +40,8 @@ export default class BaseGenerator extends Generator
     } else {
       throw new Error("You forgot to name your subgenerator");
     }
+
+    this._mustPrompt = true;
 
     console.log("***INSTANTIATING", generatorName);
 
@@ -81,8 +84,13 @@ export default class BaseGenerator extends Generator
 
   public composeAll(): void {
     if (BaseGenerator.calledGenerator === this) {
+      let prompt = true;
+
       for (const { generator } of config.generators()) {
         if (generator === this) {
+          // All ancestors have been treated, now dealing with descendants:
+          // Stop prompting the user but configure using the gathered parameters.
+          prompt = false;
           continue;
         }
 
@@ -90,7 +98,9 @@ export default class BaseGenerator extends Generator
           `***COMPOSING ${this.generatorName} with ${generator.generatorName}`
         );
 
-        // ._composedWith: Accessing internal on purpose.
+        generator._mustPrompt = prompt;
+
+        // ._composedWith: Accessing parent internal on purpose.
         // We don't rely on Yeoman to build the dependency mesh of our
         // subgenerators but instanciate them as needed by hand during the
         // linking process; This prevents from being prompted again and again
