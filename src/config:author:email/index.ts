@@ -17,9 +17,7 @@ export default class Email extends Base {
         this.destinationPath("package.json")
       ).author;
 
-      if (typeof author === "string") {
-        this.addProp(this.generatorName, author);
-      } else {
+      if (typeof author !== "string") {
         this.addProp(this.generatorName, author.email);
       }
     } catch (e) {}
