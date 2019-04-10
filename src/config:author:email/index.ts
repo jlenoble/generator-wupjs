@@ -11,6 +11,20 @@ export default class AuthorEmail extends Base {
     );
   }
 
+  protected _isValid(email: Wup.Email): boolean {
+    if (email.length > 254) {
+      console.warn("An email address mustn't be longer than 254 characters");
+    } else if (
+      !email.match(/^[\w\d._%+-]{1,64}@(?:[\w\d-]{1,63}\.){1,8}\w{2,63}$/)
+    ) {
+      console.warn("Invalid email address");
+    } else {
+      return true;
+    }
+
+    return false;
+  }
+
   public initializing(): void {
     try {
       const author: Wup.Name | Wup.Person = this.fs.readJSON(
@@ -35,7 +49,14 @@ export default class AuthorEmail extends Base {
       ];
 
       const props = await this.prompt(prompts);
-      this.setProp(props);
+      const email = props[this.generatorName].toLowerCase();
+
+      if (this._isValid(email)) {
+        this.addProp(this.generatorName, email);
+        return;
+      }
+
+      return this.prompting();
     }
   }
 }
