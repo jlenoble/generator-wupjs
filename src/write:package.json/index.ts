@@ -10,6 +10,7 @@ export default class PackageJson extends Base {
         generatorName: "write:package.json",
         dependsOn: [
           "config:package:name",
+          "config:package:version",
           "config:author:name",
           "config:author:email"
         ]
@@ -19,13 +20,14 @@ export default class PackageJson extends Base {
 
   public configuring(): void {
     const name = this.getProp("config:package:name");
+    const version = this.getProp("config:package:version");
 
     const author = {
       name: this.getProp("config:author:name"),
       email: this.getProp("config:author:email")
     };
 
-    this.props = { name, author };
+    this.props = { name, version, author };
   }
 
   public writing(): void {
