@@ -16,7 +16,15 @@ export default class PackageVersion extends Base {
 
   protected _isValid(props: Wup.Options): boolean {
     const version: Version = props[this.generatorName] as Version;
-    return !!semver.valid(version);
+
+    if (!semver.valid(version)) {
+      console.warn(
+        "Version format doesn't follow SemVer: 1.2.3(-4|-alpha.5|-beta.6)"
+      );
+      return false;
+    }
+
+    return true;
   }
 
   public initializing(): void {
