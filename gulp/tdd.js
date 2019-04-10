@@ -1,6 +1,8 @@
-import gulp from 'gulp';
+import gulp from "gulp";
 
-import './test';
-import './watch';
+// import "./test";
+import "./build";
+import "./watch";
 
-gulp.task('tdd', gulp.series('test', 'watch'));
+// gulp.task('tdd', gulp.series('test', 'watch'));
+gulp.task("tdd", gulp.series("build", "watch"));
