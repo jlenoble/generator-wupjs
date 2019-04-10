@@ -12,6 +12,7 @@ export default class PackageJson extends Base {
           "config:package:name",
           "config:package:version",
           "config:package:description",
+          "config:package:keywords",
           "config:author:name",
           "config:author:email"
         ]
@@ -20,16 +21,19 @@ export default class PackageJson extends Base {
   }
 
   public configuring(): void {
-    const name = this.getProp("config:package:name");
-    const version = this.getProp("config:package:version");
-    const description = this.getProp("config:package:description");
+    const name = this.getProp("config:package:name") as Wup.GenName;
+    const version = this.getProp("config:package:version") as Wup.Version;
+    const description = this.getProp(
+      "config:package:description"
+    ) as Wup.Description;
+    const keywords = this.getProp("config:package:keywords") as string[];
 
     const author = {
-      name: this.getProp("config:author:name"),
-      email: this.getProp("config:author:email")
+      name: this.getProp("config:author:name") as Wup.Name,
+      email: this.getProp("config:author:email") as Wup.Email
     };
 
-    this.props = { name, version, description, author };
+    this.props = { name, version, description, keywords, author };
   }
 
   public writing(): void {
