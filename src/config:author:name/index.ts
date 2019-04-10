@@ -1,5 +1,7 @@
 import Base from "../common/base-generator";
 
+type Name = Wup.Name;
+
 export default class AuthorName extends Base {
   public constructor(args: string | string[], options: {}) {
     super(
@@ -9,6 +11,19 @@ export default class AuthorName extends Base {
         willWrite: ["write:package.json"]
       })
     );
+  }
+
+  protected _isValid(props: Wup.Options): boolean {
+    const name: Name = props[this.generatorName] as Name;
+
+    if (name.match(/^\w+([-']\w+)*\.?( \w+([-']\w+)*\.?)*$/)) {
+      return true;
+    }
+
+    console.warn(`Name should be an actual name, for example:
+John Doe, John-Paul Doe, John O'Doe, John P. Doe`);
+
+    return false;
   }
 
   public initializing(): void {
@@ -37,7 +52,13 @@ export default class AuthorName extends Base {
       ];
 
       const props = await this.prompt(prompts);
-      this.setProp(props);
+
+      if (this._isValid(props)) {
+        this.addProp(props);
+        return;
+      }
+
+      return this.prompting();
     }
   }
 }
