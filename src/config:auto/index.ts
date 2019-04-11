@@ -6,7 +6,7 @@ export default class Auto extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:auto",
-        dependsOn: ["config:generator:version"]
+        dependsOn: ["config:generator:version", "config:date"]
       })
     );
   }
