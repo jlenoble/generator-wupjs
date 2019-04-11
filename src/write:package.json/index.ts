@@ -8,14 +8,7 @@ export default class PackageJson extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "write:package.json",
-        dependsOn: [
-          "config:package:name",
-          "config:package:version",
-          "config:package:description",
-          "config:package:keywords",
-          "config:license",
-          "config:author"
-        ]
+        dependsOn: ["config:package", "config:license", "config:author"]
       })
     );
   }
