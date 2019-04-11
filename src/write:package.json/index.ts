@@ -14,8 +14,7 @@ export default class PackageJson extends Base {
           "config:package:description",
           "config:package:keywords",
           "config:license",
-          "config:author:name",
-          "config:author:email"
+          "config:author"
         ]
       })
     );
