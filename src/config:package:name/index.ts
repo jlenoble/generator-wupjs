@@ -39,7 +39,7 @@ folder name. Therefore, the name can’t contain any non-URL-safe characters.`);
   }
 
   public async prompting(): Promise<void> {
-    if (this._mustPrompt) {
+    if (this.mustPrompt) {
       const prompts = [
         {
           type: "input",

@@ -14,7 +14,7 @@ let config: Config;
 export default class BaseGenerator extends Generator
   implements Wup.BaseGenerator {
   public readonly generatorName: GenName;
-  protected _mustPrompt: boolean;
+  protected mustPrompt: boolean;
 
   private static calledGenerator: BaseGenerator | null = null;
 
@@ -41,7 +41,7 @@ export default class BaseGenerator extends Generator
       throw new Error("You forgot to name your subgenerator");
     }
 
-    this._mustPrompt = true;
+    this.mustPrompt = true;
 
     console.log("***INSTANTIATING", generatorName);
 
@@ -102,7 +102,7 @@ export default class BaseGenerator extends Generator
           `***COMPOSING ${this.generatorName} with ${generator.generatorName}`
         );
 
-        generator._mustPrompt = prompt;
+        generator.mustPrompt = prompt;
 
         // ._composedWith: Accessing parent internal on purpose.
         // We don't rely on Yeoman to build the dependency mesh of our

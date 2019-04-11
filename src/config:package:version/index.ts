@@ -38,7 +38,7 @@ export default class PackageVersion extends Base {
   }
 
   public async prompting(): Promise<void> {
-    if (this._mustPrompt) {
+    if (this.mustPrompt) {
       const prompts = [
         {
           type: "input",

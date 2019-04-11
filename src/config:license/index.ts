@@ -24,7 +24,7 @@ export default class License extends Base {
   }
 
   public async prompting(): Promise<void> {
-    if (this._mustPrompt) {
+    if (this.mustPrompt) {
       let license = this.getProp(this.generatorName) as Wup.License;
       let licenses = license.match(/^\((.*)\)$/);
 

@@ -41,7 +41,7 @@ John Doe, John-Paul Doe, John O'Doe, John P. Doe`);
   }
 
   public async prompting(): Promise<void> {
-    if (this._mustPrompt) {
+    if (this.mustPrompt) {
       const prompts = [
         {
           type: "input",
