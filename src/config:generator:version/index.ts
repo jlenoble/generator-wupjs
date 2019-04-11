@@ -14,17 +14,14 @@ export default class GeneratorVersion extends Base {
     );
   }
 
-  protected _isValid(version: Version, previousVersion: Version): boolean {
+  protected _isValid(version: Version, modifiedWith: Version): boolean {
     if (!semver.valid(version)) {
       this.log(
         "Generator version format doesn't follow SemVer: 1.2.3(-4|-alpha.5|-beta.6)"
       );
-    } else if (
-      semver.valid(previousVersion) &&
-      semver.lt(version, previousVersion)
-    ) {
+    } else if (semver.valid(modifiedWith) && semver.lt(version, modifiedWith)) {
       this.log(
-        `Current generator version (${version}) is lower than that used last time (${previousVersion})
+        `Current generator version (${version}) is lower than that used last time (${modifiedWith})
 Upgrade generator-wupjs before proceeding further`
       );
     } else {
@@ -35,15 +32,31 @@ Upgrade generator-wupjs before proceeding further`
   }
 
   public initializing(): void {
-    const previousVersion: Version = this.config.get("genVersion");
+    let createdWith: Version = this.config.get("createdWith");
+    let modifiedWith: Version = this.config.get("modifiedWith");
 
     const version: Version = this.fs.readJSON(
       path.join(__dirname, "../../package.json")
     ).version;
 
-    if (this._isValid(version, previousVersion)) {
-      this.addProp(this.generatorName, version);
-      this.config.set("genVersion", version);
+    if (!createdWith) {
+      createdWith = version;
+    }
+
+    if (!modifiedWith) {
+      modifiedWith = version;
+    }
+
+    if (
+      this._isValid(version, modifiedWith) &&
+      this._isValid(modifiedWith, createdWith)
+    ) {
+      this.addProp(this.generatorName, { createdWith, modifiedWith });
+      this.addProp(this.generatorName + ":created", createdWith);
+      this.addProp(this.generatorName + ":modified", modifiedWith);
+
+      this.config.set("createdWith", createdWith);
+      this.config.set("modifiedWith", modifiedWith);
     } else {
       throw new Error(`Unrecognized or outdated generator-wupjs@${version}`);
     }
