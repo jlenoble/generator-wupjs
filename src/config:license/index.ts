@@ -1,13 +1,11 @@
 import Base from "../common/base-generator";
 
-type License = Wup.License;
-
-export default class PackageLicense extends Base {
+export default class License extends Base {
   public constructor(args: string | string[], options: {}) {
     super(
       args,
       Object.assign({}, options, {
-        generatorName: "config:package:license",
+        generatorName: "config:license",
         willWrite: ["write:package.json"]
       })
     );
@@ -15,7 +13,7 @@ export default class PackageLicense extends Base {
 
   public initializing(): void {
     try {
-      const license: License = this.fs.readJSON(
+      const license: Wup.License = this.fs.readJSON(
         this.destinationPath("package.json")
       ).license;
 
@@ -27,7 +25,7 @@ export default class PackageLicense extends Base {
 
   public async prompting(): Promise<void> {
     if (this._mustPrompt) {
-      let license = this.getProp(this.generatorName) as License;
+      let license = this.getProp(this.generatorName) as Wup.License;
       let licenses = license.match(/^\((.*)\)$/);
 
       if (licenses) {

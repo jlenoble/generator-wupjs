@@ -13,7 +13,7 @@ export default class PackageJson extends Base {
           "config:package:version",
           "config:package:description",
           "config:package:keywords",
-          "config:package:license",
+          "config:license",
           "config:author:name",
           "config:author:email"
         ]
@@ -28,7 +28,8 @@ export default class PackageJson extends Base {
       "config:package:description"
     ) as Wup.Description;
     const keywords = this.getProp("config:package:keywords") as string[];
-    const license = this.getProp("config:package:license") as Wup.License;
+
+    const license = this.getProp("config:license") as Wup.License;
 
     const author = {
       name: this.getProp("config:author:name") as Wup.Name,
