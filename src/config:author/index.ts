@@ -12,8 +12,10 @@ export default class Author extends Base {
     );
   }
 
-  public initializing(): void {
-    // Do nothing, just avoid AssertionError [ERR_ASSERTION]:
-    // This Generator is empty. Add at least one method for it to run.
+  public configuring(): void {
+    this.addProp(this.generatorName, {
+      name: this.getProp("config:author:name"),
+      email: this.getProp("config:author:email")
+    });
   }
 }
