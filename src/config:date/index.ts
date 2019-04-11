@@ -32,7 +32,7 @@ You need to fix by hand the date 'createdOn' in .yo-rc.json`
     let createdOn = new Date(this.config.get("createdOn"));
     const modifiedOn = new Date();
 
-    if (!createdOn) {
+    if (isNaN((createdOn as unknown) as number)) {
       createdOn = modifiedOn;
     }
 
