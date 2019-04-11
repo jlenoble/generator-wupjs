@@ -16,7 +16,7 @@ export default class PackageKeywords extends Base {
     let keyword = "";
 
     if (!keywords.length) {
-      console.warn("You must enter at least one keyword");
+      this.log("You must enter at least one keyword");
     } else if (
       keywords.some(
         (kwd): boolean => {
@@ -30,7 +30,7 @@ export default class PackageKeywords extends Base {
     ) {
       const kwd = chalk.yellow(keyword);
 
-      console.log(
+      this.log(
         `you typed [${keywords.map(
           (k): string => (k === keyword ? kwd : k)
         )}] but ${kwd} is invalid`

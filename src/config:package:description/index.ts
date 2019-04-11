@@ -20,7 +20,7 @@ export default class PackageDescription extends Base {
       return true;
     }
 
-    console.warn("You must enter a proper description, not an empty string");
+    this.log("You must enter a proper description, not an empty string");
 
     return false;
   }

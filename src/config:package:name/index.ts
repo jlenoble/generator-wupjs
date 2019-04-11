@@ -15,18 +15,22 @@ export default class PackageName extends Base {
     const name: Wup.GenName = props[this.generatorName] as Wup.GenName;
 
     if (name.length > 214) {
-      console.warn(`The name must be less than or equal to 214 characters.
+      this.log(`The name must be less than or equal to 214 characters.
 This includes the scope for scoped packages.`);
     } else if (name[0] === "." || name[0] === "_") {
-      console.warn("The name can’t start with a dot or an underscore.");
+      this.log("The name can’t start with a dot (.) or an underscore (_).");
     } else if (name.toLowerCase() !== name) {
-      console.warn("New packages must not have uppercase letters in the name.");
+      this.log("New packages must not have uppercase letters in the name.");
     } else if (/\s/.test(name)) {
-      console.warn(`The name ends up being part of a URL, an argument on the command line, and a
-folder name. So don't use space characters`);
+      this.log(
+        `The name ends up being part of a URL, an argument on the command line, and a
+folder name. So don't use space characters`
+      );
     } else if (encodeURIComponent(name) !== name) {
-      console.warn(`The name ends up being part of a URL, an argument on the command line, and a
-folder name. Therefore, the name can’t contain any non-URL-safe characters.`);
+      this.log(
+        `The name ends up being part of a URL, an argument on the command line, and a
+folder name. Therefore, the name can’t contain any non-URL-safe characters.`
+      );
     } else {
       return true;
     }

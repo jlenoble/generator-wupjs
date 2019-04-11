@@ -18,7 +18,7 @@ export default class PackageVersion extends Base {
     const version: Version = props[this.generatorName] as Version;
 
     if (!semver.valid(version)) {
-      console.warn(
+      this.log(
         "Version format doesn't follow SemVer: 1.2.3(-4|-alpha.5|-beta.6)"
       );
       return false;

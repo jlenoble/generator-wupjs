@@ -20,7 +20,7 @@ export default class AuthorName extends Base {
       return true;
     }
 
-    console.warn(`Name should be an actual name, for example:
+    this.log(`Name should be an actual name, for example:
 John Doe, John-Paul Doe, John O'Doe, John P. Doe`);
 
     return false;

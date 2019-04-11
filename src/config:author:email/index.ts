@@ -13,11 +13,11 @@ export default class AuthorEmail extends Base {
 
   protected _isValid(email: Wup.Email): boolean {
     if (email.length > 254) {
-      console.warn("An email address mustn't be longer than 254 characters");
+      this.log("An email address mustn't be longer than 254 characters");
     } else if (
       !email.match(/^[\w\d._%+-]{1,64}@(?:[\w\d-]{1,63}\.){1,8}\w{2,63}$/)
     ) {
-      console.warn("Invalid email address");
+      this.log("Invalid email address");
     } else {
       return true;
     }
