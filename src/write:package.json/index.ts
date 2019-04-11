@@ -13,20 +13,13 @@ export default class PackageJson extends Base {
     );
   }
 
-  // 'default' queue runs between 'configuring' and 'writing' queues:
-  // This is exactly what we need here
+  // 'default' queue runs between 'configuring' and 'writing' queues
   public beforeWriting(): void {
-    const name = this.getProp("config:package:name") as Wup.GenName;
-    const version = this.getProp("config:package:version") as Wup.Version;
-    const description = this.getProp(
-      "config:package:description"
-    ) as Wup.Description;
-    const keywords = this.getProp("config:package:keywords") as string[];
-
+    const _package = this.getProp("config:package") as Wup.Package;
     const license = this.getProp("config:license") as Wup.License;
     const author = this.getProp("config:author") as Wup.Person;
 
-    this.props = { name, version, description, keywords, license, author };
+    this.props = { ..._package, license, author };
   }
 
   public writing(): void {

@@ -27,6 +27,13 @@ declare namespace Wup {
     [key: string]: Option;
   }
 
+  interface Package {
+    name: Name;
+    version: Version;
+    description: Description;
+    keywords: string[];
+  }
+
   interface Person {
     name: Name;
     email?: Email;

@@ -17,8 +17,12 @@ export default class Package extends Base {
     );
   }
 
-  public initializing(): void {
-    // Do nothing, just avoid AssertionError [ERR_ASSERTION]:
-    // This Generator is empty. Add at least one method for it to run.
+  public configuring(): void {
+    this.addProp(this.generatorName, {
+      name: this.getProp("config:package:name"),
+      version: this.getProp("config:package:version"),
+      description: this.getProp("config:package:description"),
+      keywords: this.getProp("config:package:keywords")
+    });
   }
 }
