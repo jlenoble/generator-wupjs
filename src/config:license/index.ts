@@ -17,6 +17,23 @@ export default class License extends Base {
     );
   }
 
+  public _toChoices(licenses: Wup.License[]): Wup.License[] {
+    const choices = [...License.defaultChoices];
+    const idx = choices.indexOf("SEE IN FILE");
+
+    if (licenses.some((license): boolean => license.includes("SEE IN FILE"))) {
+      choices.splice(idx, 1);
+    }
+
+    return Array.from(
+      new Set(
+        licenses
+          .filter((license): boolean => license !== "UNLICENSED")
+          .concat(choices)
+      )
+    );
+  }
+
   public _toLicense(licenses: Wup.License[]): Wup.License {
     let license: Wup.License;
 
@@ -65,13 +82,7 @@ export default class License extends Base {
           type: "checkbox",
           name: this.generatorName,
           message: "LICENSE:",
-          choices: Array.from(
-            new Set(
-              licenses
-                .concat(License.defaultChoices)
-                .filter((license): boolean => license !== "UNLICENSED")
-            )
-          ),
+          choices: this._toChoices(licenses),
           default: licenses
         }
       ];
@@ -79,19 +90,38 @@ export default class License extends Base {
       let props = await this.prompt(prompts);
 
       licenses = props[this.generatorName] as string[];
-      const idx = licenses.indexOf("SEE IN FILE");
+      const idx = licenses.findIndex(
+        (license): boolean => license.includes("SEE IN FILE")
+      );
 
       if (idx !== -1) {
-        props = await this.prompt([
+        const match = licenses[idx].match(/SEE IN FILE (.*)/);
+
+        const prompts = [
           {
             type: "input",
             name: this.generatorName + ":SEE",
             message: "Enter your custom license file name",
-            default: "LICENSE"
+            default: match && match[1] !== "LICENSE" ? match[1] : "CUSTOM"
           }
-        ]);
+        ];
 
-        licenses[idx] = `SEE IN FILE ${props[this.generatorName + ":SEE"]}`;
+        let file: Wup.Name;
+
+        while (true) {
+          props = await this.prompt(prompts);
+
+          file = props[this.generatorName + ":SEE"].trim();
+
+          if (file === "LICENSE") {
+            this.log(`LICENSE will be overwritten by this generator.
+Change your custom license file name.`);
+          } else {
+            break;
+          }
+        }
+
+        licenses[idx] = `SEE IN FILE ${file}`;
       }
 
       license = this._toLicense(licenses);

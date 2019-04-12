@@ -43,6 +43,10 @@ export default class LICENSE extends Base {
       license !== "UNLICENSED"
         ? licenses
             .reduce((text, license): string => {
+              if (license.includes("SEE IN FILE")) {
+                return text;
+              }
+
               const txt = this.fs.read(this.templatePath(`LICENSE_${license}`));
               return `${text}${this._licenseSeparator(license)}${txt}
 `;
