@@ -85,6 +85,48 @@ export default class License extends Base {
     }
   }
 
+  public async _promptingIfSeeInFile(
+    licenses: Wup.License[]
+  ): Promise<Wup.License[]> {
+    const res = [...licenses];
+
+    const idx = licenses.findIndex(
+      (license): boolean => license.includes("SEE IN FILE")
+    );
+
+    if (idx !== -1) {
+      const match = licenses[idx].match(/SEE IN FILE (.*)/);
+
+      const prompts = [
+        {
+          type: "input",
+          name: this.generatorName + ":SEE",
+          message: "Enter your custom license file name",
+          default: match && match[1] !== "LICENSE" ? match[1] : "CUSTOM"
+        }
+      ];
+
+      let file: Wup.Name;
+
+      while (true) {
+        const props = await this.prompt(prompts);
+
+        file = props[this.generatorName + ":SEE"].trim();
+
+        if (file === "LICENSE") {
+          this.log(`LICENSE will be overwritten by this generator.
+Change your custom license file name.`);
+        } else {
+          break;
+        }
+      }
+
+      res[idx] = `SEE IN FILE ${file}`;
+    }
+
+    return res;
+  }
+
   public async prompting(): Promise<void> {
     if (this.mustPrompt) {
       let license = this.getProp(this.generatorName) as Wup.License;
@@ -100,42 +142,10 @@ export default class License extends Base {
         }
       ];
 
-      let props = await this.prompt(prompts);
+      const props = await this.prompt(prompts);
 
       licenses = props[this.generatorName] as string[];
-      const idx = licenses.findIndex(
-        (license): boolean => license.includes("SEE IN FILE")
-      );
-
-      if (idx !== -1) {
-        const match = licenses[idx].match(/SEE IN FILE (.*)/);
-
-        const prompts = [
-          {
-            type: "input",
-            name: this.generatorName + ":SEE",
-            message: "Enter your custom license file name",
-            default: match && match[1] !== "LICENSE" ? match[1] : "CUSTOM"
-          }
-        ];
-
-        let file: Wup.Name;
-
-        while (true) {
-          props = await this.prompt(prompts);
-
-          file = props[this.generatorName + ":SEE"].trim();
-
-          if (file === "LICENSE") {
-            this.log(`LICENSE will be overwritten by this generator.
-Change your custom license file name.`);
-          } else {
-            break;
-          }
-        }
-
-        licenses[idx] = `SEE IN FILE ${file}`;
-      }
+      licenses = await this._promptingIfSeeInFile(licenses);
 
       license = this._toLicense(licenses);
 
