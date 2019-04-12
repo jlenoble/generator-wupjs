@@ -12,7 +12,7 @@ declare namespace Wup {
   type Os = string;
   type Path = string;
   type PropName = string;
-  type PropValue = string | object;
+  type PropValue = string | object | boolean;
   type RelGlob = string;
   type RelPath = string;
   type Url = string;
