@@ -15,26 +15,24 @@ export default class License extends Base {
 
   public _toLicense(licenses: Wup.License[]): Wup.License {
     let license: Wup.License;
-    console.log(licenses);
 
     if (licenses.length > 1) {
       license = `(${licenses.join(" OR ")})`;
     } else {
       license = licenses[0];
     }
-    console.log(license);
+
     return license;
   }
 
   public _toLicenses(license: Wup.License): Wup.License[] {
     let licenses = license.match(/^\((.*)\)$/);
-    console.log(license);
+
     if (licenses) {
       licenses = licenses[1].split(/\s+OR\s+/);
     } else {
       licenses = [license];
     }
-    console.log(licenses);
 
     return licenses;
   }
