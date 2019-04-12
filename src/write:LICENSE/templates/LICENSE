@@ -1,0 +1,5 @@
+License: <%= license %>
+
+Copyright © <%= cYear %> <%= cHolder %> <<%= email %>>
+
+<%= licenseText %>
