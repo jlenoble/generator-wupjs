@@ -2,8 +2,21 @@ import Base from "../common/base-generator";
 
 export default class License extends Base {
   protected static defaultChoices: Wup.License[] = [
-    "MIT",
+    "AFL-3.0",
+    "AGPL-3.0",
+    "APACHE-2.0",
+    "BSD-2-CLAUSE",
+    "BSD-3-CLAUSE",
+    "CC-BY-SA-4.0",
+    "EUPL-1.2",
+    "GPL-2.0",
     "GPL-3.0",
+    "ISC",
+    "LGPL-2.1",
+    "LGPL-3.0",
+    "MIT",
+    "MPL-2.0",
+    "OSL-3.0",
     "SEE IN FILE"
   ];
 
