@@ -42,6 +42,7 @@ export default class License extends Base {
       new Set(
         licenses
           .filter((license): boolean => license !== "UNLICENSED")
+          .map(this._unsuffixGPL)
           .concat(choices)
       )
     );
@@ -85,6 +86,45 @@ export default class License extends Base {
     }
   }
 
+  public _suffixGPL(license: Wup.License): Wup.License {
+    const gpl = this.getProp(this.generatorName + ":GPL-suffix");
+    return license
+      .replace(/(GPL-\d\.\d)/g, `$&${gpl || ""}`)
+      .replace("-only-", "-")
+      .replace("-or-later-", "-");
+  }
+
+  public _unsuffixGPL(license: Wup.License): Wup.License {
+    return license.replace(/(-only|-or-later)/g, "");
+  }
+
+  public async _promptingIfGPL(licenses: Wup.License[]): Promise<void> {
+    const idx = licenses.findIndex(
+      (license): boolean => license.includes("GPL-")
+    );
+
+    if (idx !== -1) {
+      const name = this.generatorName + ":GPL-suffix";
+      const y = "Yes";
+      const n = "No, this license is restricted to the specified version(s)";
+
+      const prompts = [
+        {
+          type: "list",
+          name,
+          message: `May a user apply a later version of the GPL terms and conditions?`,
+          choices: [n, y],
+          default: n
+        }
+      ];
+
+      const props = await this.prompt(prompts);
+      const yes = props[name];
+
+      this.addProp(name, yes === y ? "-or-later" : "-only");
+    }
+  }
+
   public async _promptingIfSeeInFile(
     licenses: Wup.License[]
   ): Promise<Wup.License[]> {
@@ -95,12 +135,13 @@ export default class License extends Base {
     );
 
     if (idx !== -1) {
+      const name = this.generatorName + ":SEE";
       const match = licenses[idx].match(/SEE IN FILE (.*)/);
 
       const prompts = [
         {
           type: "input",
-          name: this.generatorName + ":SEE",
+          name,
           message: "Enter your custom license file name",
           default: match && match[1] !== "LICENSE" ? match[1] : "CUSTOM"
         }
@@ -111,7 +152,7 @@ export default class License extends Base {
       while (true) {
         const props = await this.prompt(prompts);
 
-        file = props[this.generatorName + ":SEE"].trim();
+        file = props[name].trim();
 
         if (file === "LICENSE") {
           this.log(`LICENSE will be overwritten by this generator.
@@ -138,7 +179,7 @@ Change your custom license file name.`);
           name: this.generatorName,
           message: "LICENSE:",
           choices: this._toChoices(licenses),
-          default: licenses
+          default: licenses.map(this._unsuffixGPL)
         }
       ];
 
@@ -147,7 +188,9 @@ Change your custom license file name.`);
       licenses = props[this.generatorName] as string[];
       licenses = await this._promptingIfSeeInFile(licenses);
 
-      license = this._toLicense(licenses);
+      await this._promptingIfGPL(licenses);
+
+      license = this._toLicense(licenses.map(this._suffixGPL.bind(this)));
 
       if (license === "UNLICENSED") {
         this.addProp("config:package:private", true);
