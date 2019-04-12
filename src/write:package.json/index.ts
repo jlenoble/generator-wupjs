@@ -23,11 +23,15 @@ export default class PackageJson extends Base {
   }
 
   public writing(): void {
-    this.fs.writeJSON(
-      this.destinationPath("package.json"),
-      this.props as Wup.PackageJson,
-      undefined,
-      2
-    );
+    if (this.props) {
+      this.fs.writeJSON(
+        this.destinationPath("package.json"),
+        this.props,
+        undefined,
+        2
+      );
+    } else {
+      this.log("Failed to write package.json: undefined props");
+    }
   }
 }
