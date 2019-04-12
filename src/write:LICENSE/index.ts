@@ -39,13 +39,16 @@ export default class LICENSE extends Base {
     const gen = this.getGen("config:license") as LicenseGenerator;
     const licenses = gen._toLicenses(license);
 
-    const licenseText = licenses
-      .reduce((text, license): string => {
-        const txt = this.fs.read(this.templatePath(`LICENSE_${license}`));
-        return `${text}${this._licenseSeparator(license)}${txt}
+    const licenseText =
+      license !== "UNLICENSED"
+        ? licenses
+            .reduce((text, license): string => {
+              const txt = this.fs.read(this.templatePath(`LICENSE_${license}`));
+              return `${text}${this._licenseSeparator(license)}${txt}
 `;
-      }, "")
-      .trim();
+            }, "")
+            .trim()
+        : "";
 
     this.props = {
       license,
