@@ -21,6 +21,7 @@ export default class Package extends Base {
     this.addProp(this.generatorName, {
       name: this.getProp("config:package:name"),
       version: this.getProp("config:package:version"),
+      private: this.getProp("config:package:private"),
       description: this.getProp("config:package:description"),
       keywords: this.getProp("config:package:keywords")
     });
