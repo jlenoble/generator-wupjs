@@ -18,6 +18,7 @@ declare namespace Wup {
   type Url = string;
   type Version = string;
   type VersionRange = string;
+  type YearRange = string;
 
   interface Dependencies {
     [name: string]: VersionRange;
