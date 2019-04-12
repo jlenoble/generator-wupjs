@@ -126,6 +126,10 @@ redundant prompting.
     );
   }
 
+  public getGen(name: GenName): BaseGenerator | undefined {
+    return config.getGen(name);
+  }
+
   public getProp(name: PropName): PropValue | undefined {
     return config.getProp(name);
   }

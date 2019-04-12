@@ -75,6 +75,11 @@ export default class Config extends EventEmitter implements Wup.Config {
     yield* GeneratorNode.generators(this.generatorNodes.values());
   }
 
+  public getGen(name: GenName): BaseGenerator | undefined {
+    const gen: GeneratorNode | undefined = this.generatorNodes.get(name);
+    return gen ? gen.generator : undefined;
+  }
+
   public getProp(name: PropName): PropValue | undefined {
     let prop: Property | undefined = this.properties.get(name);
 
