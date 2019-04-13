@@ -8,7 +8,7 @@ declare namespace Wup {
   type Name = string;
   type NotCpu = string;
   type NotOs = string;
-  type Option = string | object;
+  type Option = string | object | boolean;
   type Os = string;
   type Path = string;
   type PropName = string;
