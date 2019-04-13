@@ -46,7 +46,7 @@ export default class LICENSE extends Base {
               if (license.includes("SEE IN FILE")) {
                 return text;
               }
-              
+
               const lic = gen._unsuffixGPL(license);
 
               const txt = this.fs.read(this.templatePath(`LICENSE_${lic}`));
