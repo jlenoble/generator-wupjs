@@ -26,7 +26,8 @@ export const generatorsDir = path.join(cwd, "generators");
 
 export const apps = ["generator-wupjs"];
 
-const stemSrcGlob = ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"];
+// const stemSrcGlob = ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"];
+const stemSrcGlob = ["**/*.ts"];
 
 export const srcGlob = join(srcDir, stemSrcGlob);
 export const testGlob = join(testDir, [
