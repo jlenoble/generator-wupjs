@@ -101,9 +101,22 @@ export default class GeneratorNode implements Wup.GeneratorNode {
       throw new Error(`Creating subgenerator ${name} twice`);
     }
 
-    // Method .create() does exist; .env is an instance of Yeoman Environment
-    // @ts-ignore
-    return this.options.env.create(`wupjs:${name}`, this.options);
+    let gen: BaseGenerator;
+
+    try {
+      // Method .create() does exist; .env is an instance of Yeoman Environment
+      // @ts-ignore
+      gen = this.options.env.create(`wupjs:${name}`, this.options);
+    } catch (e) {
+      // yeoman-test, unlike yo, does not collect subgenerators: fix that!
+      // @ts-ignore
+      this.options.env.lookup((): void => {});
+
+      // @ts-ignore
+      gen = this.options.env.create(`wupjs:${name}`, this.options);
+    }
+
+    return gen;
   }
 
   public getFirstAncestors(nodesLeft: Set<GeneratorNode>): Set<GeneratorNode> {
