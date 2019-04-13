@@ -1,8 +1,8 @@
-import gulp from 'gulp';
+import gulp from "gulp";
 
-import './test';
-import './clean';
-import './doc';
-import './lint';
+import "./test";
+import "./clean";
+import "./doc";
+import "./lint";
 
-gulp.task('prepublish', gulp.series('clean', 'test', 'doc', 'lint'));
+gulp.task("prepublish", gulp.series("clean", "test", "doc", "lint"));
