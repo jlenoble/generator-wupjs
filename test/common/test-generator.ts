@@ -1,10 +1,14 @@
 /* eslint-disable no-invalid-this */
 
-import fs from "fs";
+import fs from "fs-extra";
 import path from "path";
 import assert from "yeoman-assert";
 import helpers from "yeoman-test";
 import parseArgs from "minimist";
+import objectHash from "object-hash";
+import chalk from "chalk";
+import conflict from "detect-conflict";
+import { diffLines } from "diff";
 import BaseGenerator from "../../src/common/base-generator";
 import { expect } from "chai";
 
@@ -15,6 +19,7 @@ const testGenerator = (_options: {
   prompt: Options;
   assertContent: { [file: string]: RegExp[] | true };
 }): void => {
+  const command = _options.command;
   const parsed = parseArgs(_options.command.split(/\s+/));
   const [, _name, ...args] = parsed._;
   const match = _name.match(/wupjs:([\w:]+)/);
@@ -24,10 +29,13 @@ const testGenerator = (_options: {
   process.env["NODE_CONFIG_DIR"] = path.join(__dirname, "../config");
 
   describe(
-    _options.command,
+    command,
     (): void => {
       const prompt: Options = Object.assign({}, _options.prompt);
       const scratchDir = path.join(__dirname, "../../../scratch");
+      const snapshotDir = path.join(__dirname, "../../../snapshots");
+      const hash = objectHash(Object.assign({ command }, prompt));
+      const hashDir = path.join(snapshotDir, hash);
 
       before(function(): Promise<void> {
         this.cwd = process.cwd();
@@ -50,7 +58,7 @@ const testGenerator = (_options: {
               // @ts-ignore
               generator._composedWith.forEach(
                 (gen: BaseGenerator): void => {
-                  gen.destinationRoot(generator.destinationRoot());
+                  gen.destinationRoot(scratchDir);
                 }
               );
             }
@@ -103,6 +111,13 @@ const testGenerator = (_options: {
 
         expect(files).to.have.length(keys.size);
         expect([...new Set([...keys, ...files])]).to.have.length(keys.size);
+
+        try {
+          fs.statSync(hashDir);
+        } catch (e) {
+          console.log(chalk.yellow(`Creating snapshot ${hash}, please review`));
+          fs.copySync(scratchDir, hashDir);
+        }
       });
 
       Object.keys(tests).forEach(
@@ -123,8 +138,34 @@ const testGenerator = (_options: {
                 }
               );
             } else {
-              // File matches a snapshot
-              throw new Error("path to file needed");
+              const snapshotFile = path.join(hashDir, file);
+
+              it(`  ${file} has the expected content ${path.join(
+                path.relative(snapshotDir, hashDir),
+                file
+              )}`, (): void => {
+                const snapshot = fs.readFileSync(snapshotFile);
+
+                if (conflict(file, snapshot)) {
+                  const text = fs.readFileSync(file);
+                  const diff = diffLines(snapshot.toString(), text.toString());
+
+                  let diffText = "";
+
+                  diff.forEach(
+                    (line): void => {
+                      const color = line.added
+                        ? "green"
+                        : line.removed
+                        ? "red"
+                        : "white";
+                      diffText += chalk[color](line.value);
+                    }
+                  );
+
+                  throw new Error(diffText);
+                }
+              });
             }
           } else {
             // File doesn't exist, or has not a specified content, or differs from a snapshot

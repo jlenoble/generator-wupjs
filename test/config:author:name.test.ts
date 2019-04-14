@@ -5,5 +5,8 @@ testGenerator({
   prompt: {
     "config:author:name": "Me Me"
   },
-  assertContent: {}
+  assertContent: {
+    "package.json": true,
+    LICENSE: true
+  }
 });
