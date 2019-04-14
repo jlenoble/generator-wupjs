@@ -11,13 +11,15 @@ type Options = Wup.Options;
 const testGenerator = (_options: {
   command: string;
   prompt: Options;
-  globalConfig: Options;
   assertContent: { [file: string]: RegExp[] | true };
 }): void => {
   const parsed = parseArgs(_options.command.split(/\s+/));
   const [, _name, ...args] = parsed._;
   const match = _name.match(/wupjs:([\w:]+)/);
   const name = match && match[1];
+
+  // Provide a global config dir specific to the tests to load defaults from
+  process.env["NODE_CONFIG_DIR"] = path.join(__dirname, "../config");
 
   describe(
     _options.command,
