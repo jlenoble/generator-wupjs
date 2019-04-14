@@ -2,6 +2,7 @@
 build
 private
 generators
+scratch
 
 # Logs
 logs
