@@ -47,6 +47,7 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
     "@babel/register": "^7.4.0",
+    "@types/chai": "^4.1.7",
     "@types/config": "0.0.34",
     "@types/del": "^4.0.0",
     "@types/gulp": "^4.0.6",
