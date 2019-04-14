@@ -36,4 +36,5 @@ export const generateGlob = join(generatorsDir, "**/*.js");
 export const templateGlob = join(srcDir, "**/templates/*");
 
 export const allSrcGlob = srcGlob.concat(testGlob);
-export const allBuildGlob = testBuildGlob.concat(generateGlob);
+export const allBuildGlob = testBuildGlob;
+export const allTestGlob = allBuildGlob.concat(generateGlob);
