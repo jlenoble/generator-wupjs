@@ -34,7 +34,9 @@ export default class PackageVersion extends Base {
       ).version;
 
       this.addProp(this.generatorName, version);
-    } catch (e) {}
+    } catch (e) {
+      this.addProp(this.generatorName, "0.0.0");
+    }
   }
 
   public async prompting(): Promise<void> {
