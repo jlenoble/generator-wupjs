@@ -43,8 +43,6 @@ export default class BaseGenerator extends Generator
 
     this.mustPrompt = true;
 
-    console.log("***INSTANTIATING", generatorName);
-
     if (!BaseGenerator.calledGenerator) {
       BaseGenerator.calledGenerator = this;
     }
