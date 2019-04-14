@@ -6,7 +6,7 @@ export default class AuthorEmail extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:author:email",
-        willWrite: ["write:package.json"]
+        willWrite: ["write:package.json", "write:LICENSE"]
       })
     );
   }
