@@ -4,6 +4,7 @@ import path from "path";
 import assert from "yeoman-assert";
 import helpers from "yeoman-test";
 import parseArgs from "minimist";
+import BaseGenerator from "../../src/common/base-generator";
 
 type Options = Wup.Options;
 
@@ -25,15 +26,32 @@ const testGenerator = (_options: {
 
       before(function(): Promise<void> {
         this.cwd = process.cwd();
+        const scratchDir = path.join(__dirname, "../../../scratch");
 
         this.runContext = helpers
           .run(path.join(__dirname, `../../../generators/${name}`), {
             tmpdir: false
           })
-          .inDir("scratch")
-          .cd("scratch")
+          .inDir(scratchDir)
           .withArguments(args)
           .withPrompts(prompt)
+          .on(
+            "ready",
+            (generator: BaseGenerator): void => {
+              // .yo-rc.json is in topdir and yeoman-test silently resets
+              // cwd to topdir (because of sinonjs masking the warning)
+              // so override the reset
+              generator.destinationRoot(scratchDir);
+
+              // Also override the reset for every single subgen
+              // @ts-ignore
+              generator._composedWith.forEach(
+                (gen: BaseGenerator): void => {
+                  gen.destinationRoot(generator.destinationRoot());
+                }
+              );
+            }
+          )
           .toPromise();
 
         return this.runContext;
