@@ -10,7 +10,8 @@ export default class Package extends Base {
           "config:package:name",
           "config:package:version",
           "config:package:description",
-          "config:package:keywords"
+          "config:package:keywords",
+          "config:license" // "config:package:private" depends on it
         ],
         willWrite: ["write:package.json"]
       })
@@ -18,6 +19,12 @@ export default class Package extends Base {
   }
 
   public configuring(): void {
+    const license = this.getProp("config:license");
+
+    if (license === "UNLICENSED") {
+      this.addProp("config:package:private", true);
+    }
+
     this.addProp(this.generatorName, {
       name: this.getProp("config:package:name"),
       version: this.getProp("config:package:version"),

@@ -192,10 +192,6 @@ Change your custom license file name.`);
 
       license = this._toLicense(licenses.map(this._suffixGPL.bind(this)));
 
-      if (license === "UNLICENSED") {
-        this.addProp("config:package:private", true);
-      }
-
       this.addProp(this.generatorName, license);
     }
   }
