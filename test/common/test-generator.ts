@@ -28,8 +28,10 @@ const testGenerator = (_options: {
 
         this.runContext = helpers
           .run(path.join(__dirname, `../../../generators/${name}`), {
-            skipCache: false
+            tmpdir: false
           })
+          .inDir("scratch")
+          .cd("scratch")
           .withArguments(args)
           .withPrompts(prompt)
           .toPromise();
