@@ -1,10 +1,12 @@
 /* eslint-disable no-invalid-this */
 
+import fs from "fs";
 import path from "path";
 import assert from "yeoman-assert";
 import helpers from "yeoman-test";
 import parseArgs from "minimist";
 import BaseGenerator from "../../src/common/base-generator";
+import { expect } from "chai";
 
 type Options = Wup.Options;
 
@@ -25,11 +27,10 @@ const testGenerator = (_options: {
     _options.command,
     (): void => {
       const prompt: Options = Object.assign({}, _options.prompt);
+      const scratchDir = path.join(__dirname, "../../../scratch");
 
       before(function(): Promise<void> {
         this.cwd = process.cwd();
-        const scratchDir = path.join(__dirname, "../../../scratch");
-
         this.runContext = helpers
           .run(path.join(__dirname, `../../../generators/${name}`), {
             tmpdir: false
@@ -92,6 +93,18 @@ const testGenerator = (_options: {
         );
       }
 
+      it("creates only the expected files", (): void => {
+        const files = fs.readdirSync(scratchDir);
+        const keys = new Set(
+          Object.keys(tests).map(
+            (key): string => (key[0] === "!" ? key.substring(1) : key)
+          )
+        );
+
+        expect(files).to.have.length(keys.size);
+        expect([...new Set([...keys, ...files])]).to.have.length(keys.size);
+      });
+
       Object.keys(tests).forEach(
         (file): void => {
           if (file[0] !== "!" && tests[file]) {
@@ -104,7 +117,7 @@ const testGenerator = (_options: {
               // File matches a specified content
               (tests[file] as RegExp[]).forEach(
                 (content): void => {
-                  it(`${file} has the expected content ${content}`, (): void => {
+                  it(`  ${file} has the expected content ${content}`, (): void => {
                     assert.fileContent(file, content);
                   });
                 }
@@ -122,7 +135,7 @@ const testGenerator = (_options: {
                 (tests[file] as RegExp[]).forEach(
                   (content): void => {
                     const _file = file.substring(1);
-                    it(`${_file} has not the content ${content}`, (): void => {
+                    it(`  ${_file} has not the content ${content}`, (): void => {
                       assert.noFileContent(_file, content);
                     });
                   }
@@ -131,11 +144,6 @@ const testGenerator = (_options: {
                 // File must differ from a snapshot
                 throw new Error("path to file needed");
               }
-            } else if (file[0] !== "!") {
-              // File doesn't exist
-              it(`${file} is missing as expected`, (): void => {
-                assert.noFile(file);
-              });
             } else {
               throw new Error(`{${file}: falsy} is meaningless`);
             }
