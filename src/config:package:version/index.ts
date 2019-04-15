@@ -14,19 +14,6 @@ export default class PackageVersion extends Base {
     );
   }
 
-  protected _isValid(props: Wup.Options): boolean {
-    const version: Version = props[this.generatorName] as Version;
-
-    if (!semver.valid(version)) {
-      this.log(
-        "Version format doesn't follow SemVer: 1.2.3(-4|-alpha.5|-beta.6)"
-      );
-      return false;
-    }
-
-    return true;
-  }
-
   public initializing(): void {
     try {
       const version: Version = this.fs.readJSON(
@@ -46,18 +33,18 @@ export default class PackageVersion extends Base {
           type: "input",
           name: this.generatorName,
           message: "Package version:",
-          default: this.getProp(this.generatorName) || "0.0.0"
+          default: this.getProp(this.generatorName) || "0.0.0",
+          validate: (version: Version): true | string => {
+            if (!semver.valid(version)) {
+              return "Version format doesn't follow SemVer: 1.2.3(-4|-alpha.5|-beta.6)";
+            }
+
+            return true;
+          }
         }
       ];
 
-      const props = await this.prompt(prompts);
-
-      if (this._isValid(props)) {
-        this.addProp(props);
-        return;
-      }
-
-      return this.prompting();
+      this.setProp(await this.prompt(prompts));
     }
   }
 }
