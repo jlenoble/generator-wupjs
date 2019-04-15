@@ -9,7 +9,6 @@ import objectHash from "object-hash";
 import chalk from "chalk";
 import conflict from "detect-conflict";
 import { diffLines } from "diff";
-import BaseGenerator from "../../src/common/base-generator";
 import { expect } from "chai";
 
 type Options = Wup.Options;
@@ -39,37 +38,59 @@ const testGenerator = (_options: {
 
       before(function(): Promise<void> {
         this.cwd = process.cwd();
-        this.runContext = helpers
-          .run(path.join(__dirname, `../../../generators/${name}`), {
-            tmpdir: false
-          })
-          .inDir(scratchDir)
-          .withArguments(args)
-          .withPrompts(prompt)
-          .on(
-            "ready",
-            (generator: BaseGenerator): void => {
-              // .yo-rc.json is in topdir and yeoman-test silently resets
-              // cwd to topdir (because of sinonjs masking the warning)
-              // so override the reset
-              generator.destinationRoot(scratchDir);
 
-              // Also override the reset for every single subgen
-              // @ts-ignore
-              generator._composedWith.forEach(
-                (gen: BaseGenerator): void => {
-                  gen.destinationRoot(scratchDir);
+        this.end = new Promise(
+          (resolve, reject): void => {
+            this.runContext = helpers
+              .run(path.join(__dirname, `../../../generators/${name}`), {
+                tmpdir: false
+              })
+              .inDir(scratchDir)
+              .withArguments(args)
+              .withPrompts(prompt)
+              .on(
+                "ready",
+                // We don't want to import any source statically, so can't import
+                // type BaseGenerator
+                // @ts-ignore
+                (generator): void => {
+                  // .yo-rc.json is in topdir and yeoman-test silently resets
+                  // cwd to topdir (because of sinonjs masking the warning)
+                  // so override the reset
+                  generator.destinationRoot(scratchDir);
+
+                  // Also override the reset for every single subgen
+                  // @ts-ignore
+                  generator._composedWith.forEach(
+                    // We don't want to import any source statically, so can't import
+                    // type BaseGenerator
+                    // @ts-ignore
+                    (gen): void => {
+                      gen.destinationRoot(scratchDir);
+                    }
+                  );
                 }
-              );
-            }
-          )
-          .toPromise();
+              )
+              .on("end", resolve)
+              .on("error", reject)
+              .toPromise();
+          }
+        );
 
         return this.runContext;
       });
 
       after(function(): void {
-        process.chdir(this.cwd);
+        return this.end.then(
+          (): void => {
+            process.chdir(this.cwd);
+            // Dynamic loading because the config package is linked
+            // statically via common/config.ts so it can't acknowledge the
+            // redefinition of process.env["NODE_CONFIG_DIR"] if any src is
+            // linked statically (they all import indirectly common/config.ts)
+            require("../../../generators/common/base-generator").reset();
+          }
+        );
       });
 
       const tests: { [k: string]: RegExp[] | true } = {
