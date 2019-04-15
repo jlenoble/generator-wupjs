@@ -32,7 +32,9 @@ export default class PackageDescription extends Base {
       ).description;
 
       this.addProp(this.generatorName, description);
-    } catch (e) {}
+    } catch (e) {
+      this.addProp(this.generatorName, "");
+    }
   }
 
   public async prompting(): Promise<void> {
