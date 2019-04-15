@@ -169,11 +169,11 @@ const testGenerator = (_options: {
               it(`  ${file} has the expected content ${path.join(
                 path.relative(snapshotDir, hashDir),
                 file
-              )}`, (): void => {
-                const snapshot = fs.readFileSync(snapshotFile);
+              )}`, async (): Promise<void> => {
+                const snapshot = await fs.readFile(snapshotFile);
 
                 if (conflict(file, snapshot)) {
-                  const text = fs.readFileSync(file);
+                  const text = await fs.readFile(file);
                   const diff = diffLines(snapshot.toString(), text.toString());
 
                   let diffText = "";
@@ -189,7 +189,15 @@ const testGenerator = (_options: {
                     }
                   );
 
-                  throw new Error(diffText);
+                  if (process.argv.includes("--update-snapshots")) {
+                    console.log(`
+Updating snapshot:
+${diffText}
+`);
+                    await fs.copy(file, snapshotFile);
+                  } else {
+                    throw new Error(diffText);
+                  }
                 }
               });
             }
