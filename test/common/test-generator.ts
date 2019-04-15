@@ -123,7 +123,7 @@ const testGenerator = (_options: {
       }
 
       it("creates only the expected files", (): void => {
-        const files = fs.readdirSync(scratchDir);
+        let files = fs.readdirSync(scratchDir);
         const keys = new Set(
           Object.keys(tests).map(
             (key): string => (key[0] === "!" ? key.substring(1) : key)
@@ -139,6 +139,11 @@ const testGenerator = (_options: {
           console.log(chalk.yellow(`Creating snapshot ${hash}, please review`));
           fs.copySync(scratchDir, hashDir);
         }
+
+        files = fs.readdirSync(hashDir);
+
+        expect(files).to.have.length(keys.size);
+        expect([...new Set([...keys, ...files])]).to.have.length(keys.size);
       });
 
       Object.keys(tests).forEach(
