@@ -12,36 +12,6 @@ export default class PackageKeywords extends Base {
     );
   }
 
-  protected _isValid(keywords: string[]): boolean {
-    let keyword = "";
-
-    if (!keywords.length) {
-      this.log("You must enter at least one keyword");
-    } else if (
-      keywords.some(
-        (kwd): boolean => {
-          if (!/^[A-Za-zÀ-ÖØ-öø-ÿ]+(-[A-Za-zÀ-ÖØ-öø-ÿ]+)*\d*$/.test(kwd)) {
-            keyword = kwd;
-            return true;
-          }
-          return false;
-        }
-      )
-    ) {
-      const kwd = chalk.yellow(keyword);
-
-      this.log(
-        `you typed [${keywords.map(
-          (k): string => (k === keyword ? kwd : k)
-        )}] but ${kwd} is invalid`
-      );
-    } else {
-      return true;
-    }
-
-    return false;
-  }
-
   public initializing(): void {
     try {
       const keywords: string[] = this.fs.readJSON(
@@ -63,21 +33,45 @@ export default class PackageKeywords extends Base {
           message: "Package keywords (',' as separator, no brackets needed):",
           default: `[${(this.getProp(this.generatorName) as string[]).join(
             ", "
-          )}]`
+          )}]`,
+          validate: (keywords: string[]): true | string => {
+            let keyword = "";
+
+            if (!keywords.length) {
+              return "You must enter at least one keyword";
+            } else if (
+              keywords.some(
+                (kwd): boolean => {
+                  if (
+                    !/^[A-Za-zÀ-ÖØ-öø-ÿ]+(-[A-Za-zÀ-ÖØ-öø-ÿ]+)*\d*$/.test(kwd)
+                  ) {
+                    keyword = kwd;
+                    return true;
+                  }
+                  return false;
+                }
+              )
+            ) {
+              const kwd = chalk.yellow(keyword);
+
+              return `you typed [${keywords.map(
+                (k): string => (k === keyword ? kwd : k)
+              )}] but ${kwd} is invalid`;
+            }
+
+            return true;
+          },
+          filter: (keywords: string): string[] => {
+            return keywords
+              .trim()
+              .replace(/[\]\[]/g, "")
+              .split(/,\s*/)
+              .map((kwd): string => kwd.trim());
+          }
         }
       ];
 
-      const props = await this.prompt(prompts);
-      const keywords = props[this.generatorName]
-        .replace(/[\]\[]/g, "")
-        .split(/,\s*/);
-
-      if (this._isValid(keywords)) {
-        this.addProp(this.generatorName, keywords);
-        return;
-      }
-
-      return this.prompting();
+      this.setProp(await this.prompt(prompts));
     }
   }
 }
