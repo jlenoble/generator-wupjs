@@ -1,0 +1,11 @@
+{
+  "name": "generator-wupjs",
+  "version": "0.0.0",
+  "private": true,
+  "keywords": [],
+  "license": "UNLICENSED",
+  "author": {
+    "name": "John Doe",
+    "email": "john.doe@example.com"
+  }
+}
