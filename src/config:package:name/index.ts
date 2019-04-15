@@ -11,33 +11,6 @@ export default class PackageName extends Base {
     );
   }
 
-  protected _isValid(props: Wup.Options): boolean {
-    const name: Wup.GenName = props[this.generatorName] as Wup.GenName;
-
-    if (name.length > 214) {
-      this.log(`The name must be less than or equal to 214 characters.
-This includes the scope for scoped packages.`);
-    } else if (name[0] === "." || name[0] === "_") {
-      this.log("The name can’t start with a dot (.) or an underscore (_).");
-    } else if (name.toLowerCase() !== name) {
-      this.log("New packages must not have uppercase letters in the name.");
-    } else if (/\s/.test(name)) {
-      this.log(
-        `The name ends up being part of a URL, an argument on the command line, and a
-folder name. So don't use space characters`
-      );
-    } else if (encodeURIComponent(name) !== name) {
-      this.log(
-        `The name ends up being part of a URL, an argument on the command line, and a
-folder name. Therefore, the name can’t contain any non-URL-safe characters.`
-      );
-    } else {
-      return true;
-    }
-
-    return false;
-  }
-
   public initializing(): void {
     this.addProp(this.generatorName, this.appname.replace(/\s+/g, "-"));
   }
@@ -49,18 +22,29 @@ folder name. Therefore, the name can’t contain any non-URL-safe characters.`
           type: "input",
           name: this.generatorName,
           message: "Package name:",
-          default: this.getProp(this.generatorName)
+          default: this.getProp(this.generatorName),
+          validate: (name: Wup.GenName): true | string => {
+            if (name.length > 214) {
+              return `The name must be less than or equal to 214 characters.
+        This includes the scope for scoped packages.`;
+            } else if (name[0] === "." || name[0] === "_") {
+              return "The name can’t start with a dot (.) or an underscore (_).";
+            } else if (name.toLowerCase() !== name) {
+              return "New packages must not have uppercase letters in the name.";
+            } else if (/\s/.test(name)) {
+              return `The name ends up being part of a URL, an argument on the command line, and a
+        folder name. So don't use space characters`;
+            } else if (encodeURIComponent(name) !== name) {
+              return `The name ends up being part of a URL, an argument on the command line, and a
+        folder name. Therefore, the name can’t contain any non-URL-safe characters.`;
+            }
+
+            return true;
+          }
         }
       ];
 
-      const props = await this.prompt(prompts);
-
-      if (this._isValid(props)) {
-        this.setProp(props);
-        return;
-      }
-
-      return this.prompting();
+      this.setProp(await this.prompt(prompts));
     }
   }
 }
