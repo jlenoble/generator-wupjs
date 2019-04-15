@@ -7,3 +7,13 @@ testGenerator({
     "package.json": true
   }
 });
+
+testGenerator({
+  command: "yo wupjs:config:package:name",
+  prompt: {
+    "config:package:name": "awesome-app"
+  },
+  assertContent: {
+    "package.json": true
+  }
+});
