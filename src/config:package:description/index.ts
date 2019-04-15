@@ -13,18 +13,6 @@ export default class PackageDescription extends Base {
     );
   }
 
-  protected _isValid(props: Wup.Options): boolean {
-    const description: Description = props[this.generatorName] as Description;
-
-    if (description.length > 1) {
-      return true;
-    }
-
-    this.log("You must enter a proper description, not an empty string");
-
-    return false;
-  }
-
   public initializing(): void {
     try {
       const description: Description = this.fs.readJSON(
@@ -44,18 +32,17 @@ export default class PackageDescription extends Base {
           type: "input",
           name: this.generatorName,
           message: "Package description:",
-          default: this.getProp(this.generatorName)
+          default: this.getProp(this.generatorName),
+          validate: (description: Description): true | string => {
+            if (description.length > 3 && description.split(/\s+/).length > 1) {
+              return true;
+            }
+            return "You must enter a proper description (at least a couple of words)";
+          }
         }
       ];
 
-      const props = await this.prompt(prompts);
-
-      if (this._isValid(props)) {
-        this.addProp(props);
-        return;
-      }
-
-      return this.prompting();
+      this.addProp(await this.prompt(prompts));
     }
   }
 }
