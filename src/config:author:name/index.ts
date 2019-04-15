@@ -13,19 +13,6 @@ export default class AuthorName extends Base {
     );
   }
 
-  protected _isValid(props: Wup.Options): boolean {
-    const name: Name = props[this.generatorName] as Name;
-
-    if (name.match(/^\w+([-']\w+)*\.?( \w+([-']\w+)*\.?)*$/)) {
-      return true;
-    }
-
-    this.log(`Name should be an actual name, for example:
-John Doe, John-Paul Doe, John O'Doe, John P. Doe`);
-
-    return false;
-  }
-
   public initializing(): void {
     try {
       const author: Wup.Name | Wup.Person = this.fs.readJSON(
@@ -47,18 +34,23 @@ John Doe, John-Paul Doe, John O'Doe, John P. Doe`);
           type: "input",
           name: this.generatorName,
           message: "Author's name:",
-          default: this.getProp(this.generatorName)
+          default: this.getProp(this.generatorName),
+          validate: (name: Name): true | string => {
+            if (
+              name.match(
+                /^[A-Za-zÀ-ÖØ-öø-ÿ]+([-'][A-Za-zÀ-ÖØ-öø-ÿ]+)*\.?( [A-Za-zÀ-ÖØ-öø-ÿ]+([-'][A-Za-zÀ-ÖØ-öø-ÿ]+)*\.?)*$/
+              )
+            ) {
+              return true;
+            }
+
+            return `Name should be an actual name, for example:
+John Doe, John-Paul Doe, John O'Doe, John P. Doe`;
+          }
         }
       ];
 
-      const props = await this.prompt(prompts);
-
-      if (this._isValid(props)) {
-        this.addProp(props);
-        return;
-      }
-
-      return this.prompting();
+      this.addProp(await this.prompt(prompts));
     }
   }
 }
