@@ -120,6 +120,21 @@ export default class Config extends EventEmitter implements Wup.Config {
     return this;
   }
 
+  public reset(): void {
+    for (const node of this.generatorNodes.values()) {
+      node.generator.removeAllListeners();
+    }
+
+    for (const prop of this.properties.values()) {
+      prop.removeAllListeners();
+    }
+
+    this.removeAllListeners();
+
+    this.generatorNodes.clear();
+    this.properties.clear();
+  }
+
   public setProp(name: PropName, value: PropValue): this {
     const prop = this.properties.get(name);
 

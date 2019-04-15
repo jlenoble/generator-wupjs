@@ -9,7 +9,7 @@ type PropValue = Wup.PropValue;
 type Options = Wup.Options;
 type Props = Wup.Props;
 
-let config: Config;
+let config: Config | null;
 
 export default class BaseGenerator extends Generator
   implements Wup.BaseGenerator {
@@ -17,6 +17,15 @@ export default class BaseGenerator extends Generator
   protected mustPrompt: boolean;
 
   private static calledGenerator: BaseGenerator | null = null;
+
+  public static reset(): void {
+    if (config) {
+      config.reset();
+      config = null;
+    }
+
+    BaseGenerator.calledGenerator = null;
+  }
 
   public constructor(args: string | string[], options: Options = {}) {
     const {
