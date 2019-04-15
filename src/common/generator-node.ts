@@ -13,6 +13,10 @@ export default class GeneratorNode implements Wup.GeneratorNode {
 
   private static n: number = 15;
 
+  public static reset(): void {
+    GeneratorNode.n = 15;
+  }
+
   public static *generators(
     nodes: IterableIterator<GeneratorNode>
   ): IterableIterator<GeneratorNode> {
@@ -22,7 +26,7 @@ export default class GeneratorNode implements Wup.GeneratorNode {
       while (leftNodes.has(leftNode)) {
         GeneratorNode.n--;
         yield* leftNode.getFirstAncestors(leftNodes);
-        if (!GeneratorNode.n) return;
+        if (GeneratorNode.n <= 0) return;
       }
     }
   }

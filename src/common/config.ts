@@ -133,6 +133,8 @@ export default class Config extends EventEmitter implements Wup.Config {
 
     this.generatorNodes.clear();
     this.properties.clear();
+
+    GeneratorNode.reset();
   }
 
   public setProp(name: PropName, value: PropValue): this {
