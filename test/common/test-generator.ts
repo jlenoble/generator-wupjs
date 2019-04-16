@@ -3,6 +3,7 @@
 import fs from "fs-extra";
 import path from "path";
 import assert from "yeoman-assert";
+import "./adapter"; // Side-effect: Overwrites DummyPrompt.prototype.run
 import helpers from "yeoman-test";
 import parseArgs from "minimist";
 import objectHash from "object-hash";
