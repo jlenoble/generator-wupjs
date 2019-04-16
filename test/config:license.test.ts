@@ -21,3 +21,14 @@ testGenerator({
     LICENSE: true
   }
 });
+
+testGenerator({
+  command: "yo wupjs:config:license",
+  prompt: {
+    "config:license": ["MIT", "APACHE-2.0"]
+  },
+  assertContent: {
+    "package.json": true,
+    LICENSE: true
+  }
+});
