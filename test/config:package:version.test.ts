@@ -5,7 +5,8 @@ testGenerator({
   command: "yo wupjs:config:package:version",
   prompt: {},
   assertContent: {
-    "package.json": true
+    "package.json": true,
+    LICENSE: true
   }
 });
 
@@ -16,6 +17,7 @@ testGenerator({
     "config:package:version": "1.2.3"
   },
   assertContent: {
-    "package.json": true
+    "package.json": true,
+    LICENSE: true
   }
 });

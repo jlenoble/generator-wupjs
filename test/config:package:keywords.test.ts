@@ -7,6 +7,7 @@ testGenerator({
     "config:package:keywords": "foo, bar, quux"
   },
   assertContent: {
-    "package.json": true
+    "package.json": true,
+    LICENSE: true
   }
 });

@@ -7,6 +7,7 @@ testGenerator({
     "config:package:description": "Some dummy description"
   },
   assertContent: {
-    "package.json": true
+    "package.json": true,
+    LICENSE: true
   }
 });

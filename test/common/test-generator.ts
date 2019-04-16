@@ -2,6 +2,7 @@
 
 import fs from "fs-extra";
 import path from "path";
+import del from "del";
 import assert from "yeoman-assert";
 import "./adapter"; // Side-effect: Overwrites DummyPrompt.prototype.run
 import helpers from "yeoman-test";
@@ -125,8 +126,8 @@ const testGenerator = (_options: {
       );
     }
 
-    it("creates only the expected files", (): void => {
-      let files = fs.readdirSync(scratchDir);
+    it("creates only the expected files", async (): Promise<void> => {
+      let files = await fs.readdir(scratchDir);
       const keys = new Set(
         Object.keys(tests).map(
           (key): string => (key[0] === "!" ? key.substring(1) : key)
@@ -137,16 +138,45 @@ const testGenerator = (_options: {
       expect([...new Set([...keys, ...files])]).to.have.length(keys.size);
 
       try {
-        fs.statSync(hashDir);
+        await fs.stat(hashDir);
       } catch (e) {
         console.log(chalk.yellow(`Creating snapshot ${hash}, please review`));
-        fs.copySync(scratchDir, hashDir);
+        await fs.copy(scratchDir, hashDir);
       }
 
-      files = fs.readdirSync(hashDir);
+      files = await fs.readdir(hashDir);
 
-      expect(files).to.have.length(keys.size);
-      expect([...new Set([...keys, ...files])]).to.have.length(keys.size);
+      try {
+        expect(files).to.have.length(keys.size);
+        expect([...new Set([...keys, ...files])]).to.have.length(keys.size);
+      } catch (e) {
+        if (process.argv.includes("--update-snapshots")) {
+          for (const file of files) {
+            if (!keys.has(file)) {
+              console.log(
+                chalk.yellow(
+                  `Removing ${file} from snapshot ${hash}, please review`
+                )
+              );
+              await del(path.join(hashDir, file));
+            }
+          }
+
+          for (const key of keys) {
+            if (!files.includes(key)) {
+              console.log(
+                chalk.yellow(`Adding ${key} to snapshot ${hash}, please review`)
+              );
+              await fs.copy(
+                path.join(scratchDir, key),
+                path.join(hashDir, key)
+              );
+            }
+          }
+        } else {
+          throw e;
+        }
+      }
     });
 
     Object.keys(tests).forEach(
