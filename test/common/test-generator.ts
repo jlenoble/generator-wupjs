@@ -15,10 +15,12 @@ import { expect } from "chai";
 type Options = Wup.Options;
 
 const testGenerator = (_options: {
+  title: string;
   command: string;
   prompt: Options;
   assertContent: { [file: string]: RegExp[] | true };
 }): void => {
+  const title = _options.title;
   const command = _options.command;
   const parsed = parseArgs(_options.command.split(/\s+/));
   const [, _name, ...args] = parsed._;
@@ -28,7 +30,7 @@ const testGenerator = (_options: {
   // Provide a global config dir specific to the tests to load defaults from
   process.env["NODE_CONFIG_DIR"] = path.join(__dirname, "../config");
 
-  describe(command, function(): void {
+  describe(title, function(): void {
     const prompt: Options = Object.assign({}, _options.prompt);
     const scratchDir = path.join(__dirname, "../../../scratch");
     const snapshotDir = path.join(__dirname, "../../../snapshots");
