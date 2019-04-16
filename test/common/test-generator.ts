@@ -164,6 +164,7 @@ const testGenerator = (_options: {
               }
             );
           } else {
+            // File has a snapshot to be compare with
             const snapshotFile = path.join(hashDir, file);
 
             it(`  ${file} has the expected content ${path.join(
