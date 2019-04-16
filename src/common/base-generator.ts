@@ -60,10 +60,10 @@ export default class BaseGenerator extends Generator
 
     if (BaseGenerator.calledGenerator === this) {
       config.linkGens("config:auto", generatorName);
+    }
 
-      for (const genName of willWrite) {
-        config.linkGens(generatorName, genName);
-      }
+    for (const genName of willWrite) {
+      config.linkGens(generatorName, genName);
     }
 
     for (const genName of dependsOn) {
