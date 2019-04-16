@@ -105,23 +105,18 @@ export default class License extends Base {
 
     if (idx !== -1) {
       const name = this.generatorName + ":GPL-suffix";
-      const y = "Yes";
-      const n = "No, this license is restricted to the specified version(s)";
 
       const prompts = [
         {
-          type: "list",
+          type: "confirm",
           name,
           message: `May a user apply a later version of the GPL terms and conditions?`,
-          choices: [n, y],
-          default: n
+          default: false
         }
       ];
 
       const props = await this.prompt(prompts);
-      const yes = props[name];
-
-      this.addProp(name, yes === y ? "-or-later" : "-only");
+      this.addProp(name, props[name] ? "-or-later" : "-only");
     }
   }
 
