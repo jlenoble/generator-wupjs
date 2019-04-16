@@ -6,7 +6,7 @@ testGenerator({
     "config:package:name": "awesome-app",
     "config:package:version": "1.2.3",
     "config:package:description": "Some dummy description",
-    "config:package:keywords": ["foo", "bar", "quux"]
+    "config:package:keywords": "foo, bar, quux"
   },
   assertContent: {
     "package.json": true
