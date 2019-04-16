@@ -8,8 +8,5 @@ testGenerator({
     "config:author:email": "me@example.com",
     "config:license": ["MIT"]
   },
-  assertContent: {
-    "package.json": true,
-    LICENSE: true
-  }
+  assertContent: {}
 });

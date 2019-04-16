@@ -6,8 +6,5 @@ testGenerator({
   prompt: {
     "config:author:email": "me@example.com"
   },
-  assertContent: {
-    "package.json": true,
-    LICENSE: true
-  }
+  assertContent: {}
 });

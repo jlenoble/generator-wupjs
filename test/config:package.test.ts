@@ -9,8 +9,5 @@ testGenerator({
     "config:package:description": "Some dummy description",
     "config:package:keywords": "foo, bar, quux"
   },
-  assertContent: {
-    "package.json": true,
-    LICENSE: true
-  }
+  assertContent: {}
 });

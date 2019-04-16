@@ -6,8 +6,5 @@ testGenerator({
   prompt: {
     "config:package:keywords": "foo, bar, quux"
   },
-  assertContent: {
-    "package.json": true,
-    LICENSE: true
-  }
+  assertContent: {}
 });

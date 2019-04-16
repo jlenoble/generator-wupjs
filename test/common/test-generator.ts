@@ -106,7 +106,13 @@ const testGenerator = (_options: {
       ]
     };
 
-    const assertContent = _options.assertContent;
+    const assertContent = Object.assign(
+      {
+        "package.json": true,
+        LICENSE: true
+      },
+      _options.assertContent
+    );
 
     if (Array.isArray(assertContent)) {
       tests[".yo-rc.json"] = (tests[".yo-rc.json"] as RegExp[]).concat(

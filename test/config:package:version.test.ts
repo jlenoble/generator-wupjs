@@ -4,10 +4,7 @@ testGenerator({
   title: "Adding a default package version",
   command: "yo wupjs:config:package:version",
   prompt: {},
-  assertContent: {
-    "package.json": true,
-    LICENSE: true
-  }
+  assertContent: {}
 });
 
 testGenerator({
@@ -16,8 +13,5 @@ testGenerator({
   prompt: {
     "config:package:version": "1.2.3"
   },
-  assertContent: {
-    "package.json": true,
-    LICENSE: true
-  }
+  assertContent: {}
 });

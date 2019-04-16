@@ -4,10 +4,7 @@ testGenerator({
   title: "Setting a default package name",
   command: "yo wupjs:config:package:name",
   prompt: {},
-  assertContent: {
-    "package.json": true,
-    LICENSE: true
-  }
+  assertContent: {}
 });
 
 testGenerator({
@@ -16,8 +13,5 @@ testGenerator({
   prompt: {
     "config:package:name": "awesome-app"
   },
-  assertContent: {
-    "package.json": true,
-    LICENSE: true
-  }
+  assertContent: {}
 });
