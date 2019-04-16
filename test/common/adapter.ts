@@ -15,15 +15,19 @@ DummyPrompt.prototype.run = async function(): Promise<void> {
 
   const { validate, filter } = this.question;
 
-  if (filter) {
-    answer = filter(answer);
-  }
-
-  if (validate) {
-    const msg = validate(answer);
-    if (msg !== true) {
-      answer = msg;
+  try {
+    if (filter) {
+      answer = filter(answer);
     }
+
+    if (validate) {
+      const msg = validate(answer);
+      if (msg !== true) {
+        answer = msg;
+      }
+    }
+  } catch (e) {
+    return e.message;
   }
 
   return answer;
