@@ -56,3 +56,15 @@ testGenerator({
     LICENSE: true
   }
 });
+
+testGenerator({
+  command: "yo wupjs:config:license",
+  prompt: {
+    "config:license": ["SEE IN FILE"],
+    "config:license:SEE": "CUSTOM_LICENSE"
+  },
+  assertContent: {
+    "package.json": true,
+    LICENSE: true
+  }
+});
