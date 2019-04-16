@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import Base from "../common/base-generator";
 
 export default class License extends Base {
@@ -138,24 +139,25 @@ export default class License extends Base {
           type: "input",
           name,
           message: "Enter your custom license file name",
-          default: match && match[1] !== "LICENSE" ? match[1] : "CUSTOM"
+          default: match && match[1] !== "LICENSE" ? match[1] : "CUSTOM",
+          validate: (file: Wup.Name): true | string => {
+            if (file === "LICENSE") {
+              return `LICENSE will be overwritten by this generator.
+Change your custom license file name.`;
+            } else if (file.length > 254) {
+              return `File name too long (max: 254)`;
+            } else if (!file.match(/^[\w.-]+$/)) {
+              return `Invalid file name: ${chalk.yellow(
+                file
+              )}, use only plain latin letters, numbers, '-', '_' or '.'`;
+            }
+            return true;
+          }
         }
       ];
 
-      let file: Wup.Name;
-
-      while (true) {
-        const props = await this.prompt(prompts);
-
-        file = props[name].trim();
-
-        if (file === "LICENSE") {
-          this.log(`LICENSE will be overwritten by this generator.
-Change your custom license file name.`);
-        } else {
-          break;
-        }
-      }
+      const props = await this.prompt(prompts);
+      const file = props[name].trim();
 
       res[idx] = `SEE IN FILE ${file}`;
     }
