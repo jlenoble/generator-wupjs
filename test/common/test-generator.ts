@@ -27,206 +27,205 @@ const testGenerator = (_options: {
   // Provide a global config dir specific to the tests to load defaults from
   process.env["NODE_CONFIG_DIR"] = path.join(__dirname, "../config");
 
-  describe(
-    command,
-    (): void => {
-      const prompt: Options = Object.assign({}, _options.prompt);
-      const scratchDir = path.join(__dirname, "../../../scratch");
-      const snapshotDir = path.join(__dirname, "../../../snapshots");
-      const hash = objectHash(Object.assign({ command }, prompt));
-      const hashDir = path.join(snapshotDir, hash);
+  describe(command, function(): void {
+    const prompt: Options = Object.assign({}, _options.prompt);
+    const scratchDir = path.join(__dirname, "../../../scratch");
+    const snapshotDir = path.join(__dirname, "../../../snapshots");
+    const hash = objectHash(Object.assign({ command }, prompt));
+    const hashDir = path.join(snapshotDir, hash);
 
-      before(function(): Promise<void> {
-        this.cwd = process.cwd();
+    this.timeout(5000);
 
-        this.end = new Promise(
-          (resolve, reject): void => {
-            this.runContext = helpers
-              .run(path.join(__dirname, `../../../generators/${name}`), {
-                tmpdir: false
-              })
-              .inDir(scratchDir)
-              .withArguments(args)
-              .withPrompts(prompt)
-              .on(
-                "ready",
-                // We don't want to import any source statically, so can't import
-                // type BaseGenerator
+    before(function(): Promise<void> {
+      this.cwd = process.cwd();
+
+      this.end = new Promise(
+        (resolve, reject): void => {
+          this.runContext = helpers
+            .run(path.join(__dirname, `../../../generators/${name}`), {
+              tmpdir: false
+            })
+            .inDir(scratchDir)
+            .withArguments(args)
+            .withPrompts(prompt)
+            .on(
+              "ready",
+              // We don't want to import any source statically, so can't import
+              // type BaseGenerator
+              // @ts-ignore
+              (generator): void => {
+                // .yo-rc.json is in topdir and yeoman-test silently resets
+                // cwd to topdir (because of sinonjs masking the warning)
+                // so override the reset
+                generator.destinationRoot(scratchDir);
+
+                // Also override the reset for every single subgen
                 // @ts-ignore
-                (generator): void => {
-                  // .yo-rc.json is in topdir and yeoman-test silently resets
-                  // cwd to topdir (because of sinonjs masking the warning)
-                  // so override the reset
-                  generator.destinationRoot(scratchDir);
-
-                  // Also override the reset for every single subgen
+                generator._composedWith.forEach(
+                  // We don't want to import any source statically, so can't import
+                  // type BaseGenerator
                   // @ts-ignore
-                  generator._composedWith.forEach(
-                    // We don't want to import any source statically, so can't import
-                    // type BaseGenerator
-                    // @ts-ignore
-                    (gen): void => {
-                      gen.destinationRoot(scratchDir);
-                    }
-                  );
-                }
+                  (gen): void => {
+                    gen.destinationRoot(scratchDir);
+                  }
+                );
+              }
+            )
+            .on("end", resolve)
+            .on("error", reject)
+            .toPromise();
+        }
+      );
+
+      return this.runContext;
+    });
+
+    after(function(): void {
+      return this.end.then(
+        (): void => {
+          process.chdir(this.cwd);
+          // Dynamic loading because the config package is linked
+          // statically via common/config.ts so it can't acknowledge the
+          // redefinition of process.env["NODE_CONFIG_DIR"] if any src is
+          // linked statically (they all import indirectly common/config.ts)
+          require("../../../generators/common/base-generator").reset();
+        }
+      );
+    });
+
+    const tests: { [k: string]: RegExp[] | true } = {
+      ".yo-rc.json": [
+        /"createdWith": "\d+\.\d+\.\d+"/,
+        /"modifiedWith": "\d+\.\d+\.\d+"/,
+        /"createdOn": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/,
+        /"modifiedOn": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/
+      ]
+    };
+
+    const assertContent = _options.assertContent;
+
+    if (Array.isArray(assertContent)) {
+      tests[".yo-rc.json"] = (tests[".yo-rc.json"] as RegExp[]).concat(
+        assertContent
+      );
+    } else {
+      Object.keys(assertContent).forEach(
+        (file: string): void => {
+          tests[file] = Array.isArray(tests[file])
+            ? (tests[file] as RegExp[]).concat(
+                Array.isArray(assertContent[file])
+                  ? (assertContent[file] as RegExp[])
+                  : []
               )
-              .on("end", resolve)
-              .on("error", reject)
-              .toPromise();
-          }
-        );
+            : assertContent[file];
+        }
+      );
+    }
 
-        return this.runContext;
-      });
+    it("creates only the expected files", (): void => {
+      let files = fs.readdirSync(scratchDir);
+      const keys = new Set(
+        Object.keys(tests).map(
+          (key): string => (key[0] === "!" ? key.substring(1) : key)
+        )
+      );
 
-      after(function(): void {
-        return this.end.then(
-          (): void => {
-            process.chdir(this.cwd);
-            // Dynamic loading because the config package is linked
-            // statically via common/config.ts so it can't acknowledge the
-            // redefinition of process.env["NODE_CONFIG_DIR"] if any src is
-            // linked statically (they all import indirectly common/config.ts)
-            require("../../../generators/common/base-generator").reset();
-          }
-        );
-      });
+      expect(files).to.have.length(keys.size);
+      expect([...new Set([...keys, ...files])]).to.have.length(keys.size);
 
-      const tests: { [k: string]: RegExp[] | true } = {
-        ".yo-rc.json": [
-          /"createdWith": "\d+\.\d+\.\d+"/,
-          /"modifiedWith": "\d+\.\d+\.\d+"/,
-          /"createdOn": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/,
-          /"modifiedOn": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/
-        ]
-      };
-
-      const assertContent = _options.assertContent;
-
-      if (Array.isArray(assertContent)) {
-        tests[".yo-rc.json"] = (tests[".yo-rc.json"] as RegExp[]).concat(
-          assertContent
-        );
-      } else {
-        Object.keys(assertContent).forEach(
-          (file: string): void => {
-            tests[file] = Array.isArray(tests[file])
-              ? (tests[file] as RegExp[]).concat(
-                  Array.isArray(assertContent[file])
-                    ? (assertContent[file] as RegExp[])
-                    : []
-                )
-              : assertContent[file];
-          }
-        );
+      try {
+        fs.statSync(hashDir);
+      } catch (e) {
+        console.log(chalk.yellow(`Creating snapshot ${hash}, please review`));
+        fs.copySync(scratchDir, hashDir);
       }
 
-      it("creates only the expected files", (): void => {
-        let files = fs.readdirSync(scratchDir);
-        const keys = new Set(
-          Object.keys(tests).map(
-            (key): string => (key[0] === "!" ? key.substring(1) : key)
-          )
-        );
+      files = fs.readdirSync(hashDir);
 
-        expect(files).to.have.length(keys.size);
-        expect([...new Set([...keys, ...files])]).to.have.length(keys.size);
+      expect(files).to.have.length(keys.size);
+      expect([...new Set([...keys, ...files])]).to.have.length(keys.size);
+    });
 
-        try {
-          fs.statSync(hashDir);
-        } catch (e) {
-          console.log(chalk.yellow(`Creating snapshot ${hash}, please review`));
-          fs.copySync(scratchDir, hashDir);
-        }
+    Object.keys(tests).forEach(
+      (file): void => {
+        if (file[0] !== "!" && tests[file]) {
+          // File exists and it matches a specified content or a snapshot
+          it(`creates a ${file} file`, (): void => {
+            assert.file(file);
+          });
 
-        files = fs.readdirSync(hashDir);
+          if (tests[file] !== true) {
+            // File matches a specified content
+            (tests[file] as RegExp[]).forEach(
+              (content): void => {
+                it(`  ${file} has the expected content ${content}`, (): void => {
+                  assert.fileContent(file, content);
+                });
+              }
+            );
+          } else {
+            const snapshotFile = path.join(hashDir, file);
 
-        expect(files).to.have.length(keys.size);
-        expect([...new Set([...keys, ...files])]).to.have.length(keys.size);
-      });
+            it(`  ${file} has the expected content ${path.join(
+              path.relative(snapshotDir, hashDir),
+              file
+            )}`, async (): Promise<void> => {
+              const snapshot = await fs.readFile(snapshotFile);
 
-      Object.keys(tests).forEach(
-        (file): void => {
-          if (file[0] !== "!" && tests[file]) {
-            // File exists and it matches a specified content or a snapshot
-            it(`creates a ${file} file`, (): void => {
-              assert.file(file);
+              if (conflict(file, snapshot)) {
+                const text = await fs.readFile(file);
+                const diff = diffLines(snapshot.toString(), text.toString());
+
+                let diffText = "";
+
+                diff.forEach(
+                  (line): void => {
+                    const color = line.added
+                      ? "green"
+                      : line.removed
+                      ? "red"
+                      : "white";
+                    diffText += chalk[color](line.value);
+                  }
+                );
+
+                if (process.argv.includes("--update-snapshots")) {
+                  console.log(`
+Updating snapshot:
+${diffText}
+`);
+                  await fs.copy(file, snapshotFile);
+                } else {
+                  throw new Error(diffText);
+                }
+              }
             });
-
+          }
+        } else {
+          // File doesn't exist, or has not a specified content, or differs from a snapshot
+          if (tests[file]) {
+            // File exists but has not a specified content or differs from a snapshot
             if (tests[file] !== true) {
-              // File matches a specified content
+              // File must not have a specified content
               (tests[file] as RegExp[]).forEach(
                 (content): void => {
-                  it(`  ${file} has the expected content ${content}`, (): void => {
-                    assert.fileContent(file, content);
+                  const _file = file.substring(1);
+                  it(`  ${_file} has not the content ${content}`, (): void => {
+                    assert.noFileContent(_file, content);
                   });
                 }
               );
             } else {
-              const snapshotFile = path.join(hashDir, file);
-
-              it(`  ${file} has the expected content ${path.join(
-                path.relative(snapshotDir, hashDir),
-                file
-              )}`, async (): Promise<void> => {
-                const snapshot = await fs.readFile(snapshotFile);
-
-                if (conflict(file, snapshot)) {
-                  const text = await fs.readFile(file);
-                  const diff = diffLines(snapshot.toString(), text.toString());
-
-                  let diffText = "";
-
-                  diff.forEach(
-                    (line): void => {
-                      const color = line.added
-                        ? "green"
-                        : line.removed
-                        ? "red"
-                        : "white";
-                      diffText += chalk[color](line.value);
-                    }
-                  );
-
-                  if (process.argv.includes("--update-snapshots")) {
-                    console.log(`
-Updating snapshot:
-${diffText}
-`);
-                    await fs.copy(file, snapshotFile);
-                  } else {
-                    throw new Error(diffText);
-                  }
-                }
-              });
+              // File must differ from a snapshot
+              throw new Error("path to file needed");
             }
           } else {
-            // File doesn't exist, or has not a specified content, or differs from a snapshot
-            if (tests[file]) {
-              // File exists but has not a specified content or differs from a snapshot
-              if (tests[file] !== true) {
-                // File must not have a specified content
-                (tests[file] as RegExp[]).forEach(
-                  (content): void => {
-                    const _file = file.substring(1);
-                    it(`  ${_file} has not the content ${content}`, (): void => {
-                      assert.noFileContent(_file, content);
-                    });
-                  }
-                );
-              } else {
-                // File must differ from a snapshot
-                throw new Error("path to file needed");
-              }
-            } else {
-              throw new Error(`{${file}: falsy} is meaningless`);
-            }
+            throw new Error(`{${file}: falsy} is meaningless`);
           }
         }
-      );
-    }
-  );
+      }
+    );
+  });
 };
 
 export default testGenerator;
