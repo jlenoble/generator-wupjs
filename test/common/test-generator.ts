@@ -4,7 +4,8 @@ import fs from "fs-extra";
 import path from "path";
 import del from "del";
 import assert from "yeoman-assert";
-import "./adapter"; // Side-effect: Overwrites DummyPrompt.prototype.run
+import "./run-context"; // Side-effects: Overwrites DummyPrompt.prototype.run
+// and RunContext.prototype._run
 import helpers from "yeoman-test";
 import parseArgs from "minimist";
 import objectHash from "object-hash";
