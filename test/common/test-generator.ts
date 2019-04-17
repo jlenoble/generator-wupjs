@@ -13,6 +13,7 @@ import chalk from "chalk";
 import conflict from "detect-conflict";
 import { diffLines } from "diff";
 import { expect } from "chai";
+import defineTests from "./define-tests";
 
 type Options = Wup.Options;
 
@@ -98,15 +99,6 @@ const testGenerator = (_options: {
       );
     });
 
-    const tests: { [k: string]: RegExp[] | true } = {
-      ".yo-rc.json": [
-        /"createdWith": "\d+\.\d+\.\d+"/,
-        /"modifiedWith": "\d+\.\d+\.\d+"/,
-        /"createdOn": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/,
-        /"modifiedOn": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/
-      ]
-    };
-
     const assertContent = Object.assign(
       {
         "package.json": true,
@@ -115,23 +107,7 @@ const testGenerator = (_options: {
       _options.assertContent
     );
 
-    if (Array.isArray(assertContent)) {
-      tests[".yo-rc.json"] = (tests[".yo-rc.json"] as RegExp[]).concat(
-        assertContent
-      );
-    } else {
-      Object.keys(assertContent).forEach(
-        (file: string): void => {
-          tests[file] = Array.isArray(tests[file])
-            ? (tests[file] as RegExp[]).concat(
-                Array.isArray(assertContent[file])
-                  ? (assertContent[file] as RegExp[])
-                  : []
-              )
-            : assertContent[file];
-        }
-      );
-    }
+    const { tests, snapshots } = defineTests(assertContent);
 
     it("creates only the expected files", async (): Promise<void> => {
       let files = await fs.readdir(scratchDir);
