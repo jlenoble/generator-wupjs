@@ -60,6 +60,7 @@
     "@types/gulp-sourcemaps": "0.0.32",
     "@types/inquirer": "^6.0.0",
     "@types/json-stable-stringify": "^1.0.32",
+    "@types/lodash": "^4.14.123",
     "@types/make-dir": "^2.1.0",
     "@types/mem-fs-editor": "^5.1.1",
     "@types/minimist": "^1.2.0",
