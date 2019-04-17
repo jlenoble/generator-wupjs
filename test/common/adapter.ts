@@ -1,5 +1,7 @@
 import { DummyPrompt, TestAdapter } from "yeoman-test/lib/adapter";
 import chalk from "chalk";
+// @ts-ignore
+import stringify from "../../../generators/common/stringify";
 
 console.warn(
   chalk.cyan(`
@@ -12,6 +14,7 @@ const run = DummyPrompt.prototype.run;
 
 DummyPrompt.prototype.run = async function(): Promise<void> {
   let answer = await run.call(this);
+  let msg: true | string = true;
 
   const { validate, filter } = this.question;
 
@@ -21,13 +24,15 @@ DummyPrompt.prototype.run = async function(): Promise<void> {
     }
 
     if (validate) {
-      const msg = validate(answer);
-      if (msg !== true) {
-        answer = msg;
-      }
+      msg = validate(answer);
     }
   } catch (e) {
     return e.message;
+  }
+
+  if (msg !== true) {
+    answer = `[VALIDATION ERROR] ${msg}
+[ANSWER] ${stringify(answer)}`;
   }
 
   return answer;
