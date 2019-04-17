@@ -111,14 +111,11 @@ const testGenerator = (_options: {
 
     it("creates only the expected files", async (): Promise<void> => {
       let files = await fs.readdir(scratchDir);
-      const keys = new Set(
-        Object.keys(tests).map(
-          (key): string => (key[0] === "!" ? key.substring(1) : key)
-        )
-      );
 
-      expect(files).to.have.length(keys.size);
-      expect([...new Set([...keys, ...files])]).to.have.length(keys.size);
+      expect(files).to.have.length(snapshots.size);
+      expect([...new Set([...snapshots, ...files])]).to.have.length(
+        snapshots.size
+      );
 
       try {
         await fs.stat(hashDir);
@@ -130,12 +127,14 @@ const testGenerator = (_options: {
       files = await fs.readdir(hashDir);
 
       try {
-        expect(files).to.have.length(keys.size);
-        expect([...new Set([...keys, ...files])]).to.have.length(keys.size);
+        expect(files).to.have.length(snapshots.size);
+        expect([...new Set([...snapshots, ...files])]).to.have.length(
+          snapshots.size
+        );
       } catch (e) {
         if (process.argv.includes("--update-snapshots")) {
           for (const file of files) {
-            if (!keys.has(file)) {
+            if (!snapshots.has(file)) {
               console.log(
                 chalk.yellow(
                   `Removing ${file} from snapshot ${hash}, please review`
@@ -145,7 +144,7 @@ const testGenerator = (_options: {
             }
           }
 
-          for (const key of keys) {
+          for (const key of snapshots) {
             if (!files.includes(key)) {
               console.log(
                 chalk.yellow(`Adding ${key} to snapshot ${hash}, please review`)
