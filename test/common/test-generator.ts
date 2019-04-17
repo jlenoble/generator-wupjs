@@ -25,7 +25,7 @@ const testGenerator = (_options: {
   const command = _options.command;
   const parsed = parseArgs(_options.command.split(/\s+/));
   const [, _name, ...args] = parsed._;
-  const match = _name.match(/wupjs:([\w:]+)/);
+  const match = _name.match(/wupjs:([-\w.:]+)/);
   const name = match && match[1];
 
   // Provide a global config dir specific to the tests to load defaults from
