@@ -29,7 +29,7 @@ const sortTests = (assertContent: {
             )
           : assertContent[file];
 
-        snapshots.add(file);
+        snapshots.add(file[0] !== "!" ? file : file.substring(1));
       }
     );
   }
