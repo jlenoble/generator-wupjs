@@ -12,8 +12,8 @@ import objectHash from "object-hash";
 import chalk from "chalk";
 import conflict from "detect-conflict";
 import { diffLines } from "diff";
-import { expect } from "chai";
 import defineTests from "./define-tests";
+import { assertSameFileNames } from "./assert";
 
 type Options = Wup.Options;
 
@@ -112,10 +112,7 @@ const testGenerator = (_options: {
     it("creates only the expected files", async (): Promise<void> => {
       let files = await fs.readdir(scratchDir);
 
-      expect(files).to.have.length(snapshots.length);
-      expect([...new Set([...snapshots, ...files])]).to.have.length(
-        snapshots.length
-      );
+      assertSameFileNames(files, snapshots);
 
       try {
         await fs.stat(hashDir);
@@ -127,10 +124,7 @@ const testGenerator = (_options: {
       files = await fs.readdir(hashDir);
 
       try {
-        expect(files).to.have.length(snapshots.length);
-        expect([...new Set([...snapshots, ...files])]).to.have.length(
-          snapshots.length
-        );
+        assertSameFileNames(files, snapshots);
       } catch (e) {
         if (process.argv.includes("--update-snapshots")) {
           for (const file of files) {
