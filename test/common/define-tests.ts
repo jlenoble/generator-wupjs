@@ -2,7 +2,7 @@ type Options = Wup.Options;
 
 const sortTests = (assertContent: {
   [file: string]: RegExp[] | true;
-}): { tests: Options; snapshots: Set<string> } => {
+}): { tests: Options; snapshots: string[] } => {
   const tests: { [k: string]: RegExp[] | true } = {
     ".yo-rc.json": [
       /"createdWith": "\d+\.\d+\.\d+"/,
@@ -34,7 +34,7 @@ const sortTests = (assertContent: {
     );
   }
 
-  return { tests, snapshots };
+  return { tests, snapshots: Array.from(snapshots) };
 };
 
 export default sortTests;

@@ -112,9 +112,9 @@ const testGenerator = (_options: {
     it("creates only the expected files", async (): Promise<void> => {
       let files = await fs.readdir(scratchDir);
 
-      expect(files).to.have.length(snapshots.size);
+      expect(files).to.have.length(snapshots.length);
       expect([...new Set([...snapshots, ...files])]).to.have.length(
-        snapshots.size
+        snapshots.length
       );
 
       try {
@@ -127,14 +127,14 @@ const testGenerator = (_options: {
       files = await fs.readdir(hashDir);
 
       try {
-        expect(files).to.have.length(snapshots.size);
+        expect(files).to.have.length(snapshots.length);
         expect([...new Set([...snapshots, ...files])]).to.have.length(
-          snapshots.size
+          snapshots.length
         );
       } catch (e) {
         if (process.argv.includes("--update-snapshots")) {
           for (const file of files) {
-            if (!snapshots.has(file)) {
+            if (!snapshots.includes(file)) {
               console.log(
                 chalk.yellow(
                   `Removing ${file} from snapshot ${hash}, please review`
