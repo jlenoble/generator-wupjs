@@ -6,7 +6,7 @@ const extractTestParameters = (assertContent: {
   matchFiles: Options;
   snapshotFiles: string[];
   expectedFiles: string[];
-  rejectedFiles: string[];
+  noFiles: string[];
 } => {
   const matchFiles: { [k: string]: RegExp[] } = {
     ".yo-rc.json": [
@@ -18,7 +18,7 @@ const extractTestParameters = (assertContent: {
   };
 
   const expectedFiles: Set<string> = new Set([".yo-rc.json"]);
-  const rejectedFiles: Set<string> = new Set();
+  const noFiles: Set<string> = new Set();
   const snapshotFiles: Set<string> = new Set();
 
   if (Array.isArray(assertContent)) {
@@ -47,7 +47,7 @@ const extractTestParameters = (assertContent: {
         if (assertContent[file] !== false) {
           expectedFiles.add(file);
         } else {
-          rejectedFiles.add(file);
+          noFiles.add(file);
         }
       }
     );
@@ -57,7 +57,7 @@ const extractTestParameters = (assertContent: {
     matchFiles,
     snapshotFiles: Array.from(snapshotFiles),
     expectedFiles: Array.from(expectedFiles),
-    rejectedFiles: Array.from(rejectedFiles)
+    noFiles: Array.from(noFiles)
   };
 };
 

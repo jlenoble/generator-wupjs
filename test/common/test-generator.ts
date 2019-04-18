@@ -115,7 +115,7 @@ const testGenerator = (_options: {
       matchFiles,
       snapshotFiles,
       expectedFiles,
-      rejectedFiles
+      noFiles
     } = extractTestParameters(assertContent);
 
     it("should create only the expected files", async (): Promise<void> => {
@@ -161,7 +161,7 @@ If this is fine, you can update your snapshot with: gulp update-snapshots
       }
     );
 
-    rejectedFiles.forEach(
+    noFiles.forEach(
       (file): void => {
         it(`shouldn't create a ${file} file`, (): void => {
           assert.noFile(file);
