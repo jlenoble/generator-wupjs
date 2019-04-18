@@ -14,6 +14,7 @@ import conflict from "detect-conflict";
 import { diffLines } from "diff";
 import defineTests from "./define-tests";
 import { assertSameFileNames } from "./assert";
+import { createSnapshotIfMissing } from "./snapshots";
 
 type Options = Wup.Options;
 
@@ -114,12 +115,7 @@ const testGenerator = (_options: {
 
       assertSameFileNames(files, snapshots);
 
-      try {
-        await fs.stat(hashDir);
-      } catch (e) {
-        console.log(chalk.yellow(`Creating snapshot ${hash}, please review`));
-        await fs.copy(scratchDir, hashDir);
-      }
+      await createSnapshotIfMissing(scratchDir, hashDir);
 
       files = await fs.readdir(hashDir);
 
