@@ -9,7 +9,7 @@ import helpers from "yeoman-test";
 import parseArgs from "minimist";
 import objectHash from "object-hash";
 import chalk from "chalk";
-import defineTests from "./define-tests";
+import extractTestParameters from "./extract-test-parameters";
 import { assertSameFileNames } from "./assert";
 import {
   addMissingFilesToSnapshot,
@@ -116,7 +116,7 @@ const testGenerator = (_options: {
       snapshotFiles,
       expectedFiles,
       rejectedFiles
-    } = defineTests(assertContent);
+    } = extractTestParameters(assertContent);
 
     it("should create only the expected files", async (): Promise<void> => {
       let files = await fs.readdir(scratchDir);

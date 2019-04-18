@@ -1,6 +1,6 @@
 type Options = Wup.Options;
 
-const sortTests = (assertContent: {
+const extractTestParameters = (assertContent: {
   [file: string]: RegExp[] | true;
 }): {
   matchFiles: Options;
@@ -61,4 +61,4 @@ const sortTests = (assertContent: {
   };
 };
 
-export default sortTests;
+export default extractTestParameters;
