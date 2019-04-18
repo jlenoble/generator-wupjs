@@ -5,8 +5,7 @@ testGenerator({
   command: "yo wupjs:config:author:name",
   prompt: {
     "config:author:name": "Me Me"
-  },
-  assertContent: {}
+  }
 });
 
 testGenerator({
@@ -14,8 +13,7 @@ testGenerator({
   command: "yo wupjs:config:author:name",
   prompt: {
     "config:author:name": "François d'Esparbès de Lussan d'Aubeterre"
-  },
-  assertContent: {}
+  }
 });
 
 // testGenerator({
@@ -23,8 +21,7 @@ testGenerator({
 //   command: "yo wupjs:config:author:name",
 //   prompt: {
 //     "config:author:name": "ルネ・デカルト"
-//   },
-//   assertContent: {}
+//   }
 // });
 //
 // testGenerator({
@@ -32,6 +29,5 @@ testGenerator({
 //   command: "yo wupjs:config:author:name",
 //   prompt: {
 //     "config:author:name": "艾薩克·牛頓"
-//   },
-//   assertContent: {}
+//   }
 // });

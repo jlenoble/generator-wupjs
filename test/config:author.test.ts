@@ -6,6 +6,5 @@ testGenerator({
   prompt: {
     "config:author:name": "Me Me",
     "config:author:email": "me@example.com"
-  },
-  assertContent: {}
+  }
 });

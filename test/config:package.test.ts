@@ -8,6 +8,5 @@ testGenerator({
     "config:package:version": "1.2.3",
     "config:package:description": "Some dummy description",
     "config:package:keywords": "foo, bar, quux"
-  },
-  assertContent: {}
+  }
 });

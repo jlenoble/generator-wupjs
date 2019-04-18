@@ -24,7 +24,7 @@ const testGenerator = (_options: {
   title: string;
   command: string;
   prompt: Options;
-  assertContent: { [file: string]: RegExp[] | true };
+  assertContent?: { [file: string]: RegExp[] | true };
 }): void => {
   const title = _options.title;
   const command = _options.command;

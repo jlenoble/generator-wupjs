@@ -5,6 +5,5 @@ testGenerator({
   command: "yo wupjs:config:package:description",
   prompt: {
     "config:package:description": "Some dummy description"
-  },
-  assertContent: {}
+  }
 });

@@ -5,6 +5,5 @@ testGenerator({
   command: "yo wupjs:config:package:keywords",
   prompt: {
     "config:package:keywords": "foo, bar, quux"
-  },
-  assertContent: {}
+  }
 });
