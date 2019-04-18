@@ -205,9 +205,9 @@ If this is fine, you can update your snapshot with: gulp update-snapshots
           if (diffText !== "") {
             if (process.argv.includes("--update-snapshots")) {
               console.log(`
-   Updating snapshot:
-   ${diffText}
-   `);
+Updating snapshot:
+${diffText}
+`);
               await fs.copy(file, snapshotFile);
             } else {
               throw new Error(diffText);
