@@ -2,7 +2,6 @@
 
 import fs from "fs-extra";
 import path from "path";
-import del from "del";
 import assert from "yeoman-assert";
 import "./run-context"; // Side-effects: Overwrites DummyPrompt.prototype.run
 // and RunContext.prototype._run
@@ -14,7 +13,10 @@ import conflict from "detect-conflict";
 import { diffLines } from "diff";
 import defineTests from "./define-tests";
 import { assertSameFileNames } from "./assert";
-import { createSnapshotIfMissing } from "./snapshots";
+import {
+  createSnapshotIfMissing,
+  removeMissingFilesFromSnapshot
+} from "./snapshots";
 
 type Options = Wup.Options;
 
@@ -123,16 +125,7 @@ const testGenerator = (_options: {
         assertSameFileNames(files, snapshots);
       } catch (e) {
         if (process.argv.includes("--update-snapshots")) {
-          for (const file of files) {
-            if (!snapshots.includes(file)) {
-              console.log(
-                chalk.yellow(
-                  `Removing ${file} from snapshot ${hash}, please review`
-                )
-              );
-              await del(path.join(hashDir, file));
-            }
-          }
+          await removeMissingFilesFromSnapshot(files, snapshots, hashDir);
 
           for (const key of snapshots) {
             if (!files.includes(key)) {
