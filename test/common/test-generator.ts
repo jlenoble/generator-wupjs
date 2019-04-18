@@ -105,16 +105,20 @@ const testGenerator = (_options: {
     const assertContent = Object.assign(
       {
         "package.json": true,
-        LICENSE: true
+        LICENSE: true,
+        "README.md": false
       },
       _options.assertContent
     );
 
-    const { matchFiles, snapshotFiles, expectedFiles } = defineTests(
-      assertContent
-    );
+    const {
+      matchFiles,
+      snapshotFiles,
+      expectedFiles,
+      rejectedFiles
+    } = defineTests(assertContent);
 
-    it("creates only the expected files", async (): Promise<void> => {
+    it("should create only the expected files", async (): Promise<void> => {
       let files = await fs.readdir(scratchDir);
 
       assertSameFileNames(files, expectedFiles);
@@ -149,68 +153,67 @@ If this is fine, you can update your snapshot with: gulp update-snapshots
       }
     });
 
+    expectedFiles.forEach(
+      (file): void => {
+        it(`should create a ${file} file`, (): void => {
+          assert.file(file);
+        });
+      }
+    );
+
+    rejectedFiles.forEach(
+      (file): void => {
+        it(`shouldn't create a ${file} file`, (): void => {
+          assert.noFile(file);
+        });
+      }
+    );
+
     Object.keys(matchFiles).forEach(
       (file): void => {
-        if (file[0] !== "!" && matchFiles[file]) {
-          // File exists and it matches a specified content or a snapshot
-          it(`creates a ${file} file`, (): void => {
-            assert.file(file);
-          });
-
-          if (matchFiles[file] !== true) {
-            // File matches a specified content
-            (matchFiles[file] as RegExp[]).forEach(
-              (content): void => {
-                it(`  ${file} has the expected content ${content}`, (): void => {
-                  assert.fileContent(file, content);
-                });
-              }
-            );
-          } else {
-            // File has a snapshot to be compare with
-            const snapshotFile = path.join(hashDir, file);
-
-            it(`  ${file} has the expected content ${path.join(
-              path.relative(snapshotDir, hashDir),
-              file
-            )}`, async (): Promise<void> => {
-              const diffText = await diffSnapshotFile(file, hashDir);
-
-              if (diffText !== "") {
-                if (process.argv.includes("--update-snapshots")) {
-                  console.log(`
-Updating snapshot:
-${diffText}
-`);
-                  await fs.copy(file, snapshotFile);
-                } else {
-                  throw new Error(diffText);
-                }
-              }
-            });
-          }
-        } else {
-          // File doesn't exist, or has not a specified content, or differs from a snapshot
-          if (matchFiles[file]) {
-            // File exists but has not a specified content or differs from a snapshot
-            if (matchFiles[file] !== true) {
-              // File must not have a specified content
-              (matchFiles[file] as RegExp[]).forEach(
-                (content): void => {
-                  const _file = file.substring(1);
-                  it(`  ${_file} has not the content ${content}`, (): void => {
-                    assert.noFileContent(_file, content);
-                  });
-                }
-              );
-            } else {
-              // File must differ from a snapshot
-              throw new Error("path to file needed");
+        if (file[0] !== "!") {
+          (matchFiles[file] as RegExp[]).forEach(
+            (content): void => {
+              it(`${file} has the expected content ${content}`, (): void => {
+                assert.fileContent(file, content);
+              });
             }
-          } else {
-            throw new Error(`{${file}: falsy} is meaningless`);
-          }
+          );
+        } else {
+          (matchFiles[file] as RegExp[]).forEach(
+            (content): void => {
+              const _file = file.substring(1);
+              it(`${_file} has not the content ${content}`, (): void => {
+                assert.noFileContent(_file, content);
+              });
+            }
+          );
         }
+      }
+    );
+
+    snapshotFiles.forEach(
+      (file): void => {
+        const snapshotFile = path.join(hashDir, file);
+
+        it(`${file} has the expected content ${path.join(
+          path.relative(snapshotDir, hashDir),
+          file
+        )}`, async (): Promise<void> => {
+          const diffText = await diffSnapshotFile(file, hashDir);
+
+          if (diffText !== "") {
+            if (process.argv.includes("--update-snapshots")) {
+              console.log(`
+   Updating snapshot:
+   ${diffText}
+   `);
+              await fs.copy(file, snapshotFile);
+            } else {
+              throw new Error(diffText);
+            }
+          }
+        });
       }
     );
   });

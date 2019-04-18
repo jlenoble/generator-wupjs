@@ -6,6 +6,7 @@ const sortTests = (assertContent: {
   matchFiles: Options;
   snapshotFiles: string[];
   expectedFiles: string[];
+  rejectedFiles: string[];
 } => {
   const matchFiles: { [k: string]: RegExp[] } = {
     ".yo-rc.json": [
@@ -17,6 +18,7 @@ const sortTests = (assertContent: {
   };
 
   const expectedFiles: Set<string> = new Set([".yo-rc.json"]);
+  const rejectedFiles: Set<string> = new Set();
   const snapshotFiles: Set<string> = new Set();
 
   if (Array.isArray(assertContent)) {
@@ -42,7 +44,11 @@ const sortTests = (assertContent: {
           snapshotFiles.add(file);
         }
 
-        expectedFiles.add(file);
+        if (assertContent[file] !== false) {
+          expectedFiles.add(file);
+        } else {
+          rejectedFiles.add(file);
+        }
       }
     );
   }
@@ -50,7 +56,8 @@ const sortTests = (assertContent: {
   return {
     matchFiles,
     snapshotFiles: Array.from(snapshotFiles),
-    expectedFiles: Array.from(expectedFiles)
+    expectedFiles: Array.from(expectedFiles),
+    rejectedFiles: Array.from(rejectedFiles)
   };
 };
 
