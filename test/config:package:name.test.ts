@@ -2,8 +2,7 @@ import testGenerator from "./common/test-generator";
 
 testGenerator({
   title: "Setting a default package name",
-  command: "yo wupjs:config:package:name",
-  prompt: {}
+  command: "yo wupjs:config:package:name"
 });
 
 testGenerator({

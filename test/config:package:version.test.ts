@@ -2,8 +2,7 @@ import testGenerator from "./common/test-generator";
 
 testGenerator({
   title: "Adding a default package version",
-  command: "yo wupjs:config:package:version",
-  prompt: {}
+  command: "yo wupjs:config:package:version"
 });
 
 testGenerator({
