@@ -2,6 +2,28 @@ import fs from "fs-extra";
 import path from "path";
 import chalk from "chalk";
 import del from "del";
+import conflict from "detect-conflict";
+import { diffLines } from "diff";
+
+export async function addMissingFilesToSnapshot(
+  files: string[],
+  snapshots: string[],
+  scratchDir: string,
+  hashDir: string
+): Promise<void> {
+  const hash = path.basename(hashDir);
+
+  for (const file of snapshots) {
+    if (!files.includes(file)) {
+      console.log(
+        chalk.yellow(
+          `Adding missing ${file} to snapshot ${hash}, please review`
+        )
+      );
+      await fs.copy(path.join(scratchDir, file), path.join(hashDir, file));
+    }
+  }
+}
 
 export async function createSnapshotIfMissing(
   scratchDir: string,
@@ -14,6 +36,30 @@ export async function createSnapshotIfMissing(
     console.log(chalk.yellow(`Creating snapshot ${hash}, please review`));
     await fs.copy(scratchDir, hashDir);
   }
+}
+
+export async function diffSnapshotFile(
+  filename: string,
+  hashDir: string
+): Promise<string> {
+  const snapshotFile = path.join(hashDir, filename);
+  const snapshotBuffer = await fs.readFile(snapshotFile);
+
+  let diffText = "";
+
+  if (conflict(filename, snapshotBuffer)) {
+    const textBuffer = await fs.readFile(filename);
+    const diff = diffLines(snapshotBuffer.toString(), textBuffer.toString());
+
+    diff.forEach(
+      (line): void => {
+        const color = line.added ? "green" : line.removed ? "red" : "white";
+        diffText += chalk[color](line.value);
+      }
+    );
+  }
+
+  return diffText;
 }
 
 export async function removeUnexpectedFilesFromSnapshot(
@@ -32,26 +78,6 @@ export async function removeUnexpectedFilesFromSnapshot(
       );
 
       await del(path.join(hashDir, file), { force: true });
-    }
-  }
-}
-
-export async function addMissingFilesToSnapshot(
-  files: string[],
-  snapshots: string[],
-  scratchDir: string,
-  hashDir: string
-): Promise<void> {
-  const hash = path.basename(hashDir);
-
-  for (const file of snapshots) {
-    if (!files.includes(file)) {
-      console.log(
-        chalk.yellow(
-          `Adding missing ${file} to snapshot ${hash}, please review`
-        )
-      );
-      await fs.copy(path.join(scratchDir, file), path.join(hashDir, file));
     }
   }
 }

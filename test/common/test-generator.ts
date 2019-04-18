@@ -9,12 +9,11 @@ import helpers from "yeoman-test";
 import parseArgs from "minimist";
 import objectHash from "object-hash";
 import chalk from "chalk";
-import conflict from "detect-conflict";
-import { diffLines } from "diff";
 import defineTests from "./define-tests";
 import { assertSameFileNames } from "./assert";
 import {
   addMissingFilesToSnapshot,
+  diffSnapshotFile,
   createSnapshotIfMissing,
   removeUnexpectedFilesFromSnapshot
 } from "./snapshots";
@@ -168,25 +167,9 @@ If this is fine, you can update your snapshot with: gulp update-snapshots
               path.relative(snapshotDir, hashDir),
               file
             )}`, async (): Promise<void> => {
-              const snapshot = await fs.readFile(snapshotFile);
+              const diffText = await diffSnapshotFile(file, hashDir);
 
-              if (conflict(file, snapshot)) {
-                const text = await fs.readFile(file);
-                const diff = diffLines(snapshot.toString(), text.toString());
-
-                let diffText = "";
-
-                diff.forEach(
-                  (line): void => {
-                    const color = line.added
-                      ? "green"
-                      : line.removed
-                      ? "red"
-                      : "white";
-                    diffText += chalk[color](line.value);
-                  }
-                );
-
+              if (diffText !== "") {
                 if (process.argv.includes("--update-snapshots")) {
                   console.log(`
 Updating snapshot:
