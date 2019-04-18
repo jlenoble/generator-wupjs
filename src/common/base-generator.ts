@@ -20,7 +20,7 @@ export default class BaseGenerator extends Generator
 
   public static reset(): void {
     if (config) {
-      config.reset();
+      (config as Config).reset();
       config = null;
     }
 
@@ -86,7 +86,7 @@ export default class BaseGenerator extends Generator
 
     Object.keys(props).forEach(
       (name): void => {
-        config.addProp(name, props[name]);
+        (config as Config).addProp(name, props[name]);
       }
     );
 
@@ -97,7 +97,7 @@ export default class BaseGenerator extends Generator
     if (BaseGenerator.calledGenerator === this) {
       let prompt = true;
 
-      for (const { generator } of config.generators()) {
+      for (const { generator } of (config as Config).generators()) {
         if (generator === this) {
           // All ancestors have been treated, now dealing with descendants:
           // Stop prompting the user but configure using the gathered parameters.
@@ -134,11 +134,11 @@ redundant prompting.
   }
 
   public getGen(name: GenName): BaseGenerator | undefined {
-    return config.getGen(name);
+    return (config as Config).getGen(name);
   }
 
   public getProp(name: PropName): PropValue | undefined {
-    return config.getProp(name);
+    return (config as Config).getProp(name);
   }
 
   public setProp(name: PropName | Props, value?: PropValue): this {
@@ -154,7 +154,7 @@ redundant prompting.
 
     Object.keys(props).forEach(
       (name): void => {
-        config.setProp(name, props[name]);
+        (config as Config).setProp(name, props[name]);
       }
     );
 
