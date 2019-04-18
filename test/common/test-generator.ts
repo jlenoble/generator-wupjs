@@ -23,7 +23,7 @@ type Options = Wup.Options;
 const testGenerator = (_options: {
   title: string;
   command: string;
-  prompt: Options;
+  prompt?: Options;
   assertContent?: { [file: string]: RegExp[] | true };
 }): void => {
   const title = _options.title;
