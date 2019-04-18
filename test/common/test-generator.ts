@@ -24,7 +24,8 @@ const testGenerator = (_options: {
   title: string;
   command: string;
   prompt?: Options;
-  assertContent?: { [file: string]: RegExp[] | true };
+  assertContent?: { [file: string]: RegExp[] | (() => RegExp[]) | true };
+  expectInvalid?: string[];
 }): void => {
   const title = _options.title;
   const command = _options.command;
@@ -111,49 +112,69 @@ const testGenerator = (_options: {
       _options.assertContent
     );
 
+    Object.keys(assertContent).forEach(
+      (key): void => {
+        if (typeof assertContent[key] === "function") {
+          assertContent[key] = (assertContent[key] as Function)();
+        }
+      }
+    );
+
+    const invalidFiles = (_options.expectInvalid || []).concat();
+
     const {
       matchFiles,
       snapshotFiles,
       expectedFiles,
       noFiles
-    } = extractTestParameters(assertContent);
-
-    it("should create only the expected files", async (): Promise<void> => {
-      let files = await fs.readdir(scratchDir);
-
-      assertSameFileNames(files, expectedFiles);
-
-      await createSnapshotIfMissing(scratchDir, hashDir);
-
-      files = await fs.readdir(hashDir);
-
-      try {
-        assertSameFileNames(files, expectedFiles);
-      } catch (e) {
-        if (process.argv.includes("--update-snapshots")) {
-          await Promise.all([
-            addMissingFilesToSnapshot(
-              files,
-              expectedFiles,
-              scratchDir,
-              hashDir
-            ),
-            removeUnexpectedFilesFromSnapshot(files, expectedFiles, hashDir)
-          ]);
-        } else {
-          throw new Error(
-            chalk.red(`
-Unexpected or missing file(s) in snapshot directory ${chalk.yellow(
-              hash
-            )}, please review.
-If this is fine, you can update your snapshot with: gulp update-snapshots
-`)
-          );
-        }
-      }
+    } = extractTestParameters(assertContent as {
+      [k: string]: RegExp[] | true;
     });
 
-    expectedFiles.forEach(
+    const validInput = invalidFiles.length === 0;
+
+    if (validInput) {
+      it("should create only the expected files", async (): Promise<void> => {
+        let files = await fs.readdir(scratchDir);
+
+        assertSameFileNames(files, expectedFiles);
+
+        await createSnapshotIfMissing(scratchDir, hashDir);
+
+        files = await fs.readdir(hashDir);
+
+        try {
+          assertSameFileNames(files, expectedFiles);
+        } catch (e) {
+          if (process.argv.includes("--update-snapshots")) {
+            await Promise.all([
+              addMissingFilesToSnapshot(
+                files,
+                expectedFiles,
+                scratchDir,
+                hashDir
+              ),
+              removeUnexpectedFilesFromSnapshot(files, expectedFiles, hashDir)
+            ]);
+          } else {
+            throw new Error(
+              chalk.red(`
+Unexpected or missing file(s) in snapshot directory ${chalk.yellow(
+                hash
+              )}, please review.
+If this is fine, you can update your snapshot with: gulp update-snapshots
+`)
+            );
+          }
+        }
+      });
+    }
+
+    const filter = (file: string): boolean => {
+      return !invalidFiles.includes(file);
+    };
+
+    expectedFiles.filter(filter).forEach(
       (file): void => {
         it(`should create a ${file} file`, (): void => {
           assert.file(file);
@@ -161,7 +182,7 @@ If this is fine, you can update your snapshot with: gulp update-snapshots
       }
     );
 
-    noFiles.forEach(
+    noFiles.filter(filter).forEach(
       (file): void => {
         it(`shouldn't create a ${file} file`, (): void => {
           assert.noFile(file);
@@ -171,10 +192,12 @@ If this is fine, you can update your snapshot with: gulp update-snapshots
 
     Object.keys(matchFiles).forEach(
       (file): void => {
+        const tag = invalidFiles.includes(file) ? "error" : "content";
+
         if (file[0] !== "!") {
           (matchFiles[file] as RegExp[]).forEach(
             (content): void => {
-              it(`${file} has the expected content ${content}`, (): void => {
+              it(`${file} has the expected ${tag} ${content}`, (): void => {
                 assert.fileContent(file, content);
               });
             }
@@ -183,7 +206,7 @@ If this is fine, you can update your snapshot with: gulp update-snapshots
           (matchFiles[file] as RegExp[]).forEach(
             (content): void => {
               const _file = file.substring(1);
-              it(`${_file} has not the content ${content}`, (): void => {
+              it(`${_file} has not the ${tag} ${content}`, (): void => {
                 assert.noFileContent(_file, content);
               });
             }
@@ -192,30 +215,32 @@ If this is fine, you can update your snapshot with: gulp update-snapshots
       }
     );
 
-    snapshotFiles.forEach(
-      (file): void => {
-        const snapshotFile = path.join(hashDir, file);
+    if (validInput) {
+      snapshotFiles.forEach(
+        (file): void => {
+          const snapshotFile = path.join(hashDir, file);
 
-        it(`${file} has the expected content ${path.join(
-          path.relative(snapshotDir, hashDir),
-          file
-        )}`, async (): Promise<void> => {
-          const diffText = await diffSnapshotFile(file, hashDir);
+          it(`${file} has the expected content ${path.join(
+            path.relative(snapshotDir, hashDir),
+            file
+          )}`, async (): Promise<void> => {
+            const diffText = await diffSnapshotFile(file, hashDir);
 
-          if (diffText !== "") {
-            if (process.argv.includes("--update-snapshots")) {
-              console.log(`
+            if (diffText !== "") {
+              if (process.argv.includes("--update-snapshots")) {
+                console.log(`
 Updating snapshot:
 ${diffText}
 `);
-              await fs.copy(file, snapshotFile);
-            } else {
-              throw new Error(diffText);
+                await fs.copy(file, snapshotFile);
+              } else {
+                throw new Error(diffText);
+              }
             }
-          }
-        });
-      }
-    );
+          });
+        }
+      );
+    }
   });
 };
 
