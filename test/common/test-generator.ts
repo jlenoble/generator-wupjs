@@ -131,7 +131,14 @@ const testGenerator = (_options: {
             removeUnexpectedFilesFromSnapshot(files, snapshots, hashDir)
           ]);
         } else {
-          throw e;
+          throw new Error(
+            chalk.red(`
+Unexpected or missing file(s) in snapshot directory ${chalk.yellow(
+              hash
+            )}, please review.
+If this is fine, you can update your snapshot with: gulp update-snapshots
+`)
+          );
         }
       }
     });
