@@ -2,8 +2,12 @@ type Options = Wup.Options;
 
 const sortTests = (assertContent: {
   [file: string]: RegExp[] | true;
-}): { tests: Options; snapshots: string[] } => {
-  const tests: { [k: string]: RegExp[] | true } = {
+}): {
+  matchFiles: Options;
+  snapshotFiles: string[];
+  expectedFiles: string[];
+} => {
+  const matchFiles: { [k: string]: RegExp[] } = {
     ".yo-rc.json": [
       /"createdWith": "\d+\.\d+\.\d+"/,
       /"modifiedWith": "\d+\.\d+\.\d+"/,
@@ -12,29 +16,42 @@ const sortTests = (assertContent: {
     ]
   };
 
-  const snapshots: Set<string> = new Set([".yo-rc.json"]);
+  const expectedFiles: Set<string> = new Set([".yo-rc.json"]);
+  const snapshotFiles: Set<string> = new Set();
 
   if (Array.isArray(assertContent)) {
-    tests[".yo-rc.json"] = (tests[".yo-rc.json"] as RegExp[]).concat(
+    matchFiles[".yo-rc.json"] = (matchFiles[".yo-rc.json"] as RegExp[]).concat(
       assertContent
     );
   } else {
     Object.keys(assertContent).forEach(
       (file: string): void => {
-        tests[file] = Array.isArray(tests[file])
-          ? (tests[file] as RegExp[]).concat(
-              Array.isArray(assertContent[file])
-                ? (assertContent[file] as RegExp[])
-                : []
-            )
-          : assertContent[file];
+        const patterns = Array.isArray(assertContent[file])
+          ? (assertContent[file] as RegExp[])
+          : [];
 
-        snapshots.add(file[0] !== "!" ? file : file.substring(1));
+        if (patterns.length) {
+          matchFiles[file] = Array.isArray(matchFiles[file])
+            ? (matchFiles[file] as RegExp[]).concat(patterns)
+            : patterns.concat();
+        }
+
+        file = file[0] !== "!" ? file : file.substring(1);
+
+        if (assertContent[file] === true) {
+          snapshotFiles.add(file);
+        }
+
+        expectedFiles.add(file);
       }
     );
   }
 
-  return { tests, snapshots: Array.from(snapshots) };
+  return {
+    matchFiles,
+    snapshotFiles: Array.from(snapshotFiles),
+    expectedFiles: Array.from(expectedFiles)
+  };
 };
 
 export default sortTests;

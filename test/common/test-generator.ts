@@ -110,24 +110,31 @@ const testGenerator = (_options: {
       _options.assertContent
     );
 
-    const { tests, snapshots } = defineTests(assertContent);
+    const { matchFiles, snapshotFiles, expectedFiles } = defineTests(
+      assertContent
+    );
 
     it("creates only the expected files", async (): Promise<void> => {
       let files = await fs.readdir(scratchDir);
 
-      assertSameFileNames(files, snapshots);
+      assertSameFileNames(files, expectedFiles);
 
       await createSnapshotIfMissing(scratchDir, hashDir);
 
       files = await fs.readdir(hashDir);
 
       try {
-        assertSameFileNames(files, snapshots);
+        assertSameFileNames(files, expectedFiles);
       } catch (e) {
         if (process.argv.includes("--update-snapshots")) {
           await Promise.all([
-            addMissingFilesToSnapshot(files, snapshots, scratchDir, hashDir),
-            removeUnexpectedFilesFromSnapshot(files, snapshots, hashDir)
+            addMissingFilesToSnapshot(
+              files,
+              expectedFiles,
+              scratchDir,
+              hashDir
+            ),
+            removeUnexpectedFilesFromSnapshot(files, expectedFiles, hashDir)
           ]);
         } else {
           throw new Error(
@@ -142,17 +149,17 @@ If this is fine, you can update your snapshot with: gulp update-snapshots
       }
     });
 
-    Object.keys(tests).forEach(
+    Object.keys(matchFiles).forEach(
       (file): void => {
-        if (file[0] !== "!" && tests[file]) {
+        if (file[0] !== "!" && matchFiles[file]) {
           // File exists and it matches a specified content or a snapshot
           it(`creates a ${file} file`, (): void => {
             assert.file(file);
           });
 
-          if (tests[file] !== true) {
+          if (matchFiles[file] !== true) {
             // File matches a specified content
-            (tests[file] as RegExp[]).forEach(
+            (matchFiles[file] as RegExp[]).forEach(
               (content): void => {
                 it(`  ${file} has the expected content ${content}`, (): void => {
                   assert.fileContent(file, content);
@@ -184,11 +191,11 @@ ${diffText}
           }
         } else {
           // File doesn't exist, or has not a specified content, or differs from a snapshot
-          if (tests[file]) {
+          if (matchFiles[file]) {
             // File exists but has not a specified content or differs from a snapshot
-            if (tests[file] !== true) {
+            if (matchFiles[file] !== true) {
               // File must not have a specified content
-              (tests[file] as RegExp[]).forEach(
+              (matchFiles[file] as RegExp[]).forEach(
                 (content): void => {
                   const _file = file.substring(1);
                   it(`  ${_file} has not the content ${content}`, (): void => {
