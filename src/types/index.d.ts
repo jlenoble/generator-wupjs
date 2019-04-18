@@ -50,6 +50,12 @@ declare namespace Wup {
     [key: string]: PropValue;
   }
 
+  interface Repository {
+    type: string;
+    url: Url;
+    directory?: RelPath;
+  }
+
   interface BaseGenerator {
     readonly generatorName: GenName;
     composeAll(): void;

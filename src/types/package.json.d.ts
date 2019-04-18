@@ -22,7 +22,7 @@ declare namespace Wup {
       example?: RelPath;
       test?: RelPath;
     };
-    repository: { type: string; url: Url; directory?: RelPath };
+    repository: Repository;
     scripts?: {};
     config?: {};
     dependencies?: Dependencies;
