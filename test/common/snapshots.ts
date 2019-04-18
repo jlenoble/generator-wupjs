@@ -16,7 +16,7 @@ export async function createSnapshotIfMissing(
   }
 }
 
-export async function removeMissingFilesFromSnapshot(
+export async function removeUnexpectedFilesFromSnapshot(
   files: string[],
   snapshots: string[],
   hashDir: string
@@ -27,11 +27,31 @@ export async function removeMissingFilesFromSnapshot(
     if (!snapshots.includes(file)) {
       console.log(
         chalk.yellow(
-          `Removing missing ${file} from snapshot ${hash}, please review`
+          `Removing unexpected ${file} from snapshot ${hash}, please review`
         )
       );
 
       await del(path.join(hashDir, file), { force: true });
+    }
+  }
+}
+
+export async function addMissingFilesToSnapshot(
+  files: string[],
+  snapshots: string[],
+  scratchDir: string,
+  hashDir: string
+): Promise<void> {
+  const hash = path.basename(hashDir);
+
+  for (const file of snapshots) {
+    if (!files.includes(file)) {
+      console.log(
+        chalk.yellow(
+          `Adding missing ${file} to snapshot ${hash}, please review`
+        )
+      );
+      await fs.copy(path.join(scratchDir, file), path.join(hashDir, file));
     }
   }
 }

@@ -14,8 +14,9 @@ import { diffLines } from "diff";
 import defineTests from "./define-tests";
 import { assertSameFileNames } from "./assert";
 import {
+  addMissingFilesToSnapshot,
   createSnapshotIfMissing,
-  removeMissingFilesFromSnapshot
+  removeUnexpectedFilesFromSnapshot
 } from "./snapshots";
 
 type Options = Wup.Options;
@@ -125,19 +126,10 @@ const testGenerator = (_options: {
         assertSameFileNames(files, snapshots);
       } catch (e) {
         if (process.argv.includes("--update-snapshots")) {
-          await removeMissingFilesFromSnapshot(files, snapshots, hashDir);
-
-          for (const key of snapshots) {
-            if (!files.includes(key)) {
-              console.log(
-                chalk.yellow(`Adding ${key} to snapshot ${hash}, please review`)
-              );
-              await fs.copy(
-                path.join(scratchDir, key),
-                path.join(hashDir, key)
-              );
-            }
-          }
+          await Promise.all([
+            addMissingFilesToSnapshot(files, snapshots, scratchDir, hashDir),
+            removeUnexpectedFilesFromSnapshot(files, snapshots, hashDir)
+          ]);
         } else {
           throw e;
         }
