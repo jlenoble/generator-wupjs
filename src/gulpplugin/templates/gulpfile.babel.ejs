@@ -1,9 +1,0 @@
-import gulp from 'gulp';
-import <%- pluginFunc %> from '<%- pluginPath %>';
-
-const test = () => {
-  return gulp.src(<%- pluginSrcGlob %>)
-    .pipe(<%- pluginFunc %>());
-};
-
-gulp.task('default', test);

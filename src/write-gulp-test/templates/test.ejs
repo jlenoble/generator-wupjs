@@ -1,9 +1,0 @@
-<%- imports %>
-const testGlob = <%- testGlob %>;
-
-export const test = <%- gulpMochaCallback %> => {
-  return gulp.src(testGlob)
-    .pipe(mocha())<%- onMochaEnd %>;
-};
-
-gulp.task('test', gulp.series(<%- preTestTask %>, test));
