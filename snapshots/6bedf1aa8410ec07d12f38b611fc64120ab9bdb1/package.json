@@ -1,0 +1,19 @@
+{
+  "name": "awesome-app",
+  "version": "1.2.3",
+  "description": "Some dummy description",
+  "keywords": [
+    "foo",
+    "bar",
+    "quux"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Me Me",
+    "email": "me@example.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/me-me/awesome-app.git"
+  }
+}
