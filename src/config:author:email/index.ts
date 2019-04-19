@@ -47,7 +47,7 @@ export default class AuthorEmail extends Base {
         }
       ];
 
-      this.setProp(await this.prompt(prompts));
+      this.addProp(await this.prompt(prompts));
     }
   }
 }
