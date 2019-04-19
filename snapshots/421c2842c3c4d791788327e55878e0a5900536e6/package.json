@@ -8,5 +8,6 @@
   "author": {
     "name": "John Doe",
     "email": "me@example.com"
-  }
+  },
+  "repository": {}
 }
