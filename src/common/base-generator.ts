@@ -56,19 +56,34 @@ export default class BaseGenerator extends Generator
       BaseGenerator.calledGenerator = this;
     }
 
-    config.addGen(this);
+    (config as Config).addGen(this);
 
     if (BaseGenerator.calledGenerator === this) {
-      config.linkGens("config:auto", generatorName);
+      (config as Config).linkGens("config:auto", generatorName);
     }
 
     for (const genName of willWrite) {
-      config.linkGens(generatorName, genName);
+      (config as Config).linkGens(generatorName, genName);
     }
 
     for (const genName of dependsOn) {
-      config.linkGens(genName, generatorName);
+      (config as Config).linkGens(genName, generatorName);
     }
+
+    this.on(
+      "dependsOn",
+      (name: GenName): void => {
+        (config as Config).linkGens(name, this.generatorName);
+        const calledGen = BaseGenerator.calledGenerator as BaseGenerator;
+        const gen = this.getGen(name) as BaseGenerator;
+
+        gen.destinationRoot(calledGen.destinationRoot());
+
+        // @ts-ignore
+        calledGen._composedWith.length = 0;
+        calledGen.composeAll();
+      }
+    );
 
     this.composeAll();
   }
@@ -118,6 +133,12 @@ export default class BaseGenerator extends Generator
         // for the same parameters.
         // @ts-ignore
         this._composedWith.push(generator);
+
+        // Accessing internals to start gens added after prompting or configuring
+        // @ts-ignore
+        if (this._running && !generator._running) {
+          generator.run();
+        }
       }
     }
   }

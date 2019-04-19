@@ -8,7 +8,12 @@ export default class PackageJson extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "write:package.json",
-        dependsOn: ["config:package", "config:license", "config:author"]
+        dependsOn: [
+          "config:package",
+          "config:license",
+          "config:author",
+          "config:repository"
+        ]
       })
     );
   }
@@ -18,8 +23,9 @@ export default class PackageJson extends Base {
     const _package = this.getProp("config:package") as Wup.Package;
     const license = this.getProp("config:license") as Wup.License;
     const author = this.getProp("config:author") as Wup.Person;
+    const repository = this.getProp("config:repository") as Wup.Repository;
 
-    this.props = { ..._package, license, author };
+    this.props = { ..._package, license, author, repository };
   }
 
   public writing(): void {
