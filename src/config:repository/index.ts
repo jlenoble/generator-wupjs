@@ -1,6 +1,6 @@
 import Base from "../common/base-generator";
 
-export default class GithubUsername extends Base {
+export default class Repository extends Base {
   public constructor(args: string | string[], options: {}) {
     super(
       args,
