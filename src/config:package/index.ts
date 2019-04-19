@@ -12,8 +12,7 @@ export default class Package extends Base {
           "config:package:description",
           "config:package:keywords",
           "config:license" // "config:package:private" depends on it
-        ],
-        willWrite: ["write:package.json"]
+        ]
       })
     );
   }
