@@ -20,6 +20,11 @@ declare namespace Wup {
   type VersionRange = string;
   type YearRange = string;
 
+  interface Bugs {
+    url: Url;
+    email?: Email;
+  }
+
   interface Dependencies {
     [name: string]: VersionRange;
   }

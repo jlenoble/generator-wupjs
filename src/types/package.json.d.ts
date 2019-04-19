@@ -5,7 +5,7 @@ declare namespace Wup {
     description: Description;
     keywords: string[];
     homepage?: Url;
-    bugs?: Url | { url: Url; email?: Email };
+    bugs?: Bugs;
     license: License;
     author: Name | Person;
     contributors?: (Name | Person)[];
