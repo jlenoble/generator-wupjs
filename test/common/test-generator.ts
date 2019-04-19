@@ -219,17 +219,17 @@ If this is fine, you can update your snapshot with: gulp update-snapshots
       snapshotFiles.forEach(
         (file): void => {
           const snapshotFile = path.join(hashDir, file);
+          const filename = path.join(path.relative(snapshotDir, hashDir), file);
 
-          it(`${file} has the expected content ${path.join(
-            path.relative(snapshotDir, hashDir),
-            file
-          )}`, async (): Promise<void> => {
+          it(`${file} has the expected content ${filename}`, async (): Promise<
+            void
+          > => {
             const diffText = await diffSnapshotFile(file, hashDir);
 
             if (diffText !== "") {
               if (process.argv.includes("--update-snapshots")) {
                 console.log(`
-Updating snapshot:
+Updating snapshot ${filename}:
 ${diffText}
 `);
                 await fs.copy(file, snapshotFile);
