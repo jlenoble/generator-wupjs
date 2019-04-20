@@ -11,6 +11,7 @@ export default class Package extends Base {
           "config:package:version",
           "config:package:description",
           "config:package:keywords",
+          "config:package:bugs",
           "config:license" // "config:package:private" depends on it
         ]
       })
@@ -29,7 +30,8 @@ export default class Package extends Base {
       version: this.getProp("config:package:version"),
       private: this.getProp("config:package:private"),
       description: this.getProp("config:package:description"),
-      keywords: this.getProp("config:package:keywords")
+      keywords: this.getProp("config:package:keywords"),
+      bugs: this.getProp("config:package:bugs")
     });
   }
 }
