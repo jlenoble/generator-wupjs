@@ -75,11 +75,9 @@ export default class Languages extends Base {
         {
           type: "checkbox",
           name: this.generatorName + ":extensions",
-          choices: Array.from(choices),
+          choices: Array.from(new Set([defaultChoice, ...choices])),
           message: "Pick the extensions you'll use",
-          default: this.getProp(this.generatorName + ":extensions") || [
-            defaultChoice
-          ]
+          default: [defaultChoice]
         }
       ];
 
