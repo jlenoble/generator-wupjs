@@ -26,8 +26,11 @@ export default class PackageBugsEmail extends Base {
           : "";
 
       if (
-        email &&
-        email.match(/^[\w.%+-]{1,64}@(?:[\w-]{1,63}\.){1,8}[A-Za-z]{2,63}$/)
+        (email &&
+          email.match(
+            /^[\w.%+-]{1,64}@(?:[\w-]{1,63}\.){1,8}[A-Za-z]{2,63}$/
+          )) ||
+        email === ""
       ) {
         this.addProp(this.generatorName, email);
       }
@@ -35,13 +38,34 @@ export default class PackageBugsEmail extends Base {
   }
 
   public async prompting(): Promise<void> {
+    const validate = (email: Email): boolean | string => {
+      if (
+        (email &&
+          email.match(
+            /^[\w.%+-]{1,64}@(?:[\w-]{1,63}\.){1,8}[A-Za-z]{2,63}$/
+          )) ||
+        email === ""
+      ) {
+        return true;
+      }
+
+      return `Invalid email ${email}`;
+    };
+
+    let email = this.getProp("config:package:bugs:email");
+
+    if (!email && email !== "") {
+      email = this.getProp("config:author:email");
+    }
+
     if (this.mustPrompt) {
       const prompts = [
         {
           type: "input",
           name: this.generatorName,
           message: "Email to report bugs to:",
-          default: this.getProp("config:author:email")
+          default: email,
+          validate
         }
       ];
 
