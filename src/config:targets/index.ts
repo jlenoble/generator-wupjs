@@ -17,7 +17,7 @@ export default class Targets extends Base {
 
     this.addProp(
       "config:targets:client",
-      this.config.get("client") || this.config.get("jsx") || false
+      this.config.get("client") || this.getProp("config:languages:jsx") || false
     );
   }
 
@@ -38,7 +38,7 @@ export default class Targets extends Base {
           message: "Which will you target?",
           choices: ["server (Node)", "client (Browsers)", "both"],
           // @ts-ignore
-          default: side && [side]
+          default: side
         }
       ];
 
@@ -50,7 +50,7 @@ export default class Targets extends Base {
           this.addProp(this.generatorName + ":client", true);
           break;
 
-        case "server (Browsers)":
+        case "client (Browsers)":
           this.addProp(this.generatorName + ":server", false);
           this.addProp(this.generatorName + ":client", true);
           break;
