@@ -6,6 +6,7 @@ export default class Repository extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:repository",
+        dependsOn: ["config:github:repository"],
         willWrite: ["write:package.json"]
       })
     );
@@ -25,16 +26,7 @@ export default class Repository extends Base {
         }
       ];
 
-      const answers = await this.prompt(prompts);
-      const type = answers[name];
-
-      switch (type) {
-        case "git":
-        default:
-          this.emit("dependsOn", "config:github:repository");
-      }
-
-      this.addProp(name, type);
+      this.addProp(await this.prompt(prompts));
     }
   }
 
