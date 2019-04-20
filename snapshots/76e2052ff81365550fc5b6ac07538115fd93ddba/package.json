@@ -7,6 +7,9 @@
     "bar",
     "quux"
   ],
+  "bugs": {
+    "url": "https://github.com/johndoe/awesome-app/issues"
+  },
   "license": "MIT",
   "author": {
     "name": "Me Me",

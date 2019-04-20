@@ -4,6 +4,7 @@
   "private": true,
   "description": "Some dummy description",
   "keywords": [],
+  "bugs": {},
   "license": "UNLICENSED",
   "author": {
     "name": "John Doe",
