@@ -6,12 +6,15 @@ export default class PackageBugs extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:package:bugs",
-        dependsOn: ["config:package:bugs:url"] // Don't prompt for email by default
+        dependsOn: ["config:package:bugs:url", "config:package:bugs:email"]
       })
     );
   }
 
-  public configuring(): void {
+  // Misnomer, but allows this gen to be configured ahead of time
+  // as "config:package:bugs:url" depends on "config:repository", messing up
+  // Yeoman run loop order
+  public prompting(): void {
     this.addProp(this.generatorName, {
       url: this.getProp("config:package:bugs:url"),
       email: this.getProp("config:package:bugs:email")
