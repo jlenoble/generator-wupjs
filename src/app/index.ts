@@ -13,6 +13,7 @@ export default class App extends Base {
           "config:author",
           "config:license",
           "config:repository",
+          "config:languages",
           "config:paths"
         ]
       })
