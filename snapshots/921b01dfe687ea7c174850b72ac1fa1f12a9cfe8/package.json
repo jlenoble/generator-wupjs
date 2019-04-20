@@ -8,6 +8,10 @@
     "bar",
     "quux"
   ],
+  "bugs": {
+    "url": "https://github.com/johndoe/awesome-app/issues",
+    "email": "john.doe@example.com"
+  },
   "license": "UNLICENSED",
   "author": {
     "name": "John Doe",

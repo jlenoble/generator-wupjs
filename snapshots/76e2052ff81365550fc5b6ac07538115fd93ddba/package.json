@@ -8,7 +8,8 @@
     "quux"
   ],
   "bugs": {
-    "url": "https://github.com/johndoe/awesome-app/issues"
+    "url": "https://github.com/johndoe/awesome-app/issues",
+    "email": "me@example.com"
   },
   "license": "MIT",
   "author": {
