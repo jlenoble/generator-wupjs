@@ -22,20 +22,20 @@ export default class Targets extends Base {
   }
 
   public async prompting(): Promise<void> {
-    let side = this.getProp(this.generatorName + ":server")
-      ? this.getProp(this.generatorName + ":client")
-        ? "both"
-        : "server (Node)"
-      : this.getProp(this.generatorName + ":client")
-      ? "client (Browsers)"
-      : undefined;
-
     if (this.mustPrompt) {
+      let side = this.getProp(this.generatorName + ":server")
+        ? this.getProp(this.generatorName + ":client")
+          ? "both"
+          : "server (Node)"
+        : this.getProp(this.generatorName + ":client")
+        ? "client (Browsers)"
+        : undefined;
+
       const prompts: Wup.Options[] = [
         {
           type: "list",
           name: this.generatorName + ":side",
-          message: "Which will you target?",
+          message: "Which side of the dev stack will you target?",
           choices: ["server (Node)", "client (Browsers)", "both"],
           // @ts-ignore
           default: side
