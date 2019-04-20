@@ -53,10 +53,10 @@ Upgrade generator-wupjs before proceeding further`
     ) {
       this.addProp(this.generatorName, { createdWith, modifiedWith });
       this.addProp(this.generatorName + ":created", createdWith);
-      this.addProp(this.generatorName + ":modified", modifiedWith);
+      this.addProp(this.generatorName + ":modified", version);
 
       this.config.set("createdWith", createdWith);
-      this.config.set("modifiedWith", modifiedWith);
+      this.config.set("modifiedWith", version);
     } else {
       throw new Error(`Unrecognized or outdated generator-wupjs@${version}`);
     }
