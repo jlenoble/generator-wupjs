@@ -14,6 +14,7 @@ export default class App extends Base {
           "config:license",
           "config:repository",
           "config:languages",
+          "config:targets",
           "config:paths"
         ]
       })
