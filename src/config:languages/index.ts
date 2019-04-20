@@ -13,12 +13,14 @@ export default class Languages extends Base {
 
   public initializing(): void {
     this.addProp(
-      "config:languages:typescript",
+      this.generatorName + ":typescript",
       this.config.get("typescript") || false
     );
-    this.addProp("config:languages:jsx", this.config.get("jsx") || false);
+
+    this.addProp(this.generatorName + ":jsx", this.config.get("jsx") || false);
+
     this.addProp(
-      "config:languages:extensions",
+      this.generatorName + ":extensions",
       this.config.get("extensions") || []
     );
   }
@@ -35,11 +37,6 @@ export default class Languages extends Base {
       ];
 
       this.addProp(await this.prompt(prompts));
-
-      this.config.set(
-        "typescript",
-        this.getProp("config:languages:typescript")
-      );
 
       prompts = [
         {
@@ -59,16 +56,16 @@ export default class Languages extends Base {
       );
       let defaultChoice = ".js";
 
-      if (this.getProp("config:languages:jsx")) {
+      if (this.getProp(this.generatorName + ":jsx")) {
         choices.add(".jsx");
         defaultChoice = ".jsx";
       }
 
-      if (this.getProp("config:languages:typescript")) {
+      if (this.getProp(this.generatorName + ":typescript")) {
         choices.add(".ts");
         defaultChoice = ".ts";
 
-        if (this.getProp("config:languages:jsx")) {
+        if (this.getProp(this.generatorName + ":jsx")) {
           choices.add(".tsx");
           defaultChoice = ".tsx";
         }
@@ -90,12 +87,14 @@ export default class Languages extends Base {
 
       this.config.set(
         "typescript",
-        this.getProp("config:languages:typescript")
+        this.getProp(this.generatorName + ":typescript")
       );
-      this.config.set("jsx", this.getProp("config:languages:jsx"));
+
+      this.config.set("jsx", this.getProp(this.generatorName + ":jsx"));
+
       this.config.set(
         "extensions",
-        this.getProp("config:languages:extensions")
+        this.getProp(this.generatorName + ":extensions")
       );
     }
   }
