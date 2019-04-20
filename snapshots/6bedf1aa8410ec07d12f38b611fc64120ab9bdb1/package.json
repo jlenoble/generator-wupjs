@@ -19,5 +19,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/me-me/awesome-app.git"
+  },
+  "engines": {
+    "node": ">=10.9.0"
   }
 }

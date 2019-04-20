@@ -10,5 +10,8 @@
     "name": "John Doe",
     "email": "me@example.com"
   },
-  "repository": {}
+  "repository": {},
+  "engines": {
+    "node": ">=10.9.0"
+  }
 }

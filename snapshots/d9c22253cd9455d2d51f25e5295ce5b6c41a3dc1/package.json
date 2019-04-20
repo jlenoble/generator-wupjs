@@ -10,5 +10,8 @@
     "name": "François d'Esparbès de Lussan d'Aubeterre",
     "email": "john.doe@example.com"
   },
-  "repository": {}
+  "repository": {},
+  "engines": {
+    "node": ">=10.9.0"
+  }
 }
