@@ -12,7 +12,8 @@ export default class PackageJson extends Base {
           "config:package",
           "config:license",
           "config:author",
-          "config:repository"
+          "config:repository",
+          "config:dependencies"
         ]
       })
     );
@@ -25,8 +26,18 @@ export default class PackageJson extends Base {
     const author = this.getProp("config:author") as Wup.Person;
     const repository = this.getProp("config:repository") as Wup.Repository;
     const engines = { node: ">=" + process.version.substring(1) };
+    const dependencies = this.getProp(
+      "config:dependencies"
+    ) as Wup.Dependencies[];
 
-    this.props = { ..._package, license, author, repository, engines };
+    this.props = {
+      ..._package,
+      license,
+      author,
+      repository,
+      engines,
+      ...dependencies
+    };
   }
 
   public writing(): void {
