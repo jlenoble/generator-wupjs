@@ -8,7 +8,7 @@ export default class Paths extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:paths",
-        willWrite: ["write:package.json"]
+        willWrite: ["write:package.json", "write:src"]
       })
     );
   }

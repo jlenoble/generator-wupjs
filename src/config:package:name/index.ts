@@ -6,7 +6,7 @@ export default class PackageName extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:package:name",
-        willWrite: ["write:package.json"]
+        willWrite: ["write:package.json", "write:src"]
       })
     );
   }

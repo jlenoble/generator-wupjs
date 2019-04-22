@@ -9,7 +9,7 @@ export default class Modules extends Base {
       Object.assign({}, options, {
         generatorName: "config:modules",
         dependsOn: ["config:targets"],
-        willWrite: ["write:package.json"]
+        willWrite: ["write:package.json", "write:src"]
       })
     );
   }
