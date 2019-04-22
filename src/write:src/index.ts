@@ -1,4 +1,5 @@
 import upperCamelCase from "uppercamelcase";
+import path from "path";
 import Base from "../common/base-generator";
 
 type Name = Wup.Name;
@@ -12,6 +13,7 @@ interface Props {
   testFiles: Path[];
   relPath: Path;
   className: Name;
+  extensions: Path[];
 }
 
 export default class Src extends Base {
@@ -39,22 +41,22 @@ export default class Src extends Base {
 
     const files =
       extensions.length > 1
-        ? extensions.map((ext): string => `${ext.substring(1)}/index`)
+        ? extensions.map((ext): string => path.join(ext.substring(1), "index"))
         : ["index"];
 
     const srcFiles =
       extensions.length > 1
         ? extensions.map(
-            (ext): string => `${srcDir}/${ext.substring(1)}/index${ext}`
+            (ext): string => path.join(srcDir, ext.substring(1), `index${ext}`)
           )
-        : [`${srcDir}/index${extensions[0]}`];
+        : [path.join(srcDir, `index${extensions[0]}`)];
 
     const testFiles =
       extensions.length > 1
         ? extensions.map(
-            (ext): string => `${testDir}/${ext.substring(1)}/index.test${ext}`
+            (ext): string => path.join(testDir, ext.substring(1), `index${ext}`)
           )
-        : [`${testDir}/index.test${extensions[0]}`];
+        : [path.join(testDir, `index.test${extensions[0]}`)];
 
     const relPath = extensions.length > 1 ? "../.." : "..";
 
@@ -69,13 +71,15 @@ export default class Src extends Base {
       srcFiles,
       testFiles,
       relPath,
-      className
+      className,
+      extensions
     };
   }
 
   public writing(): void {
     const props = this.props as Props;
     const files = props.files;
+    const extensions = props.extensions;
 
     props.srcFiles.forEach(
       (file): void => {
@@ -90,7 +94,11 @@ export default class Src extends Base {
     props.testFiles.forEach(
       (file, i): void => {
         this.fs.copyTpl(
-          this.templatePath("class.test.ejs"),
+          this.templatePath(
+            extensions.length > 1
+              ? path.join(extensions[i], "class.test.ejs")
+              : "class.test.ejs"
+          ),
           this.destinationPath(file),
           { ...props, file: files[i] }
         );

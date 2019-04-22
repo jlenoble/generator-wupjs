@@ -1,0 +1,14 @@
+import { expect } from "chai";
+import <%- className %> from "<%- relPath %>/<%- srcDir %>/<%- file %>";
+
+describe("Testing <%- className %>", () => {
+  const defaultArgs = [];
+
+  it("Class <%- className %> can be instanciated", () => {
+    expect(
+      () => {
+        new <%- className %>(...defaultArgs);
+      }
+    ).not.to.throw();
+  });
+});
