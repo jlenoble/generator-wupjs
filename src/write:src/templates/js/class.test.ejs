@@ -5,10 +5,8 @@ describe("Testing <%- className %>", () => {
   const defaultArgs = [];
 
   it("Class <%- className %> can be instanciated", () => {
-    expect(
-      () => {
-        new <%- className %>(...defaultArgs);
-      }
-    ).not.to.throw();
+    expect(() => {
+      new <%- className %>(...defaultArgs);
+    }).not.to.throw();
   });
 });
