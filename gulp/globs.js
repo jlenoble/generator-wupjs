@@ -33,7 +33,7 @@ export const testGlob = join(testDir, stemSrcGlob);
 
 export const testBuildGlob = join(buildDir, "test", "**/*.js");
 export const generateGlob = join(generatorsDir, "**/*.js");
-export const templateGlob = join(srcDir, "**/templates/*");
+export const templateGlob = join(srcDir, "**/templates/**");
 
 export const allSrcGlob = srcGlob.concat(testGlob);
 export const allBuildGlob = testBuildGlob;
