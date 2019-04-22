@@ -10,6 +10,7 @@ import parseArgs from "minimist";
 import objectHash from "object-hash";
 import chalk from "chalk";
 import extractTestParameters from "./extract-test-parameters";
+import { readdir } from "./readdir-recursive";
 import { assertSameFileNames } from "./assert";
 import {
   addMissingFilesToSnapshot,
@@ -135,13 +136,13 @@ const testGenerator = (_options: {
 
     if (validInput) {
       it("should create only the expected files", async (): Promise<void> => {
-        let files = await fs.readdir(scratchDir);
+        let files = await readdir(scratchDir);
 
         assertSameFileNames(files, expectedFiles);
 
         await createSnapshotIfMissing(scratchDir, hashDir);
 
-        files = await fs.readdir(hashDir);
+        files = await readdir(hashDir);
 
         try {
           assertSameFileNames(files, expectedFiles);
