@@ -59,6 +59,9 @@ export default class Languages extends Base {
       if (this.getProp(this.generatorName + ":jsx")) {
         choices.add(".jsx");
         defaultChoice = ".jsx";
+      } else {
+        choices.delete(".jsx");
+        choices.delete(".tsx");
       }
 
       if (this.getProp(this.generatorName + ":typescript")) {
@@ -69,6 +72,8 @@ export default class Languages extends Base {
           choices.add(".tsx");
           defaultChoice = ".tsx";
         }
+      } else {
+        choices.delete(".ts");
       }
 
       prompts = [
