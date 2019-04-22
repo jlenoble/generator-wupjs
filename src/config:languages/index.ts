@@ -51,29 +51,29 @@ export default class Languages extends Base {
 
       const choices: Set<string> = new Set(
         (this.getProp(this.generatorName + ":extensions") as string[]).concat([
-          ".js"
+          "js"
         ])
       );
-      let defaultChoice = ".js";
+      let defaultChoice = "js";
 
       if (this.getProp(this.generatorName + ":jsx")) {
-        choices.add(".jsx");
-        defaultChoice = ".jsx";
+        choices.add("jsx");
+        defaultChoice = "jsx";
       } else {
-        choices.delete(".jsx");
-        choices.delete(".tsx");
+        choices.delete("jsx");
+        choices.delete("tsx");
       }
 
       if (this.getProp(this.generatorName + ":typescript")) {
-        choices.add(".ts");
-        defaultChoice = ".ts";
+        choices.add("ts");
+        defaultChoice = "ts";
 
         if (this.getProp(this.generatorName + ":jsx")) {
-          choices.add(".tsx");
-          defaultChoice = ".tsx";
+          choices.add("tsx");
+          defaultChoice = "tsx";
         }
       } else {
-        choices.delete(".ts");
+        choices.delete("ts");
       }
 
       prompts = [

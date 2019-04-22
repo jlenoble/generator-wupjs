@@ -47,16 +47,17 @@ export default class Src extends Base {
     const srcFiles =
       extensions.length > 1
         ? extensions.map(
-            (ext): string => path.join(srcDir, ext.substring(1), `index${ext}`)
+            (ext): string => path.join(srcDir, ext.substring(1), `index.${ext}`)
           )
-        : [path.join(srcDir, `index${extensions[0]}`)];
+        : [path.join(srcDir, `index.${extensions[0]}`)];
 
     const testFiles =
       extensions.length > 1
         ? extensions.map(
-            (ext): string => path.join(testDir, ext.substring(1), `index${ext}`)
+            (ext): string =>
+              path.join(testDir, ext.substring(1), `index.${ext}`)
           )
-        : [path.join(testDir, `index.test${extensions[0]}`)];
+        : [path.join(testDir, `index.test.${extensions[0]}`)];
 
     const relPath = extensions.length > 1 ? "../.." : "..";
 
@@ -82,9 +83,9 @@ export default class Src extends Base {
     const extensions = props.extensions;
 
     props.srcFiles.forEach(
-      (file): void => {
+      (file, i): void => {
         this.fs.copyTpl(
-          this.templatePath("class.ejs"),
+          this.templatePath(path.join(extensions[i], "class.ejs")),
           this.destinationPath(file),
           props
         );
@@ -94,11 +95,7 @@ export default class Src extends Base {
     props.testFiles.forEach(
       (file, i): void => {
         this.fs.copyTpl(
-          this.templatePath(
-            extensions.length > 1
-              ? path.join(extensions[i], "class.test.ejs")
-              : "class.test.ejs"
-          ),
+          this.templatePath(path.join(extensions[i], "class.test.ejs")),
           this.destinationPath(file),
           { ...props, file: files[i] }
         );
