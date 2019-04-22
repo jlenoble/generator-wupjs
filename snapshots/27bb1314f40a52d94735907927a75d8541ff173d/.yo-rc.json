@@ -1,0 +1,26 @@
+{
+  "generator-wupjs": {
+    "createdWith": "0.6.0-0",
+    "modifiedWith": "0.6.0-0",
+    "createdOn": "2019-04-22T14:51:47.577Z",
+    "modifiedOn": "2019-04-22T14:51:47.577Z",
+    "typescript": true,
+    "jsx": false,
+    "extensions": [
+      "ts"
+    ],
+    "server": true,
+    "client": false,
+    "devModuleTypes": [
+      "ES6"
+    ],
+    "prodModuleTypes": [
+      "CommonJs"
+    ],
+    "srcDir": "src",
+    "testDir": "test",
+    "buildDir": "build",
+    "docDir": "doc",
+    "libDir": "lib"
+  }
+}
