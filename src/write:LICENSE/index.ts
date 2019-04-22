@@ -68,7 +68,7 @@ export default class LICENSE extends Base {
   public writing(): void {
     if (this.props) {
       this.fs.copyTpl(
-        this.templatePath("LICENSE"),
+        this.templatePath("LICENSE.ejs"),
         this.destinationPath("LICENSE"),
         this.props
       );
