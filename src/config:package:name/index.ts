@@ -35,10 +35,12 @@ export default class PackageName extends Base {
               return `The name ends up being part of a URL, an argument on the command line, and a
         folder name. So don't use space characters`;
             } else if (encodeURIComponent(name) !== name) {
-              return `The name ends up being part of a URL, an argument on the command line, and a
+              // Scoped package names are valid
+              if (name[0] !== "@" || name.split("/").length !== 2) {
+                return `The name ends up being part of a URL, an argument on the command line, and a
         folder name. Therefore, the name can’t contain any non-URL-safe characters.`;
+              }
             }
-
             return true;
           }
         }
