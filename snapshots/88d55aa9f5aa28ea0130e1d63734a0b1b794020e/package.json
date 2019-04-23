@@ -8,6 +8,9 @@
     "quux"
   ],
   "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "types": "",
   "bugs": {
     "url": "https://github.com/me-me/awesome-app/issues",
