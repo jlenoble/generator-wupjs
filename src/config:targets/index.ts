@@ -7,7 +7,7 @@ export default class Targets extends Base {
       Object.assign({}, options, {
         generatorName: "config:targets",
         dependsOn: ["config:languages"],
-        willWrite: ["write:package.json"]
+        willWrite: ["write:package.json", "write:gitignore"]
       })
     );
   }
