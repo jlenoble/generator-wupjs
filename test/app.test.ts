@@ -14,6 +14,7 @@ testGenerator({
     "config:github:username": "me-me"
   },
   assertContent: {
+    ".gitignore": true,
     "src/index.js": true,
     "test/index.test.js": true
   }
@@ -34,6 +35,7 @@ testGenerator({
     "config:languages:typescript": true
   },
   assertContent: {
+    ".gitignore": true,
     "src/index.ts": true,
     "test/index.test.ts": true
   }
