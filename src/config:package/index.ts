@@ -12,6 +12,7 @@ export default class Package extends Base {
           "config:package:description",
           "config:package:keywords",
           "config:package:bugs",
+          "config:package:main",
           "config:license" // "config:package:private" depends on it
         ]
       })
@@ -31,6 +32,7 @@ export default class Package extends Base {
       private: this.getProp("config:package:private"),
       description: this.getProp("config:package:description"),
       keywords: this.getProp("config:package:keywords"),
+      main: this.getProp("config:package:main"),
       bugs: this.getProp("config:package:bugs")
     });
   }
