@@ -9,6 +9,7 @@ export default class PackageJson extends Base {
       Object.assign({}, options, {
         generatorName: "write:package.json",
         dependsOn: [
+          "config:dev",
           "config:package",
           "config:license",
           "config:author",
