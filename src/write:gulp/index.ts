@@ -18,9 +18,19 @@ export default class Gulp extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "write:gulp",
-        dependsOn: ["config:paths"]
+        dependsOn: ["config:paths", "config:dependencies"]
       })
     );
+  }
+
+  public initializing(): void {
+    const devDependencies = this.getProp("config:dependencies:dev") as Set<
+      string
+    >;
+    const noTypes = this.getProp("config:dependencies:no-types") as Set<string>;
+
+    devDependencies.add("plumb-gulp").add("autoreload-gulp");
+    noTypes.add("plumb-gulp").add("autoreload-gulp");
   }
 
   public configuring(): void {
