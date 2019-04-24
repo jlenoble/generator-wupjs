@@ -29,6 +29,8 @@
     "node": ">=10.9.0"
   },
   "devDependencies": {
+    "plumb-gulp": "*",
+    "autoreload-gulp": "*",
     "@babel/core": "*",
     "@babel/register": "*",
     "@babel/preset-env": "*",

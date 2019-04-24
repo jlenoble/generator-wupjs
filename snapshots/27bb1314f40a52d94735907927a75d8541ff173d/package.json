@@ -35,7 +35,9 @@
     "@babel/register": "*",
     "@types/gulp": "*",
     "@types/gulp-babel": "*",
+    "autoreload-gulp": "*",
     "gulp": "*",
-    "gulp-babel": "*"
+    "gulp-babel": "*",
+    "plumb-gulp": "*"
   }
 }
