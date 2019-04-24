@@ -14,6 +14,8 @@ export default class ConfigDependencies extends Base {
   }
 
   public initializing(): void {
+    this.addProp(this.generatorName + ":no-types", new Set());
+
     this.addProp(this.generatorName, {
       dependencies: {},
       devDependencies: {},
@@ -28,10 +30,15 @@ export default class ConfigDependencies extends Base {
     }
 
     const set: Set<string> = new Set(dependencies);
+    const noTypes = this.getProp("config:dependencies:no-types") as Set<string>;
 
     dependencies.forEach(
       (dep): void => {
-        if (!dep.includes("@babel/") && !dep.includes("@types/")) {
+        if (
+          !dep.includes("@babel/") &&
+          !dep.includes("@types/") &&
+          !noTypes.has(dep)
+        ) {
           set.add(`@types/${dep}`);
         }
       }
