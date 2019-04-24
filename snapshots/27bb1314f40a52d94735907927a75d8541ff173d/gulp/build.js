@@ -1,4 +1,4 @@
-import {src, dest, lastRun} from "gulp";
+import {src, dest, lastRun, task} from "gulp";
 import babel from "gulp-babel";
 
 const buildDir = "build";
@@ -16,4 +16,4 @@ export const build = () => {
     .pipe(dest(buildDir));
 };
 
-gulp.task("build", build);
+task("build", build);
