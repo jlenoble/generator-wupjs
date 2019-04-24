@@ -27,5 +27,12 @@
   },
   "engines": {
     "node": ">=10.9.0"
+  },
+  "devDependencies": {
+    "@babel/core": "*",
+    "@types/gulp": "*",
+    "@types/gulp-babel": "*",
+    "gulp": "*",
+    "gulp-babel": "*"
   }
 }
