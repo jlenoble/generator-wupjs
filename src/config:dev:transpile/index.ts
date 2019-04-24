@@ -18,6 +18,7 @@ export default class DevTranspile extends Base {
     >;
 
     devDependencies.add("@babel/core");
+    devDependencies.add("@babel/register");
 
     if (this.getProp("config:dev:gulp")) {
       devDependencies.add("gulp-babel");
