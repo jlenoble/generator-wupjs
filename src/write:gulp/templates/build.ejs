@@ -1,0 +1,16 @@
+import {src, dest, lastRun} from "gulp";
+import babel from "gulp-babel";
+
+const buildDir = "<%- buildDir %>";
+const srcGlob = <%- srcGlob %>;
+
+export const build = () => {
+  return src(srcGlob, {
+    base: process.cwd(),
+    since: lastRun(build)
+  })
+    .pipe(babel())
+    .pipe(dest(buildDir));
+};
+
+gulp.task("build", build);

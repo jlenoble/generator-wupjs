@@ -8,7 +8,12 @@ export default class Paths extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:paths",
-        willWrite: ["write:package.json", "write:src", "write:gitignore"]
+        willWrite: [
+          "write:package.json",
+          "write:src",
+          "write:gitignore",
+          "write:gulp"
+        ]
       })
     );
   }
@@ -19,6 +24,7 @@ export default class Paths extends Base {
     this.addProp("config:paths:build", this.config.get("buildDir") || "build");
     this.addProp("config:paths:doc", this.config.get("docDir") || "doc");
     this.addProp("config:paths:lib", this.config.get("libDir") || "lib");
+    this.addProp("config:paths:gulp", this.config.get("gulpDir") || "gulp");
   }
 
   public async prompting(): Promise<void> {
@@ -74,6 +80,7 @@ export default class Paths extends Base {
       this.config.set("buildDir", this.getProp("config:paths:build"));
       this.config.set("docDir", this.getProp("config:paths:doc"));
       this.config.set("libDir", this.getProp("config:paths:lib"));
+      this.config.set("gulpDir", this.getProp("config:paths:gulp"));
     }
   }
 }
