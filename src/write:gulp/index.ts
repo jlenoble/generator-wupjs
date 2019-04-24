@@ -30,7 +30,11 @@ export default class Gulp extends Base {
     >;
     const noTypes = this.getProp("config:dependencies:no-types") as Set<string>;
 
-    devDependencies.add("plumb-gulp").add("autoreload-gulp");
+    devDependencies
+      .add("plumb-gulp")
+      .add("autoreload-gulp")
+      .add("gulp-mocha")
+      .add("chai");
     noTypes.add("plumb-gulp").add("autoreload-gulp");
   }
 
