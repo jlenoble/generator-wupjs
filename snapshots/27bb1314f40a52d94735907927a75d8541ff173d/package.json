@@ -30,6 +30,8 @@
   },
   "devDependencies": {
     "@babel/core": "*",
+    "@babel/preset-env": "*",
+    "@babel/preset-typescript": "*",
     "@babel/register": "*",
     "@types/gulp": "*",
     "@types/gulp-babel": "*",

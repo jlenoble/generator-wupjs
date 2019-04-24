@@ -14,6 +14,7 @@ testGenerator({
     "config:github:username": "me-me"
   },
   assertContent: {
+    ".babelrc": true,
     ".gitignore": true,
     "gulpfile.babel.js": true,
     "gulp/build.js": true,
@@ -37,6 +38,7 @@ testGenerator({
     "config:languages:typescript": true
   },
   assertContent: {
+    ".babelrc": true,
     ".gitignore": true,
     "gulpfile.babel.js": true,
     "gulp/build.js": true,

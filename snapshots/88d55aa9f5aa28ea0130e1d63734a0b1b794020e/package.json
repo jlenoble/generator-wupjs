@@ -31,6 +31,7 @@
   "devDependencies": {
     "@babel/core": "*",
     "@babel/register": "*",
+    "@babel/preset-env": "*",
     "gulp-babel": "*",
     "gulp": "*"
   }
