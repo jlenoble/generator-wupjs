@@ -15,6 +15,8 @@ testGenerator({
   },
   assertContent: {
     ".gitignore": true,
+    "gulpfile.babel.js": true,
+    "gulp/build.js": true,
     "src/index.js": true,
     "test/index.test.js": true
   }
@@ -36,6 +38,8 @@ testGenerator({
   },
   assertContent: {
     ".gitignore": true,
+    "gulpfile.babel.js": true,
+    "gulp/build.js": true,
     "src/index.ts": true,
     "test/index.test.ts": true
   }
