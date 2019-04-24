@@ -7,7 +7,7 @@ export default class DevTranspile extends Base {
       Object.assign({}, options, {
         generatorName: "config:dev:transpile",
         dependsOn: ["config:dependencies:dev"],
-        willWrite: ["write:package.json"]
+        willWrite: ["write:package.json", "write:babelrc"]
       })
     );
   }
@@ -19,6 +19,7 @@ export default class DevTranspile extends Base {
 
     devDependencies.add("@babel/core");
     devDependencies.add("@babel/register");
+    devDependencies.add("@babel/preset-env");
 
     if (this.getProp("config:dev:gulp")) {
       devDependencies.add("gulp-babel");

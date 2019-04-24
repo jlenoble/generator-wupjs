@@ -37,6 +37,8 @@ export default class ConfigDependencies extends Base {
       }
     );
 
+    set.add("@babel/preset-typescript");
+
     return new Set([...set].sort());
   }
 
