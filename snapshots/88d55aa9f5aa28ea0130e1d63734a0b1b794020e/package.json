@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@babel/core": "*",
+    "@babel/register": "*",
     "gulp-babel": "*",
     "gulp": "*"
   }
