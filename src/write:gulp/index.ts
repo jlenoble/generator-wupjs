@@ -35,6 +35,7 @@ export default class Gulp extends Base {
       .add("plumb-gulp")
       .add("autoreload-gulp")
       .add("gulp-sourcemaps")
+      .add("gulp-cached")
       .add("del")
       .add("gulp-mocha")
       .add("chai");
