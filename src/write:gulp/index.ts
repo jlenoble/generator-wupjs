@@ -33,13 +33,17 @@ export default class Gulp extends Base {
     devDependencies
       .add("plumb-gulp")
       .add("autoreload-gulp")
+      .add("del")
       .add("gulp-mocha")
       .add("chai");
-    noTypes.add("plumb-gulp").add("autoreload-gulp");
+    noTypes
+      .add("plumb-gulp")
+      .add("autoreload-gulp")
+      .add("del");
   }
 
   public configuring(): void {
-    const gulpIncludes = ["build", "test"];
+    const gulpIncludes = ["build", "clean", "test"];
 
     const buildDir = this.getProp("config:paths:build") as Path;
     const srcDir = this.getProp("config:paths:src") as Path;
