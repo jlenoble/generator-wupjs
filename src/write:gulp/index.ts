@@ -9,6 +9,7 @@ interface Props {
   gulpDir: string;
   srcGlob: string;
   testGlob: string;
+  buildGlob: string;
 }
 
 export default class Gulp extends Base {
@@ -43,7 +44,7 @@ export default class Gulp extends Base {
   }
 
   public configuring(): void {
-    const gulpIncludes = ["build", "clean", "test"];
+    const gulpIncludes = ["build", "clean", "test", "watch"];
 
     const buildDir = this.getProp("config:paths:build") as Path;
     const srcDir = this.getProp("config:paths:src") as Path;
@@ -68,12 +69,22 @@ export default class Gulp extends Base {
       2
     );
 
+    const buildGlob = JSON.stringify(
+      [
+        path.join(buildDir, srcDir, "**/*.js"),
+        path.join(buildDir, testDir, "**/*.js")
+      ],
+      undefined,
+      2
+    );
+
     this.props = {
       gulpIncludes,
       buildDir,
       gulpDir,
       srcGlob,
-      testGlob
+      testGlob,
+      buildGlob
     };
   }
 

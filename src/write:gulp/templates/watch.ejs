@@ -1,0 +1,14 @@
+import {task, watch} from "gulp";
+import {build} from './build';
+import {test} from './test';
+
+const srcGlob = <%- srcGlob %>;
+const buildGlob = <%- buildGlob %>;
+
+export const startWatching = done => {
+  watch(srcGlob, build);
+  watch(buildGlob, test);
+  done();
+};
+
+task("watch", startWatching);
