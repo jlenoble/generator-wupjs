@@ -32,6 +32,7 @@
     "plumb-gulp": "*",
     "autoreload-gulp": "*",
     "gulp-sourcemaps": "*",
+    "gulp-cached": "*",
     "del": "*",
     "gulp-mocha": "*",
     "chai": "*",

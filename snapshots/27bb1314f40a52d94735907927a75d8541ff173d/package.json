@@ -36,6 +36,7 @@
     "@types/chai": "*",
     "@types/gulp": "*",
     "@types/gulp-babel": "*",
+    "@types/gulp-cached": "*",
     "@types/gulp-mocha": "*",
     "@types/gulp-sourcemaps": "*",
     "autoreload-gulp": "*",
@@ -43,6 +44,7 @@
     "del": "*",
     "gulp": "*",
     "gulp-babel": "*",
+    "gulp-cached": "*",
     "gulp-mocha": "*",
     "gulp-sourcemaps": "*",
     "plumb-gulp": "*"
