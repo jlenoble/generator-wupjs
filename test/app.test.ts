@@ -21,6 +21,7 @@ testGenerator({
     "gulp/clean.js": true,
     "gulp/test.js": true,
     "gulp/watch.js": true,
+    "gulp/tdd.js": true,
     "src/index.js": true,
     "test/index.test.js": true
   }
@@ -48,6 +49,7 @@ testGenerator({
     "gulp/clean.js": true,
     "gulp/test.js": true,
     "gulp/watch.js": true,
+    "gulp/tdd.js": true,
     "src/index.ts": true,
     "test/index.test.ts": true
   }

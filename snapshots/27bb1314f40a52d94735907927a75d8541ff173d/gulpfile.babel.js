@@ -6,7 +6,8 @@ import "./gulp/build";
 import "./gulp/clean";
 import "./gulp/test";
 import "./gulp/watch";
+import "./gulp/tdd";
 
 usePlumbedGulpSrc();
 
-gulp.task("default", autoreload("build"));
+gulp.task("default", autoreload("tdd"));

@@ -1,6 +1,6 @@
 import {task, watch} from "gulp";
-import {build} from './build';
-import {test} from './test';
+import {build} from "./build";
+import {test} from "./test";
 
 const srcGlob = [
   "src/**/*.js",
