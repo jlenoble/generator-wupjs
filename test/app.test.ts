@@ -18,6 +18,7 @@ testGenerator({
     ".gitignore": true,
     "gulpfile.babel.js": true,
     "gulp/build.js": true,
+    "gulp/clean.js": true,
     "gulp/test.js": true,
     "src/index.js": true,
     "test/index.test.js": true
@@ -43,6 +44,7 @@ testGenerator({
     ".gitignore": true,
     "gulpfile.babel.js": true,
     "gulp/build.js": true,
+    "gulp/clean.js": true,
     "gulp/test.js": true,
     "src/index.ts": true,
     "test/index.test.ts": true

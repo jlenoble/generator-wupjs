@@ -39,6 +39,7 @@
     "@types/gulp-mocha": "*",
     "autoreload-gulp": "*",
     "chai": "*",
+    "del": "*",
     "gulp": "*",
     "gulp-babel": "*",
     "gulp-mocha": "*",
