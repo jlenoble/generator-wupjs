@@ -12,7 +12,15 @@ export default class PackageName extends Base {
   }
 
   public initializing(): void {
-    this.addProp(this.generatorName, this.appname.replace(/\s+/g, "-"));
+    try {
+      const name: string = this.fs.readJSON(
+        this.destinationPath("package.json")
+      ).name;
+
+      this.addProp(this.generatorName, name);
+    } catch (e) {
+      this.addProp(this.generatorName, this.appname.replace(/\s+/g, "-"));
+    }
   }
 
   public async prompting(): Promise<void> {

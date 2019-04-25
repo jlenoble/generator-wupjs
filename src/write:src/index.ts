@@ -61,9 +61,9 @@ export default class Src extends Base {
 
     const relPath = extensions.length > 1 ? "../.." : "..";
 
-    const className = upperCamelCase(this.getProp(
-      "config:package:name"
-    ) as Name);
+    const className = upperCamelCase(
+      (this.getProp("config:package:name") as Name).replace(/^@[-.\w]+\//, "")
+    );
 
     this.props = {
       srcDir,
