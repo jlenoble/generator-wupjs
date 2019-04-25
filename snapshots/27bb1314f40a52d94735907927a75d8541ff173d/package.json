@@ -38,6 +38,7 @@
     "@types/gulp-babel": "*",
     "@types/gulp-cached": "*",
     "@types/gulp-mocha": "*",
+    "@types/gulp-newer": "*",
     "@types/gulp-sourcemaps": "*",
     "autoreload-gulp": "*",
     "chai": "*",
@@ -46,6 +47,7 @@
     "gulp-babel": "*",
     "gulp-cached": "*",
     "gulp-mocha": "*",
+    "gulp-newer": "*",
     "gulp-sourcemaps": "*",
     "plumb-gulp": "*"
   }

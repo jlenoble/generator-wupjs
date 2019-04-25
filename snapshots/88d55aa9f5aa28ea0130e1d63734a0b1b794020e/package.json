@@ -33,6 +33,7 @@
     "autoreload-gulp": "*",
     "gulp-sourcemaps": "*",
     "gulp-cached": "*",
+    "gulp-newer": "*",
     "del": "*",
     "gulp-mocha": "*",
     "chai": "*",
