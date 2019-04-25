@@ -6,7 +6,7 @@ const testGlob = [
 ];
 
 export const test = () => {
-  return src(testGlob)
+  return src(testGlob, { read: false })
     .pipe(mocha({
       require: ["source-map-support/register"]
     }));
