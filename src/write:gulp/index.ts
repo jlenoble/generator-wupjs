@@ -44,7 +44,7 @@ export default class Gulp extends Base {
   }
 
   public configuring(): void {
-    const gulpIncludes = ["build", "clean", "test", "watch"];
+    const gulpIncludes = ["build", "clean", "test", "watch", "tdd"];
 
     const buildDir = this.getProp("config:paths:build") as Path;
     const srcDir = this.getProp("config:paths:src") as Path;
