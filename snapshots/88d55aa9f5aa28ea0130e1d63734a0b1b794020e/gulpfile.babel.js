@@ -5,6 +5,7 @@ import autoreload from "autoreload-gulp";
 import "./gulp/build";
 import "./gulp/clean";
 import "./gulp/test";
+import "./gulp/watch";
 
 usePlumbedGulpSrc();
 
