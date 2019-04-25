@@ -31,6 +31,8 @@
   "devDependencies": {
     "plumb-gulp": "*",
     "autoreload-gulp": "*",
+    "gulp-mocha": "*",
+    "chai": "*",
     "@babel/core": "*",
     "@babel/register": "*",
     "@babel/preset-env": "*",

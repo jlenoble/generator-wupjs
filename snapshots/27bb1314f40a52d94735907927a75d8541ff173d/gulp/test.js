@@ -1,4 +1,4 @@
-import {src, task} from "gulp";
+import {src, task, series} from "gulp";
 import mocha from "gulp-mocha";
 
 const testGlob = [
@@ -10,4 +10,4 @@ export const test = () => {
     .pipe(mocha());
 };
 
-task("test", gulp.series("build", test));
+task("test", series("build", test));
