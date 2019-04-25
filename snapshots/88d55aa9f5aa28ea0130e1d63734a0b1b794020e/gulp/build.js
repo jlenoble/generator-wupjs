@@ -1,5 +1,6 @@
 import {src, dest, lastRun, task} from "gulp";
 import babel from "gulp-babel";
+import sourcemaps from "gulp-sourcemaps";
 
 const buildDir = "build";
 const srcGlob = [
@@ -12,7 +13,11 @@ export const build = () => {
     base: process.cwd(),
     since: lastRun(build)
   })
+    .pipe(sourcemaps.init())
     .pipe(babel())
+    .pipe(sourcemaps.write(".", {
+      sourceRoot: file => file.cwd
+    }))
     .pipe(dest(buildDir));
 };
 

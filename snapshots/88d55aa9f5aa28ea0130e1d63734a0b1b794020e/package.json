@@ -31,6 +31,7 @@
   "devDependencies": {
     "plumb-gulp": "*",
     "autoreload-gulp": "*",
+    "gulp-sourcemaps": "*",
     "del": "*",
     "gulp-mocha": "*",
     "chai": "*",

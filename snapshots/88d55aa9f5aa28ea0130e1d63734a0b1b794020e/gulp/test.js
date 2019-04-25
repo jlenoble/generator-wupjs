@@ -7,7 +7,9 @@ const testGlob = [
 
 export const test = () => {
   return src(testGlob)
-    .pipe(mocha());
+    .pipe(mocha({
+      require: ["source-map-support/register"]
+    }));
 };
 
 task("test", series("build", test));

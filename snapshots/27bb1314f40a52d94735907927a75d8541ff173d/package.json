@@ -37,12 +37,14 @@
     "@types/gulp": "*",
     "@types/gulp-babel": "*",
     "@types/gulp-mocha": "*",
+    "@types/gulp-sourcemaps": "*",
     "autoreload-gulp": "*",
     "chai": "*",
     "del": "*",
     "gulp": "*",
     "gulp-babel": "*",
     "gulp-mocha": "*",
+    "gulp-sourcemaps": "*",
     "plumb-gulp": "*"
   }
 }
