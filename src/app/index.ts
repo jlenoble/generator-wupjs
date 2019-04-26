@@ -9,6 +9,7 @@ export default class App extends Base {
       Object.assign({}, options, {
         generatorName: "app",
         dependsOn: [
+          "config:dev",
           "config:package",
           "config:author",
           "config:license",
