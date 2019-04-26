@@ -40,9 +40,14 @@
     "@types/gulp-mocha": "*",
     "@types/gulp-newer": "*",
     "@types/gulp-sourcemaps": "*",
+    "@typescript-eslint/eslint-plugin": "*",
+    "@typescript-eslint/parser": "*",
     "autoreload-gulp": "*",
     "chai": "*",
     "del": "*",
+    "eslint-config-google": "*",
+    "eslint-config-prettier": "*",
+    "eslint-plugin-prettier": "*",
     "gulp": "*",
     "gulp-babel": "*",
     "gulp-cached": "*",
@@ -50,6 +55,8 @@
     "gulp-mocha": "*",
     "gulp-newer": "*",
     "gulp-sourcemaps": "*",
-    "plumb-gulp": "*"
+    "plumb-gulp": "*",
+    "prettier": "*",
+    "typescript": "*"
   }
 }

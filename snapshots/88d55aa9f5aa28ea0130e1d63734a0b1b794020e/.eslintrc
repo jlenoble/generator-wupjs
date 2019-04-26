@@ -1,5 +1,5 @@
 {
-  "parser": ,
+  "parser": "",
   "parserOptions": {
     "ecmaVersion": 2019,
     "sourceType": "module",
@@ -8,8 +8,7 @@
   "plugins": [],
   "extends": [
   "google",
-  "plugin:prettier/recommended",
-  "prettier/@typescript-eslint"
+  "plugin:prettier/recommended"
 ],
   "rules": {
   "require-jsdoc": [

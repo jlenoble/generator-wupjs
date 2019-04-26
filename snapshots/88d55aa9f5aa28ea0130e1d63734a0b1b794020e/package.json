@@ -42,6 +42,10 @@
     "@babel/register": "*",
     "@babel/preset-env": "*",
     "gulp-babel": "*",
-    "gulp": "*"
+    "gulp": "*",
+    "eslint-config-google": "*",
+    "prettier": "*",
+    "eslint-config-prettier": "*",
+    "eslint-plugin-prettier": "*"
   }
 }
