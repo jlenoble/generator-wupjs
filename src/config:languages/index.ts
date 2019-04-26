@@ -93,6 +93,10 @@ export default class Languages extends Base {
         this.getProp(this.generatorName + ":typescript")
       );
 
+      if (this.config.get("typescript")) {
+        this.addDevDep("typescript", false);
+      }
+
       this.config.set("jsx", this.getProp(this.generatorName + ":jsx"));
 
       this.config.set(
