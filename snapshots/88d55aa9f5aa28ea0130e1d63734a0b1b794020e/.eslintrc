@@ -1,0 +1,22 @@
+{
+  "parser": ,
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "sourceType": "module",
+    "ecmaFeatures": {}
+  },
+  "plugins": [],
+  "extends": [
+  "google",
+  "plugin:prettier/recommended",
+  "prettier/@typescript-eslint"
+],
+  "rules": {
+  "require-jsdoc": [
+    "off"
+  ],
+  "prefer-arrow-callback": [
+    "error"
+  ]
+}
+}

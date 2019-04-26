@@ -7,6 +7,7 @@ import "./gulp/clean";
 import "./gulp/test";
 import "./gulp/watch";
 import "./gulp/tdd";
+import "./gulp/lint";
 
 usePlumbedGulpSrc();
 

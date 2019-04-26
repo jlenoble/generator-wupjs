@@ -46,6 +46,7 @@
     "gulp": "*",
     "gulp-babel": "*",
     "gulp-cached": "*",
+    "gulp-eslint": "*",
     "gulp-mocha": "*",
     "gulp-newer": "*",
     "gulp-sourcemaps": "*",

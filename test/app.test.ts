@@ -1,5 +1,21 @@
 import testGenerator from "./common/test-generator";
 
+const configFiles: Wup.Options = {
+  ".babelrc": true,
+  ".eslintrc": true,
+  ".gitignore": true
+};
+
+const gulpFiles: Wup.Options = {
+  "gulpfile.babel.js": true,
+  "gulp/build.js": true,
+  "gulp/clean.js": true,
+  "gulp/test.js": true,
+  "gulp/watch.js": true,
+  "gulp/tdd.js": true,
+  "gulp/lint.js": true
+};
+
 testGenerator({
   title: "Testing main generator: Vanilla",
   command: "yo wupjs",
@@ -14,14 +30,8 @@ testGenerator({
     "config:github:username": "me-me"
   },
   assertContent: {
-    ".babelrc": true,
-    ".gitignore": true,
-    "gulpfile.babel.js": true,
-    "gulp/build.js": true,
-    "gulp/clean.js": true,
-    "gulp/test.js": true,
-    "gulp/watch.js": true,
-    "gulp/tdd.js": true,
+    ...configFiles,
+    ...gulpFiles,
     "src/index.js": true,
     "test/index.test.js": true
   }
@@ -42,14 +52,8 @@ testGenerator({
     "config:languages:typescript": true
   },
   assertContent: {
-    ".babelrc": true,
-    ".gitignore": true,
-    "gulpfile.babel.js": true,
-    "gulp/build.js": true,
-    "gulp/clean.js": true,
-    "gulp/test.js": true,
-    "gulp/watch.js": true,
-    "gulp/tdd.js": true,
+    ...configFiles,
+    ...gulpFiles,
     "src/index.ts": true,
     "test/index.test.ts": true
   }

@@ -34,6 +34,7 @@
     "gulp-sourcemaps": "*",
     "gulp-cached": "*",
     "gulp-newer": "*",
+    "gulp-eslint": "*",
     "del": "*",
     "gulp-mocha": "*",
     "chai": "*",
