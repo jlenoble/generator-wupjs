@@ -44,6 +44,7 @@ export default class Gulp extends Base {
     noTypes
       .add("plumb-gulp")
       .add("autoreload-gulp")
+      .add("gulp-eslint")
       .add("del");
   }
 
