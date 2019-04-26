@@ -9,7 +9,7 @@ export default class DevDependencies extends Base {
       Object.assign({}, options, {
         generatorName: "config:dependencies:dev",
         dependsOn: ["config:modules"],
-        willWrite: ["write:package.json"]
+        willWrite: ["write:eslintrc", "write:package.json"]
       })
     );
   }

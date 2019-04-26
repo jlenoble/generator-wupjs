@@ -88,6 +88,29 @@ export default class BaseGenerator extends Generator
     this.composeAll();
   }
 
+  protected _addDevDep(name: string, addTypings: boolean): void {
+    throw new Error(
+      chalk.red(`
+Don't use ._addDevDep(${name}) super method;
+Call .addDevDep(${name}) and delegate to "config:dependencies" subgen
+`)
+    );
+  }
+
+  public addDevDep(name: string, addTypings: boolean = true): void {
+    // Make every subgen able to add dev deps on the fly
+    const gen = this.getGen("config:dependencies");
+
+    if (!gen) {
+      console.warn(
+        "Calling addDevDep too early, config:dependencies subgen not registered"
+      );
+      return;
+    }
+
+    gen._addDevDep(name);
+  }
+
   public addProp(name: PropName | Props, value?: PropValue): this {
     let props: Props;
 

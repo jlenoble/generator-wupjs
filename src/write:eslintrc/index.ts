@@ -17,16 +17,12 @@ export default class EslintRc extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "write:eslintrc",
-        dependsOn: ["config:languages", "config:dependencies"]
+        dependsOn: ["config:dependencies", "config:languages"]
       })
     );
   }
 
   public async configure(): Promise<void> {
-    const devDependencies = this.getProp("config:dependencies:dev") as Set<
-      string
-    >;
-
     let parser: string | undefined;
     const ecmaVersion: number = new Date().getFullYear();
     const ecmaFeatures: Wup.Options = {};
@@ -40,6 +36,7 @@ export default class EslintRc extends Base {
     if (this.getProp("config:languages:typescript")) {
       parser = "@typescript-eslint/parser";
       _extends.push("plugin:@typescript-eslint/recommended");
+      this.addDevDep("@typescript-eslint/parser", false);
     }
 
     _extends.push("plugin:prettier/recommended", "prettier/@typescript-eslint");

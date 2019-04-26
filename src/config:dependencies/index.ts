@@ -2,6 +2,13 @@ import Base from "../common/base-generator";
 
 type Dependencies = Wup.Dependencies;
 
+interface Deps {
+  dependencies: Dependencies;
+  devDependencies: Dependencies;
+  peerDependencies: Dependencies;
+  optionalDependencies: Dependencies;
+}
+
 export default class ConfigDependencies extends Base {
   public constructor(args: string | string[], options: {}) {
     super(
@@ -22,6 +29,27 @@ export default class ConfigDependencies extends Base {
       peerDependencies: {},
       optionalDependencies: {}
     });
+  }
+
+  protected _addDevDep(name: string, addTypings: boolean): void {
+    const dependencies: Deps = this.getProp(this.generatorName) as Deps;
+
+    if (dependencies) {
+      const devDependencies = this.getProp("config:dependencies:dev") as Set<
+        string
+      >;
+
+      devDependencies.add(name);
+
+      if (!addTypings) {
+        const noTypes = this.getProp("config:dependencies:no-types") as Set<
+          string
+        >;
+        noTypes.add(name);
+      }
+
+      dependencies.devDependencies = this._filterDeps(devDependencies);
+    }
   }
 
   protected _addTypeScript(dependencies: Set<string> = new Set()): Set<string> {
