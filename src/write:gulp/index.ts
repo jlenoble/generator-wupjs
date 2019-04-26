@@ -37,6 +37,7 @@ export default class Gulp extends Base {
       .add("gulp-sourcemaps")
       .add("gulp-cached")
       .add("gulp-newer")
+      .add("gulp-eslint")
       .add("del")
       .add("gulp-mocha")
       .add("chai");
@@ -47,7 +48,7 @@ export default class Gulp extends Base {
   }
 
   public configuring(): void {
-    const gulpIncludes = ["build", "clean", "test", "watch", "tdd"];
+    const gulpIncludes = ["build", "clean", "test", "watch", "tdd", "lint"];
 
     const buildDir = this.getProp("config:paths:build") as Path;
     const srcDir = this.getProp("config:paths:src") as Path;
