@@ -108,7 +108,7 @@ Call .addDevDep(${name}) and delegate to "config:dependencies" subgen
       return;
     }
 
-    gen._addDevDep(name);
+    gen._addDevDep(name, addTypings);
   }
 
   public addProp(name: PropName | Props, value?: PropValue): this {
