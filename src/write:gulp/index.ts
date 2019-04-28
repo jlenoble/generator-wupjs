@@ -58,7 +58,8 @@ export default class Gulp extends Base {
       "watch",
       "tdd",
       "lint",
-      "dist-build"
+      "dist-build",
+      "dist-clean"
     ];
 
     const buildDir = this.getProp("config:paths:build") as Path;
