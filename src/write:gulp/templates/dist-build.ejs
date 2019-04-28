@@ -1,0 +1,15 @@
+import {src, dest, task} from "gulp";
+import babel from "gulp-babel";
+
+const libDir = "<%- libDir %>";
+const libGlob = <%- libGlob %>;
+
+export const distBuild = () => {
+  return src(libGlob, {
+    base: process.cwd()
+  })
+    .pipe(babel())
+    .pipe(dest(libDir));
+};
+
+task("dist-build", distBuild);

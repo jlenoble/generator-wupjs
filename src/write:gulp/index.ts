@@ -6,8 +6,10 @@ type Path = Wup.Path;
 interface Props {
   gulpIncludes: string[];
   buildDir: string;
+  libDir: string;
   gulpDir: string;
   srcGlob: string;
+  libGlob: string;
   testGlob: string;
   buildGlob: string;
 }
@@ -49,24 +51,36 @@ export default class Gulp extends Base {
   }
 
   public configuring(): void {
-    const gulpIncludes = ["build", "clean", "test", "watch", "tdd", "lint"];
+    const gulpIncludes = [
+      "build",
+      "clean",
+      "test",
+      "watch",
+      "tdd",
+      "lint",
+      "dist-build"
+    ];
 
     const buildDir = this.getProp("config:paths:build") as Path;
     const srcDir = this.getProp("config:paths:src") as Path;
+    const libDir = this.getProp("config:paths:lib") as Path;
     const testDir = this.getProp("config:paths:test") as Path;
     const gulpDir = this.getProp("config:paths:gulp") as Path;
     const extensions = this.getProp("config:languages:extensions") as string[];
 
     const globs: string[] = [];
+    const srcGlobs: string[] = [];
 
     extensions.forEach(
       (ext): void => {
         globs.push(path.join(srcDir, "**/*." + ext));
+        srcGlobs.push(path.join(srcDir, "**/*." + ext));
         globs.push(path.join(testDir, "**/*." + ext));
       }
     );
 
     const srcGlob = JSON.stringify(globs, undefined, 2);
+    const libGlob = JSON.stringify(srcGlobs, undefined, 2);
 
     const testGlob = JSON.stringify(
       [path.join(buildDir, testDir, "**/*.test.js")],
@@ -86,8 +100,10 @@ export default class Gulp extends Base {
     this.props = {
       gulpIncludes,
       buildDir,
+      libDir,
       gulpDir,
       srcGlob,
+      libGlob,
       testGlob,
       buildGlob
     };
