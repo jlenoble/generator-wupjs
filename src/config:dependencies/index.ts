@@ -121,6 +121,8 @@ export default class ConfigDependencies extends Base {
   }
 
   public writing(): void {
+    const noTypes = this.getProp("config:dependencies:no-types") as Set<string>;
+
     Promise.all(
       Object.keys(this.depsRef)
         .filter(
@@ -130,9 +132,12 @@ export default class ConfigDependencies extends Base {
             const lastChecked = new Date(this.depsRef[key].lastChecked);
 
             return (
-              !latestV ||
-              isNaN(lastChecked) ||
-              Date.now() - lastChecked.getTime() > 86400000
+              !key.includes("@babel/") &&
+              !key.includes("@types/") &&
+              !noTypes.has(key) &&
+              (!latestV ||
+                isNaN(lastChecked) ||
+                Date.now() - lastChecked.getTime() > 86400000)
             );
           }
         )
@@ -145,13 +150,24 @@ export default class ConfigDependencies extends Base {
             };
           }
         )
-    ).then(
-      (): void => {
-        this.fs.writeJSON(
-          path.join(__dirname, "../../deps.json"),
-          this.depsRef
-        );
-      }
-    );
+    )
+      .then(
+        (): void => {
+          const keys = Object.keys(this.depsRef);
+          for (const key of keys) {
+            if (Object.keys(this.depsRef[key]).length === 0) {
+              delete this.depsRef[key];
+            }
+          }
+        }
+      )
+      .then(
+        (): void => {
+          this.fs.writeJSON(
+            path.join(__dirname, "../../deps.json"),
+            this.depsRef
+          );
+        }
+      );
   }
 }
