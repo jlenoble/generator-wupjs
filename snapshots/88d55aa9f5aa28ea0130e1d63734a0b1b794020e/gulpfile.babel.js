@@ -9,6 +9,7 @@ import "./gulp/watch";
 import "./gulp/tdd";
 import "./gulp/lint";
 import "./gulp/dist-build";
+import "./gulp/dist-clean";
 
 usePlumbedGulpSrc();
 
