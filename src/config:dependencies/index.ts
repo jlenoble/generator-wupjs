@@ -1,3 +1,5 @@
+import path from "path";
+import latestVersion from "latest-version";
 import Base from "../common/base-generator";
 
 type Dependencies = Wup.Dependencies;
@@ -10,6 +12,10 @@ interface Deps {
 }
 
 export default class ConfigDependencies extends Base {
+  protected depsRef: {
+    [k: string]: { latestVersion?: string; lastChecked?: Date };
+  } = {};
+
   public constructor(args: string | string[], options: {}) {
     super(
       args,
@@ -21,6 +27,11 @@ export default class ConfigDependencies extends Base {
   }
 
   public initializing(): void {
+    this.depsRef = this.fs.readJSON(
+      path.join(__dirname, "../../deps.json"),
+      this.depsRef
+    );
+
     this.addProp(this.generatorName + ":no-types", new Set());
 
     this.addProp(this.generatorName, {
@@ -84,7 +95,14 @@ export default class ConfigDependencies extends Base {
       const d = this._addTypeScript(dependencies);
 
       for (const dep of d) {
-        deps[dep] = "*";
+        if (!deps[dep]) {
+          if (this.depsRef[dep]) {
+            deps[dep] = this.depsRef[dep].latestVersion || "*";
+          } else {
+            deps[dep] = "*";
+            this.depsRef[dep] = {};
+          }
+        }
       }
     }
 
@@ -100,5 +118,40 @@ export default class ConfigDependencies extends Base {
       peerDependencies: this.getProp("config:dependencies:peer"),
       optionalDependencies: this.getProp("config:dependencies:optional")
     });
+  }
+
+  public writing(): void {
+    Promise.all(
+      Object.keys(this.depsRef)
+        .filter(
+          (key): boolean => {
+            const latestV = this.depsRef[key].latestVersion;
+            // @ts-ignore
+            const lastChecked = new Date(this.depsRef[key].lastChecked);
+
+            return (
+              !latestV ||
+              isNaN(lastChecked) ||
+              Date.now() - lastChecked.getTime() > 86400000
+            );
+          }
+        )
+        .map(
+          async (key): Promise<void> => {
+            const version = await latestVersion(key);
+            this.depsRef[key] = {
+              latestVersion: version,
+              lastChecked: new Date()
+            };
+          }
+        )
+    ).then(
+      (): void => {
+        this.fs.writeJSON(
+          path.join(__dirname, "../../deps.json"),
+          this.depsRef
+        );
+      }
+    );
   }
 }

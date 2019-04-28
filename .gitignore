@@ -3,6 +3,7 @@ build
 private
 generators
 scratch
+deps.json
 
 # Logs
 logs
