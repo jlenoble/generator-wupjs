@@ -13,7 +13,8 @@ const gulpFiles: Wup.Options = {
   "gulp/test.js": true,
   "gulp/watch.js": true,
   "gulp/tdd.js": true,
-  "gulp/lint.js": true
+  "gulp/lint.js": true,
+  "gulp/dist-build.js": true
 };
 
 testGenerator({

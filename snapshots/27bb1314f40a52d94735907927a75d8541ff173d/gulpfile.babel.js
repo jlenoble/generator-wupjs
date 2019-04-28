@@ -8,6 +8,7 @@ import "./gulp/test";
 import "./gulp/watch";
 import "./gulp/tdd";
 import "./gulp/lint";
+import "./gulp/dist-build";
 
 usePlumbedGulpSrc();
 
