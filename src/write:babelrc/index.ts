@@ -1,10 +1,8 @@
 import Base from "../common/base-generator";
 
-type Dependencies = Wup.Dependencies;
-
 interface Props {
-  presets: any;
-  plugins: any;
+  presets: any[];
+  plugins: any[];
 }
 
 export default class BabelRc extends Base {
@@ -63,16 +61,21 @@ export default class BabelRc extends Base {
     );
 
     this.props = {
-      presets: JSON.stringify(presets, undefined, 2),
-      plugins: JSON.stringify(plugins, undefined, 2)
+      presets,
+      plugins
     };
   }
 
   public writing(): void {
-    this.fs.copyTpl(
-      this.templatePath("babelrc.ejs"),
-      this.destinationPath(".babelrc"),
-      this.props as Props
-    );
+    if (this.props) {
+      this.fs.writeJSON(
+        this.destinationPath(".babelrc"),
+        this.props,
+        undefined,
+        2
+      );
+    } else {
+      this.log("Failed to write .babelrc: undefined props");
+    }
   }
 }
