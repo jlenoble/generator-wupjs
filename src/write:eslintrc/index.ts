@@ -1,12 +1,17 @@
 import Base from "../common/base-generator";
 
+type Options = Wup.Options;
+
 interface Props {
   parser?: string;
-  ecmaVersion: number;
-  ecmaFeatures: string;
-  esLintPlugins: string;
-  _extends: string;
-  esLintRules: string;
+  parserOptions: {
+    ecmaVersion: number;
+    sourceType: string;
+    ecmaFeatures: Options;
+  };
+  plugins: string[];
+  extends: string[];
+  rules: Options;
 }
 
 export default class EslintRc extends Base {
@@ -54,19 +59,27 @@ export default class EslintRc extends Base {
 
     this.props = {
       parser,
-      ecmaVersion,
-      ecmaFeatures: JSON.stringify(ecmaFeatures, undefined, 2),
-      esLintPlugins: JSON.stringify(esLintPlugins, undefined, 2),
-      _extends: JSON.stringify(_extends, undefined, 2),
-      esLintRules: JSON.stringify(esLintRules, undefined, 2)
+      parserOptions: {
+        ecmaVersion,
+        sourceType: "module",
+        ecmaFeatures
+      },
+      plugins: esLintPlugins,
+      extends: _extends,
+      rules: esLintRules
     };
   }
 
   public writing(): void {
-    this.fs.copyTpl(
-      this.templatePath("eslintrc.ejs"),
-      this.destinationPath(".eslintrc"),
-      this.props as Props
-    );
+    if (this.props) {
+      this.fs.writeJSON(
+        this.destinationPath(".eslintrc"),
+        this.props,
+        undefined,
+        2
+      );
+    } else {
+      this.log("Failed to write .eslintrc: undefined props");
+    }
   }
 }
