@@ -7,17 +7,17 @@
   },
   "plugins": [],
   "extends": [
-  "google",
-  "plugin:prettier/recommended",
-  "plugin:@typescript-eslint/recommended",
-  "prettier/@typescript-eslint"
-],
-  "rules": {
-  "require-jsdoc": [
-    "off"
+    "google",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint"
   ],
-  "prefer-arrow-callback": [
-    "error"
-  ]
-}
+  "rules": {
+    "require-jsdoc": [
+      "off"
+    ],
+    "prefer-arrow-callback": [
+      "error"
+    ]
+  }
 }

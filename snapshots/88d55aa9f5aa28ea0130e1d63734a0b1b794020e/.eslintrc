@@ -1,5 +1,4 @@
 {
-  "parser": "",
   "parserOptions": {
     "ecmaVersion": 2019,
     "sourceType": "module",
@@ -7,15 +6,15 @@
   },
   "plugins": [],
   "extends": [
-  "google",
-  "plugin:prettier/recommended"
-],
-  "rules": {
-  "require-jsdoc": [
-    "off"
+    "google",
+    "plugin:prettier/recommended"
   ],
-  "prefer-arrow-callback": [
-    "error"
-  ]
-}
+  "rules": {
+    "require-jsdoc": [
+      "off"
+    ],
+    "prefer-arrow-callback": [
+      "error"
+    ]
+  }
 }
