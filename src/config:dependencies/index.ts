@@ -143,11 +143,13 @@ export default class ConfigDependencies extends Base {
         )
         .map(
           async (key): Promise<void> => {
-            const version = await latestVersion(key);
-            this.depsRef[key] = {
-              latestVersion: version,
-              lastChecked: new Date()
-            };
+            try {
+              const version = await latestVersion(key);
+              this.depsRef[key] = {
+                latestVersion: version,
+                lastChecked: new Date()
+              };
+            } catch (e) {}
           }
         )
     )
