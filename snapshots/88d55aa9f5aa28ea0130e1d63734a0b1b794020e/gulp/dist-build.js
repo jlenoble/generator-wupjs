@@ -7,9 +7,7 @@ const libGlob = [
 ];
 
 export const distBuild = () => {
-  return src(libGlob, {
-    base: process.cwd()
-  })
+  return src(libGlob)
     .pipe(babel())
     .pipe(dest(libDir));
 };
