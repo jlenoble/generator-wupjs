@@ -28,7 +28,8 @@ export default class Src extends Base {
           "config:paths",
           "config:languages",
           "config:modules",
-          "config:package:name"
+          "config:package:name",
+          "config:package:main"
         ]
       })
     );
@@ -38,26 +39,37 @@ export default class Src extends Base {
     const srcDir = this.getProp("config:paths:src") as Path;
     const testDir = this.getProp("config:paths:test") as Path;
     const extensions = this.getProp("config:languages:extensions") as string[];
+    let main: any = this.getProp("config:package:main");
+
+    if (main) {
+      main = main.match(/^([-\w.]+\/)?([-\w.]+)\.js$/);
+      if (main !== null) {
+        main = main[2];
+      } else {
+        main = "index";
+      }
+    }
 
     const files =
       extensions.length > 1
-        ? extensions.map((ext): string => path.join(ext.substring(1), "index"))
-        : ["index"];
+        ? extensions.map((ext): string => path.join(ext.substring(1), main))
+        : [main];
 
     const srcFiles =
       extensions.length > 1
         ? extensions.map(
-            (ext): string => path.join(srcDir, ext.substring(1), `index.${ext}`)
+            (ext): string =>
+              path.join(srcDir, ext.substring(1), `${main}.${ext}`)
           )
-        : [path.join(srcDir, `index.${extensions[0]}`)];
+        : [path.join(srcDir, `${main}.${extensions[0]}`)];
 
     const testFiles =
       extensions.length > 1
         ? extensions.map(
             (ext): string =>
-              path.join(testDir, ext.substring(1), `index.${ext}`)
+              path.join(testDir, ext.substring(1), `${main}.${ext}`)
           )
-        : [path.join(testDir, `index.test.${extensions[0]}`)];
+        : [path.join(testDir, `${main}.test.${extensions[0]}`)];
 
     const relPath = extensions.length > 1 ? "../.." : "..";
 
