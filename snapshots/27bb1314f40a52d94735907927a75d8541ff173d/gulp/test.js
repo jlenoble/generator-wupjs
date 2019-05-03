@@ -1,6 +1,8 @@
 import {src, task, series} from "gulp";
 import mocha from "gulp-mocha";
 
+import "./build";
+
 const testGlob = [
   "build/test/**/*.test.js"
 ];
