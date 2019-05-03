@@ -1,4 +1,5 @@
 import upperCamelCase from "uppercamelcase";
+import fs from "fs-extra";
 import path from "path";
 import Base from "../common/base-generator";
 
@@ -37,6 +38,13 @@ export default class Src extends Base {
 
   public beforeWriting(): void {
     const srcDir = this.getProp("config:paths:src") as Path;
+
+    try {
+      if (fs.readdirSync(srcDir)) {
+        return;
+      }
+    } catch (e) {}
+
     const testDir = this.getProp("config:paths:test") as Path;
     const extensions = this.getProp("config:languages:extensions") as string[];
     let main: any = this.getProp("config:package:main");
@@ -91,6 +99,11 @@ export default class Src extends Base {
 
   public writing(): void {
     const props = this.props as Props;
+
+    if (!props) {
+      return;
+    }
+
     const files = props.files;
     const extensions = props.extensions;
 
