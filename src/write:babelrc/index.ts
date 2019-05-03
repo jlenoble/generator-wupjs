@@ -56,6 +56,13 @@ export default class BabelRc extends Base {
             if (dep.includes("@babel/preset-")) {
               presets.push(dep);
             }
+            if (
+              dep.includes("@babel/plugin-") ||
+              dep.includes("babel-plugin-") ||
+              dep.includes("@babel/proposal-")
+            ) {
+              plugins.push(dep);
+            }
         }
       }
     );
