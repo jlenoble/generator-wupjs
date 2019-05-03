@@ -32,7 +32,15 @@ export default class ConfigDependencies extends Base {
       this.depsRef
     );
 
-    this.addProp(this.generatorName + ":no-types", new Set());
+    const noTypes: Set<string> = new Set();
+
+    this.addProp(this.generatorName + ":no-types", noTypes);
+
+    noTypes
+      .add("gulp-wrap")
+      .add("babel-plugin-add-module-exports")
+      .add("muter")
+      .add("markdown-include");
 
     this.addProp(this.generatorName, {
       dependencies: {},
