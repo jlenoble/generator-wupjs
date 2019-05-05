@@ -6,7 +6,12 @@ export default class Languages extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:languages",
-        willWrite: ["write:package.json", "write:src", "write:eslintrc"]
+        willWrite: [
+          "write:package.json",
+          "write:src",
+          "write:eslintrc",
+          "write:tsconfig.json"
+        ]
       })
     );
   }
