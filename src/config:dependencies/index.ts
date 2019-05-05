@@ -106,6 +106,9 @@ export default class ConfigDependencies extends Base {
         if (!deps[dep]) {
           if (this.depsRef[dep]) {
             deps[dep] = this.depsRef[dep].latestVersion || "*";
+            if (deps[dep][0] !== "^") {
+              deps[dep] = "^" + deps[dep];
+            }
           } else {
             deps[dep] = "*";
             this.depsRef[dep] = {};
@@ -140,8 +143,6 @@ export default class ConfigDependencies extends Base {
             const lastChecked = new Date(this.depsRef[key].lastChecked);
 
             return (
-              !key.includes("@babel/") &&
-              !key.includes("@types/") &&
               !noTypes.has(key) &&
               (!latestV ||
                 isNaN(lastChecked) ||
