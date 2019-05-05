@@ -55,6 +55,7 @@ testGenerator({
   },
   assertContent: {
     ...configFiles,
+    "tsconfig.json": true,
     ...gulpFiles,
     "src/index.ts": true,
     "test/index.test.ts": true
