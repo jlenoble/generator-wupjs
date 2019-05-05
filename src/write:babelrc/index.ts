@@ -52,14 +52,17 @@ export default class BabelRc extends Base {
             this._handlePresetEnv(presets);
             break;
 
+          case "@babel/plugin-proposal-decorators":
+            plugins.push([dep, { decoratorsBeforeExport: true }]);
+            break;
+
           default:
             if (dep.includes("@babel/preset-")) {
               presets.push(dep);
             }
             if (
               dep.includes("@babel/plugin-") ||
-              dep.includes("babel-plugin-") ||
-              dep.includes("@babel/proposal-")
+              dep.includes("babel-plugin-")
             ) {
               plugins.push(dep);
             }
