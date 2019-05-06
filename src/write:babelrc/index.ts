@@ -52,6 +52,10 @@ export default class BabelRc extends Base {
             this._handlePresetEnv(presets);
             break;
 
+          case "@babel/preset-typescript":
+            presets.push([dep, { allExtensions: true }]);
+            break;
+
           case "@babel/plugin-proposal-decorators":
             plugins.push([dep, { decoratorsBeforeExport: true }]);
             break;
