@@ -20,7 +20,7 @@ export default class Modules extends Base {
 
     if (this.getProp("config:targets:server") && !dev.length) {
       dev.push("ES6");
-      prod.push("CommonJs");
+      prod.push("CommonJS");
     }
 
     if (this.getProp("config:targets:client") && !prod.length) {
@@ -61,6 +61,10 @@ export default class Modules extends Base {
         "prodModuleTypes",
         this.getProp(this.generatorName + ":prod")
       );
+
+      if (this.config.get("prodModuleTypes").includes("CommonJS")) {
+        this.addDevDep("babel-plugin-add-module-exports", false);
+      }
     }
   }
 }
