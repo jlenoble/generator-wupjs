@@ -88,6 +88,15 @@ export default class BaseGenerator extends Generator
     this.composeAll();
   }
 
+  protected _addDep(name: string, addTypings: boolean): void {
+    throw new Error(
+      chalk.red(`
+Don't use ._addDep(${name}) super method;
+Call .addDep(${name}) and delegate to "config:dependencies" subgen
+`)
+    );
+  }
+
   protected _addDevDep(name: string, addTypings: boolean): void {
     throw new Error(
       chalk.red(`
@@ -95,6 +104,20 @@ Don't use ._addDevDep(${name}) super method;
 Call .addDevDep(${name}) and delegate to "config:dependencies" subgen
 `)
     );
+  }
+
+  public addDep(name: string, addTypings: boolean = true): void {
+    // Make every subgen able to add dev deps on the fly
+    const gen = this.getGen("config:dependencies");
+
+    if (!gen) {
+      console.warn(
+        "Calling addDep too early, config:dependencies subgen not registered"
+      );
+      return;
+    }
+
+    gen._addDep(name, addTypings);
   }
 
   public addDevDep(name: string, addTypings: boolean = true): void {

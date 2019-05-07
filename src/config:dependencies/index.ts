@@ -21,7 +21,7 @@ export default class ConfigDependencies extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:dependencies",
-        dependsOn: ["config:dependencies:dev"]
+        dependsOn: ["config:dependencies:dev", "config:dependencies:prod"]
       })
     );
   }
@@ -48,6 +48,27 @@ export default class ConfigDependencies extends Base {
       peerDependencies: {},
       optionalDependencies: {}
     });
+  }
+
+  protected _addDep(name: string, addTypings: boolean): void {
+    const dependencies: Deps = this.getProp(this.generatorName) as Deps;
+
+    if (dependencies) {
+      const prodDependencies = this.getProp("config:dependencies:prod") as Set<
+        string
+      >;
+
+      prodDependencies.add(name);
+
+      if (!addTypings) {
+        const noTypes = this.getProp("config:dependencies:no-types") as Set<
+          string
+        >;
+        noTypes.add(name);
+      }
+
+      dependencies.dependencies = this._filterDeps(prodDependencies);
+    }
   }
 
   protected _addDevDep(name: string, addTypings: boolean): void {
