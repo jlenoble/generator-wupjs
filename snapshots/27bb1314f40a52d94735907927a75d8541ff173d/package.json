@@ -30,6 +30,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-typescript": "^7.3.3",
     "@babel/register": "^7.4.4",
@@ -43,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^1.7.0",
     "@typescript-eslint/parser": "^1.7.0",
     "autoreload-gulp": "^0.4.1",
+    "babel-plugin-add-module-exports": "^1.0.2",
     "chai": "^4.2.0",
     "del": "^4.1.1",
     "eslint-config-google": "^0.12.0",

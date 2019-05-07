@@ -1,6 +1,12 @@
 {
   "presets": [
     [
+      "@babel/preset-typescript",
+      {
+        "allExtensions": true
+      }
+    ],
+    [
       "@babel/preset-env",
       {
         "targets": {
@@ -9,5 +15,15 @@
       }
     ]
   ],
-  "plugins": []
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread",
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "decoratorsBeforeExport": true
+      }
+    ],
+    "babel-plugin-add-module-exports"
+  ]
 }
