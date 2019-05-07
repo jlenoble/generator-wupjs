@@ -76,6 +76,7 @@ export default class Gulp extends Base {
 
     if (jupyter) {
       gulpIncludes.push("notebooks");
+      this.addDevDep("gulp-exec", false);
     }
 
     const globs: string[] = [];
