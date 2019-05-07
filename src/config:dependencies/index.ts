@@ -106,7 +106,7 @@ export default class ConfigDependencies extends Base {
         if (!deps[dep]) {
           if (this.depsRef[dep]) {
             deps[dep] = this.depsRef[dep].latestVersion || "*";
-            if (deps[dep][0] !== "^") {
+            if (deps[dep][0] !== "^" && deps[dep] !== "*") {
               deps[dep] = "^" + deps[dep];
             }
           } else {
