@@ -3,6 +3,7 @@ import path from "path";
 import del from "del";
 import {build} from "./build";
 import {test} from "./test";
+import {convertNotebooks} from "./notebooks";
 
 const buildDir = "build";
 const srcGlob = [
@@ -12,6 +13,9 @@ const srcGlob = [
 const buildGlob = [
   "build/src/**/*.js",
   "build/test/**/*.js"
+];
+const ipynbGlob = [
+  "src/**/*.ipynb"
 ];
 
 export const startWatching = done => {
@@ -25,6 +29,7 @@ export const startWatching = done => {
   });
 
   watch(buildGlob, test);
+  watch(ipynbGlob, convertNotebooks);
 
   done();
 };
