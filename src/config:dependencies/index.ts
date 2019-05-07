@@ -88,7 +88,7 @@ export default class ConfigDependencies extends Base {
         noTypes.add(name);
       }
 
-      dependencies.devDependencies = this._filterDeps(devDependencies);
+      dependencies.devDependencies = this._filterDeps(devDependencies, true);
     }
   }
 
@@ -117,11 +117,13 @@ export default class ConfigDependencies extends Base {
     return new Set([...set].sort());
   }
 
-  protected _filterDeps(dependencies?: Set<string>): Dependencies {
+  protected _filterDeps(dependencies?: Set<string>, dev = false): Dependencies {
     const deps: Dependencies = {};
 
     if (dependencies) {
-      const d = this._addTypeScript(dependencies);
+      const d = Array.from(
+        dev ? this._addTypeScript(dependencies) : dependencies
+      ).sort();
 
       for (const dep of d) {
         if (!deps[dep]) {
@@ -143,10 +145,13 @@ export default class ConfigDependencies extends Base {
 
   public configuring(): void {
     this.addProp(this.generatorName, {
-      dependencies: this.getProp("config:dependencies:prod"),
-      devDependencies: this._filterDeps(this.getProp(
-        "config:dependencies:dev"
+      dependencies: this._filterDeps(this.getProp(
+        "config:dependencies:prod"
       ) as Set<string>),
+      devDependencies: this._filterDeps(
+        this.getProp("config:dependencies:dev") as Set<string>,
+        true
+      ),
       peerDependencies: this.getProp("config:dependencies:peer"),
       optionalDependencies: this.getProp("config:dependencies:optional")
     });
