@@ -1,6 +1,7 @@
 import {task, series} from "gulp";
 
-import "./test";
+import "./test";<% if (jupyter) { %>
+import "./notebooks";<% } %>
 import "./watch";
 
-task("tdd", series("test", "watch"));
+task("tdd", series(<% if (jupyter) { %>"notebooks", <% } %>"test", "watch"));
