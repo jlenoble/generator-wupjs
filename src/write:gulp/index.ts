@@ -5,6 +5,7 @@ type Path = Wup.Path;
 
 interface Props {
   gulpIncludes: string[];
+  srcDir: string;
   buildDir: string;
   libDir: string;
   gulpDir: string;
@@ -12,6 +13,9 @@ interface Props {
   libGlob: string;
   testGlob: string;
   buildGlob: string;
+  ipynbGlob: string;
+  filePath: string;
+  extensions: string[];
 }
 
 export default class Gulp extends Base {
@@ -68,6 +72,11 @@ export default class Gulp extends Base {
     const testDir = this.getProp("config:paths:test") as Path;
     const gulpDir = this.getProp("config:paths:gulp") as Path;
     const extensions = this.getProp("config:languages:extensions") as string[];
+    const jupyter = this.getProp("config:languages:jupyter") as boolean;
+
+    if (jupyter) {
+      gulpIncludes.push("notebooks");
+    }
 
     const globs: string[] = [];
     const srcGlobs: string[] = [];
@@ -98,15 +107,29 @@ export default class Gulp extends Base {
       2
     );
 
+    const ipynbGlob = JSON.stringify(
+      [path.join(srcDir, "**/*.ipynb")],
+      undefined,
+      2
+    );
+
     this.props = {
       gulpIncludes,
+      srcDir,
       buildDir,
       libDir,
       gulpDir,
       srcGlob,
       libGlob,
       testGlob,
-      buildGlob
+      buildGlob,
+      ipynbGlob,
+      filePath: "<%- file.path %>",
+      extensions: JSON.stringify(
+        extensions.map((ext): string => "." + ext),
+        undefined,
+        2
+      )
     };
   }
 

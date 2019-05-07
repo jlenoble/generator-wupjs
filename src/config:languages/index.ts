@@ -25,6 +25,11 @@ export default class Languages extends Base {
     this.addProp(this.generatorName + ":jsx", this.config.get("jsx") || false);
 
     this.addProp(
+      this.generatorName + ":jupyter",
+      this.config.get("jupyter") || false
+    );
+
+    this.addProp(
       this.generatorName + ":extensions",
       this.config.get("extensions") || []
     );
@@ -112,6 +117,19 @@ export default class Languages extends Base {
         "extensions",
         this.getProp(this.generatorName + ":extensions")
       );
+
+      prompts = [
+        {
+          type: "confirm",
+          name: this.generatorName + ":jupyter",
+          message: "Will you use Jupyter notebooks?",
+          default: this.getProp(this.generatorName + ":jupyter") as boolean
+        }
+      ];
+
+      this.addProp(await this.prompt(prompts));
+
+      this.config.set("jupyter", this.getProp(this.generatorName + ":jupyter"));
     }
   }
 }
