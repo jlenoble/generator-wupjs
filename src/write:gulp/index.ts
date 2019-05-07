@@ -13,6 +13,7 @@ interface Props {
   libGlob: string;
   testGlob: string;
   buildGlob: string;
+  jupyter: boolean;
   ipynbGlob: string;
   filePath: string;
   extensions: string[];
@@ -124,6 +125,7 @@ export default class Gulp extends Base {
       libGlob,
       testGlob,
       buildGlob,
+      jupyter,
       ipynbGlob,
       filePath: "<%- file.path %>",
       extensions: JSON.stringify(
