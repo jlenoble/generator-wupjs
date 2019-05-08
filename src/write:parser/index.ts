@@ -5,6 +5,7 @@ type Path = Wup.Path;
 
 interface Props {
   grammar: string;
+  rule: string;
   grammarDir: Path;
   dataDir: Path;
   parserDir: Path;
@@ -30,6 +31,7 @@ export default class WriteParser extends Base {
 
   public configuring(): void {
     const grammar = this.getProp("config:parser:grammar") as string;
+    const rule = this.getProp("config:parser:rule") as string;
     const grammarDir = this.getProp("config:paths:grammar") as Path;
     const dataDir = this.getProp("config:paths:data") as Path;
     const parserDir = this.getProp("config:paths:parser") as Path;
@@ -41,6 +43,7 @@ export default class WriteParser extends Base {
 
     this.props = {
       grammar,
+      rule,
       grammarDir,
       dataDir,
       parserDir,
@@ -58,7 +61,9 @@ export default class WriteParser extends Base {
 
       this.fs.copyTpl(
         this.templatePath("grammar.ejs"),
-        this.destinationPath(path.join(props.grammarDir, "Calc.g4")),
+        this.destinationPath(
+          path.join(props.grammarDir, `${props.grammar}.g4`)
+        ),
         props
       );
 

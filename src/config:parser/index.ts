@@ -21,7 +21,7 @@ export default class Parser extends Base {
 
     this.addProp(
       this.generatorName + ":rule",
-      this.config.get("rule") || "file"
+      this.config.get("rule") || "prog"
     );
 
     this.addProp(

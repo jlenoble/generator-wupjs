@@ -1,6 +1,6 @@
-grammar Calc;
+grammar <%- grammar %>;
 
-prog : stat+ ;
+<%- rule %> : stat+ ;
 
 stat : expr NEWLINE
      | ID '=' expr NEWLINE
