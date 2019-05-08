@@ -22,9 +22,9 @@ export const makeParser = () => {
   if (require && require.cache) {
     // Remove parser files from Babel cache
     Object.keys(require.cache).filter(key => {
-      return key.includes(parserDir) ||
-        key.includes(listenerDir) ||
-        key.includes(visitorDir);
+      return key.includes(parserDir)<% if (parsers.includes("Listener")) { %> ||
+        key.includes(listenerDir)<% } %><% if (parsers.includes("Visitor")) { %> ||
+        key.includes(visitorDir)<% } %>;
     }).forEach(key => {
       delete require.cache[key];
     });
