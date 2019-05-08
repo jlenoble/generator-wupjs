@@ -11,5 +11,8 @@ scratch
 
 # Misc
 private
-packages
+packages<% if (antlr4) { %>
+
+# ANTLR4
+<%- parserDir %><% } %>
 <%- gitignores %>

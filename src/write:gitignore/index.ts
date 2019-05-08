@@ -8,6 +8,8 @@ interface Props {
   buildDir: Path;
   libDir: Path;
   gitignores: string;
+  antlr4: boolean;
+  parserDir: Path;
 }
 
 export default class GitIgnore extends Base {
@@ -27,6 +29,9 @@ export default class GitIgnore extends Base {
     const buildDir = this.getProp("config:paths:build") as Path;
     const libDir = this.getProp("config:paths:lib") as Path;
     const includes: Path[] = [];
+    const antlr4 =
+      (this.getProp("config:languages:antlr4") as boolean) || false;
+    const parserDir = this.getProp("config:paths:parser") as Path;
 
     if (this.getProp("config:targets:server")) {
       includes.push(
@@ -51,7 +56,7 @@ export default class GitIgnore extends Base {
       }
     }
 
-    this.props = { buildDir, libDir, gitignores };
+    this.props = { buildDir, libDir, gitignores, antlr4, parserDir };
   }
 
   public writing(): void {
