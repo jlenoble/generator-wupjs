@@ -106,7 +106,7 @@ testGenerator({
     "src/index.js": true,
     "test/index.test.js": true,
     "src/static/antlr4/MyListener.js": true,
-    "src/static/antlr4/grammars/Calc.g4": true,
+    "src/static/antlr4/grammars/MyGrammar.g4": true,
     "src/static/data/data.txt": true
   }
 });

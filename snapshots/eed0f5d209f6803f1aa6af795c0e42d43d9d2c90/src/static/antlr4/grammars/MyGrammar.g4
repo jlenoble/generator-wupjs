@@ -1,4 +1,4 @@
-grammar Calc;
+grammar MyGrammar;
 
 prog : stat+ ;
 

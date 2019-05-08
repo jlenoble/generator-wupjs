@@ -12,7 +12,7 @@ const dataGlob = [
 ];
 
 const grammar = "MyGrammar";
-const rule = "file";
+const rule = "prog";
 
 const listener = "MyListener";
 const listenerDir = "src/static/antlr4";
@@ -23,8 +23,7 @@ export const makeParser = () => {
     // Remove parser files from Babel cache
     Object.keys(require.cache).filter(key => {
       return key.includes(parserDir) ||
-        key.includes(listenerDir) ||
-        key.includes(visitorDir);
+        key.includes(listenerDir);
     }).forEach(key => {
       delete require.cache[key];
     });
