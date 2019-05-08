@@ -18,7 +18,7 @@ export default class GitIgnore extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "write:gitignore",
-        dependsOn: ["config:paths", "config:targets"]
+        dependsOn: ["config:paths", "config:targets", "config:languages"]
       })
     );
   }
@@ -31,6 +31,12 @@ export default class GitIgnore extends Base {
     if (this.getProp("config:targets:server")) {
       includes.push(
         path.join(__dirname, "../..", buildDir, "gitignore", "Node.gitignore")
+      );
+    }
+
+    if (this.getProp("config:languages:jupyter")) {
+      includes.push(
+        path.join(__dirname, "../..", buildDir, "gitignore", "Python.gitignore")
       );
     }
 
