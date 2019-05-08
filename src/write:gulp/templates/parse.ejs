@@ -1,0 +1,65 @@
+import { src, task, series, parallel } from "gulp";
+import antlr4 from "gulp-antlr4";
+
+const parserDir = "<%- parserDir %>";
+const parserOptions = { parserDir };
+
+const grammarGlob = <%- grammarGlob %>;
+const dataGlob = <%- dataGlob %>;
+
+const grammar = "<%- grammar %>";
+const rule = "<%- rule %>";<% if (parsers.includes("Listener")) { %>
+
+const listener = "<%- listener %>";
+const listenerDir = "<%- listenerDir %>";
+parserOptions.listener = listener;<% } %><% if (parsers.includes("Visitor")) { %>
+
+const visitor = "<%- visitor %>";
+const visitorDir = "<%- visitorDir %>";
+parserOptions.visitor = visitor;<% } %>
+
+export const makeParser = () => {
+  if (require && require.cache) {
+    // Remove parser files from Babel cache
+    Object.keys(require.cache).filter(key => {
+      return key.includes(parserDir) ||
+        key.includes(listenerDir) ||
+        key.includes(visitorDir);
+    }).forEach(key => {
+      delete require.cache[key];
+    });
+  }
+
+  return src(grammarGlob)
+    .pipe(antlr4(parserOptions));
+};<% if (parsers.includes("Listener")) { %>
+
+export const translate = () => {
+  return src(dataGlob)
+    .pipe(antlr4({
+      grammar, parserDir, listener, listenerDir, rule
+    }));
+};
+
+task("translate", series(makeParser, translate));<% if (!parsers.includes("Visitor")) { %>
+
+export const parse = translate;
+
+task("parse", series(makeParser, translate));<% } %><% } %><% if (parsers.includes("Visitor")) { %>
+
+export const interprete = () => {
+  return src(dataGlob)
+    .pipe(antlr4({
+      grammar, parserDir, visitor, visitorDir, rule
+    }));
+};
+
+task("interprete", series(makeParser, interprete));<% if (!parsers.includes("Listener")) { %>
+
+export const parse = interprete;
+
+gulp.task("parse", series(makeParser, interprete));<% } %><% } %><% if (parsers.includes("Visitor") && parsers.includes("Listener")) { %>
+
+export const parse = parallel(translate, interprete);
+
+task("parse", series(makeParser, parse));<% } %>

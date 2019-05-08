@@ -16,7 +16,7 @@ interface Props {
   jupyter: boolean;
   ipynbGlob: string;
   filePath: string;
-  extensions: string[];
+  extensions: string;
 }
 
 export default class Gulp extends Base {
@@ -73,11 +73,17 @@ export default class Gulp extends Base {
     const testDir = this.getProp("config:paths:test") as Path;
     const gulpDir = this.getProp("config:paths:gulp") as Path;
     const extensions = this.getProp("config:languages:extensions") as string[];
+
     const jupyter = this.getProp("config:languages:jupyter") as boolean;
+    const antlr4 = this.getProp("config:languages:antlr4") as boolean;
 
     if (jupyter) {
       gulpIncludes.push("notebooks");
       this.addDevDep("gulp-exec", false);
+    }
+
+    if (antlr4) {
+      gulpIncludes.push("parse");
     }
 
     const globs: string[] = [];
@@ -134,6 +140,44 @@ export default class Gulp extends Base {
         2
       )
     };
+
+    if (antlr4) {
+      const grammar = this.getProp("config:parser:grammar") as string;
+      const rule = this.getProp("config:parser:rule") as string;
+      const grammarDir = this.getProp("config:paths:grammar") as Path;
+      const dataDir = this.getProp("config:paths:data") as Path;
+      const parserDir = this.getProp("config:paths:parser") as Path;
+      const listenerDir = this.getProp("config:paths:listener") as Path;
+      const visitorDir = this.getProp("config:paths:visitor") as Path;
+      const listener = this.getProp("config:parser:listener") as string;
+      const visitor = this.getProp("config:parser:visitor") as string;
+      const parsers = this.getProp("config:parser:parsers") as string[];
+      const grammarGlob = JSON.stringify(
+        [path.join(grammarDir, "**/*.g4")],
+        undefined,
+        2
+      );
+      const dataGlob = JSON.stringify(
+        [path.join(dataDir, "**/*")],
+        undefined,
+        2
+      );
+
+      Object.assign(this.props, {
+        grammar,
+        rule,
+        grammarDir,
+        dataDir,
+        parserDir,
+        listenerDir,
+        visitorDir,
+        listener,
+        visitor,
+        parsers,
+        grammarGlob,
+        dataGlob
+      });
+    }
   }
 
   public writing(): void {

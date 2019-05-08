@@ -30,6 +30,11 @@ export default class Languages extends Base {
     );
 
     this.addProp(
+      this.generatorName + ":antlr4",
+      this.config.get("antlr4") || false
+    );
+
+    this.addProp(
       this.generatorName + ":extensions",
       this.config.get("extensions") || []
     );
@@ -130,6 +135,19 @@ export default class Languages extends Base {
       this.addProp(await this.prompt(prompts));
 
       this.config.set("jupyter", this.getProp(this.generatorName + ":jupyter"));
+
+      prompts = [
+        {
+          type: "confirm",
+          name: this.generatorName + ":antlr4",
+          message: "Will you use ANTLR4 grammars?",
+          default: this.getProp(this.generatorName + ":antlr4") as boolean
+        }
+      ];
+
+      this.addProp(await this.prompt(prompts));
+
+      this.config.set("antlr4", this.getProp(this.generatorName + ":antlr4"));
     }
   }
 }

@@ -17,7 +17,8 @@ export default class App extends Base {
           "config:languages",
           "config:targets",
           "config:modules",
-          "config:paths"
+          "config:paths",
+          "config:parser"
         ]
       })
     );
