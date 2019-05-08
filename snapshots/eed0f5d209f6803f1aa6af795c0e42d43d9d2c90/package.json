@@ -1,0 +1,59 @@
+{
+  "name": "awesome-app",
+  "version": "1.2.3",
+  "description": "Some dummy description",
+  "keywords": [
+    "foo",
+    "bar",
+    "quux"
+  ],
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "types": "",
+  "bugs": {
+    "url": "https://github.com/me-me/awesome-app/issues",
+    "email": "me@example.com"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Me Me",
+    "email": "me@example.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/me-me/awesome-app.git"
+  },
+  "engines": {
+    "node": ">=10.9.0"
+  },
+  "dependencies": {
+    "antlr4": "^4.7.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/register": "^7.4.4",
+    "autoreload-gulp": "^0.4.1",
+    "babel-plugin-add-module-exports": "^1.0.2",
+    "chai": "^4.2.0",
+    "child-process-data": "^0.7.0",
+    "del": "^4.1.1",
+    "eslint-config-google": "^0.12.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "gulp": "^4.0.2",
+    "gulp-antlr4": "^0.4.6",
+    "gulp-babel": "^8.0.0",
+    "gulp-cached": "^1.1.1",
+    "gulp-eslint": "^5.0.0",
+    "gulp-mocha": "^6.0.0",
+    "gulp-newer": "^1.4.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "plugin-error": "^1.0.1",
+    "plumb-gulp": "^0.2.2",
+    "prettier": "^1.17.0",
+    "through2": "^3.0.1"
+  }
+}
