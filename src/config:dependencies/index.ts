@@ -158,8 +158,6 @@ export default class ConfigDependencies extends Base {
   }
 
   public writing(): void {
-    const noTypes = this.getProp("config:dependencies:no-types") as Set<string>;
-
     Promise.all(
       Object.keys(this.depsRef)
         .filter(
@@ -169,10 +167,9 @@ export default class ConfigDependencies extends Base {
             const lastChecked = new Date(this.depsRef[key].lastChecked);
 
             return (
-              !noTypes.has(key) &&
-              (!latestV ||
-                isNaN(lastChecked) ||
-                Date.now() - lastChecked.getTime() > 86400000)
+              !latestV ||
+              isNaN(lastChecked) ||
+              Date.now() - lastChecked.getTime() > 86400000
             );
           }
         )
