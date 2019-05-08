@@ -13,6 +13,9 @@ scratch
 private
 packages
 
+# ANTLR4
+src/static/antlr4/parsers
+
 # Logs
 logs
 *.log
