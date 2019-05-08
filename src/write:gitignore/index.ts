@@ -1,3 +1,4 @@
+import path from "path";
 import fs from "fs-extra";
 import Base from "../common/base-generator";
 
@@ -28,14 +29,16 @@ export default class GitIgnore extends Base {
     const includes: Path[] = [];
 
     if (this.getProp("config:targets:server")) {
-      includes.push("gitignore_node");
+      includes.push(
+        path.join(__dirname, "../..", buildDir, "gitignore", "Node.gitignore")
+      );
     }
 
     let gitignores = "";
 
     for (const include of includes) {
       try {
-        const buffer = await fs.readFile(this.templatePath(include));
+        const buffer = await fs.readFile(include);
         gitignores += "\n" + buffer.toString("utf-8");
       } catch (e) {
         console.log(e);
