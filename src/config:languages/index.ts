@@ -69,7 +69,9 @@ export default class Languages extends Base {
           "js"
         ])
       );
-      const previousChoices = new Set(choices);
+      const previousChoices = new Set(this.getProp(
+        this.generatorName + ":extensions"
+      ) as string[]);
       let defaultChoice = "js";
 
       if (this.getProp(this.generatorName + ":jsx")) {
