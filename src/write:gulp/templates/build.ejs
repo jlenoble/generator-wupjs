@@ -1,9 +1,10 @@
-import {src, dest, lastRun, task<% if (antlr4) { %>, parallel<% } %>} from "gulp";
+import { src, dest, lastRun, task<% if (antlr4) { %>, parallel<% } %><% if (jupyter) { %>, series<% } %> } from "gulp";
 import babel from "gulp-babel";
 import sourcemaps from "gulp-sourcemaps";
 import cached from "gulp-cached";
 import newer from "gulp-newer";<% if (antlr4) { %>
-import {makeParser} from "./parse"<% } %>
+import { makeParser } from "./parse";<% } %><% if (jupyter) { %>
+import { convertNotebooks } from "./notebooks";<% } %>
 
 const buildDir = "<%- buildDir %>";
 const srcGlob = <%- srcGlob %>;
@@ -22,6 +23,8 @@ export const build = () => {
     }))
     .pipe(dest(buildDir));
 };
-<% if (antlr4) { %>
+<% if (antlr4 && jupyter) { %>
+task("build", parallel(series(convertNotebooks, build), makeParser)));<% } else if (jupyter) { %>
+task("build", series(convertNotebooks, build));<% } else if (antlr4) { %>
 task("build", parallel(build, makeParser));<% } else { %>
 task("build", build);<% } %>
