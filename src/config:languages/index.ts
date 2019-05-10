@@ -69,6 +69,7 @@ export default class Languages extends Base {
           "js"
         ])
       );
+      const previousChoices = new Set(choices);
       let defaultChoice = "js";
 
       if (this.getProp(this.generatorName + ":jsx")) {
@@ -77,6 +78,8 @@ export default class Languages extends Base {
       } else {
         choices.delete("jsx");
         choices.delete("tsx");
+        previousChoices.delete("jsx");
+        previousChoices.delete("tsx");
       }
 
       if (this.getProp(this.generatorName + ":typescript")) {
@@ -86,9 +89,13 @@ export default class Languages extends Base {
         if (this.getProp(this.generatorName + ":jsx")) {
           choices.add("tsx");
           defaultChoice = "tsx";
+        } else {
+          choices.delete("tsx");
+          previousChoices.delete("tsx");
         }
       } else {
         choices.delete("ts");
+        previousChoices.delete("ts");
       }
 
       prompts = [
@@ -97,7 +104,7 @@ export default class Languages extends Base {
           name: this.generatorName + ":extensions",
           choices: Array.from(new Set([defaultChoice, ...choices])),
           message: "Pick the extensions you'll use",
-          default: [defaultChoice]
+          default: Array.from(new Set([...previousChoices, defaultChoice]))
         }
       ];
 
