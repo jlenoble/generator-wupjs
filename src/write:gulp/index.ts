@@ -9,11 +9,13 @@ interface Props {
   buildDir: string;
   libDir: string;
   gulpDir: string;
+  parserDir: string;
   srcGlob: string;
   libGlob: string;
   testGlob: string;
   buildGlob: string;
   jupyter: boolean;
+  antlr4: boolean;
   ipynbGlob: string;
   filePath: string;
   extensions: string;
@@ -72,6 +74,7 @@ export default class Gulp extends Base {
     const libDir = this.getProp("config:paths:lib") as Path;
     const testDir = this.getProp("config:paths:test") as Path;
     const gulpDir = this.getProp("config:paths:gulp") as Path;
+    const parserDir = this.getProp("config:paths:parsers") as Path;
     const extensions = this.getProp("config:languages:extensions") as string[];
 
     const jupyter = this.getProp("config:languages:jupyter") as boolean;
@@ -127,11 +130,13 @@ export default class Gulp extends Base {
       buildDir,
       libDir,
       gulpDir,
+      parserDir,
       srcGlob,
       libGlob,
       testGlob,
       buildGlob,
       jupyter,
+      antlr4,
       ipynbGlob,
       filePath: "<%- file.path %>",
       extensions: JSON.stringify(
