@@ -97,34 +97,47 @@ export default class Src extends Base {
     };
   }
 
-  public writing(): void {
+  public async writing(): Promise<void> {
     const props = this.props as Props;
 
     if (!props) {
       return;
     }
 
-    const files = props.files;
-    const extensions = props.extensions;
+    let found = true;
 
-    props.srcFiles.forEach(
-      (file, i): void => {
-        this.fs.copyTpl(
-          this.templatePath(path.join(extensions[i], "class.ejs")),
-          this.destinationPath(file),
-          props
-        );
-      }
-    );
+    try {
+      await Promise.all([
+        fs.stat(this.destinationPath(props.srcDir)),
+        fs.stat(this.destinationPath(props.testDir))
+      ]);
+    } catch (e) {
+      found = false;
+    }
 
-    props.testFiles.forEach(
-      (file, i): void => {
-        this.fs.copyTpl(
-          this.templatePath(path.join(extensions[i], "class.test.ejs")),
-          this.destinationPath(file),
-          { ...props, file: files[i] }
-        );
-      }
-    );
+    if (!found) {
+      const files = props.files;
+      const extensions = props.extensions;
+
+      props.srcFiles.forEach(
+        (file, i): void => {
+          this.fs.copyTpl(
+            this.templatePath(path.join(extensions[i], "class.ejs")),
+            this.destinationPath(file),
+            props
+          );
+        }
+      );
+
+      props.testFiles.forEach(
+        (file, i): void => {
+          this.fs.copyTpl(
+            this.templatePath(path.join(extensions[i], "class.test.ejs")),
+            this.destinationPath(file),
+            { ...props, file: files[i] }
+          );
+        }
+      );
+    }
   }
 }

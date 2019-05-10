@@ -1,4 +1,5 @@
 import path from "path";
+import fs from "fs-extra";
 import Base from "../common/base-generator";
 
 type Path = Wup.Path;
@@ -55,42 +56,55 @@ export default class WriteParser extends Base {
     };
   }
 
-  public writing(): void {
+  public async writing(): Promise<void> {
     if (this.getProp("config:languages:antlr4")) {
-      const props: Props = this.props as Props;
+      const { grammarDir, parserDir, dataDir } = this.props as Props;
+      let found = true;
 
-      this.fs.copyTpl(
-        this.templatePath("grammar.ejs"),
-        this.destinationPath(
-          path.join(props.grammarDir, `${props.grammar}.g4`)
-        ),
-        props
-      );
-
-      this.fs.copyTpl(
-        this.templatePath("data.ejs"),
-        this.destinationPath(path.join(props.dataDir, "data.txt")),
-        props
-      );
-
-      if (props.parsers.includes("Listener")) {
-        this.fs.copyTpl(
-          this.templatePath("listener.ejs"),
-          this.destinationPath(
-            path.join(props.listenerDir, props.listener + ".js")
-          ),
-          props
-        );
+      try {
+        await Promise.all([
+          fs.stat(this.destinationPath(grammarDir)),
+          fs.stat(this.destinationPath(dataDir)),
+          fs.stat(this.destinationPath(parserDir))
+        ]);
+      } catch (e) {
+        found = false;
       }
 
-      if (props.parsers.includes("Visitor")) {
+      if (!found) {
+        const props: Props = this.props as Props;
+
         this.fs.copyTpl(
-          this.templatePath("visitor.ejs"),
-          this.destinationPath(
-            path.join(props.visitorDir, props.visitor + ".js")
-          ),
+          this.templatePath("grammar.ejs"),
+          this.destinationPath(path.join(grammarDir, `${props.grammar}.g4`)),
           props
         );
+
+        this.fs.copyTpl(
+          this.templatePath("data.ejs"),
+          this.destinationPath(path.join(dataDir, "data.txt")),
+          props
+        );
+
+        if (props.parsers.includes("Listener")) {
+          this.fs.copyTpl(
+            this.templatePath("listener.ejs"),
+            this.destinationPath(
+              path.join(props.listenerDir, props.listener + ".js")
+            ),
+            props
+          );
+        }
+
+        if (props.parsers.includes("Visitor")) {
+          this.fs.copyTpl(
+            this.templatePath("visitor.ejs"),
+            this.destinationPath(
+              path.join(props.visitorDir, props.visitor + ".js")
+            ),
+            props
+          );
+        }
       }
     }
   }
