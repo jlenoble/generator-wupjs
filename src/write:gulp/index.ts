@@ -21,6 +21,7 @@ interface Props {
   libGlob: string;
   testGlob: string;
   buildGlob: string;
+  lintGlob: string;
 
   grammarGlob?: string;
   dataGlob?: string;
@@ -132,12 +133,14 @@ export default class Gulp extends Base {
       }
     );
 
+    const lintGlobs: string[] = [...globs];
+
     if (antlr4) {
-      globs.push("!" + path.join(parserDir, "**/*.js"));
-      srcGlobs.push("!" + path.join(parserDir, "**/*.js"));
+      lintGlobs.push("!" + path.join(parserDir, "**/*.js"));
     }
 
     const srcGlob = JSON.stringify(globs, undefined, 2);
+    const lintGlob = JSON.stringify(lintGlobs, undefined, 2);
     const libGlob = JSON.stringify(srcGlobs, undefined, 2);
 
     const testGlob = JSON.stringify(
@@ -179,6 +182,7 @@ export default class Gulp extends Base {
       libGlob,
       testGlob,
       buildGlob,
+      lintGlob,
       ipynbGlob,
 
       jupyter,
