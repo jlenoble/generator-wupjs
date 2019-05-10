@@ -1,8 +1,9 @@
-import {src, dest, lastRun, task} from "gulp";
+import {src, dest, lastRun, task<% if (antlr4) { %>, parallel<% } %>} from "gulp";
 import babel from "gulp-babel";
 import sourcemaps from "gulp-sourcemaps";
 import cached from "gulp-cached";
-import newer from "gulp-newer";
+import newer from "gulp-newer";<% if (antlr4) { %>
+import {makeParser} from "./parse"<% } %>
 
 const buildDir = "<%- buildDir %>";
 const srcGlob = <%- srcGlob %>;
@@ -21,5 +22,6 @@ export const build = () => {
     }))
     .pipe(dest(buildDir));
 };
-
-task("build", build);
+<% if (antlr4) { %>
+task("build", parallel(build, makeParser));<% } else { %>
+task("build", build);<% } %>

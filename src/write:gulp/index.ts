@@ -9,12 +9,23 @@ interface Props {
   buildDir: string;
   libDir: string;
   gulpDir: string;
+  grammarDir: string;
+  dataDir: string;
   parserDir: string;
+  listenerDir: string;
+  visitorDir: string;
   srcGlob: string;
   libGlob: string;
   testGlob: string;
   buildGlob: string;
+  grammarGlob?: string;
+  dataGlob?: string;
   jupyter: boolean;
+  grammar: string;
+  rule: string;
+  listener: string;
+  visitor: string;
+  parsers: string[];
   antlr4: boolean;
   ipynbGlob: string;
   filePath: string;
@@ -74,19 +85,40 @@ export default class Gulp extends Base {
     const libDir = this.getProp("config:paths:lib") as Path;
     const testDir = this.getProp("config:paths:test") as Path;
     const gulpDir = this.getProp("config:paths:gulp") as Path;
-    const parserDir = this.getProp("config:paths:parsers") as Path;
+
+    const grammarDir = this.getProp("config:paths:grammar") as Path;
+    const dataDir = this.getProp("config:paths:data") as Path;
+    const parserDir = this.getProp("config:paths:parser") as Path;
+    const listenerDir = this.getProp("config:paths:listener") as Path;
+    const visitorDir = this.getProp("config:paths:visitor") as Path;
+
     const extensions = this.getProp("config:languages:extensions") as string[];
 
     const jupyter = this.getProp("config:languages:jupyter") as boolean;
     const antlr4 = this.getProp("config:languages:antlr4") as boolean;
+
+    const grammar = this.getProp("config:parser:grammar") as string;
+    const rule = this.getProp("config:parser:rule") as string;
+    const listener = this.getProp("config:parser:listener") as string;
+    const visitor = this.getProp("config:parser:visitor") as string;
+    const parsers = this.getProp("config:parser:parsers") as string[];
 
     if (jupyter) {
       gulpIncludes.push("notebooks");
       this.addDevDep("gulp-exec", false);
     }
 
+    let grammarGlob;
+    let dataGlob;
+
     if (antlr4) {
       gulpIncludes.push("parse");
+      grammarGlob = JSON.stringify(
+        [path.join(grammarDir, "**/*.g4")],
+        undefined,
+        2
+      );
+      dataGlob = JSON.stringify([path.join(dataDir, "**/*")], undefined, 2);
     }
 
     const globs: string[] = [];
@@ -99,6 +131,11 @@ export default class Gulp extends Base {
         globs.push(path.join(testDir, "**/*." + ext));
       }
     );
+
+    if (antlr4) {
+      globs.push("!" + path.join(parserDir, "**/*.js"));
+      srcGlobs.push("!" + path.join(parserDir, "**/*.js"));
+    }
 
     const srcGlob = JSON.stringify(globs, undefined, 2);
     const libGlob = JSON.stringify(srcGlobs, undefined, 2);
@@ -126,18 +163,35 @@ export default class Gulp extends Base {
 
     this.props = {
       gulpIncludes,
+
       srcDir,
       buildDir,
       libDir,
       gulpDir,
+
+      grammarDir,
+      dataDir,
       parserDir,
+      listenerDir,
+      visitorDir,
+
       srcGlob,
       libGlob,
       testGlob,
       buildGlob,
+      ipynbGlob,
+      grammarGlob,
+      dataGlob,
+
       jupyter,
       antlr4,
-      ipynbGlob,
+
+      grammar,
+      rule,
+      listener,
+      visitor,
+      parsers,
+
       filePath: "<%- file.path %>",
       extensions: JSON.stringify(
         extensions.map((ext): string => "." + ext),
@@ -145,44 +199,6 @@ export default class Gulp extends Base {
         2
       )
     };
-
-    if (antlr4) {
-      const grammar = this.getProp("config:parser:grammar") as string;
-      const rule = this.getProp("config:parser:rule") as string;
-      const grammarDir = this.getProp("config:paths:grammar") as Path;
-      const dataDir = this.getProp("config:paths:data") as Path;
-      const parserDir = this.getProp("config:paths:parser") as Path;
-      const listenerDir = this.getProp("config:paths:listener") as Path;
-      const visitorDir = this.getProp("config:paths:visitor") as Path;
-      const listener = this.getProp("config:parser:listener") as string;
-      const visitor = this.getProp("config:parser:visitor") as string;
-      const parsers = this.getProp("config:parser:parsers") as string[];
-      const grammarGlob = JSON.stringify(
-        [path.join(grammarDir, "**/*.g4")],
-        undefined,
-        2
-      );
-      const dataGlob = JSON.stringify(
-        [path.join(dataDir, "**/*")],
-        undefined,
-        2
-      );
-
-      Object.assign(this.props, {
-        grammar,
-        rule,
-        grammarDir,
-        dataDir,
-        parserDir,
-        listenerDir,
-        visitorDir,
-        listener,
-        visitor,
-        parsers,
-        grammarGlob,
-        dataGlob
-      });
-    }
   }
 
   public writing(): void {
