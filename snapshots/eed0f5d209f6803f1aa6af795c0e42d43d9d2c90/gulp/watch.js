@@ -3,16 +3,18 @@ import path from "path";
 import del from "del";
 import { handleBuild as build } from "./build";
 import { handleTest as test } from "./test";
-import { makeParser, copyParser } from "./parse";
+import { handleParse } from "./parse";
 
 const buildDir = "build";
 const srcGlob = [
   "src/**/*.js",
-  "test/**/*.js"
+  "test/**/*.js",
+  "!src/static/antlr4/parsers/**/*.js"
 ];
 const buildGlob = [
   "build/src/**/*.js",
-  "build/test/**/*.js"
+  "build/test/**/*.js",
+  "!build/src/static/antlr4/parsers/**/*.js"
 ];
 const grammarGlob = [
   "src/static/antlr4/grammars/**/*.g4"
@@ -29,7 +31,7 @@ export const startWatching = done => {
   });
 
   watch(buildGlob, test);
-  watch(grammarGlob, series(makeParser, copyParser));
+  watch(grammarGlob, series(handleParse, test));
 
   done();
 };

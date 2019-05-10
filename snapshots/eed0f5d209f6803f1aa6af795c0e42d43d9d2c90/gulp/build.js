@@ -3,12 +3,13 @@ import babel from "gulp-babel";
 import sourcemaps from "gulp-sourcemaps";
 import cached from "gulp-cached";
 import newer from "gulp-newer";
-import { makeParser, copyParser } from "./parse";
+import { handleParse } from "./parse";
 
 const buildDir = "build";
 const srcGlob = [
   "src/**/*.js",
-  "test/**/*.js"
+  "test/**/*.js",
+  "!src/static/antlr4/parsers/**/*.js"
 ];
 
 export const handleBuild = () => {
@@ -26,7 +27,6 @@ export const handleBuild = () => {
     .pipe(dest(buildDir));
 };
 
-const handleParse = series(makeParser, copyParser);
 const prebuild = handleParse;
 const build = series(prebuild, handleBuild);
 
