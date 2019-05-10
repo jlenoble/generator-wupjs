@@ -1,7 +1,8 @@
-import { src, task, series, parallel, lastRun } from "gulp";
+import { src, dest, task, series, parallel, lastRun } from "gulp";
 import antlr4 from "gulp-antlr4";
 import newer from "gulp-newer";
 
+const buildDir = "<%- buildDir %>";
 const parserDir = "<%- parserDir %>";
 const parserOptions = { parserDir };
 
