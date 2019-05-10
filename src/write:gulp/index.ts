@@ -21,11 +21,11 @@ interface Props {
   libGlob: string;
   testGlob: string;
   buildGlob: string;
-  lintGlob: string;
 
   grammarGlob?: string;
   dataGlob?: string;
-  parserGlob?: string;
+  parserSrcGlob?: string;
+  parserTokenGlob?: string;
 
   ipynbGlob: string;
 
@@ -122,26 +122,29 @@ export default class Gulp extends Base {
       gulpIncludes.push("parse");
     }
 
-    const globs: string[] = [];
     const srcGlobs: string[] = [];
+    const libGlobs: string[] = [];
 
     extensions.forEach(
       (ext): void => {
-        globs.push(path.join(srcDir, "**/*." + ext));
         srcGlobs.push(path.join(srcDir, "**/*." + ext));
-        globs.push(path.join(testDir, "**/*." + ext));
+        srcGlobs.push(path.join(testDir, "**/*." + ext));
+        libGlobs.push(path.join(srcDir, "**/*." + ext));
       }
     );
 
-    const lintGlobs: string[] = [...globs];
+    const buildGlobs = [
+      path.join(buildDir, srcDir, "**/*.js"),
+      path.join(buildDir, testDir, "**/*.js")
+    ];
 
     if (antlr4) {
-      lintGlobs.push("!" + path.join(parserDir, "**/*.js"));
+      srcGlobs.push("!" + path.join(parserDir, "**/*.js"));
+      buildGlobs.push("!" + path.join(buildDir, parserDir, "**/*.js"));
     }
 
-    const srcGlob = JSON.stringify(globs, undefined, 2);
-    const lintGlob = JSON.stringify(lintGlobs, undefined, 2);
-    const libGlob = JSON.stringify(srcGlobs, undefined, 2);
+    const srcGlob = JSON.stringify(srcGlobs, undefined, 2);
+    const libGlob = JSON.stringify(libGlobs, undefined, 2);
 
     const testGlob = JSON.stringify(
       [path.join(buildDir, testDir, "**/*.test.js")],
@@ -149,14 +152,7 @@ export default class Gulp extends Base {
       2
     );
 
-    const buildGlob = JSON.stringify(
-      [
-        path.join(buildDir, srcDir, "**/*.js"),
-        path.join(buildDir, testDir, "**/*.js")
-      ],
-      undefined,
-      2
-    );
+    const buildGlob = JSON.stringify(buildGlobs, undefined, 2);
 
     const ipynbGlob = JSON.stringify(
       [path.join(srcDir, "**/*.ipynb")],
@@ -182,7 +178,6 @@ export default class Gulp extends Base {
       libGlob,
       testGlob,
       buildGlob,
-      lintGlob,
       ipynbGlob,
 
       jupyter,
@@ -213,7 +208,7 @@ export default class Gulp extends Base {
         undefined,
         2
       );
-      const parserGlob = JSON.stringify(
+      const parserTokenGlob = JSON.stringify(
         [
           path.join(parserDir, "**/*.interp"),
           path.join(parserDir, "**/*.tokens")
@@ -221,11 +216,17 @@ export default class Gulp extends Base {
         undefined,
         2
       );
+      const parserSrcGlob = JSON.stringify(
+        [path.join(parserDir, "**/*.js")],
+        undefined,
+        2
+      );
 
       Object.assign(this.props, {
         grammarGlob,
         dataGlob,
-        parserGlob
+        parserTokenGlob,
+        parserSrcGlob
       });
     }
   }

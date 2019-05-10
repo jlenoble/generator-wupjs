@@ -1,13 +1,15 @@
 import { src, dest, task, series, parallel, lastRun } from "gulp";
 import antlr4 from "gulp-antlr4";
 import newer from "gulp-newer";
+import sourcemaps from "gulp-sourcemaps";
 
 const buildDir = "<%- buildDir %>";
 const parserDir = "<%- parserDir %>";
 const parserOptions = { parserDir };
 
 const grammarGlob = <%- grammarGlob %>;
-const parserGlob = <%- parserGlob %>;
+const parserTokenGlob = <%- parserTokenGlob %>;
+const parserSrcGlob = <%- parserSrcGlob %>;
 const dataGlob = <%- dataGlob %>;
 
 const grammar = "<%- grammar %>";
@@ -21,7 +23,7 @@ const visitor = "<%- visitor %>";
 const visitorDir = "<%- visitorDir %>";
 parserOptions.visitor = visitor;<% } %>
 
-export const makeParser = () => {
+const makeParser = () => {
   if (require && require.cache) {
     // Remove parser files from Babel cache
     Object.keys(require.cache).filter(key => {
@@ -37,14 +39,35 @@ export const makeParser = () => {
     .pipe(antlr4(parserOptions));
 };
 
-export const copyParser = () => {
-  return src(parserGlob, {
+const copyParser = () => {
+  return src(parserTokenGlob, {
     base: process.cwd(),
     since: lastRun(copyParser)
   })
     .pipe(newer(buildDir))
     .pipe(dest(buildDir))
-};<% if (parsers.includes("Listener")) { %>
+};
+
+const transpileParser = () => {
+  return src(parserSrcGlob, {
+    base: process.cwd(),
+    since: lastRun(transpileParser)
+  })
+    .pipe(newer(buildDir))
+    .pipe(sourcemaps.init())
+    .pipe(sourcemaps.write(".", {
+      sourceRoot: file => file.cwd
+    }))
+    .pipe(dest(buildDir))
+};
+
+export const handleParse = series(
+  makeParser,
+  parallel(
+    copyParser,
+    transpileParser
+  )
+);<% if (parsers.includes("Listener")) { %>
 
 export const translate = () => {
   return src(dataGlob)
@@ -53,11 +76,11 @@ export const translate = () => {
     }));
 };
 
-task("translate", series(makeParser, translate));<% if (!parsers.includes("Visitor")) { %>
+task("translate", series(handleParse, translate));<% if (!parsers.includes("Visitor")) { %>
 
 export const parse = translate;
 
-task("parse", series(makeParser, translate));<% } %><% } %><% if (parsers.includes("Visitor")) { %>
+task("parse", series(handleParse, translate));<% } %><% } %><% if (parsers.includes("Visitor")) { %>
 
 export const interprete = () => {
   return src(dataGlob)
@@ -66,12 +89,12 @@ export const interprete = () => {
     }));
 };
 
-task("interprete", series(makeParser, interprete));<% if (!parsers.includes("Listener")) { %>
+task("interprete", series(handleParse, interprete));<% if (!parsers.includes("Listener")) { %>
 
 export const parse = interprete;
 
-gulp.task("parse", series(makeParser, interprete));<% } %><% } %><% if (parsers.includes("Visitor") && parsers.includes("Listener")) { %>
+gulp.task("parse", series(handleParse, interprete));<% } %><% } %><% if (parsers.includes("Visitor") && parsers.includes("Listener")) { %>
 
 export const parse = parallel(translate, interprete);
 
-task("parse", series(makeParser, parse));<% } %>
+task("parse", series(handleParse, parse));<% } %>

@@ -1,10 +1,10 @@
 import gulp from "gulp";
 import eslint from "gulp-eslint";
 
-const lintGlob = <%- lintGlob %>;
+const srcGlob = <%- srcGlob %>;
 
 export const handleLint = () => {
-  return gulp.src(lintGlob)
+  return gulp.src(srcGlob)
     .pipe(eslint())
     .pipe(eslint.format());
 };

@@ -4,7 +4,7 @@ import del from "del";
 import { handleBuild as build } from "./build";
 import { handleTest as test } from "./test";<% if (jupyter) { %>
 import { convertNotebooks } from "./notebooks";<% } %><% if (antlr4) { %>
-import { makeParser, copyParser } from "./parse";<% } %>
+import { handleParse } from "./parse";<% } %>
 
 const buildDir = "<%- buildDir %>";
 const srcGlob = <%- srcGlob %>;
@@ -24,7 +24,7 @@ export const startWatching = done => {
 
   watch(buildGlob, test);<% if (jupyter) { %>
   watch(ipynbGlob, convertNotebooks);<% } %><% if (antlr4) { %>
-  watch(grammarGlob, series(makeParser, copyParser));<% } %>
+  watch(grammarGlob, series(handleParse, test));<% } %>
 
   done();
 };
