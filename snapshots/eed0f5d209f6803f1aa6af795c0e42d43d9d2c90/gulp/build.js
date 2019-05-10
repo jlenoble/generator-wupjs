@@ -1,13 +1,15 @@
-import {src, dest, lastRun, task} from "gulp";
+import { src, dest, lastRun, task, parallel } from "gulp";
 import babel from "gulp-babel";
 import sourcemaps from "gulp-sourcemaps";
 import cached from "gulp-cached";
 import newer from "gulp-newer";
+import { makeParser } from "./parse";
 
 const buildDir = "build";
 const srcGlob = [
   "src/**/*.js",
-  "test/**/*.js"
+  "test/**/*.js",
+  "!src/static/antlr4/parsers/**/*.js"
 ];
 
 export const build = () => {
@@ -25,4 +27,4 @@ export const build = () => {
     .pipe(dest(buildDir));
 };
 
-task("build", build);
+task("build", parallel(build, makeParser));

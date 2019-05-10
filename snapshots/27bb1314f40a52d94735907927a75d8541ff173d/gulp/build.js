@@ -1,4 +1,4 @@
-import {src, dest, lastRun, task} from "gulp";
+import { src, dest, lastRun, task } from "gulp";
 import babel from "gulp-babel";
 import sourcemaps from "gulp-sourcemaps";
 import cached from "gulp-cached";

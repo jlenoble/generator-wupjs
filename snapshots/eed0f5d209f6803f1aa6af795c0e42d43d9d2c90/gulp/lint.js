@@ -3,7 +3,8 @@ import eslint from "gulp-eslint";
 
 const srcGlob = [
   "src/**/*.js",
-  "test/**/*.js"
+  "test/**/*.js",
+  "!src/static/antlr4/parsers/**/*.js"
 ];
 
 export const lint = () => {

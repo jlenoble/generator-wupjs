@@ -1,9 +1,9 @@
-import {task, watch} from "gulp";
+import { task, watch } from "gulp";
 import path from "path";
 import del from "del";
-import {build} from "./build";
-import {test} from "./test";
-import {convertNotebooks} from "./notebooks";
+import { build } from "./build";
+import { test } from "./test";
+import { convertNotebooks } from "./notebooks";
 
 const buildDir = "build";
 const srcGlob = [

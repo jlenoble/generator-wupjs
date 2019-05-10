@@ -1,8 +1,9 @@
-import {src, dest, lastRun, task} from "gulp";
+import { src, dest, lastRun, task, series } from "gulp";
 import babel from "gulp-babel";
 import sourcemaps from "gulp-sourcemaps";
 import cached from "gulp-cached";
 import newer from "gulp-newer";
+import { convertNotebooks } from "./notebooks";
 
 const buildDir = "build";
 const srcGlob = [
@@ -25,4 +26,4 @@ export const build = () => {
     .pipe(dest(buildDir));
 };
 
-task("build", build);
+task("build", series(convertNotebooks, build));

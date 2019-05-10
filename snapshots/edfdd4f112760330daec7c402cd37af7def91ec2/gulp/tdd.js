@@ -1,7 +1,6 @@
-import {task, series} from "gulp";
+import { task, series } from "gulp";
 
 import "./test";
-import "./notebooks";
 import "./watch";
 
-task("tdd", series("notebooks", "test", "watch"));
+task("tdd", series("test", "watch"));
