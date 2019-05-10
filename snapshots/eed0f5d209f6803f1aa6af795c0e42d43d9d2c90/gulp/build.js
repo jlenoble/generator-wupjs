@@ -8,8 +8,7 @@ import { makeParser, copyParser } from "./parse";
 const buildDir = "build";
 const srcGlob = [
   "src/**/*.js",
-  "test/**/*.js",
-  "!src/static/antlr4/parsers/**/*.js"
+  "test/**/*.js"
 ];
 
 export const build = () => {

@@ -1,14 +1,14 @@
 import gulp from "gulp";
 import eslint from "gulp-eslint";
 
-const srcGlob = [
+const lintGlob = [
   "src/**/*.js",
   "test/**/*.js",
   "!src/static/antlr4/parsers/**/*.js"
 ];
 
 export const lint = () => {
-  return gulp.src(srcGlob)
+  return gulp.src(lintGlob)
     .pipe(eslint())
     .pipe(eslint.format());
 };

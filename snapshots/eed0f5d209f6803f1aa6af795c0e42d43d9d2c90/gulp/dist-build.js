@@ -3,8 +3,7 @@ import babel from "gulp-babel";
 
 const libDir = "lib";
 const libGlob = [
-  "src/**/*.js",
-  "!src/static/antlr4/parsers/**/*.js"
+  "src/**/*.js"
 ];
 
 export const distBuild = () => {
