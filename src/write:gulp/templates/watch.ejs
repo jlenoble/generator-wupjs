@@ -1,4 +1,4 @@
-import { task, watch } from "gulp";
+import { task, watch<% if (antlr4) { %>, series<% } %> } from "gulp";
 import path from "path";
 import del from "del";
 import { build } from "./build";
@@ -10,8 +10,7 @@ const buildDir = "<%- buildDir %>";
 const srcGlob = <%- srcGlob %>;
 const buildGlob = <%- buildGlob %>;<% if (jupyter) { %>
 const ipynbGlob = <%- ipynbGlob %>;<% } %><% if (antlr4) { %>
-const grammarGlob = <%- grammarGlob %>;
-const parserGlob = <%- parserGlob %>;<% } %>
+const grammarGlob = <%- grammarGlob %>;<% } %>
 
 export const startWatching = done => {
   const watcher = watch(srcGlob, {events: ["add", "change"]}, build);
@@ -25,8 +24,7 @@ export const startWatching = done => {
 
   watch(buildGlob, test);<% if (jupyter) { %>
   watch(ipynbGlob, convertNotebooks);<% } %><% if (antlr4) { %>
-  watch(grammarGlob, makeParser);
-  watch(parserGlob, copyParser);<% } %>
+  watch(grammarGlob, series(makeParser, copyParser));<% } %>
 
   done();
 };
