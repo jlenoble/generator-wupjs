@@ -9,7 +9,7 @@ import { convertNotebooks } from "./notebooks";<% } %>
 const buildDir = "<%- buildDir %>";
 const srcGlob = <%- srcGlob %>;
 
-export const build = () => {
+export const handleBuild = () => {
   return src(srcGlob, {
     base: process.cwd(),
     since: lastRun(build)
@@ -28,7 +28,7 @@ const handleParse = series(makeParser, copyParser);<% } %><% if (antlr4 && jupyt
 const prebuild = parallel(convertNotebooks, handleParse);<% } else if (jupyter) { %>
 const prebuild = convertNotebooks;<% } else if (antlr4) { %>
 const prebuild = handleParse;<% } %><% if (!antlr4 && !jupyter) { %>
-const handleBuild = build;<% } else { %>
-const handleBuild = series(prebuild, build);<% } %>
+const build = handleBuild;<% } else { %>
+const build = series(prebuild, handleBuild);<% } %>
 
-task("build", handleBuild);
+task("build", build);
