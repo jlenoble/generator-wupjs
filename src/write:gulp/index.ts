@@ -5,29 +5,38 @@ type Path = Wup.Path;
 
 interface Props {
   gulpIncludes: string[];
+
   srcDir: string;
   buildDir: string;
   libDir: string;
   gulpDir: string;
+
   grammarDir: string;
   dataDir: string;
   parserDir: string;
   listenerDir: string;
   visitorDir: string;
+
   srcGlob: string;
   libGlob: string;
   testGlob: string;
   buildGlob: string;
+
   grammarGlob?: string;
   dataGlob?: string;
+  parserGlob?: string;
+
+  ipynbGlob: string;
+
   jupyter: boolean;
+  antlr4: boolean;
+
   grammar: string;
   rule: string;
   listener: string;
   visitor: string;
   parsers: string[];
-  antlr4: boolean;
-  ipynbGlob: string;
+
   filePath: string;
   extensions: string;
 }
@@ -108,17 +117,8 @@ export default class Gulp extends Base {
       this.addDevDep("gulp-exec", false);
     }
 
-    let grammarGlob;
-    let dataGlob;
-
     if (antlr4) {
       gulpIncludes.push("parse");
-      grammarGlob = JSON.stringify(
-        [path.join(grammarDir, "**/*.g4")],
-        undefined,
-        2
-      );
-      dataGlob = JSON.stringify([path.join(dataDir, "**/*")], undefined, 2);
     }
 
     const globs: string[] = [];
@@ -180,8 +180,6 @@ export default class Gulp extends Base {
       testGlob,
       buildGlob,
       ipynbGlob,
-      grammarGlob,
-      dataGlob,
 
       jupyter,
       antlr4,
@@ -199,6 +197,33 @@ export default class Gulp extends Base {
         2
       )
     };
+
+    if (antlr4) {
+      const grammarGlob = JSON.stringify(
+        [path.join(grammarDir, "**/*.g4")],
+        undefined,
+        2
+      );
+      const dataGlob = JSON.stringify(
+        [path.join(dataDir, "**/*")],
+        undefined,
+        2
+      );
+      const parserGlob = JSON.stringify(
+        [
+          path.join(parserDir, "**/*.interp"),
+          path.join(parserDir, "**/*.tokens")
+        ],
+        undefined,
+        2
+      );
+
+      Object.assign(this.props, {
+        grammarGlob,
+        dataGlob,
+        parserGlob
+      });
+    }
   }
 
   public writing(): void {

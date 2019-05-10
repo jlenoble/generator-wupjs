@@ -1,10 +1,12 @@
 import { src, task, series, parallel } from "gulp";
 import antlr4 from "gulp-antlr4";
+import newer from "gulp-newer";
 
 const parserDir = "<%- parserDir %>";
 const parserOptions = { parserDir };
 
 const grammarGlob = <%- grammarGlob %>;
+const parserGlob = <%- parserGlob %>;
 const dataGlob = <%- dataGlob %>;
 
 const grammar = "<%- grammar %>";
@@ -32,6 +34,15 @@ export const makeParser = () => {
 
   return src(grammarGlob)
     .pipe(antlr4(parserOptions));
+};
+
+export const copyParser = () => {
+  return src(parserGlob, {
+    base: process.cwd(),
+    since: lastRun(copyParser)
+  })
+    .pipe(newer(buildDir))
+    .pipe(dest(buildDir))
 };<% if (parsers.includes("Listener")) { %>
 
 export const translate = () => {
