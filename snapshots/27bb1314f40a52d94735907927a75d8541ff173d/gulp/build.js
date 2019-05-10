@@ -25,4 +25,6 @@ export const build = () => {
     .pipe(dest(buildDir));
 };
 
-task("build", build);
+const handleBuild = build;
+
+task("build", handleBuild);

@@ -26,4 +26,7 @@ export const build = () => {
     .pipe(dest(buildDir));
 };
 
-task("build", series(convertNotebooks, build));
+const prebuild = convertNotebooks;
+const handleBuild = series(prebuild, build);
+
+task("build", handleBuild);

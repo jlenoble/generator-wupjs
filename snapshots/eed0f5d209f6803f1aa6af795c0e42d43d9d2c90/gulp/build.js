@@ -1,9 +1,9 @@
-import { src, dest, lastRun, task, parallel } from "gulp";
+import { src, dest, lastRun, task, series } from "gulp";
 import babel from "gulp-babel";
 import sourcemaps from "gulp-sourcemaps";
 import cached from "gulp-cached";
 import newer from "gulp-newer";
-import { makeParser } from "./parse";
+import { makeParser, copyParser } from "./parse";
 
 const buildDir = "build";
 const srcGlob = [
@@ -27,4 +27,8 @@ export const build = () => {
     .pipe(dest(buildDir));
 };
 
-task("build", parallel(build, makeParser));
+const handleParse = series(makeParser, copyParser);
+const prebuild = handleParse;
+const handleBuild = series(prebuild, build);
+
+task("build", handleBuild);
