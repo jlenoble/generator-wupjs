@@ -1,9 +1,9 @@
-import { task, watch } from "gulp";
+import { task, watch, series } from "gulp";
 import path from "path";
 import del from "del";
-import { build } from "./build";
-import { test } from "./test";
-import { makeParser } from "./parse";
+import { handleBuild as build } from "./build";
+import { handleTest as test } from "./test";
+import { makeParser, copyParser } from "./parse";
 
 const buildDir = "build";
 const srcGlob = [
@@ -29,7 +29,7 @@ export const startWatching = done => {
   });
 
   watch(buildGlob, test);
-  watch(grammarGlob, makeParser);
+  watch(grammarGlob, series(makeParser, copyParser));
 
   done();
 };

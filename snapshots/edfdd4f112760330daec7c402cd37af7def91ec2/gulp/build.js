@@ -11,7 +11,7 @@ const srcGlob = [
   "test/**/*.js"
 ];
 
-export const build = () => {
+export const handleBuild = () => {
   return src(srcGlob, {
     base: process.cwd(),
     since: lastRun(build)
@@ -27,6 +27,6 @@ export const build = () => {
 };
 
 const prebuild = convertNotebooks;
-const handleBuild = series(prebuild, build);
+const build = series(prebuild, handleBuild);
 
-task("build", handleBuild);
+task("build", build);

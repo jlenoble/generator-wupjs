@@ -6,10 +6,10 @@ const lintGlob = [
   "test/**/*.ts"
 ];
 
-export const lint = () => {
+export const handleLint = () => {
   return gulp.src(lintGlob)
     .pipe(eslint())
     .pipe(eslint.format());
 };
 
-gulp.task("lint", lint);
+gulp.task("lint", handleLint);

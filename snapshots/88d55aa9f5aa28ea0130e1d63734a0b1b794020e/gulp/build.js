@@ -10,7 +10,7 @@ const srcGlob = [
   "test/**/*.js"
 ];
 
-export const build = () => {
+export const handleBuild = () => {
   return src(srcGlob, {
     base: process.cwd(),
     since: lastRun(build)
@@ -25,6 +25,6 @@ export const build = () => {
     .pipe(dest(buildDir));
 };
 
-const handleBuild = build;
+const build = handleBuild;
 
-task("build", handleBuild);
+task("build", build);
