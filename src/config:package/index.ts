@@ -21,6 +21,25 @@ export default class Package extends Base {
     );
   }
 
+  public initializing(): void {
+    try {
+      const pckg: Wup.Props = this.fs.readJSON(
+        this.destinationPath("package.json")
+      );
+
+      Object.keys(pckg).forEach(
+        (key): void => {
+          const genName = this.generatorName + ":" + key;
+          if (this.getProp(genName) === undefined) {
+            this.addProp(genName, pckg[key]);
+          }
+        }
+      );
+    } catch (e) {
+      this.addProp(this.generatorName, []);
+    }
+  }
+
   public configuring(): void {
     const license = this.getProp("config:license");
 
@@ -37,7 +56,8 @@ export default class Package extends Base {
       main: this.getProp("config:package:main"),
       files: this.getProp("config:package:files"),
       types: this.getProp("config:package:types"),
-      bugs: this.getProp("config:package:bugs")
+      bugs: this.getProp("config:package:bugs"),
+      scripts: this.getProp("config:package:scripts")
     });
   }
 }
