@@ -13,7 +13,7 @@ const srcGlob = [
 export const handleBuild = () => {
   return src(srcGlob, {
     base: process.cwd(),
-    since: lastRun(build)
+    since: lastRun(handleBuild)
   })
     .pipe(newer(buildDir))
     .pipe(cached())
