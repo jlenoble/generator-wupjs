@@ -1,5 +1,7 @@
 import Base from "../common/base-generator";
 
+type Path = Wup.Path;
+
 interface Props {
   compilerOptions: {
     target: "esnext";
@@ -29,6 +31,9 @@ export default class TsConfigJson extends Base {
   }
 
   public async configure(): Promise<void> {
+    const srcDir = this.getProp("config:paths:src") as Path;
+    const testDir = this.getProp("config:paths:test") as Path;
+
     this.props = {
       compilerOptions: {
         target: "esnext",
@@ -41,7 +46,7 @@ export default class TsConfigJson extends Base {
         esModuleInterop: true,
         experimentalDecorators: true
       },
-      include: []
+      include: [srcDir, testDir]
     };
   }
 
