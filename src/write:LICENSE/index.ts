@@ -23,6 +23,32 @@ export default class LICENSE extends Base {
 `;
   }
 
+  public _getLicenseText(lic: string): string | undefined {
+    try {
+      return this.fs.read(this.templatePath(`LICENSE_${lic}.ejs`));
+    } catch (e) {
+      try {
+        return this.fs.read(this.templatePath(`LICENSE_${lic}`));
+      } catch (e) {}
+    }
+  }
+
+  public _getLicenseName(lic: string): string {
+    try {
+      const name = `LICENSE_${lic}.ejs`;
+      this.fs.read(this.templatePath(name));
+      return name;
+    } catch (e) {
+      try {
+        const name = `LICENSE_${lic}`;
+        this.fs.read(this.templatePath(name));
+        return name;
+      } catch (e) {}
+    }
+
+    return "";
+  }
+
   // 'default' queue runs between 'configuring' and 'writing' queues
   public beforeWriting(): void {
     const license = this.getProp("config:license") as Wup.License;
@@ -49,7 +75,7 @@ export default class LICENSE extends Base {
 
               const lic = gen._unsuffixGPL(license);
 
-              const txt = this.fs.read(this.templatePath(`LICENSE_${lic}.ejs`));
+              const txt = this._getLicenseText(lic);
               return `${text}${this._licenseSeparator(license)}${txt}
 `;
             }, "")
@@ -74,7 +100,7 @@ export default class LICENSE extends Base {
     if (this.props) {
       if (this.props.licenses.length === 1) {
         this.fs.copyTpl(
-          this.templatePath(`LICENSE_${this.props.licenses[0]}.ejs`),
+          this.templatePath(this._getLicenseName(this.props.licenses[0])),
           this.destinationPath("LICENSE"),
           this.props
         );
