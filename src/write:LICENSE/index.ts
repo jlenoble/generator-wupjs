@@ -23,7 +23,10 @@ export default class LICENSE extends Base {
 `;
   }
 
-  public _getLicenseText(lic: string): string | undefined {
+  public _getLicenseText(license: string): string | undefined {
+    const gen = this.getGen("config:license") as LicenseGenerator;
+    const lic = gen._unsuffixGPL(license);
+
     try {
       return this.fs.read(this.templatePath(`LICENSE_${lic}.ejs`));
     } catch (e) {
@@ -33,7 +36,10 @@ export default class LICENSE extends Base {
     }
   }
 
-  public _getLicenseName(lic: string): string {
+  public _getLicenseName(license: string): string {
+    const gen = this.getGen("config:license") as LicenseGenerator;
+    const lic = gen._unsuffixGPL(license);
+
     try {
       const name = `LICENSE_${lic}.ejs`;
       this.fs.read(this.templatePath(name));
@@ -73,9 +79,7 @@ export default class LICENSE extends Base {
                 return text;
               }
 
-              const lic = gen._unsuffixGPL(license);
-
-              const txt = this._getLicenseText(lic);
+              const txt = this._getLicenseText(license);
               return `${text}${this._licenseSeparator(license)}${txt}
 `;
             }, "")

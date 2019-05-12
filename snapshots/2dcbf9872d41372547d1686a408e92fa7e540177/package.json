@@ -1,0 +1,35 @@
+{
+  "name": "generator-wupjs",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "",
+  "files": [],
+  "types": "",
+  "bugs": {},
+  "license": "GPL-2.0-or-later",
+  "author": {
+    "name": "Me Me",
+    "email": "me@example.com"
+  },
+  "repository": {},
+  "engines": {
+    "node": ">=10.9.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/register": "^7.4.4",
+    "autoreload-gulp": "^0.4.1",
+    "chai": "^4.2.0",
+    "del": "^4.1.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-cached": "^1.1.1",
+    "gulp-eslint": "^5.0.0",
+    "gulp-mocha": "^6.0.0",
+    "gulp-newer": "^1.4.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "plumb-gulp": "^0.2.2"
+  }
+}
