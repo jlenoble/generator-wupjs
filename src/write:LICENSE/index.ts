@@ -108,7 +108,10 @@ export default class LICENSE extends Base {
     }
 
     if (this.props) {
-      if (this.props.licenses.length === 1) {
+      if (
+        this.props.licenses.length === 1 &&
+        !this.props.licenses[0].includes("SEE IN FILE")
+      ) {
         this.fs.copyTpl(
           this.templatePath(this._getLicenseName(this.props.licenses[0])),
           this.destinationPath("LICENSE"),
