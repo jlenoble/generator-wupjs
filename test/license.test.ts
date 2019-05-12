@@ -30,4 +30,5 @@ const testLICENSE = (licenses: Wup.License[]): void => {
   });
 };
 
+testLICENSE(["MIT"]);
 testLICENSE(["ISC"]);
