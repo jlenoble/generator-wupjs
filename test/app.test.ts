@@ -1,19 +1,10 @@
 import testGenerator from "./common/test-generator";
-import { configFiles, gulpFiles } from "./common/default-options";
+import { configFiles, gulpFiles, prompt } from "./common/default-options";
 
 testGenerator({
   title: "Testing main generator: Vanilla",
   command: "yo wupjs",
-  prompt: {
-    "config:author:name": "Me Me",
-    "config:author:email": "me@example.com",
-    "config:license": ["MIT"],
-    "config:package:name": "awesome-app",
-    "config:package:version": "1.2.3",
-    "config:package:description": "Some dummy description",
-    "config:package:keywords": "foo, bar, quux",
-    "config:github:username": "me-me"
-  },
+  prompt,
   assertContent: {
     ...configFiles,
     ...gulpFiles,
@@ -26,14 +17,7 @@ testGenerator({
   title: "Testing main generator: with Typescript",
   command: "yo wupjs",
   prompt: {
-    "config:author:name": "Me Me",
-    "config:author:email": "me@example.com",
-    "config:license": ["MIT"],
-    "config:package:name": "awesome-app",
-    "config:package:version": "1.2.3",
-    "config:package:description": "Some dummy description",
-    "config:package:keywords": "foo, bar, quux",
-    "config:github:username": "me-me",
+    ...prompt,
     "config:languages:typescript": true
   },
   assertContent: {
@@ -49,14 +33,7 @@ testGenerator({
   title: "Testing main generator: with Jupyter",
   command: "yo wupjs",
   prompt: {
-    "config:author:name": "Me Me",
-    "config:author:email": "me@example.com",
-    "config:license": ["MIT"],
-    "config:package:name": "awesome-app",
-    "config:package:version": "1.2.3",
-    "config:package:description": "Some dummy description",
-    "config:package:keywords": "foo, bar, quux",
-    "config:github:username": "me-me",
+    ...prompt,
     "config:languages:jupyter": true
   },
   assertContent: {
@@ -72,14 +49,7 @@ testGenerator({
   title: "Testing main generator: with ANTLR4",
   command: "yo wupjs",
   prompt: {
-    "config:author:name": "Me Me",
-    "config:author:email": "me@example.com",
-    "config:license": ["MIT"],
-    "config:package:name": "awesome-app",
-    "config:package:version": "1.2.3",
-    "config:package:description": "Some dummy description",
-    "config:package:keywords": "foo, bar, quux",
-    "config:github:username": "me-me",
+    ...prompt,
     "config:languages:antlr4": true
   },
   assertContent: {
