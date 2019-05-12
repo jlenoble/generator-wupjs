@@ -37,6 +37,7 @@ testLicense(["BSD-3-CLAUSE"]);
 testLicense(["APACHE-2.0"]);
 testLicense(["CC-BY-SA-4.0"]);
 testLicense(["EUPL-1.2"]);
+testLicense(["SEE IN FILE CUSTOM_LICENSE"]);
 
 const testGplLicense = (licenses: Wup.License[], only: boolean): void => {
   return testGenerator({
@@ -73,9 +74,12 @@ const testMultipleLicense = (
   only: boolean = false
 ): void => {
   return testGenerator({
-    title: `Testing LICENSE: ${toLicense(licenses)}-${
-      only ? "only" : "or-later"
-    }`,
+    title: `Testing LICENSE: ${toLicense(
+      licenses.map(
+        (lic): string =>
+          lic + (lic.includes("GPL") ? (only ? "-only" : "-or-later") : "")
+      )
+    )}`,
     command: "yo wupjs:write:LICENSE",
     prompt: {
       ...prompt,
