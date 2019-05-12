@@ -232,6 +232,10 @@ export default class Gulp extends Base {
   }
 
   public writing(): void {
+    if (!this.mustWrite()) {
+      return;
+    }
+
     const props: Props = this.props as Props;
     const gulpDir: Path = this.getProp("config:paths:gulp") as Path;
 

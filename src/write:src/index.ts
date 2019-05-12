@@ -98,6 +98,10 @@ export default class Src extends Base {
   }
 
   public async writing(): Promise<void> {
+    if (!this.mustWrite()) {
+      return;
+    }
+
     const props = this.props as Props;
 
     if (!props) {

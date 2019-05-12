@@ -71,6 +71,10 @@ export default class EslintRc extends Base {
   }
 
   public writing(): void {
+    if (!this.mustWrite()) {
+      return;
+    }
+
     if (this.props) {
       this.fs.writeJSON(
         this.destinationPath(".eslintrc"),

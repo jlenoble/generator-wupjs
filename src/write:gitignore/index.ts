@@ -60,6 +60,10 @@ export default class GitIgnore extends Base {
   }
 
   public writing(): void {
+    if (!this.mustWrite()) {
+      return;
+    }
+
     this.fs.copyTpl(
       this.templatePath("gitignore.ejs"),
       this.destinationPath(".gitignore"),

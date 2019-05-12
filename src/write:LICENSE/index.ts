@@ -67,6 +67,10 @@ export default class LICENSE extends Base {
   }
 
   public writing(): void {
+    if (!this.mustWrite()) {
+      return;
+    }
+
     if (this.props) {
       if (this.props.licenses.length === 1) {
         this.fs.copyTpl(

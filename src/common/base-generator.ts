@@ -167,7 +167,14 @@ Call .addDevDep(${name}) and delegate to "config:dependencies" subgen
         }
 
         console.log(
-          `***COMPOSING ${this.generatorName} with ${generator.generatorName}`
+          `*** COMPOSING ${chalk.cyan(
+            this.generatorName
+          )} with              ${chalk.yellow(generator.generatorName)}
+    will${
+      prompt ? "     " : chalk.magenta("  NOT")
+    } init or prompt for ${" ".repeat(this.generatorName.length)}${chalk.yellow(
+            generator.generatorName
+          )}`
         );
 
         generator.mustPrompt = prompt;
@@ -226,5 +233,13 @@ redundant prompting.
     );
 
     return this;
+  }
+
+  public mustWrite(): boolean {
+    return this.options.dependsOn.some(
+      (name: GenName): boolean => {
+        return (this.getGen(name) as BaseGenerator).mustPrompt;
+      }
+    );
   }
 }

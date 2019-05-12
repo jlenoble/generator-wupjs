@@ -57,6 +57,10 @@ export default class WriteParser extends Base {
   }
 
   public async writing(): Promise<void> {
+    if (!this.mustWrite()) {
+      return;
+    }
+
     if (this.getProp("config:languages:antlr4")) {
       const { grammarDir, parserDir, dataDir } = this.props as Props;
       let found = true;

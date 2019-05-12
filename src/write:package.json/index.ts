@@ -41,6 +41,10 @@ export default class PackageJson extends Base {
   }
 
   public writing(): void {
+    if (!this.mustWrite()) {
+      return;
+    }
+
     if (this.props) {
       this.fs.writeJSON(
         this.destinationPath("package.json"),

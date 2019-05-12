@@ -51,6 +51,10 @@ export default class TsConfigJson extends Base {
   }
 
   public writing(): void {
+    if (!this.mustWrite()) {
+      return;
+    }
+
     if (this.getProp("config:languages:typescript")) {
       if (this.props) {
         this.fs.writeJSON(
