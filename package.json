@@ -17,7 +17,7 @@
     "generators"
   ],
   "scripts": {
-    "postinstall": "if [ -d build/gitignore ]; then cd build/gitignore; git fetch; cd ../..; else git clone git@github.com:github/gitignore.git build/gitignore; fi"
+    "gitignore": "if [ -d build/gitignore ]; then cd build/gitignore; git fetch; cd ../..; else git clone git@github.com:github/gitignore.git build/gitignore; fi"
   },
   "repository": {
     "type": "git",
