@@ -33,3 +33,4 @@ const testLICENSE = (licenses: Wup.License[]): void => {
 testLICENSE(["MIT"]);
 testLICENSE(["ISC"]);
 testLICENSE(["BSD-2-CLAUSE"]);
+testLICENSE(["BSD-3-CLAUSE"]);
