@@ -1,4 +1,5 @@
 import Base from "../common/base-generator";
+import { getAuthorName } from "../initializing/get-author-name";
 
 type Name = Wup.Name;
 
@@ -14,17 +15,7 @@ export default class AuthorName extends Base {
   }
 
   public initializing(): void {
-    try {
-      const author: Wup.Name | Wup.Person = this.fs.readJSON(
-        this.destinationPath("package.json")
-      ).author;
-
-      if (typeof author === "string") {
-        this.addProp(this.generatorName, author);
-      } else {
-        this.addProp(this.generatorName, author.name);
-      }
-    } catch (e) {}
+    this.addProp(this.generatorName, getAuthorName(this));
   }
 
   public async prompting(): Promise<void> {
