@@ -40,7 +40,7 @@ export default class LICENSE extends Base {
     const licenses = gen._toLicenses(license);
 
     const licenseText =
-      license !== "UNLICENSED"
+      license !== "UNLICENSED" && licenses.length > 1
         ? licenses
             .reduce((text, license): string => {
               if (license.includes("SEE IN FILE")) {
@@ -49,7 +49,7 @@ export default class LICENSE extends Base {
 
               const lic = gen._unsuffixGPL(license);
 
-              const txt = this.fs.read(this.templatePath(`LICENSE_${lic}`));
+              const txt = this.fs.read(this.templatePath(`LICENSE_${lic}.ejs`));
               return `${text}${this._licenseSeparator(license)}${txt}
 `;
             }, "")
@@ -58,6 +58,7 @@ export default class LICENSE extends Base {
 
     this.props = {
       license,
+      licenses,
       licenseText,
       cYear,
       cHolder: name,
@@ -67,11 +68,19 @@ export default class LICENSE extends Base {
 
   public writing(): void {
     if (this.props) {
-      this.fs.copyTpl(
-        this.templatePath("LICENSE.ejs"),
-        this.destinationPath("LICENSE"),
-        this.props
-      );
+      if (this.props.licenses.length === 1) {
+        this.fs.copyTpl(
+          this.templatePath(`LICENSE_${this.props.licenses[0]}.ejs`),
+          this.destinationPath("LICENSE"),
+          this.props
+        );
+      } else {
+        this.fs.copyTpl(
+          this.templatePath("LICENSE.ejs"),
+          this.destinationPath("LICENSE"),
+          this.props
+        );
+      }
     } else {
       this.log("Failed to write LICENSE: undefined props");
     }
