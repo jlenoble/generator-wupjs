@@ -15,7 +15,7 @@ const toLicense = (licenses: Wup.License[]): Wup.License => {
   return license;
 };
 
-const testLICENSE = (licenses: Wup.License[]): void => {
+const testLicense = (licenses: Wup.License[]): void => {
   return testGenerator({
     title: `Testing LICENSE: ${toLicense(licenses)}`,
     command: "yo wupjs:write:LICENSE",
@@ -30,15 +30,15 @@ const testLICENSE = (licenses: Wup.License[]): void => {
   });
 };
 
-testLICENSE(["MIT"]);
-testLICENSE(["ISC"]);
-testLICENSE(["BSD-2-CLAUSE"]);
-testLICENSE(["BSD-3-CLAUSE"]);
-testLICENSE(["APACHE-2.0"]);
-testLICENSE(["CC-BY-SA-4.0"]);
-testLICENSE(["EUPL-1.2"]);
+testLicense(["MIT"]);
+testLicense(["ISC"]);
+testLicense(["BSD-2-CLAUSE"]);
+testLicense(["BSD-3-CLAUSE"]);
+testLicense(["APACHE-2.0"]);
+testLicense(["CC-BY-SA-4.0"]);
+testLicense(["EUPL-1.2"]);
 
-const testGplLICENSE = (licenses: Wup.License[], only: boolean): void => {
+const testGplLicense = (licenses: Wup.License[], only: boolean): void => {
   return testGenerator({
     title: `Testing LICENSE: ${toLicense(licenses)}-${
       only ? "only" : "or-later"
@@ -64,6 +64,32 @@ for (const only of [true, false]) {
     "LGPL-3.0",
     "AGPL-3.0"
   ]) {
-    testGplLICENSE([gpl], only);
+    testGplLicense([gpl], only);
   }
 }
+
+const testMultipleLicense = (
+  licenses: Wup.License[],
+  only: boolean = false
+): void => {
+  return testGenerator({
+    title: `Testing LICENSE: ${toLicense(licenses)}-${
+      only ? "only" : "or-later"
+    }`,
+    command: "yo wupjs:write:LICENSE",
+    prompt: {
+      ...prompt,
+      "config:license": licenses,
+      "config:license:GPL-suffix": only
+    },
+    assertContent: {
+      "package.json": true,
+      LICENSE: true
+    }
+  });
+};
+
+testMultipleLicense(["MIT", "APACHE-2.0"]);
+testMultipleLicense(["MIT", "GPL-2.0"], true);
+testMultipleLicense(["AGPL-3.0", "GPL-2.0"], false);
+testMultipleLicense(["MIT", "CC-BY-SA-4.0", "APACHE-2.0"]);
