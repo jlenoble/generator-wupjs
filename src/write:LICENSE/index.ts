@@ -1,5 +1,6 @@
 import Base from "../common/base-generator";
 import LicenseGenerator from "../config:license";
+import template from "lodash.template";
 
 export default class LICENSE extends Base {
   protected props?: Wup.LICENSE;
@@ -23,17 +24,20 @@ export default class LICENSE extends Base {
 `;
   }
 
-  public _getLicenseText(license: string): string | undefined {
+  public _getLicenseText(license: string): string {
     const gen = this.getGen("config:license") as LicenseGenerator;
     const lic = gen._unsuffixGPL(license);
+    let text = "";
 
     try {
-      return this.fs.read(this.templatePath(`LICENSE_${lic}.ejs`));
+      text = this.fs.read(this.templatePath(`LICENSE_${lic}.ejs`));
     } catch (e) {
       try {
-        return this.fs.read(this.templatePath(`LICENSE_${lic}`));
+        text = this.fs.read(this.templatePath(`LICENSE_${lic}`));
       } catch (e) {}
     }
+
+    return text;
   }
 
   public _getLicenseName(license: string): string {
@@ -94,6 +98,8 @@ export default class LICENSE extends Base {
       cHolder: name,
       email: email as Wup.Email
     };
+
+    this.props.licenseText = template(this.props.licenseText)(this.props);
   }
 
   public writing(): void {
