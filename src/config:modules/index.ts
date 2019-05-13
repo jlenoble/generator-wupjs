@@ -63,7 +63,7 @@ export default class Modules extends Base {
       );
 
       if (this.config.get("prodModuleTypes").includes("CommonJS")) {
-        this.addDevDep("babel-plugin-add-module-exports", false);
+        this.addDevDep("babel-plugin-add-module-exports");
       }
     }
   }

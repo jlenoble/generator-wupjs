@@ -56,26 +56,15 @@ export default class Gulp extends Base {
   }
 
   public initializing(): void {
-    const devDependencies = this.getProp("config:dependencies:dev") as Set<
-      string
-    >;
-    const noTypes = this.getProp("config:dependencies:no-types") as Set<string>;
-
-    devDependencies
-      .add("plumb-gulp")
-      .add("autoreload-gulp")
-      .add("gulp-sourcemaps")
-      .add("gulp-cached")
-      .add("gulp-newer")
-      .add("gulp-eslint")
-      .add("del")
-      .add("gulp-mocha")
-      .add("chai");
-    noTypes
-      .add("plumb-gulp")
-      .add("autoreload-gulp")
-      .add("gulp-eslint")
-      .add("del");
+    this.addDevDep("plumb-gulp");
+    this.addDevDep("autoreload-gulp");
+    this.addDevDep("gulp-sourcemaps");
+    this.addDevDep("gulp-cached");
+    this.addDevDep("gulp-newer");
+    this.addDevDep("gulp-eslint");
+    this.addDevDep("del");
+    this.addDevDep("gulp-mocha");
+    this.addDevDep("chai");
   }
 
   public configuring(): void {
@@ -115,7 +104,7 @@ export default class Gulp extends Base {
 
     if (jupyter) {
       gulpIncludes.push("notebooks");
-      this.addDevDep("gulp-exec", false);
+      this.addDevDep("gulp-exec");
     }
 
     if (antlr4) {

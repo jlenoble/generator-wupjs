@@ -90,10 +90,10 @@ export default class Parser extends Base {
       this.setProp(await this.prompt(prompts));
 
       this.addDep("antlr4");
-      this.addDevDep("gulp-antlr4", false);
+      this.addDevDep("gulp-antlr4");
       this.addDevDep("plugin-error");
       this.addDevDep("through2");
-      this.addDevDep("child-process-data", false);
+      this.addDevDep("child-process-data");
     }
   }
 

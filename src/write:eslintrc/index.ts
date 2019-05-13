@@ -38,18 +38,18 @@ export default class EslintRc extends Base {
       "prefer-arrow-callback": ["error"]
     };
 
-    this.addDevDep("eslint-config-google", false);
-    this.addDevDep("prettier", false);
-    this.addDevDep("eslint-config-prettier", false);
-    this.addDevDep("eslint-plugin-prettier", false);
+    this.addDevDep("eslint-config-google");
+    this.addDevDep("prettier");
+    this.addDevDep("eslint-config-prettier");
+    this.addDevDep("eslint-plugin-prettier");
 
     _extends.push("plugin:prettier/recommended");
 
     if (this.getProp("config:languages:typescript")) {
       parser = "@typescript-eslint/parser";
 
-      this.addDevDep("@typescript-eslint/parser", false);
-      this.addDevDep("@typescript-eslint/eslint-plugin", false);
+      this.addDevDep("@typescript-eslint/parser");
+      this.addDevDep("@typescript-eslint/eslint-plugin");
 
       _extends.push(
         "plugin:@typescript-eslint/recommended",

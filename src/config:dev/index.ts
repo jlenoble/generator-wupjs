@@ -17,12 +17,8 @@ export default class Dev extends Base {
   }
 
   public configuring(): void {
-    const devDependencies = this.getProp("config:dependencies:dev") as Set<
-      string
-    >;
-
     if (this.getProp(this.generatorName + ":gulp")) {
-      devDependencies.add("gulp");
+      this.addDevDep("gulp");
     }
   }
 }

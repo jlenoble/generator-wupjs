@@ -13,16 +13,12 @@ export default class DevTranspile extends Base {
   }
 
   public configuring(): void {
-    const devDependencies = this.getProp("config:dependencies:dev") as Set<
-      string
-    >;
-
-    devDependencies.add("@babel/core");
-    devDependencies.add("@babel/register");
-    devDependencies.add("@babel/preset-env");
+    this.addDevDep("@babel/core");
+    this.addDevDep("@babel/register");
+    this.addDevDep("@babel/preset-env");
 
     if (this.getProp("config:dev:gulp")) {
-      devDependencies.add("gulp-babel");
+      this.addDevDep("gulp-babel");
     }
   }
 }

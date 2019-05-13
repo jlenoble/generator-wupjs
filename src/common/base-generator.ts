@@ -2,6 +2,7 @@ import { Editor } from "mem-fs-editor";
 import Generator from "yeoman-generator";
 import chalk from "chalk";
 import Config from "./config";
+import RefDeps from "./ref-deps";
 
 type GenName = Wup.GenName;
 type PropName = Wup.PropName;
@@ -10,6 +11,7 @@ type Options = Wup.Options;
 type Props = Wup.Props;
 
 let config: Config | null;
+let refDeps: RefDeps | null;
 
 export default class BaseGenerator extends Generator
   implements Wup.BaseGenerator {
@@ -17,6 +19,7 @@ export default class BaseGenerator extends Generator
   protected mustPrompt: boolean;
 
   private static calledGenerator: BaseGenerator | null = null;
+  protected static refDeps: RefDeps | null = null;
 
   public static reset(): void {
     if (config) {
@@ -41,7 +44,13 @@ export default class BaseGenerator extends Generator
     super(args, options);
 
     if (!config) {
+      // @ts-ignore
       config = new Config(this.fs as Editor, this.destinationPath.bind(this));
+    }
+
+    if (!refDeps) {
+      // @ts-ignore
+      refDeps = new RefDeps(this.fs as Editor);
     }
 
     if (generatorName) {
@@ -54,6 +63,7 @@ export default class BaseGenerator extends Generator
 
     if (!BaseGenerator.calledGenerator) {
       BaseGenerator.calledGenerator = this;
+      BaseGenerator.refDeps = refDeps;
     }
 
     (config as Config).addGen(this);
@@ -88,7 +98,7 @@ export default class BaseGenerator extends Generator
     this.composeAll();
   }
 
-  protected _addDep(name: string, addTypings: boolean): void {
+  protected _addDep(name: string): void {
     throw new Error(
       chalk.red(`
 Don't use ._addDep(${name}) super method;
@@ -97,7 +107,7 @@ Call .addDep(${name}) and delegate to "config:dependencies" subgen
     );
   }
 
-  protected _addDevDep(name: string, addTypings: boolean): void {
+  protected _addDevDep(name: string): void {
     throw new Error(
       chalk.red(`
 Don't use ._addDevDep(${name}) super method;
@@ -106,8 +116,8 @@ Call .addDevDep(${name}) and delegate to "config:dependencies" subgen
     );
   }
 
-  public addDep(name: string, addTypings: boolean = true): void {
-    // Make every subgen able to add dev deps on the fly
+  public addDep(name: string): void {
+    // Make every subgen able to add deps on the fly
     const gen = this.getGen("config:dependencies");
 
     if (!gen) {
@@ -117,10 +127,10 @@ Call .addDevDep(${name}) and delegate to "config:dependencies" subgen
       return;
     }
 
-    gen._addDep(name, addTypings);
+    gen._addDep(name);
   }
 
-  public addDevDep(name: string, addTypings: boolean = true): void {
+  public addDevDep(name: string): void {
     // Make every subgen able to add dev deps on the fly
     const gen = this.getGen("config:dependencies");
 
@@ -131,7 +141,7 @@ Call .addDevDep(${name}) and delegate to "config:dependencies" subgen
       return;
     }
 
-    gen._addDevDep(name, addTypings);
+    gen._addDevDep(name);
   }
 
   public addProp(name: PropName | Props, value?: PropValue): this {

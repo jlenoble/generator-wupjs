@@ -118,11 +118,11 @@ export default class Languages extends Base {
       );
 
       if (this.config.get("typescript")) {
-        this.addDevDep("typescript", false);
-        this.addDevDep("@babel/preset-typescript", false);
-        this.addDevDep("@babel/plugin-proposal-class-properties", false);
-        this.addDevDep("@babel/plugin-proposal-object-rest-spread", false);
-        this.addDevDep("@babel/plugin-proposal-decorators", false);
+        this.addDevDep("typescript");
+        this.addDevDep("@babel/preset-typescript");
+        this.addDevDep("@babel/plugin-proposal-class-properties");
+        this.addDevDep("@babel/plugin-proposal-object-rest-spread");
+        this.addDevDep("@babel/plugin-proposal-decorators");
       }
 
       this.config.set("jsx", this.getProp(this.generatorName + ":jsx"));
