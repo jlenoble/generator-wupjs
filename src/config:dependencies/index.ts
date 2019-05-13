@@ -59,11 +59,15 @@ export default class ConfigDependencies extends Base {
     const dependencies: Deps = this.getProp(this.generatorName) as Deps;
 
     if (dependencies) {
-      const prodDependencies = this.getProp("config:dependencies:prod") as Set<
+      const prodDependencies = this.getProp("config:dependencies:prod") as Map<
+        string,
         string
       >;
 
-      prodDependencies.add(name);
+      if (!prodDependencies.has(name)) {
+        prodDependencies.set(name, "*");
+      }
+
       dependencies.dependencies = this._filterDeps(prodDependencies);
       this._cleanUpDeps();
     }
@@ -73,21 +77,25 @@ export default class ConfigDependencies extends Base {
     const dependencies: Deps = this.getProp(this.generatorName) as Deps;
 
     if (dependencies) {
-      const devDependencies = this.getProp("config:dependencies:dev") as Set<
+      const devDependencies = this.getProp("config:dependencies:dev") as Map<
+        string,
         string
       >;
 
-      devDependencies.add(name);
+      if (!devDependencies.has(name)) {
+        devDependencies.set(name, "*");
+      }
+
       dependencies.devDependencies = this._filterDeps(devDependencies);
       this._cleanUpDeps();
     }
   }
 
   public _isUserDep(dep: string): boolean {
-    return /^"file:.+"$/.test(dep);
+    return /^file:.+$/.test(dep);
   }
 
-  protected _filterDeps(dependencies?: Set<string>): Dependencies {
+  protected _filterDeps(dependencies?: Map<string, string>): Dependencies {
     const deps: Dependencies = {};
     const typescript = !!this.getProp("config:languages:typescript");
     const refDeps = Base.refDeps as RefDeps;
@@ -95,10 +103,11 @@ export default class ConfigDependencies extends Base {
     if (dependencies) {
       const d = Array.from(dependencies).sort();
 
-      for (const dep of d) {
+      for (const [dep, value] of d) {
         refDeps.addDep(dep, { typescript }); // async, wait in "configuring"
 
-        if (this._isUserDep(deps[dep])) {
+        if (this._isUserDep(value)) {
+          deps[dep] = value;
           continue;
         }
 
@@ -132,10 +141,10 @@ export default class ConfigDependencies extends Base {
     this.addProp(this.generatorName, {
       dependencies: this._filterDeps(this.getProp(
         "config:dependencies:prod"
-      ) as Set<string>),
+      ) as Map<string, string>),
       devDependencies: this._filterDeps(this.getProp(
         "config:dependencies:dev"
-      ) as Set<string>),
+      ) as Map<string, string>),
       peerDependencies: this.getProp("config:dependencies:peer") || {},
       optionalDependencies: this.getProp("config:dependencies:optional") || {}
     });

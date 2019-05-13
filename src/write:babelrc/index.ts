@@ -41,11 +41,12 @@ export default class BabelRc extends Base {
     const presets: any[] = [];
     const plugins: any[] = [];
 
-    const devDependencies = this.getProp("config:dependencies:dev") as Set<
+    const devDependencies = this.getProp("config:dependencies:dev") as Map<
+      string,
       string
     >;
 
-    devDependencies.forEach(
+    Array.from(devDependencies.keys()).forEach(
       (dep): void => {
         switch (dep) {
           case "@babel/preset-env":

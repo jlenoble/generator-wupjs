@@ -1,7 +1,7 @@
 import Base from "../common/base-generator";
 
 export default class ProdDependencies extends Base {
-  protected props: Set<string> = new Set();
+  protected props: Map<string, string> = new Map();
 
   public constructor(args: string | string[], options: {}) {
     super(
@@ -22,7 +22,7 @@ export default class ProdDependencies extends Base {
 
       Object.keys(dependencies).forEach(
         (dep): void => {
-          this.props.add(dep);
+          this.props.set(dep, dependencies[dep]);
         }
       );
 
