@@ -16,6 +16,7 @@ export default class RefDeps {
   protected readonly depsFile: string = path.join(__dirname, "../../deps.json");
   protected readonly fs: Editor;
   protected readonly deps: Deps;
+  protected readonly pending: Map<string, Promise<string>> = new Map();
 
   public constructor(fs: Editor) {
     this.fs = fs;
@@ -23,6 +24,10 @@ export default class RefDeps {
   }
 
   public mustUpdate(name: string): boolean {
+    if (this.pending.has(name)) {
+      return false;
+    }
+
     const dep = this.deps[name];
 
     if (dep) {
@@ -59,7 +64,7 @@ export default class RefDeps {
   public async addDep(
     name: string,
     { typescript = false }: { typescript: boolean } = { typescript: false }
-  ): Promise<boolean> {
+  ): Promise<void> {
     let dep = this.deps[name];
 
     if (!dep) {
@@ -67,24 +72,38 @@ export default class RefDeps {
     }
 
     if (!this.mustUpdate(name)) {
-      return true;
+      return;
     }
 
     const ts = typescript && !name.includes("@types/");
 
     try {
-      const version = await latestVersion(name);
+      const vs = latestVersion(name);
+
+      this.pending.set(name, vs);
+
+      const version = await vs;
 
       dep.latestVersion = version;
       dep.lastChecked = new Date().toUTCString();
 
-      return ts ? this.addDep(`@types/${name}`) : true;
+      if (ts) {
+        this.addDep(`@types/${name}`);
+      }
     } catch (e) {
       dep.latestVersion = e.message;
       dep.lastChecked = new Date().toUTCString();
 
-      return false;
+      return;
     }
+  }
+
+  public async isPending(): Promise<string[]> {
+    return Promise.all(Array.from(this.pending.values())).finally(
+      (): void => {
+        this.pending.clear();
+      }
+    );
   }
 
   public writeJSON(): void {

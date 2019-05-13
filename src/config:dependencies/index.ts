@@ -92,20 +92,18 @@ export default class ConfigDependencies extends Base {
       const d = Array.from(dependencies).sort();
 
       for (const dep of d) {
-        if (!deps[dep]) {
-          refDeps.addDep(dep, { typescript }); // async
+        refDeps.addDep(dep, { typescript }); // async
 
-          if (refDeps.hasDep(dep)) {
-            deps[dep] = "^" + (refDeps.getDep(dep) as Dep).latestVersion;
+        if (refDeps.hasDep(dep)) {
+          deps[dep] = "^" + (refDeps.getDep(dep) as Dep).latestVersion;
 
-            const tsDep = `@types/${dep}`;
+          const tsDep = `@types/${dep}`;
 
-            if (refDeps.hasDep(tsDep) && typescript) {
-              deps[tsDep] = "^" + (refDeps.getDep(tsDep) as Dep).latestVersion;
-            }
-          } else {
-            deps[dep] = "*";
+          if (refDeps.hasDep(tsDep) && typescript) {
+            deps[tsDep] = "^" + (refDeps.getDep(tsDep) as Dep).latestVersion;
           }
+        } else {
+          deps[dep] = "*";
         }
       }
     }
@@ -120,7 +118,9 @@ export default class ConfigDependencies extends Base {
     return dps;
   }
 
-  public configuring(): void {
+  public async configuring(): Promise<void> {
+    await (Base.refDeps as RefDeps).isPending();
+
     this.addProp(this.generatorName, {
       dependencies: this._filterDeps(this.getProp(
         "config:dependencies:prod"
