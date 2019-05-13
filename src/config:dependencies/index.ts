@@ -59,18 +59,23 @@ export default class ConfigDependencies extends Base {
   protected _filterDeps(dependencies?: Set<string>): Dependencies {
     const deps: Dependencies = {};
     const typescript = !!this.getProp("config:languages:typescript");
+    const refDeps = Base.refDeps as RefDeps;
 
     if (dependencies) {
       const d = Array.from(dependencies).sort();
 
       for (const dep of d) {
         if (!deps[dep]) {
-          (Base.refDeps as RefDeps).addDep(dep, { typescript }); // async
+          refDeps.addDep(dep, { typescript }); // async
 
-          if ((Base.refDeps as RefDeps).hasDep(dep)) {
-            deps[dep] =
-              "^" +
-              ((Base.refDeps as RefDeps).getDep(dep) as Dep).latestVersion;
+          if (refDeps.hasDep(dep)) {
+            deps[dep] = "^" + (refDeps.getDep(dep) as Dep).latestVersion;
+
+            const tsDep = `@types/${dep}`;
+
+            if (refDeps.hasDep(tsDep) && typescript) {
+              deps[tsDep] = "^" + (refDeps.getDep(tsDep) as Dep).latestVersion;
+            }
           } else {
             deps[dep] = "*";
           }
@@ -78,7 +83,14 @@ export default class ConfigDependencies extends Base {
       }
     }
 
-    return deps;
+    const dps: Dependencies = {};
+    const keys = Object.keys(deps).sort();
+
+    for (const key of keys) {
+      dps[key] = deps[key];
+    }
+
+    return dps;
   }
 
   public configuring(): void {
