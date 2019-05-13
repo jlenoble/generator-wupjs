@@ -55,5 +55,7 @@
     "plumb-gulp": "^0.2.2",
     "prettier": "^1.17.0",
     "through2": "^3.0.1"
-  }
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {}
 }
