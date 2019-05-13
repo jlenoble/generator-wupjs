@@ -83,6 +83,10 @@ export default class ConfigDependencies extends Base {
     }
   }
 
+  public _isUserDep(dep: string): boolean {
+    return /^"file:.+"$/.test(dep);
+  }
+
   protected _filterDeps(dependencies?: Set<string>): Dependencies {
     const deps: Dependencies = {};
     const typescript = !!this.getProp("config:languages:typescript");
@@ -92,14 +96,18 @@ export default class ConfigDependencies extends Base {
       const d = Array.from(dependencies).sort();
 
       for (const dep of d) {
-        refDeps.addDep(dep, { typescript }); // async
+        refDeps.addDep(dep, { typescript }); // async, wait in "configuring"
+
+        if (this._isUserDep(deps[dep])) {
+          continue;
+        }
 
         if (refDeps.hasDep(dep)) {
           deps[dep] = "^" + (refDeps.getDep(dep) as Dep).latestVersion;
 
           const tsDep = `@types/${dep}`;
 
-          if (refDeps.hasDep(tsDep) && typescript) {
+          if (typescript && refDeps.hasDep(tsDep)) {
             deps[tsDep] = "^" + (refDeps.getDep(tsDep) as Dep).latestVersion;
           }
         } else {
