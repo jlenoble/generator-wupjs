@@ -30,6 +30,31 @@ export default class ConfigDependencies extends Base {
     });
   }
 
+  protected _cleanUpDeps(): void {
+    const dependencies: Deps = this.getProp(this.generatorName) as Deps;
+
+    if (dependencies) {
+      const depTypes = Object.keys(dependencies) as (keyof Deps)[];
+
+      while (depTypes.length > 1) {
+        const depType = depTypes.shift() as (keyof Deps);
+
+        for (const dpType of depTypes) {
+          const deps = dependencies[depType];
+          const dps = dependencies[dpType];
+
+          Object.keys(deps).forEach(
+            (key): void => {
+              if (dps[key]) {
+                delete dps[key];
+              }
+            }
+          );
+        }
+      }
+    }
+  }
+
   protected _addDep(name: string): void {
     const dependencies: Deps = this.getProp(this.generatorName) as Deps;
 
@@ -40,6 +65,7 @@ export default class ConfigDependencies extends Base {
 
       prodDependencies.add(name);
       dependencies.dependencies = this._filterDeps(prodDependencies);
+      this._cleanUpDeps();
     }
   }
 
@@ -53,6 +79,7 @@ export default class ConfigDependencies extends Base {
 
       devDependencies.add(name);
       dependencies.devDependencies = this._filterDeps(devDependencies);
+      this._cleanUpDeps();
     }
   }
 
@@ -101,8 +128,8 @@ export default class ConfigDependencies extends Base {
       devDependencies: this._filterDeps(this.getProp(
         "config:dependencies:dev"
       ) as Set<string>),
-      peerDependencies: this.getProp("config:dependencies:peer"),
-      optionalDependencies: this.getProp("config:dependencies:optional")
+      peerDependencies: this.getProp("config:dependencies:peer") || {},
+      optionalDependencies: this.getProp("config:dependencies:optional") || {}
     });
   }
 
