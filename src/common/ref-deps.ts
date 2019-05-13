@@ -98,12 +98,14 @@ export default class RefDeps {
     }
   }
 
-  public async isPending(): Promise<string[]> {
-    return Promise.all(Array.from(this.pending.values())).finally(
-      (): void => {
-        this.pending.clear();
-      }
-    );
+  public async isPending(): Promise<void | string[]> {
+    return Promise.all(Array.from(this.pending.values()))
+      .catch((): void => {})
+      .finally(
+        (): void => {
+          this.pending.clear();
+        }
+      );
   }
 
   public writeJSON(): void {
