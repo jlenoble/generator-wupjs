@@ -4,6 +4,7 @@ import chalk from "chalk";
 import del from "del";
 import conflict from "detect-conflict";
 import { diffLines } from "diff";
+import equiv from "./equiv";
 
 export async function addMissingFilesToSnapshot(
   files: string[],
@@ -49,14 +50,19 @@ export async function diffSnapshotFile(
 
   if (conflict(filename, snapshotBuffer)) {
     const textBuffer = await fs.readFile(filename);
-    const diff = diffLines(snapshotBuffer.toString(), textBuffer.toString());
-
-    diff.forEach(
-      (line): void => {
-        const color = line.added ? "green" : line.removed ? "red" : "white";
-        diffText += chalk[color](line.value);
-      }
+    const diff = diffLines(
+      equiv(snapshotBuffer.toString()),
+      equiv(textBuffer.toString())
     );
+
+    if (diff.some((line): boolean => !(!line.added && !line.removed))) {
+      diff.forEach(
+        (line): void => {
+          const color = line.added ? "green" : line.removed ? "red" : "white";
+          diffText += chalk[color](line.value);
+        }
+      );
+    }
   }
 
   return diffText;
