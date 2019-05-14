@@ -31,14 +31,19 @@ export default class RefDeps {
     const dep = this.deps[name];
 
     if (dep) {
-      const { latestVersion } = dep;
       const lastChecked = new Date(dep.lastChecked);
 
-      return (
-        !latestVersion ||
-        isNaN(+lastChecked) ||
-        Date.now() - lastChecked.getTime() > 86400000 // one day
-      );
+      if (isNaN(+lastChecked)) {
+        return true;
+      }
+
+      const checkedRecently = Date.now() - lastChecked.getTime() < 86400000; // one day
+
+      if (!checkedRecently) {
+        return true;
+      }
+
+      return !dep.latestVersion;
     }
 
     return false;
@@ -68,7 +73,10 @@ export default class RefDeps {
     let dep = this.deps[name];
 
     if (!dep) {
-      dep = this.deps[name] = { latestVersion: "", lastChecked: "" };
+      dep = this.deps[name] = {
+        latestVersion: "",
+        lastChecked: new Date().toUTCString()
+      };
     }
 
     if (!this.mustUpdate(name)) {
