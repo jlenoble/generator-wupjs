@@ -135,7 +135,10 @@ export default class ConfigDependencies extends Base {
     return dps;
   }
 
-  public async configuring(): Promise<void> {
+  public async afterConfiguring(): Promise<void> {
+    // afterConfiguring and not configuring because write:gulp and others
+    // add new deps when configuring, so we wait for all requests (for last
+    // versions to have completed) after all configurations are over.
     await (Base.refDeps as RefDeps).isPending();
 
     this.addProp(this.generatorName, {
