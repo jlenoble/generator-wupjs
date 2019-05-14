@@ -2,6 +2,7 @@ import { Editor } from "mem-fs-editor";
 import latestVersion from "latest-version";
 import path from "path";
 import semver from "semver";
+import PromiseMap from "./promise-map";
 
 export interface Dep {
   latestVersion: string;
@@ -16,7 +17,7 @@ export default class RefDeps {
   protected readonly depsFile: string = path.join(__dirname, "../../deps.json");
   protected readonly fs: Editor;
   protected readonly deps: Deps;
-  protected readonly pending: Map<string, Promise<string>> = new Map();
+  protected readonly pending: PromiseMap = new PromiseMap();
 
   public constructor(fs: Editor) {
     this.fs = fs;
@@ -104,21 +105,8 @@ export default class RefDeps {
     }
   }
 
-  public async isPending(): Promise<void | string[]> {
-    const promises = Array.from(this.pending.values());
-
-    return Promise.all(promises)
-      .catch((): void => {})
-      .finally(
-        (): Promise<void | string[]> | undefined => {
-          if (this.pending.size > promises.length) {
-            // There were late dependency additions, prolong wait
-            return this.isPending();
-          }
-
-          this.pending.clear();
-        }
-      );
+  public async complete(): Promise<void> {
+    return this.pending.complete();
   }
 
   public writeJSON(): void {

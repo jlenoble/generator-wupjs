@@ -104,7 +104,7 @@ export default class ConfigDependencies extends Base {
       const d = Array.from(dependencies).sort();
 
       for (const [dep, value] of d) {
-        refDeps.addDep(dep, { typescript }); // async, wait in "configuring"
+        refDeps.addDep(dep, { typescript }); // async, wait in this.afterConfiguring()
 
         if (this._isUserDep(value)) {
           deps[dep] = value;
@@ -139,7 +139,7 @@ export default class ConfigDependencies extends Base {
     // afterConfiguring and not configuring because write:gulp and others
     // add new deps when configuring, so we wait for all requests (for last
     // versions to have completed) after all configurations are over.
-    await (Base.refDeps as RefDeps).isPending();
+    await (Base.refDeps as RefDeps).complete();
 
     this.addProp(this.generatorName, {
       dependencies: this._filterDeps(this.getProp(
