@@ -24,14 +24,17 @@ export default class PromiseMap extends Map<any, Promise<any>> {
   public async complete(): Promise<void> {
     const promises = Array.from(this.values());
 
-    return Promise.all(promises).then(
-      async (): Promise<void> => {
-        // Before all promises are resolved, more promises may have been added
-        // so check on that.
-        if (this.size) {
-          return this.complete();
+    return Promise.all(promises)
+      .then((): void => {}, (): void => {})
+      .finally(
+        async (): Promise<void> => {
+          // Before all promises are resolved, more promises may have been added
+          // so check on that.
+          if (this.size) {
+            // There are new pending promises in the queue, wait for them
+            return this.complete();
+          }
         }
-      }
-    );
+      );
   }
 }
