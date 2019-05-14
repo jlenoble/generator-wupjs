@@ -93,24 +93,29 @@ export default class RefDeps {
       const version = await vs;
 
       dep.latestVersion = version;
-      dep.lastChecked = new Date().toUTCString();
 
       if (ts) {
         this.addDep(`@types/${name}`);
       }
     } catch (e) {
       dep.latestVersion = e.message;
+    } finally {
       dep.lastChecked = new Date().toUTCString();
-
-      return;
     }
   }
 
   public async isPending(): Promise<void | string[]> {
-    return Promise.all(Array.from(this.pending.values()))
+    const promises = Array.from(this.pending.values());
+
+    return Promise.all(promises)
       .catch((): void => {})
       .finally(
-        (): void => {
+        (): Promise<void | string[]> | undefined => {
+          if (this.pending.size > promises.length) {
+            // There were late dependency additions, prolong wait
+            return this.isPending();
+          }
+
           this.pending.clear();
         }
       );
