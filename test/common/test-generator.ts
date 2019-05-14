@@ -45,7 +45,7 @@ const testGenerator = (_options: {
     const hash = objectHash(Object.assign({ command }, prompt));
     const hashDir = path.join(snapshotDir, hash);
 
-    this.timeout(4000);
+    this.timeout(10000);
 
     before(function(): Promise<void> {
       this.cwd = process.cwd();
