@@ -11,6 +11,7 @@ export default class App extends Base {
         dependsOn: [
           "config:dev",
           "config:package",
+          "config:eslint",
           "config:author",
           "config:license",
           "config:repository",
