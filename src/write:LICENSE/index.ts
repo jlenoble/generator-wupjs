@@ -1,6 +1,6 @@
 import Base from "../common/base-generator";
 import LicenseGenerator from "../config:license";
-import template from "lodash.template";
+import ejs from "ejs";
 
 export default class LICENSE extends Base {
   protected props?: Wup.LICENSE;
@@ -99,7 +99,7 @@ export default class LICENSE extends Base {
       email: email as Wup.Email
     };
 
-    this.props.licenseText = template(this.props.licenseText)(this.props);
+    this.props.licenseText = ejs.compile(this.props.licenseText)(this.props);
   }
 
   public writing(): void {

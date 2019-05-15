@@ -1,5 +1,6 @@
 import path from "path";
 import Base from "../common/base-generator";
+import prettyWrite from "../common/pretty-write";
 
 type Path = Wup.Path;
 
@@ -228,18 +229,20 @@ export default class Gulp extends Base {
     const props: Props = this.props as Props;
     const gulpDir: Path = this.getProp("config:paths:gulp") as Path;
 
-    this.fs.copyTpl(
+    prettyWrite(
+      this,
+      props,
       this.templatePath("gulpfile.ejs"),
-      this.destinationPath("gulpfile.babel.js"),
-      props
+      this.destinationPath("gulpfile.babel.js")
     );
 
     props.gulpIncludes.forEach(
       (include): void => {
-        this.fs.copyTpl(
+        prettyWrite(
+          this,
+          props,
           this.templatePath(`${include}.ejs`),
-          this.destinationPath(path.join(gulpDir, `${include}.js`)),
-          props
+          this.destinationPath(path.join(gulpDir, `${include}.js`))
         );
       }
     );
