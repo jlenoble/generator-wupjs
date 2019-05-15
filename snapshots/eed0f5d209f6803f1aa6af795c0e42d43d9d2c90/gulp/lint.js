@@ -8,7 +8,8 @@ const srcGlob = [
 ];
 
 export const handleLint = () => {
-  return gulp.src(srcGlob)
+  return gulp
+    .src(srcGlob)
     .pipe(eslint())
     .pipe(eslint.format());
 };

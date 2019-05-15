@@ -7,19 +7,13 @@ const buildDir = "build";
 const parserDir = "src/static/antlr4/parsers";
 const parserOptions = { parserDir };
 
-const grammarGlob = [
-  "src/static/antlr4/grammars/**/*.g4"
-];
+const grammarGlob = ["src/static/antlr4/grammars/**/*.g4"];
 const parserTokenGlob = [
   "src/static/antlr4/parsers/**/*.interp",
   "src/static/antlr4/parsers/**/*.tokens"
 ];
-const parserSrcGlob = [
-  "src/static/antlr4/parsers/**/*.js"
-];
-const dataGlob = [
-  "src/static/data/**/*"
-];
+const parserSrcGlob = ["src/static/antlr4/parsers/**/*.js"];
+const dataGlob = ["src/static/data/**/*"];
 
 const grammar = "MyGrammar";
 const rule = "prog";
@@ -31,16 +25,16 @@ parserOptions.listener = listener;
 const makeParser = () => {
   if (require && require.cache) {
     // Remove parser files from Babel cache
-    Object.keys(require.cache).filter(key => {
-      return key.includes(parserDir) ||
-        key.includes(listenerDir);
-    }).forEach(key => {
-      delete require.cache[key];
-    });
+    Object.keys(require.cache)
+      .filter(key => {
+        return key.includes(parserDir) || key.includes(listenerDir);
+      })
+      .forEach(key => {
+        delete require.cache[key];
+      });
   }
 
-  return src(grammarGlob)
-    .pipe(antlr4(parserOptions));
+  return src(grammarGlob).pipe(antlr4(parserOptions));
 };
 
 const copyParser = () => {
@@ -49,7 +43,7 @@ const copyParser = () => {
     since: lastRun(copyParser)
   })
     .pipe(newer(buildDir))
-    .pipe(dest(buildDir))
+    .pipe(dest(buildDir));
 };
 
 const transpileParser = () => {
@@ -59,25 +53,29 @@ const transpileParser = () => {
   })
     .pipe(newer(buildDir))
     .pipe(sourcemaps.init())
-    .pipe(sourcemaps.write(".", {
-      sourceRoot: file => file.cwd
-    }))
-    .pipe(dest(buildDir))
+    .pipe(
+      sourcemaps.write(".", {
+        sourceRoot: file => file.cwd
+      })
+    )
+    .pipe(dest(buildDir));
 };
 
 export const handleParse = series(
   makeParser,
-  parallel(
-    copyParser,
-    transpileParser
-  )
+  parallel(copyParser, transpileParser)
 );
 
 export const translate = () => {
-  return src(dataGlob)
-    .pipe(antlr4({
-      grammar, parserDir, listener, listenerDir, rule
-    }));
+  return src(dataGlob).pipe(
+    antlr4({
+      grammar,
+      parserDir,
+      listener,
+      listenerDir,
+      rule
+    })
+  );
 };
 
 task("translate", series(handleParse, translate));

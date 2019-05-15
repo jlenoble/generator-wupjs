@@ -6,20 +6,12 @@ import { handleTest as test } from "./test";
 import { convertNotebooks } from "./notebooks";
 
 const buildDir = "build";
-const srcGlob = [
-  "src/**/*.js",
-  "test/**/*.js"
-];
-const buildGlob = [
-  "build/src/**/*.js",
-  "build/test/**/*.js"
-];
-const ipynbGlob = [
-  "src/**/*.ipynb"
-];
+const srcGlob = ["src/**/*.js", "test/**/*.js"];
+const buildGlob = ["build/src/**/*.js", "build/test/**/*.js"];
+const ipynbGlob = ["src/**/*.ipynb"];
 
 export const startWatching = done => {
-  const watcher = watch(srcGlob, {events: ["add", "change"]}, build);
+  const watcher = watch(srcGlob, { events: ["add", "change"] }, build);
 
   watcher.on("unlink", file => {
     const buildFile = path.join(buildDir, file.replace(/(\.[\w]+)$/, ".js"));

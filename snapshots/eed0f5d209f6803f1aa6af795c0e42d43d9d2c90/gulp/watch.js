@@ -16,12 +16,10 @@ const buildGlob = [
   "build/test/**/*.js",
   "!build/src/static/antlr4/parsers/**/*.js"
 ];
-const grammarGlob = [
-  "src/static/antlr4/grammars/**/*.g4"
-];
+const grammarGlob = ["src/static/antlr4/grammars/**/*.g4"];
 
 export const startWatching = done => {
-  const watcher = watch(srcGlob, {events: ["add", "change"]}, build);
+  const watcher = watch(srcGlob, { events: ["add", "change"] }, build);
 
   watcher.on("unlink", file => {
     const buildFile = path.join(buildDir, file.replace(/(\.[\w]+)$/, ".js"));

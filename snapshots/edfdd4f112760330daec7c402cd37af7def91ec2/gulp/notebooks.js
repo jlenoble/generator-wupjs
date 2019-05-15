@@ -3,12 +3,8 @@ import exec from "gulp-exec";
 import newer from "gulp-newer";
 
 const srcDir = "src";
-const ipynbGlob = [
-  "src/**/*.ipynb"
-];
-const extensions = [
-  ".js"
-];
+const ipynbGlob = ["src/**/*.ipynb"];
+const extensions = [".js"];
 
 export function convertNotebooks() {
   const options = {

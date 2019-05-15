@@ -21,9 +21,11 @@ export const handleBuild = () => {
     .pipe(cached())
     .pipe(sourcemaps.init())
     .pipe(babel())
-    .pipe(sourcemaps.write(".", {
-      sourceRoot: file => file.cwd
-    }))
+    .pipe(
+      sourcemaps.write(".", {
+        sourceRoot: file => file.cwd
+      })
+    )
     .pipe(dest(buildDir));
 };
 

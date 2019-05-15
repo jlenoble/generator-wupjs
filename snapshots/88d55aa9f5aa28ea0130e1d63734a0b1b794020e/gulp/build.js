@@ -5,10 +5,7 @@ import cached from "gulp-cached";
 import newer from "gulp-newer";
 
 const buildDir = "build";
-const srcGlob = [
-  "src/**/*.js",
-  "test/**/*.js"
-];
+const srcGlob = ["src/**/*.js", "test/**/*.js"];
 
 export const handleBuild = () => {
   return src(srcGlob, {
@@ -19,9 +16,11 @@ export const handleBuild = () => {
     .pipe(cached())
     .pipe(sourcemaps.init())
     .pipe(babel())
-    .pipe(sourcemaps.write(".", {
-      sourceRoot: file => file.cwd
-    }))
+    .pipe(
+      sourcemaps.write(".", {
+        sourceRoot: file => file.cwd
+      })
+    )
     .pipe(dest(buildDir));
 };
 
