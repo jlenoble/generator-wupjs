@@ -66,8 +66,8 @@ export default class ConfigDependencies extends Base {
       ) as Deps;
 
       if (deps) {
-        this._updateDeps(DepName.prodDependencies, deps.dependencies);
-        this._updateDeps(DepName.devDependencies, deps.devDependencies);
+        this._updateDeps(DepName.prodDependencies, deps.dependencies || {});
+        this._updateDeps(DepName.devDependencies, deps.devDependencies || {});
       }
     } catch (e) {}
 
