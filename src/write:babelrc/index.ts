@@ -1,5 +1,7 @@
 import Base from "../common/base-generator";
 
+import { Deps } from "../config:config:dependencies";
+
 interface Props {
   presets: any[];
   plugins: any[];
@@ -41,12 +43,10 @@ export default class BabelRc extends Base {
     const presets: any[] = [];
     const plugins: any[] = [];
 
-    const devDependencies = this.getProp("config:dependencies:dev") as Map<
-      string,
-      string
-    >;
+    const devDependencies = (this.getProp("config:dependencies") as Deps)
+      .devDependencies;
 
-    Array.from(devDependencies.keys()).forEach(
+    Object.keys(devDependencies).forEach(
       (dep): void => {
         switch (dep) {
           case "@babel/preset-env":

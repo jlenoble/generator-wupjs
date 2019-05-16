@@ -6,7 +6,7 @@ export default class DevTranspile extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:dev:transpile",
-        dependsOn: ["config:dependencies:dev"],
+        dependsOn: ["config:dependencies"],
         willWrite: ["write:package.json", "write:babelrc"]
       })
     );

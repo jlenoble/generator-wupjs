@@ -1,4 +1,5 @@
 import Base from "../common/base-generator";
+import ConfigDependencies from "../config:dependencies";
 
 type Options = Wup.Options;
 
@@ -20,6 +21,7 @@ export default class Eslint extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:eslint",
+        dependsOn: ["config:dependencies"],
         willWrite: ["write:eslintrc"]
       })
     );
@@ -69,5 +71,13 @@ export default class Eslint extends Base {
     };
 
     this.addProp(this.generatorName, props);
+  }
+
+  public async afterConfiguring(): Promise<void> {
+    // Dev deps added by this generator, so wait for all requests to complete
+    // and update deps
+    await (this.getGen(
+      "config:dependencies"
+    ) as ConfigDependencies).afterConfiguring();
   }
 }

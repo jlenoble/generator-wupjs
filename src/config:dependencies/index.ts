@@ -3,128 +3,155 @@ import RefDeps, { Dep } from "../common/ref-deps";
 
 type Dependencies = Wup.Dependencies;
 
-interface Deps {
+export interface Deps {
   dependencies: Dependencies;
   devDependencies: Dependencies;
   peerDependencies: Dependencies;
   optionalDependencies: Dependencies;
 }
 
+enum DepName {
+  prodDependencies = "dependencies",
+  devDependencies = "devDependencies",
+  peerDependencies = "peerDependencies",
+  optionalDependencies = "optionalDependencies"
+}
+
+enum PropName {
+  prodDependencies = "prodDependencies",
+  devDependencies = "devDependencies",
+  peerDependencies = "peerDependencies",
+  optionalDependencies = "optionalDependencies"
+}
+
 export default class ConfigDependencies extends Base {
+  protected dependencies: Deps;
+  protected prodDependencies: Dependencies;
+  protected devDependencies: Dependencies;
+  protected peerDependencies: Dependencies;
+  protected optionalDependencies: Dependencies;
+  protected isBeforeWriting: boolean = false;
+
   public constructor(args: string | string[], options: {}) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:dependencies",
-        dependsOn: ["config:dependencies:dev", "config:dependencies:prod"]
+        willWrite: [
+          "write:package.json",
+          "write:eslintrc",
+          "write:babelrc",
+          "write:gulp"
+        ]
       })
     );
+
+    this.prodDependencies = {};
+    this.devDependencies = {};
+    this.peerDependencies = {};
+    this.optionalDependencies = {};
+
+    this.dependencies = {
+      dependencies: this.prodDependencies,
+      devDependencies: this.devDependencies,
+      peerDependencies: this.peerDependencies,
+      optionalDependencies: this.optionalDependencies
+    };
   }
 
   public initializing(): void {
-    this.addProp(this.generatorName, {
-      dependencies: {},
-      devDependencies: {},
-      peerDependencies: {},
-      optionalDependencies: {}
-    });
+    try {
+      const deps = this.fs.readJSON(
+        this.destinationPath("package.json")
+      ) as Deps;
+
+      if (deps) {
+        this._updateDeps(DepName.prodDependencies, deps.dependencies);
+        this._updateDeps(DepName.devDependencies, deps.devDependencies);
+      }
+    } catch (e) {}
+
+    this.addProp(this.generatorName, this.dependencies);
   }
 
   protected _cleanUpDeps(): void {
-    const dependencies: Deps = this.getProp(this.generatorName) as Deps;
+    const depTypes = Object.keys(this.dependencies) as DepName[];
 
-    if (dependencies) {
-      const depTypes = Object.keys(dependencies) as (keyof Deps)[];
+    while (depTypes.length > 1) {
+      const depType = depTypes.shift() as DepName;
+      const deps = this.dependencies[depType];
 
-      while (depTypes.length > 1) {
-        const depType = depTypes.shift() as (keyof Deps);
+      for (const dpType of depTypes) {
+        const dps = this.dependencies[dpType];
 
-        for (const dpType of depTypes) {
-          const deps = dependencies[depType];
-          const dps = dependencies[dpType];
-
-          Object.keys(deps).forEach(
-            (key): void => {
-              if (dps[key]) {
-                delete dps[key];
-              }
+        Object.keys(deps).forEach(
+          (key): void => {
+            if (dps[key]) {
+              delete dps[key];
             }
-          );
-        }
+          }
+        );
       }
+
+      this._sortDeps(depType, deps);
     }
   }
 
   protected _addDep(name: string): void {
-    const dependencies: Deps = this.getProp(this.generatorName) as Deps;
-
-    if (dependencies) {
-      const prodDependencies = this.getProp("config:dependencies:prod") as Map<
-        string,
-        string
-      >;
-
-      if (!prodDependencies.has(name)) {
-        prodDependencies.set(name, "*");
-      }
-
-      dependencies.dependencies = this._filterDeps(prodDependencies);
-      this._cleanUpDeps();
+    if (!this.prodDependencies[name]) {
+      this.prodDependencies[name] = "*";
     }
+    this._filterDeps(this.prodDependencies);
+    this._cleanUpDeps();
   }
 
   protected _addDevDep(name: string): void {
-    const dependencies: Deps = this.getProp(this.generatorName) as Deps;
-
-    if (dependencies) {
-      const devDependencies = this.getProp("config:dependencies:dev") as Map<
-        string,
-        string
-      >;
-
-      if (!devDependencies.has(name)) {
-        devDependencies.set(name, "*");
-      }
-
-      dependencies.devDependencies = this._filterDeps(devDependencies);
-      this._cleanUpDeps();
+    if (!this.devDependencies[name]) {
+      this.devDependencies[name] = "*";
     }
+    this._filterDeps(this.devDependencies);
+    this._cleanUpDeps();
   }
 
   public _isUserDep(dep: string): boolean {
     return /^file:.+$/.test(dep);
   }
 
-  protected _filterDeps(dependencies?: Map<string, string>): Dependencies {
-    const deps: Dependencies = {};
+  protected _filterDeps(deps: Dependencies): void {
     const typescript = !!this.getProp("config:languages:typescript");
     const refDeps = Base.refDeps as RefDeps;
 
-    if (dependencies) {
-      const d = Array.from(dependencies).sort();
+    const d = Object.keys(deps)
+      .sort()
+      .map((key): [string, string] => [key, deps[key]]);
 
-      for (const [dep, value] of d) {
-        refDeps.addDep(dep, { typescript }); // async, wait in this.afterConfiguring()
+    for (const [dep, value] of d) {
+      refDeps.addDep(dep, { typescript }); // async, wait in this.afterConfiguring()
 
-        if (this._isUserDep(value)) {
-          deps[dep] = value;
-          continue;
-        }
+      if (this._isUserDep(value)) {
+        continue;
+      }
 
-        if (refDeps.hasDep(dep)) {
-          deps[dep] = "^" + (refDeps.getDep(dep) as Dep).latestVersion;
+      if (refDeps.hasDep(dep)) {
+        deps[dep] = "^" + (refDeps.getDep(dep) as Dep).latestVersion;
 
-          const tsDep = `@types/${dep}`;
+        const tsDep = `@types/${dep}`;
 
-          if (typescript && refDeps.hasDep(tsDep)) {
-            deps[tsDep] = "^" + (refDeps.getDep(tsDep) as Dep).latestVersion;
-          }
-        } else {
-          deps[dep] = "*";
+        if (typescript && refDeps.hasDep(tsDep)) {
+          deps[tsDep] = "^" + (refDeps.getDep(tsDep) as Dep).latestVersion;
         }
       }
     }
+  }
 
+  protected _updateDeps(name: DepName, deps: Dependencies): void {
+    this[
+      name === DepName.prodDependencies ? PropName.prodDependencies : name
+    ] = deps;
+    this.dependencies[name] = deps;
+  }
+
+  protected _sortDeps(name: DepName, deps: Dependencies): void {
     const dps: Dependencies = {};
     const keys = Object.keys(deps).sort();
 
@@ -132,7 +159,7 @@ export default class ConfigDependencies extends Base {
       dps[key] = deps[key];
     }
 
-    return dps;
+    this._updateDeps(name, dps);
   }
 
   public async afterConfiguring(): Promise<void> {
@@ -141,16 +168,11 @@ export default class ConfigDependencies extends Base {
     // versions to have completed) after all configurations are over.
     await (Base.refDeps as RefDeps).complete();
 
-    this.addProp(this.generatorName, {
-      dependencies: this._filterDeps(this.getProp(
-        "config:dependencies:prod"
-      ) as Map<string, string>),
-      devDependencies: this._filterDeps(this.getProp(
-        "config:dependencies:dev"
-      ) as Map<string, string>),
-      peerDependencies: this.getProp("config:dependencies:peer") || {},
-      optionalDependencies: this.getProp("config:dependencies:optional") || {}
-    });
+    this._filterDeps(this.prodDependencies);
+    this._filterDeps(this.devDependencies);
+
+    this._sortDeps(DepName.prodDependencies, this.prodDependencies);
+    this._sortDeps(DepName.devDependencies, this.devDependencies);
   }
 
   public writing(): void {

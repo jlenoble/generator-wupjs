@@ -6,7 +6,7 @@ export default class Dev extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:dev",
-        dependsOn: ["config:dependencies:dev", "config:dev:transpile"]
+        dependsOn: ["config:dependencies", "config:dev:transpile"]
       })
     );
   }
