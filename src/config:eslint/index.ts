@@ -36,6 +36,7 @@ export default class Eslint extends Base {
       "prefer-arrow-callback": ["error"]
     };
 
+    this.addDevDep("eslint");
     this.addDevDep("eslint-config-google");
     this.addDevDep("prettier");
     this.addDevDep("eslint-config-prettier");
