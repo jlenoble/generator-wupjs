@@ -1,6 +1,10 @@
 import BaseGenerator from "./base-generator";
 import ejs from "ejs";
-import prettier from "prettier";
+import { CLIEngine } from "eslint";
+
+type Options = CLIEngine.Options;
+
+let engine: CLIEngine;
 
 export default function prettyWrite(
   gen: BaseGenerator,
@@ -9,7 +13,28 @@ export default function prettyWrite(
   destName: string
 ): void {
   let text = gen.fs.read(fileName);
+
   text = ejs.compile(text)(props);
-  text = prettier.format(text, { parser: "babel" });
-  gen.fs.write(destName, text);
+
+  if (!engine) {
+    engine = new CLIEngine({
+      ...(gen.getProp("config:eslint") as Options),
+      fix: true
+    });
+  }
+
+  const {
+    results: [
+      {
+        // messages,
+        // errorCount,
+        // warningCount,
+        // fixableErrorCount,
+        // fixableWarningCount,
+        output
+      }
+    ]
+  } = engine.executeOnText(text);
+
+  gen.fs.write(destName, output || text);
 }

@@ -2,6 +2,7 @@ import upperCamelCase from "uppercamelcase";
 import fs from "fs-extra";
 import path from "path";
 import Base from "../common/base-generator";
+import prettyWrite from "../common/pretty-write";
 
 type Name = Wup.Name;
 type Path = Wup.Path;
@@ -125,20 +126,22 @@ export default class Src extends Base {
 
       props.srcFiles.forEach(
         (file, i): void => {
-          this.fs.copyTpl(
+          prettyWrite(
+            this,
+            props,
             this.templatePath(path.join(extensions[i], "class.ejs")),
-            this.destinationPath(file),
-            props
+            this.destinationPath(file)
           );
         }
       );
 
       props.testFiles.forEach(
         (file, i): void => {
-          this.fs.copyTpl(
+          prettyWrite(
+            this,
+            { ...props, file: files[i] },
             this.templatePath(path.join(extensions[i], "class.test.ejs")),
-            this.destinationPath(file),
-            { ...props, file: files[i] }
+            this.destinationPath(file)
           );
         }
       );
