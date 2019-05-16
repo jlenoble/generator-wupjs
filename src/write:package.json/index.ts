@@ -13,7 +13,8 @@ export default class PackageJson extends Base {
           "config:license",
           "config:author",
           "config:repository",
-          "config:dependencies"
+          "config:dependencies",
+          "config:eslint" // add dev deps
         ]
       })
     );
