@@ -7,6 +7,7 @@
     "bar",
     "quux"
   ],
+  "homepage": "https://github.com/me-me/awesome-app#readme",
   "main": "lib/index.js",
   "files": [
     "lib"
