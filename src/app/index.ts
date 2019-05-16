@@ -19,7 +19,8 @@ export default class App extends Base {
           "config:targets",
           "config:modules",
           "config:paths",
-          "config:parser"
+          "config:parser",
+          "config:gulp"
         ]
       })
     );
