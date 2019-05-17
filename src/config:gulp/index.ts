@@ -101,6 +101,7 @@ export default class Gulp extends Base {
     this.addDevDep("del");
     this.addDevDep("gulp-mocha");
     this.addDevDep("chai");
+    this.addDevDep("mochawesome");
 
     if (jupyter) {
       gulpIncludes.push("notebooks");
