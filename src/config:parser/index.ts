@@ -133,5 +133,12 @@ export default class Parser extends Base {
       this.config.get("grammarDir") ||
         path.join(this.getProp("config:paths:listener") as string, "grammars")
     );
+
+    this.config.set("staticDir", this.getProp("config:paths:static"));
+    this.config.set("dataDir", this.getProp("config:paths:data"));
+    this.config.set("visitorDir", this.getProp("config:paths:visitor"));
+    this.config.set("listenerDir", this.getProp("config:paths:listener"));
+    this.config.set("parserDir", this.getProp("config:paths:parser"));
+    this.config.set("grammarDir", this.getProp("config:paths:grammar"));
   }
 }
