@@ -98,47 +98,49 @@ export default class Parser extends Base {
   }
 
   public configuring(): void {
-    this.addProp(
-      "config:paths:static",
-      this.config.get("staticDir") ||
-        path.join(this.getProp("config:paths:src") as string, "static")
-    );
+    if (this.getProp("config:languages:antlr4")) {
+      this.addProp(
+        "config:paths:static",
+        this.config.get("staticDir") ||
+          path.join(this.getProp("config:paths:src") as string, "static")
+      );
 
-    this.addProp(
-      "config:paths:data",
-      this.config.get("dataDir") ||
-        path.join(this.getProp("config:paths:static") as string, "data")
-    );
+      this.addProp(
+        "config:paths:data",
+        this.config.get("dataDir") ||
+          path.join(this.getProp("config:paths:static") as string, "data")
+      );
 
-    this.addProp(
-      "config:paths:visitor",
-      this.config.get("visitorDir") ||
-        path.join(this.getProp("config:paths:static") as string, "antlr4")
-    );
+      this.addProp(
+        "config:paths:visitor",
+        this.config.get("visitorDir") ||
+          path.join(this.getProp("config:paths:static") as string, "antlr4")
+      );
 
-    this.addProp(
-      "config:paths:listener",
-      this.config.get("listenerDir") ||
-        path.join(this.getProp("config:paths:static") as string, "antlr4")
-    );
+      this.addProp(
+        "config:paths:listener",
+        this.config.get("listenerDir") ||
+          path.join(this.getProp("config:paths:static") as string, "antlr4")
+      );
 
-    this.addProp(
-      "config:paths:parser",
-      this.config.get("parserDir") ||
-        path.join(this.getProp("config:paths:listener") as string, "parsers")
-    );
+      this.addProp(
+        "config:paths:parser",
+        this.config.get("parserDir") ||
+          path.join(this.getProp("config:paths:listener") as string, "parsers")
+      );
 
-    this.addProp(
-      "config:paths:grammar",
-      this.config.get("grammarDir") ||
-        path.join(this.getProp("config:paths:listener") as string, "grammars")
-    );
+      this.addProp(
+        "config:paths:grammar",
+        this.config.get("grammarDir") ||
+          path.join(this.getProp("config:paths:listener") as string, "grammars")
+      );
 
-    this.config.set("staticDir", this.getProp("config:paths:static"));
-    this.config.set("dataDir", this.getProp("config:paths:data"));
-    this.config.set("visitorDir", this.getProp("config:paths:visitor"));
-    this.config.set("listenerDir", this.getProp("config:paths:listener"));
-    this.config.set("parserDir", this.getProp("config:paths:parser"));
-    this.config.set("grammarDir", this.getProp("config:paths:grammar"));
+      this.config.set("staticDir", this.getProp("config:paths:static"));
+      this.config.set("dataDir", this.getProp("config:paths:data"));
+      this.config.set("visitorDir", this.getProp("config:paths:visitor"));
+      this.config.set("listenerDir", this.getProp("config:paths:listener"));
+      this.config.set("parserDir", this.getProp("config:paths:parser"));
+      this.config.set("grammarDir", this.getProp("config:paths:grammar"));
+    }
   }
 }
