@@ -2,6 +2,12 @@ import Base from "../common/base-generator";
 
 type Path = Wup.Path;
 
+export const validate = (path: Path): boolean | string => {
+  return /^(|\/|~|[-$+.\w]+)(\/+[-$+.\w]+)*$/.test(path)
+    ? true
+    : `Invalid path ${path}`;
+};
+
 export default class Paths extends Base {
   public constructor(args: string | string[], options: {}) {
     super(
@@ -29,12 +35,6 @@ export default class Paths extends Base {
 
   public async prompting(): Promise<void> {
     if (this.mustPrompt) {
-      const validate = (path: Path): boolean | string => {
-        return /^(\/|~|[-$\+\.\w]+)(\/+[-$\+\.\w])*$/.test(path)
-          ? true
-          : `Invalid path ${path}`;
-      };
-
       const prompts = [
         {
           type: "input",
