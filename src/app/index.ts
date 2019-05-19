@@ -20,7 +20,8 @@ export default class App extends Base {
           "config:modules",
           "config:paths",
           "config:parser",
-          "config:gulp"
+          "config:gulp",
+          "config:monorepo"
         ]
       })
     );

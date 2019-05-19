@@ -41,6 +41,9 @@ export interface Props {
 
   filePath: string;
   extensions: string;
+
+  activePackages: string[];
+  packageGlobs: { [k: string]: string };
 }
 
 export default class Gulp extends Base {
@@ -51,7 +54,12 @@ export default class Gulp extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:gulp",
-        dependsOn: ["config:paths", "config:languages", "config:dependencies"],
+        dependsOn: [
+          "config:paths",
+          "config:languages",
+          "config:dependencies",
+          "config:monorepo"
+        ],
         willWrite: ["write:gulp"]
       })
     );
@@ -85,6 +93,7 @@ export default class Gulp extends Base {
 
     const jupyter = this.getProp("config:languages:jupyter") as boolean;
     const antlr4 = this.getProp("config:languages:antlr4") as boolean;
+    const monorepo = this.getProp("config:monorepo") as boolean;
 
     const grammar = this.getProp("config:parser:grammar") as string;
     const rule = this.getProp("config:parser:rule") as string;
@@ -110,6 +119,10 @@ export default class Gulp extends Base {
 
     if (antlr4) {
       gulpIncludes.push("parse");
+    }
+
+    if (monorepo) {
+      gulpIncludes.push("monorepo");
     }
 
     const srcGlobs: string[] = [];
@@ -150,6 +163,20 @@ export default class Gulp extends Base {
       2
     );
 
+    let activePackages: string[];
+    let packageGlobs: { [k: string]: string };
+
+    if (monorepo) {
+      activePackages = [...this.getProp("config:monorepo:active")];
+      packageGlobs = { ...this.getProp("config:monorepo:deps") };
+
+      Object.keys(packageGlobs).forEach(
+        (key): void => {
+          packageGlobs[key] = JSON.stringify(packageGlobs[key], undefined, 2);
+        }
+      );
+    }
+
     this.props = {
       gulpIncludes,
 
@@ -184,7 +211,10 @@ export default class Gulp extends Base {
         extensions.map((ext): string => "." + ext),
         undefined,
         2
-      )
+      ),
+
+      activePackages,
+      packageGlobs
     };
 
     if (antlr4) {
