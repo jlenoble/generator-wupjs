@@ -4,6 +4,7 @@ private
 generators
 scratch
 deps.json
+packages
 
 # Logs
 logs
