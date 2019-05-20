@@ -80,7 +80,7 @@ export default class Mono extends Base {
             type: "input",
             name: "config:paths:packages",
             message: "Packages directory:",
-            default: this.getProp("config:paths:packages"),
+            default: this.getProp("config:paths:packages") || "packages",
             validate
           }
         ];
@@ -91,44 +91,48 @@ export default class Mono extends Base {
 
         this.config.set("packagesDir", dir);
 
-        const links = [];
+        try {
+          const links = [];
 
-        for (const file of await fs.readdir(dir)) {
-          const fullPath = path.join(dir, file);
-          const stats = await fs.lstat(fullPath);
+          for (const file of await fs.readdir(dir)) {
+            const fullPath = path.join(dir, file);
+            const stats = await fs.lstat(fullPath);
 
-          if (stats.isSymbolicLink()) {
-            links.push(file);
+            if (stats.isSymbolicLink()) {
+              links.push(file);
+            }
           }
+
+          prompts = [
+            {
+              type: "checkbox",
+              name: this.generatorName + ":packages",
+              message: "Activate/deactivate TDD for packages:",
+              choices: links,
+              default:
+                (this.getProp(this.generatorName + ":packages") as string[]) ||
+                []
+            }
+          ];
+
+          this.addProp(await this.prompt(prompts));
+        } catch (e) {
+        } finally {
+          this.config.set(
+            "activePackages",
+            this.getProp(this.generatorName + ":packages") || []
+          );
         }
-
-        prompts = [
-          {
-            type: "checkbox",
-            name: this.generatorName + ":packages",
-            message: "Activate/deactivate TDD for packages:",
-            choices: links,
-            default:
-              (this.getProp(this.generatorName + ":packages") as string[]) || []
-          }
-        ];
-
-        this.addProp(await this.prompt(prompts));
-
-        this.config.set(
-          "activePackages",
-          this.getProp(this.generatorName + ":packages")
-        );
       }
     }
   }
 
   public configuring(): void {
     if (this.getProp(this.generatorName)) {
-      const packagesDir = this.getProp("config:paths:packages") as Path;
-      const activePackages = this.getProp(
-        this.generatorName + ":packages"
-      ) as string[];
+      const packagesDir =
+        (this.getProp("config:paths:packages") as Path) || "packages";
+      const activePackages =
+        (this.getProp(this.generatorName + ":packages") as string[]) || [];
       const active: string[] = [];
       const deps: { [k: string]: string } = {};
 
