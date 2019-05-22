@@ -1,5 +1,6 @@
 import Base from "../common/base-generator";
 import RefDeps, { Dep } from "../common/ref-deps";
+import upgradePackage from "../common/upgrade-package";
 
 type Dependencies = Wup.Dependencies;
 
@@ -125,7 +126,18 @@ export default class ConfigDependencies extends Base {
       .sort()
       .map((key): [string, string] => [key, deps[key]]);
 
-    for (const [dep, value] of d) {
+    for (const [_dep, value] of d) {
+      const dep = upgradePackage(_dep);
+
+      if (!dep) {
+        delete deps[_dep];
+        return;
+      }
+
+      if (dep !== _dep) {
+        delete deps[_dep];
+      }
+
       refDeps.addDep(dep, { typescript }); // async, wait in this.afterConfiguring()
 
       if (this._isUserDep(value)) {
