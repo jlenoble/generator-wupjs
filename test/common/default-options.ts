@@ -3,7 +3,8 @@ type Options = Wup.Options;
 export const configFiles: Options = {
   ".babelrc": true,
   ".eslintrc": true,
-  ".gitignore": true
+  ".gitignore": true,
+  "markdown.json": true
 };
 
 export const gulpFiles: Options = {
@@ -17,7 +18,13 @@ export const gulpFiles: Options = {
   "gulp/dist-build.js": true,
   "gulp/dist-clean.js": true,
   "gulp/dist-test.js": true,
+  "gulp/doc.js": true,
   "gulp/prepublish.js": true
+};
+
+export const docFiles: Options = {
+  "docs/index.md": true,
+  "docs/license.md": true
 };
 
 export const prompt: Options = {

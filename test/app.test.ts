@@ -1,6 +1,10 @@
-import path from "path";
 import testGenerator from "./common/test-generator";
-import { configFiles, gulpFiles, prompt } from "./common/default-options";
+import {
+  configFiles,
+  gulpFiles,
+  docFiles,
+  prompt
+} from "./common/default-options";
 
 testGenerator({
   title: "Testing main generator: Vanilla",
@@ -9,6 +13,7 @@ testGenerator({
   assertContent: {
     ...configFiles,
     ...gulpFiles,
+    ...docFiles,
     "src/index.js": true,
     "test/index.test.js": true
   }
@@ -25,6 +30,7 @@ testGenerator({
     ...configFiles,
     "tsconfig.json": true,
     ...gulpFiles,
+    ...docFiles,
     "src/index.ts": true,
     "test/index.test.ts": true
   }
@@ -40,6 +46,7 @@ testGenerator({
   assertContent: {
     ...configFiles,
     ...gulpFiles,
+    ...docFiles,
     "gulp/notebooks.js": true,
     "src/index.js": true,
     "test/index.test.js": true
@@ -56,6 +63,7 @@ testGenerator({
   assertContent: {
     ...configFiles,
     ...gulpFiles,
+    ...docFiles,
     "gulp/parse.js": true,
     "src/index.js": true,
     "test/index.test.js": true,
@@ -82,6 +90,7 @@ testGenerator({
   assertContent: {
     ...configFiles,
     ...gulpFiles,
+    ...docFiles,
     "gulp/monorepo.js": true,
     "src/index.js": true,
     "test/index.test.js": true
