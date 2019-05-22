@@ -11,7 +11,7 @@ export default class WritingGulp extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "write:gulp",
-        dependsOn: ["config:gulp"]
+        dependsOn: ["config:gulp", "config:doc"]
       })
     );
   }

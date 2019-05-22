@@ -46,6 +46,9 @@ export interface Props {
 
   activePackages: string[];
   packageGlobs: { [k: string]: string };
+
+  docConfigFile: string;
+  examplesGlob: string;
 }
 
 export default class Gulp extends Base {
@@ -60,7 +63,8 @@ export default class Gulp extends Base {
           "config:paths",
           "config:languages",
           "config:dependencies",
-          "config:monorepo"
+          "config:monorepo",
+          "config:doc"
         ],
         willWrite: ["write:gulp"]
       })
@@ -78,6 +82,7 @@ export default class Gulp extends Base {
       "dist-build",
       "dist-clean",
       "dist-test",
+      "doc",
       "prepublish"
     ];
 
@@ -116,6 +121,10 @@ export default class Gulp extends Base {
     this.addDevDep("gulp-mocha");
     this.addDevDep("chai");
     this.addDevDep("mochawesome");
+    this.addDevDep("gulp-rename");
+    this.addDevDep("gulp-replace");
+    this.addDevDep("gulp-wrap");
+    this.addDevDep("markdown-include");
 
     if (jupyter) {
       gulpIncludes.push("notebooks");
@@ -132,12 +141,14 @@ export default class Gulp extends Base {
 
     const srcGlobs: string[] = [];
     const libGlobs: string[] = [];
+    const examplesGlobs: string[] = [];
 
     extensions.forEach(
       (ext): void => {
         srcGlobs.push(path.join(srcDir, "**/*." + ext));
         srcGlobs.push(path.join(testDir, "**/*." + ext));
         libGlobs.push(path.join(srcDir, "**/*." + ext));
+        examplesGlobs.push(path.join(examplesDir, "**/*." + ext));
       }
     );
 
@@ -153,6 +164,7 @@ export default class Gulp extends Base {
 
     const srcGlob = JSON.stringify(srcGlobs, undefined, 2);
     const libGlob = JSON.stringify(libGlobs, undefined, 2);
+    const examplesGlob = JSON.stringify(examplesGlobs, undefined, 2);
 
     const testGlob = JSON.stringify(
       [path.join(buildDir, testDir, "**/*.test.js")],
@@ -169,7 +181,7 @@ export default class Gulp extends Base {
     );
 
     const distTestGlob = JSON.stringify(
-      [path.join(examplesDir, "**/*.js")],
+      [path.join(buildDir, examplesDir, "**/*.test.js")],
       undefined,
       2
     );
@@ -193,6 +205,8 @@ export default class Gulp extends Base {
         }
       );
     }
+
+    const docConfigFile = this.getProp("config:doc:config") as string;
 
     this.props = {
       gulpIncludes,
@@ -233,7 +247,10 @@ export default class Gulp extends Base {
       ),
 
       activePackages,
-      packageGlobs
+      packageGlobs,
+
+      docConfigFile,
+      examplesGlob
     };
 
     if (antlr4) {
