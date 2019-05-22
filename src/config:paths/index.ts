@@ -1,3 +1,4 @@
+import path from "path";
 import Base from "../common/base-generator";
 
 type Path = Wup.Path;
@@ -28,7 +29,7 @@ export default class Paths extends Base {
     this.addProp("config:paths:src", this.config.get("srcDir") || "src");
     this.addProp("config:paths:test", this.config.get("testDir") || "test");
     this.addProp("config:paths:build", this.config.get("buildDir") || "build");
-    this.addProp("config:paths:doc", this.config.get("docDir") || "doc");
+    this.addProp("config:paths:doc", this.config.get("docDir") || "docs");
     this.addProp("config:paths:lib", this.config.get("libDir") || "lib");
     this.addProp("config:paths:gulp", this.config.get("gulpDir") || "gulp");
   }
@@ -82,5 +83,12 @@ export default class Paths extends Base {
       this.config.set("libDir", this.getProp("config:paths:lib"));
       this.config.set("gulpDir", this.getProp("config:paths:gulp"));
     }
+  }
+
+  public configuring(): void {
+    this.addProp(
+      this.generatorName + ":examples",
+      path.join(this.getProp(this.generatorName + ":doc"), "examples")
+    );
   }
 }

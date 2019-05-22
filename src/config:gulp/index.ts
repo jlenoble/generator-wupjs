@@ -22,6 +22,8 @@ export interface Props {
   libGlob: string;
   testGlob: string;
   buildGlob: string;
+  distSrcGlob: string;
+  distTestGlob: string;
 
   grammarGlob?: string;
   dataGlob?: string;
@@ -74,7 +76,9 @@ export default class Gulp extends Base {
       "tdd",
       "lint",
       "dist-build",
-      "dist-clean"
+      "dist-clean",
+      "dist-test",
+      "prepublish"
     ];
 
     const buildDir = this.getProp("config:paths:build") as Path;
@@ -82,6 +86,7 @@ export default class Gulp extends Base {
     const libDir = this.getProp("config:paths:lib") as Path;
     const testDir = this.getProp("config:paths:test") as Path;
     const gulpDir = this.getProp("config:paths:gulp") as Path;
+    const examplesDir = this.getProp("config:paths:examples") as Path;
 
     const grammarDir = this.getProp("config:paths:grammar") as Path;
     const dataDir = this.getProp("config:paths:data") as Path;
@@ -157,6 +162,18 @@ export default class Gulp extends Base {
 
     const buildGlob = JSON.stringify(buildGlobs, undefined, 2);
 
+    const distSrcGlob = JSON.stringify(
+      [path.join(libDir, "**/*.js")],
+      undefined,
+      2
+    );
+
+    const distTestGlob = JSON.stringify(
+      [path.join(examplesDir, "**/*.js")],
+      undefined,
+      2
+    );
+
     const ipynbGlob = JSON.stringify(
       [path.join(srcDir, "**/*.ipynb")],
       undefined,
@@ -195,6 +212,8 @@ export default class Gulp extends Base {
       libGlob,
       testGlob,
       buildGlob,
+      distSrcGlob,
+      distTestGlob,
       ipynbGlob,
 
       jupyter,
