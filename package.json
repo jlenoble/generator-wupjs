@@ -1,7 +1,7 @@
 {
   "name": "generator-wupjs",
   "description": "A custom Yeoman generator to reduce boiler-plate in JS dev",
-  "version": "0.6.0-3",
+  "version": "0.6.0-4",
   "keywords": [],
   "author": {
     "name": "Jason Lenoble",
