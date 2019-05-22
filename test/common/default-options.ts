@@ -15,7 +15,9 @@ export const gulpFiles: Options = {
   "gulp/tdd.js": true,
   "gulp/lint.js": true,
   "gulp/dist-build.js": true,
-  "gulp/dist-clean.js": true
+  "gulp/dist-clean.js": true,
+  "gulp/dist-test.js": true,
+  "gulp/prepublish.js": true
 };
 
 export const prompt: Options = {
