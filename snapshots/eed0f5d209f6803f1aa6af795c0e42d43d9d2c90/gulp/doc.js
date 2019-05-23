@@ -35,7 +35,7 @@ export const compileExamples = () => {
   return gulp
     .src(examplesGlob, {
       base: process.cwd(),
-      since: gulp.lastRun(examples)
+      since: gulp.lastRun(compileExamples)
     })
     .pipe(replace(/describe.*\n  it.*\n    /, ""))
     .pipe(replace(/\n  }\);\n}\);\n/, "\n"))
