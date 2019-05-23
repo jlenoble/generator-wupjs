@@ -1,4 +1,5 @@
 import upperCamelCase from "uppercamelcase";
+import path from "path";
 import Base from "../common/base-generator";
 
 export interface Props {
@@ -38,6 +39,9 @@ export default class Doc extends Base {
   public configuring(): void {
     const name = this.getProp("config:package:name") as string;
     const className = upperCamelCase(name).replace(/^@[-.\w]+\//, "");
+    const buildDir = this.getProp("config:paths:build") as string;
+    const examplesDir = this.getProp("config:paths:examples") as string;
+    const builtExamplesDir = path.join(buildDir, examplesDir);
 
     const { createdOn, modifiedOn } = this.getProp(
       "config:date"
@@ -57,7 +61,8 @@ export default class Doc extends Base {
       email: this.getProp("config:author:email") as string,
       cYear,
       docDir: this.getProp("config:paths:doc") as string,
-      examplesDir: this.getProp("config:paths:examples") as string
+      examplesDir,
+      builtExamplesDir
     };
 
     this.addProp(this.generatorName, this.props);

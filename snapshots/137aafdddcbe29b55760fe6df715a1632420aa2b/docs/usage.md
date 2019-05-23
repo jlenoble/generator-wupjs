@@ -2,4 +2,4 @@
 
 Blah blah blah
 
-#include "docs/examples/usage.test.md"
+#include "build/docs/examples/usage.test.md"
