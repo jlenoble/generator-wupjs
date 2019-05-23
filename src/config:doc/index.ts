@@ -1,3 +1,4 @@
+import upperCamelCase from "uppercamelcase";
 import Base from "../common/base-generator";
 
 export interface Props {
@@ -7,6 +8,7 @@ export interface Props {
   email: string;
   cYear: string;
   docDir: string;
+  examplesDir: string;
 }
 
 export default class Doc extends Base {
@@ -34,6 +36,9 @@ export default class Doc extends Base {
   }
 
   public configuring(): void {
+    const name = this.getProp("config:package:name") as string;
+    const className = upperCamelCase(name).replace(/^@[-.\w]+\//, "");
+
     const { createdOn, modifiedOn } = this.getProp(
       "config:date"
     ) as Wup.YoRcJson;
@@ -44,13 +49,15 @@ export default class Doc extends Base {
     const cYear = y1 === y2 ? y1.toString() : `${y1}-${y2}`;
 
     this.props = {
-      name: this.getProp("config:package:name") as string,
+      name,
+      className,
       description: this.getProp("config:package:description") as string,
       license: this.getProp("config:license") as string,
       author: this.getProp("config:author:name") as string,
       email: this.getProp("config:author:email") as string,
       cYear,
-      docDir: this.getProp("config:paths:doc") as string
+      docDir: this.getProp("config:paths:doc") as string,
+      examplesDir: this.getProp("config:paths:examples") as string
     };
 
     this.addProp(this.generatorName, this.props);

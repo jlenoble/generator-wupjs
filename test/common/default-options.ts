@@ -24,6 +24,8 @@ export const gulpFiles: Options = {
 
 export const docFiles: Options = {
   "docs/index.md": true,
+  "docs/usage.md": true,
+  "docs/examples/usage.test.md": true,
   "docs/license.md": true
 };
 

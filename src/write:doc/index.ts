@@ -20,32 +20,45 @@ export default class WriteDoc extends Base {
     }
 
     const props: Props = this.getProp("config:doc") as Props;
+    const { docDir, examplesDir } = props;
 
     let found = true;
 
     try {
-      await fs.stat(this.destinationPath(props.docDir));
+      await fs.stat(this.destinationPath(docDir));
     } catch (e) {
       found = false;
     }
 
     if (!found) {
-      // Don't overwrite doc index if already exists
+      // Don't overwrite docs if already exist...
       this.fs.copyTpl(
         this.templatePath("index.ejs"),
-        this.destinationPath(path.join(props.docDir, "index.md")),
+        this.destinationPath(path.join(docDir, "index.md")),
+        props
+      );
+
+      this.fs.copyTpl(
+        this.templatePath("usage.ejs"),
+        this.destinationPath(path.join(docDir, "usage.md")),
+        props
+      );
+
+      this.fs.copyTpl(
+        this.templatePath("usage.test.ejs"),
+        this.destinationPath(path.join(examplesDir, "usage.test.md")),
         props
       );
     }
 
+    // ...But always update license...
     this.fs.copyTpl(
       this.templatePath("license.ejs"),
-      this.destinationPath(
-        path.join(this.getProp("config:paths:doc"), "license.md")
-      ),
+      this.destinationPath(path.join(docDir, "license.md")),
       props
     );
 
+    // ...And config
     this.fs.copyTpl(
       this.templatePath("markdown.ejs"),
       this.destinationPath("markdown.json"),
