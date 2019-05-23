@@ -26,12 +26,12 @@ md.buildLink = function(title, _anchor) {
   return "[" + title + "](#" + anchor + ")\n";
 };
 
-export const doc = () => {
+export const compileDoc = () => {
   md.reset();
   return md.compileFiles(docConf);
 };
 
-export const examples = () => {
+export const compileExamples = () => {
   return gulp
     .src(examplesGlob, {
       base: process.cwd(),
@@ -72,4 +72,4 @@ export const examples = () => {
     .pipe(gulp.dest(buildDir));
 };
 
-gulp.task("doc", gulp.series(examples, doc));
+gulp.task("doc", gulp.series(compileExamples, compileDoc));
