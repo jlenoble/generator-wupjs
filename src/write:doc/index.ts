@@ -46,7 +46,7 @@ export default class WriteDoc extends Base {
 
       this.fs.copyTpl(
         this.templatePath("usage.test.ejs"),
-        this.destinationPath(path.join(examplesDir, "usage.test.md")),
+        this.destinationPath(path.join(examplesDir, "usage.test.js")),
         props
       );
     }
