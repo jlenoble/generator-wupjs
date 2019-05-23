@@ -61,22 +61,20 @@ export default class Src extends Base {
 
     const files =
       extensions.length > 1
-        ? extensions.map((ext): string => path.join(ext.substring(1), main))
+        ? extensions.map((ext): string => path.join(ext, main))
         : [main];
 
     const srcFiles =
       extensions.length > 1
         ? extensions.map(
-            (ext): string =>
-              path.join(srcDir, ext.substring(1), `${main}.${ext}`)
+            (ext): string => path.join(srcDir, ext, `${main}.${ext}`)
           )
         : [path.join(srcDir, `${main}.${extensions[0]}`)];
 
     const testFiles =
       extensions.length > 1
         ? extensions.map(
-            (ext): string =>
-              path.join(testDir, ext.substring(1), `${main}.${ext}`)
+            (ext): string => path.join(testDir, ext, `${main}.test.${ext}`)
           )
         : [path.join(testDir, `${main}.test.${extensions[0]}`)];
 

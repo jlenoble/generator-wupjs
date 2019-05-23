@@ -96,3 +96,23 @@ testGenerator({
     "test/index.test.js": true
   }
 });
+
+testGenerator({
+  title: "Testing main generator: with both Javascript and Typescript",
+  command: "yo wupjs",
+  prompt: {
+    ...prompt,
+    "config:languages:typescript": true,
+    "config:languages:extensions": ["js", "ts"]
+  },
+  assertContent: {
+    ...configFiles,
+    "tsconfig.json": true,
+    ...gulpFiles,
+    ...docFiles,
+    "src/js/index.js": true,
+    "test/js/index.test.js": true,
+    "src/ts/index.ts": true,
+    "test/ts/index.test.ts": true
+  }
+});

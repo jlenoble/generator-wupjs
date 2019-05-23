@@ -1,0 +1,32 @@
+{
+  "generator-wupjs": {
+    "createdWith": "0.6.0-4",
+    "modifiedWith": "0.6.0-4",
+    "createdOn": "2019-05-23T09:04:33.207Z",
+    "modifiedOn": "2019-05-23T09:04:33.207Z",
+    "gulp": true,
+    "srcDir": "src",
+    "testDir": "test",
+    "buildDir": "build",
+    "docDir": "docs",
+    "libDir": "lib",
+    "gulpDir": "gulp",
+    "typescript": true,
+    "jsx": false,
+    "extensions": [
+      "js",
+      "ts"
+    ],
+    "jupyter": false,
+    "antlr4": false,
+    "server": true,
+    "client": false,
+    "devModuleTypes": [
+      "ES6"
+    ],
+    "prodModuleTypes": [
+      "CommonJS"
+    ],
+    "monorepo": false
+  }
+}
