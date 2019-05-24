@@ -5,6 +5,7 @@ import ConfigDependencies from "../config:dependencies";
 type Path = Wup.Path;
 
 export interface Props {
+  packageName: string;
   gulpIncludes: string[];
 
   srcDir: string;
@@ -49,6 +50,7 @@ export interface Props {
 
   docConfigFile: string;
   examplesGlob: string;
+  relPath: string;
 }
 
 export default class Gulp extends Base {
@@ -72,6 +74,8 @@ export default class Gulp extends Base {
   }
 
   public configuring(): void {
+    const packageName = this.getProp("config:package:name") as string;
+
     const gulpIncludes = [
       "build",
       "clean",
@@ -208,7 +212,10 @@ export default class Gulp extends Base {
 
     const docConfigFile = this.getProp("config:doc:config") as string;
 
+    const relPath = path.relative(path.join(buildDir, examplesDir), libDir);
+
     this.props = {
+      packageName,
       gulpIncludes,
 
       srcDir,
@@ -250,7 +257,8 @@ export default class Gulp extends Base {
       packageGlobs,
 
       docConfigFile,
-      examplesGlob
+      examplesGlob,
+      relPath
     };
 
     if (antlr4) {
