@@ -130,6 +130,7 @@ export default class Gulp extends Base {
     this.addDevDep("gulp-replace");
     this.addDevDep("gulp-wrap");
     this.addDevDep("markdown-include");
+    this.addDevDep("gulp-debug");
 
     if (typescript) {
       this.addDevDep("gulp-typescript");
