@@ -1,22 +1,31 @@
 import gulp from "gulp";
 import ts from "gulp-typescript";
-import merge from "merge2";
 
 const buildDir = "<%- buildDir %>";
+const buildSrcDir = "<%- buildSrcDir %>";
+const libDir = "<%- libDir %>";
 const libGlob = <%- libGlob %>;
+const declareGlob = <%- declareGlob %>;
 const tsProject = ts.createProject("tsconfig.json");
 
 const handleTypes = () => {
-  const tsResult = gulp.src(libGlob, {
-    base: process.cwd(),
-    since: gulp.lastRun(handleTypes)
-  })
+  const tsResult = gulp
+    .src(libGlob, {
+      base: process.cwd(),
+      since: gulp.lastRun(handleTypes)
+    })
     .pipe(tsProject());
 
-  return merge([
-    tsResult.dts.pipe(gulp.dest(buildDir)),
-    tsResult.js.pipe(gulp.dest(buildDir))
-  ]);
+  return tsResult.dts.pipe(gulp.dest(buildDir));
 };
 
-gulp.task("types", handleTypes);
+const copyTypes = () => {
+  return gulp
+    .src(declareGlob, {
+      base: buildSrcDir,
+      since: gulp.lastRun(copyTypes)
+    })
+    .pipe(gulp.dest(libDir));
+};
+
+gulp.task("types", gulp.series(handleTypes, copyTypes));

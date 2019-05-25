@@ -10,6 +10,7 @@ export interface Props {
 
   srcDir: string;
   buildDir: string;
+  buildSrcDir: string;
   libDir: string;
   gulpDir: string;
 
@@ -25,6 +26,7 @@ export interface Props {
   buildGlob: string;
   distSrcGlob: string;
   distTestGlob: string;
+  declareGlob?: string;
 
   grammarGlob?: string;
   dataGlob?: string;
@@ -103,6 +105,8 @@ export default class Gulp extends Base {
     const listenerDir = this.getProp("config:paths:listener") as Path;
     const visitorDir = this.getProp("config:paths:visitor") as Path;
 
+    const buildSrcDir = path.join(buildDir, srcDir);
+
     const extensions = this.getProp("config:languages:extensions") as string[];
 
     const typescript = this.getProp("config:languages:typescript") as boolean;
@@ -130,12 +134,17 @@ export default class Gulp extends Base {
     this.addDevDep("gulp-replace");
     this.addDevDep("gulp-wrap");
     this.addDevDep("markdown-include");
-    this.addDevDep("gulp-debug");
+
+    let declareGlob = "";
 
     if (typescript) {
       this.addDevDep("gulp-typescript");
-      this.addDevDep("merge2");
       gulpIncludes.push("types");
+      declareGlob = JSON.stringify(
+        [path.join(buildSrcDir, "**/*.d.ts")],
+        undefined,
+        2
+      );
     }
 
     if (jupyter) {
@@ -204,12 +213,14 @@ export default class Gulp extends Base {
       2
     );
 
-    let activePackages: string[];
-    let packageGlobs: { [k: string]: string };
+    let activePackages: string[] = [];
+    let packageGlobs: { [k: string]: string } = {};
 
     if (monorepo) {
-      activePackages = [...this.getProp("config:monorepo:active")];
-      packageGlobs = { ...this.getProp("config:monorepo:deps") };
+      activePackages = [
+        ...(this.getProp("config:monorepo:active") as string[])
+      ];
+      packageGlobs = { ...(this.getProp("config:monorepo:deps") as object) };
 
       Object.keys(packageGlobs).forEach(
         (key): void => {
@@ -230,6 +241,7 @@ export default class Gulp extends Base {
       buildDir,
       libDir,
       gulpDir,
+      buildSrcDir,
 
       grammarDir,
       dataDir,
@@ -243,6 +255,7 @@ export default class Gulp extends Base {
       buildGlob,
       distSrcGlob,
       distTestGlob,
+      declareGlob,
       ipynbGlob,
 
       jupyter,
