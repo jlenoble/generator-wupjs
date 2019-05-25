@@ -7,6 +7,8 @@ type Path = Wup.Path;
 interface Props {
   buildDir: Path;
   libDir: Path;
+  docDir: Path;
+  gulpDir: Path;
   gitignores: string;
   antlr4: boolean;
   parserDir: Path;
@@ -28,6 +30,9 @@ export default class GitIgnore extends Base {
   public async configure(): Promise<void> {
     const buildDir = this.getProp("config:paths:build") as Path;
     const libDir = this.getProp("config:paths:lib") as Path;
+    const docDir = this.getProp("config:paths:doc") as Path;
+    const gulpDir = this.getProp("config:paths:gulp") as Path;
+
     const includes: Path[] = [];
     const antlr4 =
       (this.getProp("config:languages:antlr4") as boolean) || false;
@@ -56,7 +61,15 @@ export default class GitIgnore extends Base {
       }
     }
 
-    this.props = { buildDir, libDir, gitignores, antlr4, parserDir };
+    this.props = {
+      buildDir,
+      libDir,
+      docDir,
+      gulpDir,
+      gitignores,
+      antlr4,
+      parserDir
+    };
   }
 
   public writing(): void {

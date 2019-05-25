@@ -1,5 +1,16 @@
+# Config
+.babelrc
+.eslintrc
+.gitignore
+markdown.json
+package-lock.json
+tsconfig.json
+
 # Build
 <%- buildDir %>
+gulpfile.babel.js
+gulpfile.js
+<%- gulpDir %>
 
 # Dist
 <%- libDir %>
@@ -11,6 +22,7 @@ scratch
 mochawesome-report
 
 # Misc
+<%- docDir %>/license.md
 private
 packages<% if (antlr4) { %>
 
