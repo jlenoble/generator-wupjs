@@ -30,6 +30,7 @@ testGenerator({
     ...configFiles,
     "tsconfig.json": true,
     ...gulpFiles,
+    "gulp/types.js": true,
     ...docFiles,
     "src/index.ts": true,
     "test/index.test.ts": true
@@ -109,6 +110,7 @@ testGenerator({
     ...configFiles,
     "tsconfig.json": true,
     ...gulpFiles,
+    "gulp/types.js": true,
     ...docFiles,
     "src/js/index.js": true,
     "test/js/index.test.js": true,
