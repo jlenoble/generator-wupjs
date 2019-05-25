@@ -105,6 +105,7 @@ export default class Gulp extends Base {
 
     const extensions = this.getProp("config:languages:extensions") as string[];
 
+    const typescript = this.getProp("config:languages:typescript") as boolean;
     const jupyter = this.getProp("config:languages:jupyter") as boolean;
     const antlr4 = this.getProp("config:languages:antlr4") as boolean;
     const monorepo = this.getProp("config:monorepo") as boolean;
@@ -129,6 +130,12 @@ export default class Gulp extends Base {
     this.addDevDep("gulp-replace");
     this.addDevDep("gulp-wrap");
     this.addDevDep("markdown-include");
+
+    if (typescript) {
+      this.addDevDep("gulp-typescript");
+      this.addDevDep("merge2");
+      gulpIncludes.push("types");
+    }
 
     if (jupyter) {
       gulpIncludes.push("notebooks");
