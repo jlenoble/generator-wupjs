@@ -9,7 +9,7 @@ export default class PackageTypes extends Base {
       args,
       Object.assign({}, options, {
         generatorName: "config:package:types",
-        dependsOn: ["config:paths", "config:languages"],
+        dependsOn: ["config:paths", "config:languages", "config:package:name"],
         willWrite: ["write:package.json"]
       })
     );
@@ -30,7 +30,10 @@ export default class PackageTypes extends Base {
     if (this.mustPrompt && this.getProp("config:languages:typescript")) {
       const types: Path =
         (this.getProp(this.generatorName) as Path) ||
-        path.join(this.getProp("config:paths:lib") as Path, "index.d.ts");
+        path.join(
+          this.getProp("config:paths:lib") as Path,
+          `${this.getProp("config:package:name")}.d.ts`
+        );
 
       const prompts = [
         {
