@@ -9,8 +9,6 @@ interface Props {
     moduleResolution: "node";
     allowJs: false;
     declaration: true;
-    emitDeclarationOnly: true;
-    declarationDir: Path;
     strict: true;
     isolatedModules: false;
     esModuleInterop: true;
@@ -35,7 +33,6 @@ export default class TsConfigJson extends Base {
   public async configure(): Promise<void> {
     const srcDir = this.getProp("config:paths:src") as Path;
     const testDir = this.getProp("config:paths:test") as Path;
-    const buildDir = this.getProp("config:paths:build") as Path;
 
     this.props = {
       compilerOptions: {
@@ -44,8 +41,6 @@ export default class TsConfigJson extends Base {
         moduleResolution: "node",
         allowJs: false,
         declaration: true,
-        emitDeclarationOnly: true,
-        declarationDir: buildDir,
         strict: true,
         isolatedModules: false,
         esModuleInterop: true,
