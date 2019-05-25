@@ -4,7 +4,8 @@ import "./test";
 import "./lint";
 import "./dist-clean";
 import "./doc";
-import "./dist-test";
+import "./dist-test";<% if (typescript) { %>
+import "./types";<% } %>
 
 gulp.task("prepublish", gulp.series(
   "test",
@@ -13,5 +14,6 @@ gulp.task("prepublish", gulp.series(
     "dist-clean",
     "doc"
   ),
-  "dist-test"
+  "dist-test"<% if (typescript) { %>,
+  "types"<% } %>
 ));

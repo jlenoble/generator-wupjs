@@ -10,7 +10,6 @@ export interface Props {
 
   srcDir: string;
   buildDir: string;
-  buildSrcDir: string;
   libDir: string;
   gulpDir: string;
 
@@ -26,7 +25,6 @@ export interface Props {
   buildGlob: string;
   distSrcGlob: string;
   distTestGlob: string;
-  declareGlob?: string;
 
   grammarGlob?: string;
   dataGlob?: string;
@@ -35,6 +33,7 @@ export interface Props {
 
   ipynbGlob: string;
 
+  typescript: boolean;
   jupyter: boolean;
   antlr4: boolean;
 
@@ -105,8 +104,6 @@ export default class Gulp extends Base {
     const listenerDir = this.getProp("config:paths:listener") as Path;
     const visitorDir = this.getProp("config:paths:visitor") as Path;
 
-    const buildSrcDir = path.join(buildDir, srcDir);
-
     const extensions = this.getProp("config:languages:extensions") as string[];
 
     const typescript = this.getProp("config:languages:typescript") as boolean;
@@ -135,16 +132,9 @@ export default class Gulp extends Base {
     this.addDevDep("gulp-wrap");
     this.addDevDep("markdown-include");
 
-    let declareGlob = "";
-
     if (typescript) {
       this.addDevDep("gulp-typescript");
       gulpIncludes.push("types");
-      declareGlob = JSON.stringify(
-        [path.join(buildSrcDir, "**/*.d.ts")],
-        undefined,
-        2
-      );
     }
 
     if (jupyter) {
@@ -241,7 +231,6 @@ export default class Gulp extends Base {
       buildDir,
       libDir,
       gulpDir,
-      buildSrcDir,
 
       grammarDir,
       dataDir,
@@ -255,9 +244,9 @@ export default class Gulp extends Base {
       buildGlob,
       distSrcGlob,
       distTestGlob,
-      declareGlob,
       ipynbGlob,
 
+      typescript,
       jupyter,
       antlr4,
 
