@@ -1,31 +1,31 @@
 # Config
-.babelrc
-.eslintrc
-.gitignore
-markdown.json
-package-lock.json
-tsconfig.json
+/.babelrc
+/.eslintrc
+/.gitignore
+/markdown.json
+/package-lock.json
+/tsconfig.json
 
 # Build
-<%- buildDir %>
-gulpfile.babel.js
-gulpfile.js
-<%- gulpDir %>
+/<%- buildDir %>/
+/gulpfile.babel.js
+/gulpfile.js
+/<%- gulpDir %>/
 
 # Dist
-<%- libDir %>
+/<%- libDir %>/
+/mochawesome-report/
+/<%- docDir %>/license.md
 
 # Test
 tmp
 temp
 scratch
-mochawesome-report
 
 # Misc
-<%- docDir %>/license.md
 private
 packages<% if (antlr4) { %>
 
 # ANTLR4
-<%- parserDir %><% } %>
+/<%- parserDir %>/<% } %>
 <%- gitignores %>
