@@ -1,28 +1,28 @@
 # Config
-.babelrc
-.eslintrc
-.gitignore
-markdown.json
-package-lock.json
-tsconfig.json
+/.babelrc
+/.eslintrc
+/.gitignore
+/markdown.json
+/package-lock.json
+/tsconfig.json
 
 # Build
-build
-gulpfile.babel.js
-gulpfile.js
-gulp
+/build/
+/gulpfile.babel.js
+/gulpfile.js
+/gulp/
 
 # Dist
-lib
+/lib/
+/mochawesome-report/
+/docs/license.md
 
 # Test
 tmp
 temp
 scratch
-mochawesome-report
 
 # Misc
-docs/license.md
 private
 packages
 
