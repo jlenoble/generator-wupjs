@@ -116,6 +116,15 @@ Call .addDevDep(${name}) and delegate to "config:dependencies" subgen
     );
   }
 
+  protected _addPeerDep(name: string, version: string): void {
+    throw new Error(
+      chalk.red(`
+Don't use ._addPeerDep(${name}, ${version}) super method;
+Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subgen
+`)
+    );
+  }
+
   public addDep(name: string): void {
     // Make every subgen able to add deps on the fly
     const gen = this.getGen("config:dependencies");
@@ -142,6 +151,20 @@ Call .addDevDep(${name}) and delegate to "config:dependencies" subgen
     }
 
     gen._addDevDep(name);
+  }
+
+  public addPeerDep(name: string, version: string): void {
+    // Make every subgen able to add peer deps on the fly
+    const gen = this.getGen("config:dependencies");
+
+    if (!gen) {
+      console.warn(
+        "Calling addPeerDep too early, config:dependencies subgen not registered"
+      );
+      return;
+    }
+
+    gen._addPeerDep(name, version);
   }
 
   public addProp(name: PropName | Props, value?: PropValue): this {

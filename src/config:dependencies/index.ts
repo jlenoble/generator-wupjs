@@ -53,7 +53,7 @@ export default class ConfigDependencies extends Base {
     this.optionalDependencies = {};
 
     this.dependencies = {
-      dependencies: this.prodDependencies,
+      dependencies: this.prodDependencies, // _cleanUpDeps rely on this being first
       devDependencies: this.devDependencies,
       peerDependencies: this.peerDependencies,
       optionalDependencies: this.optionalDependencies
@@ -69,6 +69,7 @@ export default class ConfigDependencies extends Base {
       if (deps) {
         this._updateDeps(DepName.prodDependencies, deps.dependencies || {});
         this._updateDeps(DepName.devDependencies, deps.devDependencies || {});
+        this._updateDeps(DepName.peerDependencies, deps.peerDependencies || {});
       }
     } catch (e) {}
 
@@ -78,24 +79,24 @@ export default class ConfigDependencies extends Base {
   protected _cleanUpDeps(): void {
     const depTypes = Object.keys(this.dependencies) as DepName[];
 
-    while (depTypes.length > 1) {
-      const depType = depTypes.shift() as DepName;
-      const deps = this.dependencies[depType];
+    // If a dep is present in first key ("dependencies"), remove it from
+    // dev, peer, etc...
+    const depType = depTypes.shift() as DepName;
+    const deps = this.dependencies[depType];
 
-      for (const dpType of depTypes) {
-        const dps = this.dependencies[dpType];
+    for (const dpType of depTypes) {
+      const dps = this.dependencies[dpType];
 
-        Object.keys(deps).forEach(
-          (key): void => {
-            if (dps[key]) {
-              delete dps[key];
-            }
+      Object.keys(deps).forEach(
+        (key): void => {
+          if (dps[key]) {
+            delete dps[key];
           }
-        );
-      }
-
-      this._sortDeps(depType, deps);
+        }
+      );
     }
+
+    this._sortDeps(depType, deps);
   }
 
   protected _addDep(name: string): void {
@@ -111,6 +112,14 @@ export default class ConfigDependencies extends Base {
       this.devDependencies[name] = "*";
     }
     this._filterDeps(this.devDependencies);
+    this._cleanUpDeps();
+  }
+
+  protected _addPeerDep(name: string, version: string): void {
+    if (!this.peerDependencies[name]) {
+      this.peerDependencies[name] = version;
+    }
+    this._filterDeps(this.peerDependencies);
     this._cleanUpDeps();
   }
 
