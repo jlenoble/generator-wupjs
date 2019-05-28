@@ -7,6 +7,7 @@ import PromiseMap from "./promise-map";
 export interface Dep {
   latestVersion: string;
   lastChecked: string;
+  deprecated?: boolean;
 }
 
 export interface Deps {
@@ -32,6 +33,10 @@ export default class RefDeps {
     const dep = this.deps[name];
 
     if (dep) {
+      if (dep.deprecated) {
+        return false;
+      }
+
       const lastChecked = new Date(dep.lastChecked);
 
       if (isNaN(+lastChecked)) {
@@ -39,8 +44,13 @@ export default class RefDeps {
       }
 
       const checkedRecently = Date.now() - lastChecked.getTime() < 86400000; // one day
+      const checkedAWhileAgo = Date.now() - lastChecked.getTime() > 2592000000; // 30 days
 
-      if (!checkedRecently) {
+      if (
+        (!checkedRecently &&
+          dep.latestVersion !== `Package \`${name}\` could not be found`) ||
+        checkedAWhileAgo
+      ) {
         return true;
       }
 
@@ -65,6 +75,10 @@ export default class RefDeps {
 
   public getDep(name: string): Dep | undefined {
     return this.deps[name];
+  }
+
+  public isDeprecated(name: string): boolean {
+    return !!(this.deps[name] && this.deps[name].deprecated);
   }
 
   public async addDep(

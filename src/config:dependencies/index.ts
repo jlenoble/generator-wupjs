@@ -99,23 +99,23 @@ export default class ConfigDependencies extends Base {
     this._sortDeps(depType, deps);
   }
 
-  protected _addDep(name: string): void {
+  protected _addDep(name: string, version: string = "*"): void {
     if (!this.prodDependencies[name]) {
-      this.prodDependencies[name] = "*";
+      this.prodDependencies[name] = version;
     }
     this._filterDeps(this.prodDependencies);
     this._cleanUpDeps();
   }
 
-  protected _addDevDep(name: string): void {
+  protected _addDevDep(name: string, version: string = "*"): void {
     if (!this.devDependencies[name]) {
-      this.devDependencies[name] = "*";
+      this.devDependencies[name] = version;
     }
     this._filterDeps(this.devDependencies);
     this._cleanUpDeps();
   }
 
-  protected _addPeerDep(name: string, version: string): void {
+  protected _addPeerDep(name: string, version: string = "*"): void {
     if (!this.peerDependencies[name]) {
       this.peerDependencies[name] = version;
     }
@@ -124,7 +124,7 @@ export default class ConfigDependencies extends Base {
   }
 
   public _isUserDep(dep: string): boolean {
-    return /^file:.+$/.test(dep) || /^(?:[<>]=?)/.test(dep);
+    return /^file:.+$/.test(dep);
   }
 
   public _isPeerDep(version: string): boolean {
@@ -140,11 +140,11 @@ export default class ConfigDependencies extends Base {
       .map((key): [string, string] => [key, deps[key]]);
 
     for (const [_dep, version] of d) {
-      const dep = upgradePackage(_dep);
+      const dep = upgradePackage(_dep, refDeps);
 
       if (!dep) {
         delete deps[_dep];
-        return;
+        continue;
       }
 
       if (dep !== _dep) {
@@ -157,12 +157,16 @@ export default class ConfigDependencies extends Base {
         continue;
       }
 
-      if (refDeps.hasDep(dep)) {
+      if (refDeps.hasDep(dep) && !refDeps.isDeprecated(dep)) {
         deps[dep] = "^" + (refDeps.getDep(dep) as Dep).latestVersion;
 
         const tsDep = `@types/${dep}`;
 
-        if (typescript && refDeps.hasDep(tsDep)) {
+        if (
+          typescript &&
+          refDeps.hasDep(tsDep) &&
+          !refDeps.isDeprecated(tsDep)
+        ) {
           deps[tsDep] = "^" + (refDeps.getDep(tsDep) as Dep).latestVersion;
         }
       }

@@ -125,7 +125,7 @@ export default class Gulp extends Base {
     this.addDevDep("gulp-eslint");
     this.addDevDep("del");
     this.addDevDep("gulp-mocha");
-    this.addPeerDep("mocha", ">=5");
+    this.addDevDep("mocha", "<6"); // Keep it thus until gulp-mocha is upgraded
     this.addDevDep("source-map-support");
     this.addDevDep("chai");
     this.addDevDep("mochawesome");

@@ -1,3 +1,5 @@
+import RefDeps from "./ref-deps";
+
 const upgradeOneToOne = new Map([
   ["babel-core", "@babel/core"],
   ["babel-preset-es2015", "@babel/preset-env"],
@@ -7,14 +9,15 @@ const upgradeOneToOne = new Map([
   ["babel-preset-react", "@babel/preset-react"]
 ]);
 
-const remove = new Set(["gulp-util"]);
-
-export default function upgradePackage(packageName): string | undefined {
+export default function upgradePackage(
+  packageName: string,
+  refDeps: RefDeps
+): string | undefined {
   if (upgradeOneToOne.has(packageName)) {
     return upgradeOneToOne.get(packageName);
   }
 
-  if (remove.has(packageName)) {
+  if (refDeps.isDeprecated(packageName)) {
     return;
   }
 

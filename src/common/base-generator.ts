@@ -98,25 +98,25 @@ export default class BaseGenerator extends Generator
     this.composeAll();
   }
 
-  protected _addDep(name: string): void {
+  protected _addDep(name: string, version: string = "*"): void {
     throw new Error(
       chalk.red(`
-Don't use ._addDep(${name}) super method;
-Call .addDep(${name}) and delegate to "config:dependencies" subgen
+Don't use ._addDep(${name}, ${version}) super method;
+Call .addDep(${name}, ${version}) and delegate to "config:dependencies" subgen
 `)
     );
   }
 
-  protected _addDevDep(name: string): void {
+  protected _addDevDep(name: string, version: string = "*"): void {
     throw new Error(
       chalk.red(`
-Don't use ._addDevDep(${name}) super method;
-Call .addDevDep(${name}) and delegate to "config:dependencies" subgen
+Don't use ._addDevDep(${name}, ${version}) super method;
+Call .addDevDep(${name}, ${version}) and delegate to "config:dependencies" subgen
 `)
     );
   }
 
-  protected _addPeerDep(name: string, version: string): void {
+  protected _addPeerDep(name: string, version: string = "*"): void {
     throw new Error(
       chalk.red(`
 Don't use ._addPeerDep(${name}, ${version}) super method;
@@ -125,7 +125,7 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
     );
   }
 
-  public addDep(name: string): void {
+  public addDep(name: string, version: string = "*"): void {
     // Make every subgen able to add deps on the fly
     const gen = this.getGen("config:dependencies");
 
@@ -136,10 +136,10 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
       return;
     }
 
-    gen._addDep(name);
+    gen._addDep(name, version);
   }
 
-  public addDevDep(name: string): void {
+  public addDevDep(name: string, version: string = "*"): void {
     // Make every subgen able to add dev deps on the fly
     const gen = this.getGen("config:dependencies");
 
@@ -150,10 +150,10 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
       return;
     }
 
-    gen._addDevDep(name);
+    gen._addDevDep(name, version);
   }
 
-  public addPeerDep(name: string, version: string): void {
+  public addPeerDep(name: string, version: string = "*"): void {
     // Make every subgen able to add peer deps on the fly
     const gen = this.getGen("config:dependencies");
 
