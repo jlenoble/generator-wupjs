@@ -124,7 +124,11 @@ export default class ConfigDependencies extends Base {
   }
 
   public _isUserDep(dep: string): boolean {
-    return /^file:.+$/.test(dep);
+    return /^file:.+$/.test(dep) || /^(?:[<>]=?)/.test(dep);
+  }
+
+  public _isPeerDep(version: string): boolean {
+    return /[><]=?/.test(version);
   }
 
   protected _filterDeps(deps: Dependencies): void {
@@ -135,7 +139,7 @@ export default class ConfigDependencies extends Base {
       .sort()
       .map((key): [string, string] => [key, deps[key]]);
 
-    for (const [_dep, value] of d) {
+    for (const [_dep, version] of d) {
       const dep = upgradePackage(_dep);
 
       if (!dep) {
@@ -149,7 +153,7 @@ export default class ConfigDependencies extends Base {
 
       refDeps.addDep(dep, { typescript }); // async, wait in this.afterConfiguring()
 
-      if (this._isUserDep(value)) {
+      if (this._isUserDep(version) || this._isPeerDep(version)) {
         continue;
       }
 
