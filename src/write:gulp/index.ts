@@ -1,4 +1,5 @@
 import path from "path";
+import fs from "fs-extra";
 import Base from "../common/base-generator";
 import prettyWrite from "../common/pretty-write";
 import { Props } from "../config:gulp";
@@ -16,6 +17,36 @@ export default class WritingGulp extends Base {
     );
   }
 
+  public _collectCustom(
+    dir: string,
+    stems: ReadonlyArray<string>
+  ): ReadonlyArray<string> {
+    const files = [];
+
+    try {
+      for (const file of fs.readdirSync(dir)) {
+        const fullPath = path.join(dir, file);
+        const stats = fs.lstatSync(fullPath);
+
+        if (stats.isFile()) {
+          files.push(file);
+        }
+      }
+    } catch (e) {}
+
+    return files
+      .map(
+        (file): string => {
+          return path.basename(file, ".js");
+        }
+      )
+      .filter(
+        (stem): boolean => {
+          return !stems.includes(stem);
+        }
+      );
+  }
+
   public writing(): void {
     if (!this.mustWrite()) {
       return;
@@ -26,7 +57,12 @@ export default class WritingGulp extends Base {
 
     prettyWrite(
       this,
-      props,
+      {
+        ...props,
+        gulpIncludes: props.gulpIncludes.concat(
+          this._collectCustom(this.destinationPath(gulpDir), props.gulpIncludes)
+        )
+      },
       this.templatePath("gulpfile.ejs"),
       this.destinationPath("gulpfile.babel.js")
     );
