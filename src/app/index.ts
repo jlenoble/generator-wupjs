@@ -31,7 +31,13 @@ export default class App extends Base {
     this.log(yosay("Welcome to our " + chalk.yellow("Wup") + " generator!"));
   }
 
-  public install(): void {
-    this.installDependencies({ bower: false });
+  public async install(): Promise<void> {
+    try {
+      if (!this.options.skipInstall) {
+        await this.spawnCommand("pnpm", ["i"]);
+      }
+    } catch (e) {
+      this.npmInstall();
+    }
   }
 }
