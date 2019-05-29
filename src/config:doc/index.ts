@@ -4,12 +4,15 @@ import Base from "../common/base-generator";
 
 export interface Props {
   name: string;
+  className: string;
+  description: string;
   license: string;
   author: string;
   email: string;
   cYear: string;
   docDir: string;
   examplesDir: string;
+  builtExamplesDir: string;
 }
 
 export default class Doc extends Base {
