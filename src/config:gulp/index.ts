@@ -132,6 +132,7 @@ export default class Gulp extends Base {
     this.addDevDep("gulp-rename");
     this.addDevDep("gulp-replace");
     this.addDevDep("gulp-wrap");
+    this.addDevDep("ejs"); // required by consolidate used by gulp-wrap
     this.addDevDep("markdown-include");
 
     if (typescript) {
