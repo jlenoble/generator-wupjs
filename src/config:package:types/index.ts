@@ -32,7 +32,7 @@ export default class PackageTypes extends Base {
         (this.getProp(this.generatorName) as Path) ||
         path.join(
           this.getProp("config:paths:lib") as Path,
-          `${this.getProp("config:package:name")}.d.ts`
+          `${this.getProp("config:package:name") || "index"}.d.ts`
         );
 
       const prompts = [

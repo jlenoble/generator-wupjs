@@ -30,7 +30,10 @@ export default class PackageMain extends Base {
     if (this.mustPrompt) {
       const main: Path =
         (this.getProp(this.generatorName) as Path) ||
-        path.join(this.getProp("config:paths:lib") as Path, "index.js");
+        path.join(
+          this.getProp("config:paths:lib") as Path,
+          `${this.getProp("config:package:name") || "index"}.js`
+        );
 
       const prompts = [
         {
