@@ -21,5 +21,10 @@ function getFromPackageJson(gen: BaseGenerator): string {
 }
 
 export function getAuthorName(gen: BaseGenerator): string {
-  return getFromPackageJson(gen);
+  return (
+    getFromPackageJson(gen) ||
+    // If the default author name can be found by "config", then the following
+    // will return it
+    (gen.getProp("config:author:name") as string)
+  );
 }
