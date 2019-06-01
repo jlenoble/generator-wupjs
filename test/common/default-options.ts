@@ -1,13 +1,19 @@
-type Options = Wup.Options;
+interface StringOptions {
+  [k: string]: string | string[];
+}
 
-export const configFiles: Options = {
+interface BoolOptions {
+  [k: string]: true;
+}
+
+export const configFiles: BoolOptions = {
   ".babelrc": true,
   ".eslintrc": true,
   ".gitignore": true,
   "markdown.json": true
 };
 
-export const gulpFiles: Options = {
+export const gulpFiles: BoolOptions = {
   "gulpfile.babel.js": true,
   "gulp/build.js": true,
   "gulp/clean.js": true,
@@ -22,14 +28,28 @@ export const gulpFiles: Options = {
   "gulp/prepublish.js": true
 };
 
-export const docFiles: Options = {
+export const docFiles: BoolOptions = {
   "docs/index.md": true,
   "docs/usage.md": true,
   "docs/examples/usage.test.js": true,
   "docs/license.md": true
 };
 
-export const prompt: Options = {
+export const files = (ext: string, ext2?: string): BoolOptions => {
+  return !ext2
+    ? {
+        [`src/awesome-app.${ext}`]: true,
+        [`test/awesome-app.test.${ext}`]: true
+      }
+    : {
+        [`src/${ext}/awesome-app.${ext}`]: true,
+        [`test/${ext}/awesome-app.test.${ext}`]: true,
+        [`src/${ext2}/awesome-app.${ext2}`]: true,
+        [`test/${ext2}/awesome-app.test.${ext2}`]: true
+      };
+};
+
+export const prompt: StringOptions = {
   "config:author:name": "Me Me",
   "config:author:email": "me@example.com",
   "config:license": ["MIT"],

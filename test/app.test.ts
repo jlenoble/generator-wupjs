@@ -3,6 +3,7 @@ import {
   configFiles,
   gulpFiles,
   docFiles,
+  files,
   prompt
 } from "./common/default-options";
 
@@ -14,8 +15,7 @@ testGenerator({
     ...configFiles,
     ...gulpFiles,
     ...docFiles,
-    "src/index.js": true,
-    "test/index.test.js": true
+    ...files("js")
   }
 });
 
@@ -32,8 +32,7 @@ testGenerator({
     ...gulpFiles,
     "gulp/types.js": true,
     ...docFiles,
-    "src/index.ts": true,
-    "test/index.test.ts": true
+    ...files("ts")
   }
 });
 
@@ -49,8 +48,7 @@ testGenerator({
     ...gulpFiles,
     ...docFiles,
     "gulp/notebooks.js": true,
-    "src/index.js": true,
-    "test/index.test.js": true
+    ...files("js")
   }
 });
 
@@ -66,8 +64,7 @@ testGenerator({
     ...gulpFiles,
     ...docFiles,
     "gulp/parse.js": true,
-    "src/index.js": true,
-    "test/index.test.js": true,
+    ...files("js"),
     "src/static/antlr4/MyListener.js": true,
     "src/static/antlr4/grammars/MyGrammar.g4": true,
     "src/static/data/data.txt": true
@@ -93,8 +90,7 @@ testGenerator({
     ...gulpFiles,
     ...docFiles,
     "gulp/monorepo.js": true,
-    "src/index.js": true,
-    "test/index.test.js": true
+    ...files("js")
   }
 });
 
@@ -112,9 +108,6 @@ testGenerator({
     ...gulpFiles,
     "gulp/types.js": true,
     ...docFiles,
-    "src/js/index.js": true,
-    "test/js/index.test.js": true,
-    "src/ts/index.ts": true,
-    "test/ts/index.test.ts": true
+    ...files("js", "ts")
   }
 });

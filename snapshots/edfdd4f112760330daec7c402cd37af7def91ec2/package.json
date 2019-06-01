@@ -8,7 +8,7 @@
     "quux"
   ],
   "homepage": "https://github.com/me-me/awesome-app#readme",
-  "main": "lib/index.js",
+  "main": "lib/awesome-app.js",
   "files": [
     "lib"
   ],

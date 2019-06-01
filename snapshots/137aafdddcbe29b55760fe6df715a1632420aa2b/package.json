@@ -8,7 +8,7 @@
     "quux"
   ],
   "homepage": "https://github.com/me-me/awesome-app#readme",
-  "main": "lib/index.js",
+  "main": "lib/awesome-app.js",
   "files": [
     "lib"
   ],
@@ -80,7 +80,7 @@
     "plumb-gulp": "^0.2.2",
     "prettier": "^1.17.1",
     "source-map-support": "^0.5.12",
-    "typescript": "^3.4.5"
+    "typescript": "^3.5.1"
   },
   "peerDependencies": {},
   "optionalDependencies": {}
