@@ -137,6 +137,7 @@ export default class Gulp extends Base {
 
     if (typescript) {
       this.addDevDep("gulp-typescript");
+      this.addDevDep("@types/node");
       gulpIncludes.push("types");
     }
 
