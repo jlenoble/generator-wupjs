@@ -5,7 +5,7 @@ import cached from "gulp-cached";
 import newer from "gulp-newer";
 
 const buildDir = "build";
-const srcGlob = ["src/**/*.ts", "test/**/*.ts"];
+const srcGlob = ["src/**/*.ts", "test/**/*.ts", "src/**/*.js", "test/**/*.js"];
 
 export const handleBuild = () => {
   return src(srcGlob, {

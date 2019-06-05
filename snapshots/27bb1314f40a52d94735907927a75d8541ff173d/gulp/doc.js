@@ -7,7 +7,7 @@ import wrap from "gulp-wrap";
 import babel from "gulp-babel";
 
 const docConf = "markdown.json";
-const examplesGlob = ["docs/examples/**/*.ts"];
+const examplesGlob = ["docs/examples/**/*.ts", "docs/examples/**/*.js"];
 const buildDir = "build";
 
 md.includePattern = /^#include\s"\/?((\w|-)+\/)*(\w|-)+(\.test)?\.md"/gm;

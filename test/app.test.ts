@@ -32,7 +32,7 @@ testGenerator({
     ...gulpFiles,
     "gulp/types.js": true,
     ...docFiles,
-    ...files("ts")
+    ...files("js", "ts")
   }
 });
 

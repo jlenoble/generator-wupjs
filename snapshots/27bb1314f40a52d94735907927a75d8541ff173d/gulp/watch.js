@@ -5,7 +5,7 @@ import { handleBuild as build } from "./build";
 import { handleTest as test } from "./test";
 
 const buildDir = "build";
-const srcGlob = ["src/**/*.ts", "test/**/*.ts"];
+const srcGlob = ["src/**/*.ts", "test/**/*.ts", "src/**/*.js", "test/**/*.js"];
 const buildGlob = ["build/src/**/*.js", "build/test/**/*.js"];
 
 export const startWatching = done => {

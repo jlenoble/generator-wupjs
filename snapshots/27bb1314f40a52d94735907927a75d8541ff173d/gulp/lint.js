@@ -1,7 +1,7 @@
 import gulp from "gulp";
 import eslint from "gulp-eslint";
 
-const srcGlob = ["src/**/*.ts", "test/**/*.ts"];
+const srcGlob = ["src/**/*.ts", "test/**/*.ts", "src/**/*.js", "test/**/*.js"];
 
 export const handleLint = () => {
   return gulp
