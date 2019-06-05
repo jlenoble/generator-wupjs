@@ -100,17 +100,24 @@ export default class Languages extends Base {
         previousChoices.delete("ts");
       }
 
-      prompts = [
-        {
-          type: "checkbox",
-          name: this.generatorName + ":extensions",
-          choices: Array.from(new Set([defaultChoice, ...choices])),
-          message: "Pick the extensions you'll use",
-          default: Array.from(new Set([...previousChoices, defaultChoice]))
-        }
-      ];
+      if (choices.size === 1 && Array.from(choices)[0] === "js") {
+        this.addProp(this.generatorName + ":extensions", Array.from(choices));
+      } else {
+        prompts = [
+          {
+            type: "checkbox",
+            name: this.generatorName + ":extensions",
+            choices: Array.from(new Set([defaultChoice, ...choices])),
+            message: "Pick the extensions you'll use",
+            filter: (choices: string[]): string[] => {
+              return Array.from(new Set(choices).add("js"));
+            },
+            default: Array.from(new Set([...previousChoices, defaultChoice]))
+          }
+        ];
 
-      this.addProp(await this.prompt(prompts));
+        this.addProp(await this.prompt(prompts));
+      }
 
       this.config.set(
         "typescript",
