@@ -152,6 +152,8 @@ export default class Gulp extends Base {
 
     if (monorepo) {
       gulpIncludes.push("monorepo");
+      this.addDevDep("child-process-data");
+      this.addDevDep("child_process");
     }
 
     const srcGlobs: string[] = [];
