@@ -51,6 +51,7 @@ export default class Eslint extends Base {
 
       this.addDevDep("@typescript-eslint/parser");
       this.addDevDep("@typescript-eslint/eslint-plugin");
+      this.addDevDep("@typescript-eslint/typescript-estree");
 
       _extends.push(
         "plugin:@typescript-eslint/recommended",
