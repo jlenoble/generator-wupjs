@@ -124,7 +124,7 @@ export default class ConfigDependencies extends Base {
   }
 
   public _isUserDep(dep: string): boolean {
-    return /^file:.+$/.test(dep);
+    return /^(file|link):.+$/.test(dep);
   }
 
   public _isPeerDep(version: string): boolean {
