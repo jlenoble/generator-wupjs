@@ -134,6 +134,8 @@ export default class Gulp extends Base {
     this.addDevDep("gulp-wrap");
     this.addDevDep("ejs"); // required by consolidate used by gulp-wrap
     this.addDevDep("markdown-include");
+    this.addDevDep("polypath");
+    this.addDevDep("stream-to-promise");
 
     if (typescript) {
       this.addDevDep("gulp-typescript");
