@@ -16,7 +16,7 @@ export const handleDistTest = async () => {
   }
 
   await streamToPromise(
-    src(testGlob, { read: false }).pipe(
+    src(files, { read: false }).pipe(
       mocha({
         reporter: "mochawesome"
       })
