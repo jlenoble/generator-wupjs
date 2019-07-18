@@ -1,6 +1,7 @@
 import path from "path";
 import Base from "../common/base-generator";
 import ConfigDependencies from "../config:dependencies";
+import { validate } from "../config:paths";
 
 type Path = Wup.Path;
 
@@ -33,6 +34,7 @@ export interface Props {
 
   ipynbGlob: string;
 
+  hasGulpfilesDir: boolean;
   typescript: boolean;
   jupyter: boolean;
   antlr4: boolean;
@@ -74,6 +76,57 @@ export default class Gulp extends Base {
     );
   }
 
+  public initializing(): void {
+    this.addProp(
+      this.generatorName + ":hasGulpfilesDir",
+      this.config.get("hasGulpfilesDir") || false
+    );
+
+    this.addProp(
+      "config:paths:gulpfiles",
+      this.config.get("gulpfilesDir") ||
+        path.join(this.getProp("config:paths:test") as Path, "gulpfiles")
+    );
+  }
+
+  public async prompting(): Promise<void> {
+    if (this.mustPrompt) {
+      let prompts: Wup.Options[] = [
+        {
+          type: "confirm",
+          name: this.generatorName + ":hasGulpfilesDir",
+          message: "Do you need a gulpfiles dir?",
+          default: this.getProp(
+            this.generatorName + ":hasGulpfilesDir"
+          ) as boolean
+        }
+      ];
+
+      this.addProp(await this.prompt(prompts));
+
+      this.config.set(
+        "hasGulpfilesDir",
+        this.getProp(this.generatorName + ":hasGulpfilesDir")
+      );
+
+      if (this.getProp(this.generatorName + ":hasGulpfilesDir")) {
+        prompts = [
+          {
+            type: "input",
+            name: "config:paths:gulpfiles",
+            message: "Gulpfiles directory:",
+            default: this.getProp("config:paths:gulpfiles") as Path,
+            validate
+          }
+        ];
+
+        this.addProp(await this.prompt(prompts));
+
+        this.config.set("gulpfilesDir", this.getProp("config:paths:gulpfiles"));
+      }
+    }
+  }
+
   public configuring(): void {
     const packageName = this.getProp("config:package:name") as string;
 
@@ -97,6 +150,11 @@ export default class Gulp extends Base {
     const testDir = this.getProp("config:paths:test") as Path;
     const gulpDir = this.getProp("config:paths:gulp") as Path;
     const examplesDir = this.getProp("config:paths:examples") as Path;
+
+    const hasGulpfilesDir = this.getProp(
+      this.generatorName + ":hasGulpfilesDir"
+    ) as boolean;
+    const gulpfilesDir = this.getProp("config:paths:gulpfiles") as Path;
 
     const grammarDir = this.getProp("config:paths:grammar") as Path;
     const dataDir = this.getProp("config:paths:data") as Path;
@@ -137,6 +195,10 @@ export default class Gulp extends Base {
     this.addDevDep("polypath");
     this.addDevDep("stream-to-promise");
 
+    if (hasGulpfilesDir) {
+      gulpIncludes.push("copy-gulpfiles");
+    }
+
     if (typescript) {
       this.addDevDep("gulp-typescript");
       this.addDevDep("@types/node");
@@ -161,6 +223,7 @@ export default class Gulp extends Base {
     const srcGlobs: string[] = [];
     const libGlobs: string[] = [];
     const examplesGlobs: string[] = [];
+    const gulpfilesGlobs: string[] = [];
 
     extensions.forEach(
       (ext): void => {
@@ -168,6 +231,7 @@ export default class Gulp extends Base {
         srcGlobs.push(path.join(testDir, "**/*." + ext));
         libGlobs.push(path.join(srcDir, "**/*." + ext));
         examplesGlobs.push(path.join(examplesDir, "**/*." + ext));
+        gulpfilesGlobs.push(path.join(gulpfilesDir, "**/*." + ext));
       }
     );
 
@@ -184,6 +248,7 @@ export default class Gulp extends Base {
     const srcGlob = JSON.stringify(srcGlobs, undefined, 2);
     const libGlob = JSON.stringify(libGlobs, undefined, 2);
     const examplesGlob = JSON.stringify(examplesGlobs, undefined, 2);
+    const gulpfilesGlob = JSON.stringify(gulpfilesGlobs, undefined, 2);
 
     const testGlob = JSON.stringify(
       [path.join(buildDir, testDir, "**/*.test.js")],
@@ -254,6 +319,7 @@ export default class Gulp extends Base {
       distTestGlob,
       ipynbGlob,
 
+      hasGulpfilesDir,
       typescript,
       jupyter,
       antlr4,
@@ -309,6 +375,12 @@ export default class Gulp extends Base {
         dataGlob,
         parserTokenGlob,
         parserSrcGlob
+      });
+    }
+
+    if (hasGulpfilesDir) {
+      Object.assign(this.props, {
+        gulpfilesGlob
       });
     }
 

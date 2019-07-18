@@ -1,10 +1,11 @@
-import { src, dest, lastRun, task<% if (antlr4 && jupyter) { %>, parallel<% } %><% if (jupyter || antlr4) { %>, series<% } %> } from "gulp";
+import { src, dest, lastRun, task<% if ((antlr4 && jupyter) || hasGulpfilesDir) { %>, parallel<% } %><% if (jupyter || antlr4) { %>, series<% } %> } from "gulp";
 import babel from "gulp-babel";
 import sourcemaps from "gulp-sourcemaps";
 import cached from "gulp-cached";
 import newer from "gulp-newer";<% if (antlr4) { %>
 import { handleParse } from "./parse";<% } %><% if (jupyter) { %>
-import { convertNotebooks } from "./notebooks";<% } %>
+import { convertNotebooks } from "./notebooks";<% } %><% if (hasGulpfilesDir) { %>
+import "./copy-gulpfiles"<% } %>
 
 const buildDir = "<%- buildDir %>";
 const srcGlob = <%- srcGlob %>;
@@ -30,4 +31,8 @@ const prebuild = handleParse;<% } %><% if (!antlr4 && !jupyter) { %>
 const build = handleBuild;<% } else { %>
 const build = series(prebuild, handleBuild);<% } %>
 
+<% if (hasGulpfilesDir) { %>
+task("build", parallel(build, "copy:gulpfiles"));
+<% }  else { %>
 task("build", build);
+<% } %>
