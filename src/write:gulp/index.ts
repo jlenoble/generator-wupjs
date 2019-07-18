@@ -47,7 +47,7 @@ export default class WritingGulp extends Base {
       );
   }
 
-  public writing(): void {
+  public async writing(): Promise<void> {
     if (!this.mustWrite()) {
       return;
     }
@@ -77,5 +77,26 @@ export default class WritingGulp extends Base {
         );
       }
     );
+
+    if (this.getProp("config:gulp:hasGulpfilesDir")) {
+      const gulpfilesDir: Path = this.getProp("config:paths:gulpfiles") as Path;
+
+      let found = true;
+
+      try {
+        await fs.stat(this.destinationPath(gulpfilesDir));
+      } catch (e) {
+        found = false;
+      }
+
+      if (!found) {
+        prettyWrite(
+          this,
+          props,
+          this.templatePath("gulpfile-example.ejs"),
+          this.destinationPath(path.join(gulpfilesDir, "gulpfile.js"))
+        );
+      }
+    }
   }
 }
