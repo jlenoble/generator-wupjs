@@ -12,7 +12,6 @@
   "files": [
     "lib"
   ],
-  "types": "",
   "bugs": {
     "url": "https://github.com/me-me/awesome-app/issues",
     "email": "me@example.com"
@@ -29,7 +28,6 @@
   "engines": {
     "node": ">=10.9.0"
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.5.4",
     "@babel/preset-env": "^7.5.4",
@@ -63,7 +61,5 @@
     "prettier": "^1.18.2",
     "source-map-support": "^0.5.12",
     "stream-to-promise": "^2.2.0"
-  },
-  "peerDependencies": {},
-  "optionalDependencies": {}
+  }
 }

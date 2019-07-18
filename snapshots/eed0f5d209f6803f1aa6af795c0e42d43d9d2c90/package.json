@@ -12,7 +12,6 @@
   "files": [
     "lib"
   ],
-  "types": "",
   "bugs": {
     "url": "https://github.com/me-me/awesome-app/issues",
     "email": "me@example.com"
@@ -67,7 +66,5 @@
     "source-map-support": "^0.5.12",
     "stream-to-promise": "^2.2.0",
     "through2": "^3.0.1"
-  },
-  "peerDependencies": {},
-  "optionalDependencies": {}
+  }
 }

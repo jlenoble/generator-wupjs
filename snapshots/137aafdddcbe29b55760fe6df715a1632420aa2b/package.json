@@ -29,7 +29,6 @@
   "engines": {
     "node": ">=10.9.0"
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.5.4",
     "@babel/plugin-proposal-class-properties": "^7.5.0",
@@ -86,7 +85,5 @@
     "source-map-support": "^0.5.12",
     "stream-to-promise": "^2.2.0",
     "typescript": "^3.5.3"
-  },
-  "peerDependencies": {},
-  "optionalDependencies": {}
+  }
 }
