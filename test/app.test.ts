@@ -95,6 +95,24 @@ testGenerator({
 });
 
 testGenerator({
+  title: "Testing main generator: gulfilesDir",
+  command: "yo wupjs",
+  prompt: {
+    ...prompt,
+    "config:gulp:hasGulpfilesDir": true,
+    "config:paths:gulpfiles": "gulpfiles"
+  },
+  assertContent: {
+    ...configFiles,
+    ...gulpFiles,
+    ...docFiles,
+    "gulp/copy-gulpfiles.js": true,
+    "gulpfiles/gulpfile.js": true,
+    ...files("js")
+  }
+});
+
+testGenerator({
   title: "Testing main generator: with both Javascript and Typescript",
   command: "yo wupjs",
   prompt: {
