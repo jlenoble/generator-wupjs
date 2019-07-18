@@ -39,6 +39,26 @@ export default class PackageJson extends Base {
       engines,
       ...dependencies
     };
+
+    Object.keys(this.props).forEach(
+      (key): void => {
+        if (!this.props) {
+          return;
+        }
+
+        // @ts-ignore
+        const a = this.props[key];
+
+        if (
+          a === "" ||
+          (Array.isArray(a) && a.length === 0) ||
+          (typeof a === "object" && Object.keys(a).length === 0)
+        ) {
+          // @ts-ignore
+          delete this.props[key];
+        }
+      }
+    );
   }
 
   public writing(): void {
