@@ -49,7 +49,7 @@ export default class Eslint extends Base {
     if (this.getProp("config:languages:typescript")) {
       parser = "@typescript-eslint/parser";
 
-      this.addDevDep("@typescript-eslint/parser");
+      this.addDevDep(parser);
       this.addDevDep("@typescript-eslint/eslint-plugin");
       this.addDevDep("@typescript-eslint/typescript-estree");
 
