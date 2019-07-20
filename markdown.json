@@ -1,7 +1,0 @@
-{
-  "build": "README.md",
-  "files": ["docs/index.md"],
-  "tableOfContents": {
-    "heading": "# generator-wupjs\n\nA custom Yeoman generator to reduce boiler-plate in JS dev"
-  }
-}
