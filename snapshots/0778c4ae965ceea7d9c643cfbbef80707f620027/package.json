@@ -29,14 +29,13 @@
     "node": ">=10.9.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.4",
-    "@babel/preset-env": "^7.5.4",
-    "@babel/register": "^7.4.4",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/register": "^7.5.5",
     "autoreload-gulp": "^0.4.1",
     "babel-plugin-add-module-exports": "^1.0.2",
     "chai": "^4.2.0",
     "child-process-data": "^0.7.0",
-    "child_process": "^1.0.2",
     "del": "^5.0.0",
     "ejs": "^2.6.2",
     "eslint": "^6.0.1",
