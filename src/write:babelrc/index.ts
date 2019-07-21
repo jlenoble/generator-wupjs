@@ -1,6 +1,5 @@
 import Base from "../common/base-generator";
-
-import { Deps } from "../config:config:dependencies";
+import { BabelConfig } from "organon";
 
 interface Props {
   presets: any[];
@@ -20,65 +19,12 @@ export default class BabelRc extends Base {
     );
   }
 
-  protected _handlePresetEnv(presets: any[]): void {
-    const targets: Wup.Options = {};
-
-    if (this.getProp("config:targets:server")) {
-      targets.node = "current";
-    }
-
-    if (Object.keys(targets).length) {
-      presets.push([
-        "@babel/preset-env",
-        {
-          targets
-        }
-      ]);
-    } else {
-      presets.push("@babel/preset-env");
-    }
-  }
-
   public async configure(): Promise<void> {
-    const presets: any[] = [];
-    const plugins: any[] = [];
-
-    const devDependencies = (this.getProp("config:dependencies") as Deps)
-      .devDependencies;
-
-    Object.keys(devDependencies).forEach(
-      (dep): void => {
-        switch (dep) {
-          case "@babel/preset-env":
-            this._handlePresetEnv(presets);
-            break;
-
-          case "@babel/preset-typescript":
-            presets.push([dep, { allExtensions: true }]);
-            break;
-
-          case "@babel/plugin-proposal-decorators":
-            plugins.push([dep, { decoratorsBeforeExport: true }]);
-            break;
-
-          default:
-            if (dep.includes("@babel/preset-")) {
-              presets.push(dep);
-            }
-            if (
-              dep.includes("@babel/plugin-") ||
-              dep.includes("babel-plugin-")
-            ) {
-              plugins.push(dep);
-            }
-        }
-      }
-    );
-
-    this.props = {
-      presets,
-      plugins
-    };
+    this.props = new BabelConfig({
+      babel: true,
+      node: this.getProp("config:targets:server") ? "current" : false,
+      typescript: !!this.getProp("config:languages:typescript")
+    });
   }
 
   public writing(): void {
