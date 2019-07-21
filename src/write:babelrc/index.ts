@@ -20,11 +20,19 @@ export default class BabelRc extends Base {
   }
 
   public async configure(): Promise<void> {
-    this.props = new BabelConfig({
+    const babel = new BabelConfig({
       babel: true,
-      node: this.getProp("config:targets:server") ? "current" : false,
+      node: (this.config.get("prodModuleTypes") || []).includes("CommonJS")
+        ? "current"
+        : false,
       typescript: !!this.getProp("config:languages:typescript")
     });
+
+    babel.deps.forEach((dep): void => {
+      this.addDevDep(dep);
+    });
+
+    this.props = babel;
   }
 
   public writing(): void {
