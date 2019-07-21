@@ -80,20 +80,17 @@ export default class BaseGenerator extends Generator
       (config as Config).linkGens(genName, generatorName);
     }
 
-    this.on(
-      "dependsOn",
-      (name: GenName): void => {
-        (config as Config).linkGens(name, this.generatorName);
-        const calledGen = BaseGenerator.calledGenerator as BaseGenerator;
-        const gen = this.getGen(name) as BaseGenerator;
+    this.on("dependsOn", (name: GenName): void => {
+      (config as Config).linkGens(name, this.generatorName);
+      const calledGen = BaseGenerator.calledGenerator as BaseGenerator;
+      const gen = this.getGen(name) as BaseGenerator;
 
-        gen.destinationRoot(calledGen.destinationRoot());
+      gen.destinationRoot(calledGen.destinationRoot());
 
-        // @ts-ignore
-        calledGen._composedWith.length = 0;
-        calledGen.composeAll();
-      }
-    );
+      // @ts-ignore
+      calledGen._composedWith.length = 0;
+      calledGen.composeAll();
+    });
 
     this.composeAll();
   }
@@ -125,7 +122,7 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
     );
   }
 
-  public addDep(name: string, version: string = "*"): void {
+  public addDep(name: string | Wup.Dependencies, version: string = "*"): void {
     // Make every subgen able to add deps on the fly
     const gen = this.getGen("config:dependencies");
 
@@ -136,10 +133,19 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
       return;
     }
 
-    gen._addDep(name, version);
+    if (typeof name === "object") {
+      Object.entries(name).forEach(([key, val]): void => {
+        gen._addDep(key, val);
+      });
+    } else {
+      gen._addDep(name, version);
+    }
   }
 
-  public addDevDep(name: string, version: string = "*"): void {
+  public addDevDep(
+    name: string | Wup.Dependencies,
+    version: string = "*"
+  ): void {
     // Make every subgen able to add dev deps on the fly
     const gen = this.getGen("config:dependencies");
 
@@ -150,10 +156,19 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
       return;
     }
 
-    gen._addDevDep(name, version);
+    if (typeof name === "object") {
+      Object.entries(name).forEach(([key, val]): void => {
+        gen._addDevDep(key, val);
+      });
+    } else {
+      gen._addDevDep(name, version);
+    }
   }
 
-  public addPeerDep(name: string, version: string = "*"): void {
+  public addPeerDep(
+    name: string | Wup.Dependencies,
+    version: string = "*"
+  ): void {
     // Make every subgen able to add peer deps on the fly
     const gen = this.getGen("config:dependencies");
 
@@ -164,7 +179,13 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
       return;
     }
 
-    gen._addPeerDep(name, version);
+    if (typeof name === "object") {
+      Object.entries(name).forEach(([key, val]): void => {
+        gen._addPeerDep(key, val);
+      });
+    } else {
+      gen._addPeerDep(name, version);
+    }
   }
 
   public addProp(name: PropName | Props, value?: PropValue): this {
@@ -178,11 +199,9 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
       throw new Error(`Cannot assign value ${value} to key ${name}`);
     }
 
-    Object.keys(props).forEach(
-      (name): void => {
-        (config as Config).addProp(name, props[name]);
-      }
-    );
+    Object.keys(props).forEach((name): void => {
+      (config as Config).addProp(name, props[name]);
+    });
 
     return this;
   }
@@ -259,20 +278,16 @@ redundant prompting.
       throw new Error(`Cannot assign value ${value} to key ${name}`);
     }
 
-    Object.keys(props).forEach(
-      (name): void => {
-        (config as Config).setProp(name, props[name]);
-      }
-    );
+    Object.keys(props).forEach((name): void => {
+      (config as Config).setProp(name, props[name]);
+    });
 
     return this;
   }
 
   public mustWrite(): boolean {
-    return this.options.dependsOn.some(
-      (name: GenName): boolean => {
-        return (this.getGen(name) as BaseGenerator).mustPrompt;
-      }
-    );
+    return this.options.dependsOn.some((name: GenName): boolean => {
+      return (this.getGen(name) as BaseGenerator).mustPrompt;
+    });
   }
 }
