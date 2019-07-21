@@ -1,19 +1,6 @@
 import Base from "../common/base-generator";
 import ConfigDependencies from "../config:dependencies";
-
-type Options = Wup.Options;
-
-export interface Props {
-  parser?: string;
-  parserOptions: {
-    ecmaVersion: number;
-    sourceType: string;
-    ecmaFeatures: Options;
-  };
-  plugins: string[];
-  extends: string[];
-  rules: Options;
-}
+import { EslintConfig } from "organon";
 
 export default class Eslint extends Base {
   public constructor(args: string | string[], options: {}) {
@@ -28,50 +15,17 @@ export default class Eslint extends Base {
   }
 
   public async configure(): Promise<void> {
-    let parser: string | undefined;
-    const ecmaVersion: number = new Date().getFullYear();
-    const ecmaFeatures: Wup.Options = {};
-    const esLintPlugins: string[] = [];
-    const _extends: string[] = ["google"];
-    const esLintRules: Wup.Options = {
-      "require-jsdoc": ["off"],
-      "prefer-arrow-callback": ["error"]
-    };
+    const eslint = new EslintConfig({
+      eslint: true,
+      prettier: true,
+      typescript: !!this.getProp("config:languages:typescript")
+    });
 
-    this.addDevDep("eslint");
-    this.addDevDep("eslint-config-google");
-    this.addDevDep("prettier");
-    this.addDevDep("eslint-config-prettier");
-    this.addDevDep("eslint-plugin-prettier");
+    eslint.deps.forEach((dep): void => {
+      this.addDevDep(dep);
+    });
 
-    _extends.push("plugin:prettier/recommended");
-
-    if (this.getProp("config:languages:typescript")) {
-      parser = "@typescript-eslint/parser";
-
-      this.addDevDep(parser);
-      this.addDevDep("@typescript-eslint/eslint-plugin");
-      this.addDevDep("@typescript-eslint/typescript-estree");
-
-      _extends.push(
-        "plugin:@typescript-eslint/recommended",
-        "prettier/@typescript-eslint"
-      );
-    }
-
-    const props: Props = {
-      parser,
-      parserOptions: {
-        ecmaVersion,
-        sourceType: "module",
-        ecmaFeatures
-      },
-      plugins: esLintPlugins,
-      extends: _extends,
-      rules: esLintRules
-    };
-
-    this.addProp(this.generatorName, props);
+    this.addProp(this.generatorName, eslint);
   }
 
   public async afterConfiguring(): Promise<void> {
