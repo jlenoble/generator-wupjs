@@ -2,6 +2,7 @@ import path from "path";
 import Base from "../common/base-generator";
 import ConfigDependencies from "../config:dependencies";
 import { validate } from "../config:paths";
+import { GulpConfig } from "organon";
 
 type Path = Wup.Path;
 
@@ -128,6 +129,16 @@ export default class Gulp extends Base {
   }
 
   public configuring(): void {
+    const gulp = new GulpConfig({
+      babel: true,
+      eslint: true,
+      gulp: true,
+      mocha: true,
+      typescript: !!this.getProp("config:languages:typescript")
+    });
+
+    this.addDevDep(gulp.dependencies);
+
     const packageName = this.getProp("config:package:name") as string;
 
     const gulpIncludes = [
@@ -180,13 +191,7 @@ export default class Gulp extends Base {
     this.addDevDep("gulp-sourcemaps");
     this.addDevDep("gulp-cached");
     this.addDevDep("gulp-newer");
-    this.addDevDep("gulp-eslint");
     this.addDevDep("del");
-    this.addDevDep("gulp-mocha");
-    this.addDevDep("mocha", "<6"); // Keep it thus until gulp-mocha is upgraded
-    this.addDevDep("source-map-support");
-    this.addDevDep("chai");
-    this.addDevDep("mochawesome");
     this.addDevDep("gulp-rename");
     this.addDevDep("gulp-replace");
     this.addDevDep("gulp-wrap");
@@ -224,15 +229,13 @@ export default class Gulp extends Base {
     const examplesGlobs: string[] = [];
     const gulpfilesGlobs: string[] = [];
 
-    extensions.forEach(
-      (ext): void => {
-        srcGlobs.push(path.join(srcDir, "**/*." + ext));
-        srcGlobs.push(path.join(testDir, "**/*." + ext));
-        libGlobs.push(path.join(srcDir, "**/*." + ext));
-        examplesGlobs.push(path.join(examplesDir, "**/*." + ext));
-        gulpfilesGlobs.push(path.join(gulpfilesDir, "**/*." + ext));
-      }
-    );
+    extensions.forEach((ext): void => {
+      srcGlobs.push(path.join(srcDir, "**/*." + ext));
+      srcGlobs.push(path.join(testDir, "**/*." + ext));
+      libGlobs.push(path.join(srcDir, "**/*." + ext));
+      examplesGlobs.push(path.join(examplesDir, "**/*." + ext));
+      gulpfilesGlobs.push(path.join(gulpfilesDir, "**/*." + ext));
+    });
 
     const buildGlobs = [
       path.join(buildDir, srcDir, "**/*.js"),
@@ -284,11 +287,9 @@ export default class Gulp extends Base {
       ];
       packageGlobs = { ...(this.getProp("config:monorepo:deps") as object) };
 
-      Object.keys(packageGlobs).forEach(
-        (key): void => {
-          packageGlobs[key] = JSON.stringify(packageGlobs[key], undefined, 2);
-        }
-      );
+      Object.keys(packageGlobs).forEach((key): void => {
+        packageGlobs[key] = JSON.stringify(packageGlobs[key], undefined, 2);
+      });
     }
 
     const docConfigFile = this.getProp("config:doc:config") as string;
