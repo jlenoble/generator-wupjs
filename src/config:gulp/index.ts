@@ -186,20 +186,6 @@ export default class Gulp extends Base {
     const visitor = this.getProp("config:parser:visitor") as string;
     const parsers = this.getProp("config:parser:parsers") as string[];
 
-    this.addDevDep("plumb-gulp");
-    this.addDevDep("autoreload-gulp");
-    this.addDevDep("gulp-sourcemaps");
-    this.addDevDep("gulp-cached");
-    this.addDevDep("gulp-newer");
-    this.addDevDep("del");
-    this.addDevDep("gulp-rename");
-    this.addDevDep("gulp-replace");
-    this.addDevDep("gulp-wrap");
-    this.addDevDep("ejs"); // required by consolidate used by gulp-wrap
-    this.addDevDep("markdown-include");
-    this.addDevDep("polypath");
-    this.addDevDep("stream-to-promise");
-
     if (hasGulpfilesDir) {
       gulpIncludes.push("copy-gulpfiles");
     }
