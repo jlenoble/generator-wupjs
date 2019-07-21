@@ -28,9 +28,7 @@ export default class BabelRc extends Base {
       typescript: !!this.getProp("config:languages:typescript")
     });
 
-    babel.deps.forEach((dep): void => {
-      this.addDevDep(dep);
-    });
+    this.addDevDep(babel.dependencies);
 
     this.props = babel;
   }

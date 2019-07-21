@@ -21,9 +21,7 @@ export default class Eslint extends Base {
       typescript: !!this.getProp("config:languages:typescript")
     });
 
-    eslint.deps.forEach((dep): void => {
-      this.addDevDep(dep);
-    });
+    this.addDevDep(eslint.dependencies);
 
     this.addProp(this.generatorName, eslint);
   }
