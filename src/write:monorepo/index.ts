@@ -1,8 +1,6 @@
 import fs from "fs-extra";
 import Base from "../common/base-generator";
 
-type Path = Wup.Path;
-
 export default class WritingMono extends Base {
   public constructor(args: string | string[], options: {}) {
     super(
@@ -14,12 +12,12 @@ export default class WritingMono extends Base {
     );
   }
 
-  public async writing(): void {
+  public async writing(): Promise<void> {
     if (!this.mustWrite() || !this.getProp("config:monorepo")) {
       return;
     }
 
-    const packagesDir = this.getProp("config:paths:packages");
+    const packagesDir = this.getProp("config:paths:packages") as string;
 
     try {
       await fs.stat(packagesDir);
