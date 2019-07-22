@@ -29,5 +29,18 @@
     ],
     "monorepo": false,
     "hasGulpfilesDir": false
+  },
+  "organon": {
+    "implicitDevDeps": [
+      "./src/app/index",
+      "./src/write:src/index",
+      "./src/config:gulp/index",
+      "./src/config:monorepo/index"
+    ],
+    "relocatedDevDeps": {
+      "test/common" : {
+        "../../../generators/common": "./src/common"
+      }
+    }
   }
 }
