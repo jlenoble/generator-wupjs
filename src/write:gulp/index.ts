@@ -17,10 +17,7 @@ export default class WritingGulp extends Base {
     );
   }
 
-  public _collectCustom(
-    dir: string,
-    stems: ReadonlyArray<string>
-  ): ReadonlyArray<string> {
+  public _collectCustom(dir: string, stems: string[]): string[] {
     const files = [];
 
     try {
@@ -35,16 +32,12 @@ export default class WritingGulp extends Base {
     } catch (e) {}
 
     return files
-      .map(
-        (file): string => {
-          return path.basename(file, ".js");
-        }
-      )
-      .filter(
-        (stem): boolean => {
-          return !stems.includes(stem);
-        }
-      );
+      .map((file): string => {
+        return path.basename(file, ".js");
+      })
+      .filter((stem): boolean => {
+        return !stems.includes(stem);
+      });
   }
 
   public async writing(): Promise<void> {
@@ -67,16 +60,14 @@ export default class WritingGulp extends Base {
       this.destinationPath("gulpfile.babel.js")
     );
 
-    props.gulpIncludes.forEach(
-      (include): void => {
-        prettyWrite(
-          this,
-          props,
-          this.templatePath(`${include}.ejs`),
-          this.destinationPath(path.join(gulpDir, `${include}.js`))
-        );
-      }
-    );
+    props.gulpIncludes.forEach((include): void => {
+      prettyWrite(
+        this,
+        props,
+        this.templatePath(`${include}.ejs`),
+        this.destinationPath(path.join(gulpDir, `${include}.js`))
+      );
+    });
 
     if (this.getProp("config:gulp:hasGulpfilesDir")) {
       const gulpfilesDir: Path = this.getProp("config:paths:gulpfiles") as Path;
