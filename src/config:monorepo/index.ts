@@ -66,7 +66,7 @@ export default class Mono extends Base {
           type: "confirm",
           name: this.generatorName,
           message: "Will this be a monorepository ?",
-          default: this.getProp(this.generatorName)
+          default: this.getProp(this.generatorName) as boolean
         }
       ];
 
@@ -134,44 +134,39 @@ export default class Mono extends Base {
       const activePackages =
         (this.getProp(this.generatorName + ":packages") as string[]) || [];
       const active: string[] = [];
-      const deps: { [k: string]: string } = {};
+      const deps: { [k: string]: string[] } = {};
 
-      activePackages.forEach(
-        (pack): void => {
-          const packageDir = path.join(packagesDir, pack);
-          const filename = getMain(this, packageDir);
+      activePackages.forEach((pack): void => {
+        const packageDir = path.join(packagesDir, pack);
+        const filename = getMain(this, packageDir);
 
-          const tree = dependencyTree({
-            filename,
-            directory: packageDir,
-            filter: (p): void => {
-              return !!getPackage(p, packageDir, activePackages);
-            }
-          });
-
-          const dependencies =
-            Object.keys(tree).map(
-              (p): string => {
-                return Object.keys(tree[p])
-                  .map((p): string => getPackage(p, packageDir, activePackages))
-                  .map(
-                    (pck): string =>
-                      path.join(
-                        packagesDir,
-                        pck,
-                        "mochawesome-report/mochawesome.json"
-                      )
-                  );
-              }
-            )[0] || [];
-
-          if (dependencies.length) {
-            const pck = `${path.join(packagesDir, pack)}`;
-            active.push(pck);
-            deps[pck] = dependencies;
+        const tree = dependencyTree({
+          filename,
+          directory: packageDir,
+          filter: (p): boolean => {
+            return !!getPackage(p, packageDir, activePackages);
           }
+        });
+
+        const dependencies =
+          Object.keys(tree).map((p): string[] => {
+            return Object.keys(tree[p])
+              .map((p): string => getPackage(p, packageDir, activePackages))
+              .map((pck): string =>
+                path.join(
+                  packagesDir,
+                  pck,
+                  "mochawesome-report/mochawesome.json"
+                )
+              );
+          })[0] || [];
+
+        if (dependencies.length) {
+          const pck = `${path.join(packagesDir, pack)}`;
+          active.push(pck);
+          deps[pck] = dependencies;
         }
-      );
+      });
 
       this.addProp("config:monorepo:active", active);
       this.addProp("config:monorepo:deps", deps);
