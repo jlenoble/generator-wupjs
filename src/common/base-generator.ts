@@ -18,6 +18,10 @@ export default class BaseGenerator extends Generator
   public readonly generatorName: GenName;
   protected mustPrompt: boolean;
 
+  public get name(): string {
+    return this.generatorName;
+  }
+
   private static calledGenerator: BaseGenerator | null = null;
   protected static refDeps: RefDeps | null = null;
 
