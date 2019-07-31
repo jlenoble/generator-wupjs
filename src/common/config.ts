@@ -2,8 +2,8 @@ import { Editor } from "mem-fs-editor";
 import EventEmitter from "events";
 import config from "config";
 import Property from "./property";
-import GeneratorNode from "./generator-node";
 import BaseGenerator from "./base-generator";
+import { DepMesh, DepMeshNode } from "organon";
 
 const genName = "generator-wupjs";
 
@@ -14,8 +14,40 @@ type PropName = Wup.PropName;
 type PropValue = Wup.PropValue;
 type Props = Wup.Props;
 
-export default class Config extends EventEmitter implements Wup.Config {
-  protected generatorNodes: Map<GenName, GeneratorNode> = new Map();
+export default class Config extends EventEmitter {
+  protected generatorNodes: DepMesh<BaseGenerator> = new DepMesh({
+    create(options): BaseGenerator {
+      const name = options.name;
+
+      if (
+        options.mesh.has(name) &&
+        options.mesh.get(name).value instanceof BaseGenerator
+      ) {
+        throw new Error(`Creating subgenerator ${name} twice`);
+      }
+
+      let gen: BaseGenerator = options.nameOrGen;
+
+      if (gen instanceof BaseGenerator && name === gen.name) {
+        return gen;
+      }
+
+      try {
+        // Method .create() does exist; .env is an instance of Yeoman Environment
+        // @ts-ignore
+        gen = options.env.create(`wupjs:${name}`, options);
+      } catch (e) {
+        // yeoman-test, unlike yo, does not collect subgenerators: fix that!
+        // @ts-ignore
+        options.env.lookup((): void => {});
+
+        // @ts-ignore
+        gen = options.env.create(`wupjs:${name}`, options);
+      }
+
+      return gen;
+    }
+  });
   protected options: Options = {};
   protected properties: Map<PropName, Property> = new Map();
 
@@ -43,10 +75,12 @@ export default class Config extends EventEmitter implements Wup.Config {
         Object.assign(this.options, nameOrGen.options);
       }
 
-      this.generatorNodes.set(
+      new DepMeshNode({
+        ...this.options,
         name,
-        new GeneratorNode(nameOrGen, this.generatorNodes, this.options)
-      );
+        nameOrGen,
+        mesh: this.generatorNodes
+      });
     }
 
     return this;
@@ -59,25 +93,24 @@ export default class Config extends EventEmitter implements Wup.Config {
 
     const prop = new Property({ name, value });
 
-    prop.on(
-      "change",
-      (): void => {
-        this.emit("change", prop.name);
-      }
-    );
+    prop.on("change", (): void => {
+      this.emit("change", prop.name);
+    });
 
     this.properties.set(name, prop);
 
     return this;
   }
 
-  public *generators(): IterableIterator<GeneratorNode> {
-    yield* GeneratorNode.generators(this.generatorNodes.values());
+  public *generators(): IterableIterator<DepMeshNode<BaseGenerator>> {
+    yield* this.generatorNodes.values();
   }
 
   public getGen(name: GenName): BaseGenerator | undefined {
-    const gen: GeneratorNode | undefined = this.generatorNodes.get(name);
-    return gen ? gen.generator : undefined;
+    const gen: DepMeshNode<BaseGenerator> | undefined = this.generatorNodes.get(
+      name
+    );
+    return gen ? gen.value : undefined;
   }
 
   public getProp(name: PropName): PropValue | undefined {
@@ -108,21 +141,34 @@ export default class Config extends EventEmitter implements Wup.Config {
         "To link two subgenerators, one at least must already exist"
       );
     } else if (parent && !child) {
-      parent.createGen(childGen);
-      child = this.generatorNodes.get(childGen) as GeneratorNode;
+      new DepMeshNode({
+        ...this.options,
+        ...parent.options,
+        name: childGen,
+        mesh: this.generatorNodes
+      });
     } else if (child && !parent) {
-      child.createGen(parentGen);
-      parent = this.generatorNodes.get(parentGen) as GeneratorNode;
+      new DepMeshNode({
+        ...this.options,
+        ...child.options,
+        name: parentGen,
+        mesh: this.generatorNodes
+      });
     }
 
-    (parent as GeneratorNode).addChild((child as GeneratorNode).name);
+    parent = this.generatorNodes.get(parentGen) as DepMeshNode<BaseGenerator>;
+    child = this.generatorNodes.get(childGen) as DepMeshNode<BaseGenerator>;
+
+    (parent as DepMeshNode<BaseGenerator>).addChild({
+      name: (child as DepMeshNode<BaseGenerator>).name
+    });
 
     return this;
   }
 
   public reset(): void {
     for (const node of this.generatorNodes.values()) {
-      node.generator.removeAllListeners();
+      node.value.removeAllListeners();
     }
 
     for (const prop of this.properties.values()) {
@@ -133,8 +179,6 @@ export default class Config extends EventEmitter implements Wup.Config {
 
     this.generatorNodes.clear();
     this.properties.clear();
-
-    GeneratorNode.reset();
   }
 
   public setProp(name: PropName, value: PropValue): this {

@@ -214,7 +214,9 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
     if (BaseGenerator.calledGenerator === this) {
       let prompt = true;
 
-      for (const { generator } of (config as Config).generators()) {
+      for (const { value } of (config as Config).generators()) {
+        const generator = value;
+
         if (generator === this) {
           // All ancestors have been treated, now dealing with descendants:
           // Stop prompting the user but configure using the gathered parameters.
