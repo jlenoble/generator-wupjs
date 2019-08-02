@@ -3,7 +3,7 @@
     "createdWith": "0.0.0",
     "modifiedWith": "0.6.0-5",
     "createdOn": "2016-08-07T12:38:59.000Z",
-    "modifiedOn": "2019-07-21T15:07:52.281Z",
+    "modifiedOn": "2019-08-02T10:02:48.863Z",
     "gulp": true,
     "srcDir": "src",
     "testDir": "test",
@@ -38,7 +38,7 @@
       "./src/config:monorepo/index"
     ],
     "relocatedDevDeps": {
-      "test/common" : {
+      "test/common": {
         "../../../generators/common": "./src/common"
       }
     }
