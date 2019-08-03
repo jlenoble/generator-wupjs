@@ -16,6 +16,7 @@
 # Dist
 /lib/
 /mochawesome-report/
+/eslint-report/
 /docs/license.md
 
 # Test

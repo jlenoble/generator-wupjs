@@ -57,6 +57,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-wrap": "^0.15.0",
     "markdown-include": "^0.4.3",
+    "mkdirp": "^0.5.1",
     "mocha": "<6",
     "mochawesome": "^4.0.1",
     "plugin-error": "^1.0.1",
