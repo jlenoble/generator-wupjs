@@ -66,15 +66,15 @@ export default class Src extends Base {
 
     const srcFiles =
       extensions.length > 1
-        ? extensions.map(
-            (ext): string => path.join(srcDir, ext, `${main}.${ext}`)
+        ? extensions.map((ext): string =>
+            path.join(srcDir, ext, `${main}.${ext}`)
           )
         : [path.join(srcDir, `${main}.${extensions[0]}`)];
 
     const testFiles =
       extensions.length > 1
-        ? extensions.map(
-            (ext): string => path.join(testDir, ext, `${main}.test.${ext}`)
+        ? extensions.map((ext): string =>
+            path.join(testDir, ext, `${main}.test.${ext}`)
           )
         : [path.join(testDir, `${main}.test.${extensions[0]}`)];
 
@@ -122,27 +122,23 @@ export default class Src extends Base {
       const files = props.files;
       const extensions = props.extensions;
 
-      props.srcFiles.forEach(
-        (file, i): void => {
-          prettyWrite(
-            this,
-            props,
-            this.templatePath(path.join(extensions[i], "class.ejs")),
-            this.destinationPath(file)
-          );
-        }
-      );
+      props.srcFiles.forEach((file, i): void => {
+        prettyWrite(
+          this,
+          props,
+          this.templatePath(path.join(extensions[i], "class.ejs")),
+          this.destinationPath(file)
+        );
+      });
 
-      props.testFiles.forEach(
-        (file, i): void => {
-          prettyWrite(
-            this,
-            { ...props, file: files[i] },
-            this.templatePath(path.join(extensions[i], "class.test.ejs")),
-            this.destinationPath(file)
-          );
-        }
-      );
+      props.testFiles.forEach((file, i): void => {
+        prettyWrite(
+          this,
+          { ...props, file: files[i] },
+          this.templatePath(path.join(extensions[i], "class.test.ejs")),
+          this.destinationPath(file)
+        );
+      });
     }
   }
 }

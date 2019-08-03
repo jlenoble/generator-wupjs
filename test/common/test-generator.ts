@@ -50,58 +50,54 @@ const testGenerator = (_options: {
     before(function(): Promise<void> {
       this.cwd = process.cwd();
 
-      this.end = new Promise(
-        (resolve, reject): void => {
-          this.runContext = helpers
-            .run(path.join(__dirname, `../../../generators/${name}`), {
-              tmpdir: false
-            })
-            .inDir(scratchDir)
-            .withArguments(args)
-            .withPrompts(prompt)
-            .on(
-              "ready",
-              // We don't want to import any source statically, so can't import
-              // type BaseGenerator
-              // @ts-ignore
-              (generator): void => {
-                // .yo-rc.json is in topdir and yeoman-test silently resets
-                // cwd to topdir (because of sinonjs masking the warning)
-                // so override the reset
-                generator.destinationRoot(scratchDir);
+      this.end = new Promise((resolve, reject): void => {
+        this.runContext = helpers
+          .run(path.join(__dirname, `../../../generators/${name}`), {
+            tmpdir: false
+          })
+          .inDir(scratchDir)
+          .withArguments(args)
+          .withPrompts(prompt)
+          .on(
+            "ready",
+            // We don't want to import any source statically, so can't import
+            // type BaseGenerator
+            // @ts-ignore
+            (generator): void => {
+              // .yo-rc.json is in topdir and yeoman-test silently resets
+              // cwd to topdir (because of sinonjs masking the warning)
+              // so override the reset
+              generator.destinationRoot(scratchDir);
 
-                // Also override the reset for every single subgen
+              // Also override the reset for every single subgen
+              // @ts-ignore
+              generator._composedWith.forEach(
+                // We don't want to import any source statically, so can't import
+                // type BaseGenerator
                 // @ts-ignore
-                generator._composedWith.forEach(
-                  // We don't want to import any source statically, so can't import
-                  // type BaseGenerator
-                  // @ts-ignore
-                  (gen): void => {
-                    gen.destinationRoot(scratchDir);
-                  }
-                );
-              }
-            )
-            .on("end", resolve)
-            .on("error", reject)
-            .toPromise();
-        }
-      );
+                (gen): void => {
+                  gen.destinationRoot(scratchDir);
+                }
+              );
+            }
+          )
+          .on("end", resolve)
+          .on("error", reject)
+          .toPromise();
+      });
 
       return this.runContext;
     });
 
     after(function(): void {
-      return this.end.then(
-        (): void => {
-          process.chdir(this.cwd);
-          // Dynamic loading because the config package is linked
-          // statically via common/config.ts so it can't acknowledge the
-          // redefinition of process.env["NODE_CONFIG_DIR"] if any src is
-          // linked statically (they all import indirectly common/config.ts)
-          require("../../../generators/common/base-generator").reset();
-        }
-      );
+      return this.end.then((): void => {
+        process.chdir(this.cwd);
+        // Dynamic loading because the config package is linked
+        // statically via common/config.ts so it can't acknowledge the
+        // redefinition of process.env["NODE_CONFIG_DIR"] if any src is
+        // linked statically (they all import indirectly common/config.ts)
+        require("../../../generators/common/base-generator").reset();
+      });
     });
 
     const assertContent = Object.assign(
@@ -113,13 +109,11 @@ const testGenerator = (_options: {
       _options.assertContent
     );
 
-    Object.keys(assertContent).forEach(
-      (key): void => {
-        if (typeof assertContent[key] === "function") {
-          assertContent[key] = (assertContent[key] as Function)();
-        }
+    Object.keys(assertContent).forEach((key): void => {
+      if (typeof assertContent[key] === "function") {
+        assertContent[key] = (assertContent[key] as Function)();
       }
-    );
+    });
 
     const invalidFiles = (_options.expectInvalid || []).concat();
 
@@ -175,72 +169,60 @@ If this is fine, you can update your snapshot with: gulp update-snapshots
       return !invalidFiles.includes(file);
     };
 
-    expectedFiles.filter(filter).forEach(
-      (file): void => {
-        it(`should create a ${file} file`, (): void => {
-          assert.file(file);
+    expectedFiles.filter(filter).forEach((file): void => {
+      it(`should create a ${file} file`, (): void => {
+        assert.file(file);
+      });
+    });
+
+    noFiles.filter(filter).forEach((file): void => {
+      it(`shouldn't create a ${file} file`, (): void => {
+        assert.noFile(file);
+      });
+    });
+
+    Object.keys(matchFiles).forEach((file): void => {
+      const tag = invalidFiles.includes(file) ? "error" : "content";
+
+      if (file[0] !== "!") {
+        (matchFiles[file] as RegExp[]).forEach((content): void => {
+          it(`${file} has the expected ${tag} ${content}`, (): void => {
+            assert.fileContent(file, content);
+          });
+        });
+      } else {
+        (matchFiles[file] as RegExp[]).forEach((content): void => {
+          const _file = file.substring(1);
+          it(`${_file} has not the ${tag} ${content}`, (): void => {
+            assert.noFileContent(_file, content);
+          });
         });
       }
-    );
-
-    noFiles.filter(filter).forEach(
-      (file): void => {
-        it(`shouldn't create a ${file} file`, (): void => {
-          assert.noFile(file);
-        });
-      }
-    );
-
-    Object.keys(matchFiles).forEach(
-      (file): void => {
-        const tag = invalidFiles.includes(file) ? "error" : "content";
-
-        if (file[0] !== "!") {
-          (matchFiles[file] as RegExp[]).forEach(
-            (content): void => {
-              it(`${file} has the expected ${tag} ${content}`, (): void => {
-                assert.fileContent(file, content);
-              });
-            }
-          );
-        } else {
-          (matchFiles[file] as RegExp[]).forEach(
-            (content): void => {
-              const _file = file.substring(1);
-              it(`${_file} has not the ${tag} ${content}`, (): void => {
-                assert.noFileContent(_file, content);
-              });
-            }
-          );
-        }
-      }
-    );
+    });
 
     if (validInput) {
-      snapshotFiles.forEach(
-        (file): void => {
-          const snapshotFile = path.join(hashDir, file);
-          const filename = path.join(path.relative(snapshotDir, hashDir), file);
+      snapshotFiles.forEach((file): void => {
+        const snapshotFile = path.join(hashDir, file);
+        const filename = path.join(path.relative(snapshotDir, hashDir), file);
 
-          it(`${file} has the expected content ${filename}`, async (): Promise<
-            void
-          > => {
-            const diffText = await diffSnapshotFile(file, hashDir);
+        it(`${file} has the expected content ${filename}`, async (): Promise<
+          void
+        > => {
+          const diffText = await diffSnapshotFile(file, hashDir);
 
-            if (diffText !== "") {
-              if (process.argv.includes("--update-snapshots")) {
-                console.log(`
+          if (diffText !== "") {
+            if (process.argv.includes("--update-snapshots")) {
+              console.log(`
 Updating snapshot ${filename}:
 ${diffText}
 `);
-                await fs.copy(file, snapshotFile);
-              } else {
-                throw new Error(diffText);
-              }
+              await fs.copy(file, snapshotFile);
+            } else {
+              throw new Error(diffText);
             }
-          });
-        }
-      );
+          }
+        });
+      });
     }
   });
 };

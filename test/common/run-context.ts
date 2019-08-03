@@ -61,22 +61,16 @@ RunContext.prototype._run = function(): void {
     helpers.mockLocalConfig(this.generator, this.localConfig);
   }
 
-  this.generator.on(
-    "error",
-    (err: Error): void => {
-      if (!this.emit("error", err)) {
-        throw err;
-      }
+  this.generator.on("error", (err: Error): void => {
+    if (!this.emit("error", err)) {
+      throw err;
     }
-  );
-  this.generator.once(
-    "end",
-    (): void => {
-      helpers.restorePrompt(this.generator);
-      this.emit("end");
-      this.completed = true;
-    }
-  );
+  });
+  this.generator.once("end", (): void => {
+    helpers.restorePrompt(this.generator);
+    this.emit("end");
+    this.completed = true;
+  });
 
   this.emit("ready", this.generator);
   this.generator.run();

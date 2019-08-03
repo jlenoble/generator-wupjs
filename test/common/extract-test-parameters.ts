@@ -26,31 +26,29 @@ const extractTestParameters = (assertContent: {
       assertContent
     );
   } else {
-    Object.keys(assertContent).forEach(
-      (file: string): void => {
-        const patterns = Array.isArray(assertContent[file])
-          ? (assertContent[file] as RegExp[])
-          : [];
+    Object.keys(assertContent).forEach((file: string): void => {
+      const patterns = Array.isArray(assertContent[file])
+        ? (assertContent[file] as RegExp[])
+        : [];
 
-        if (patterns.length) {
-          matchFiles[file] = Array.isArray(matchFiles[file])
-            ? (matchFiles[file] as RegExp[]).concat(patterns)
-            : patterns.concat();
-        }
-
-        file = file[0] !== "!" ? file : file.substring(1);
-
-        if (assertContent[file] === true) {
-          snapshotFiles.add(file);
-        }
-
-        if (assertContent[file] !== false) {
-          expectedFiles.add(file);
-        } else {
-          noFiles.add(file);
-        }
+      if (patterns.length) {
+        matchFiles[file] = Array.isArray(matchFiles[file])
+          ? (matchFiles[file] as RegExp[]).concat(patterns)
+          : patterns.concat();
       }
-    );
+
+      file = file[0] !== "!" ? file : file.substring(1);
+
+      if (assertContent[file] === true) {
+        snapshotFiles.add(file);
+      }
+
+      if (assertContent[file] !== false) {
+        expectedFiles.add(file);
+      } else {
+        noFiles.add(file);
+      }
+    });
   }
 
   return {

@@ -97,8 +97,8 @@ export default class License extends Base {
   }
 
   public async _promptingIfGPL(licenses: Wup.License[]): Promise<void> {
-    const idx = licenses.findIndex(
-      (license): boolean => license.includes("GPL-")
+    const idx = licenses.findIndex((license): boolean =>
+      license.includes("GPL-")
     );
 
     if (idx !== -1) {
@@ -123,8 +123,8 @@ export default class License extends Base {
   ): Promise<Wup.License[]> {
     const res = [...licenses];
 
-    const idx = licenses.findIndex(
-      (license): boolean => license.includes("SEE IN FILE")
+    const idx = licenses.findIndex((license): boolean =>
+      license.includes("SEE IN FILE")
     );
 
     if (idx !== -1) {

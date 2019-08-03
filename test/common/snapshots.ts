@@ -56,12 +56,10 @@ export async function diffSnapshotFile(
     );
 
     if (diff.some((line): boolean => !(!line.added && !line.removed))) {
-      diff.forEach(
-        (line): void => {
-          const color = line.added ? "green" : line.removed ? "red" : "white";
-          diffText += chalk[color](line.value);
-        }
-      );
+      diff.forEach((line): void => {
+        const color = line.added ? "green" : line.removed ? "red" : "white";
+        diffText += chalk[color](line.value);
+      });
     }
   }
 

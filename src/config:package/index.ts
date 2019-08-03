@@ -28,14 +28,12 @@ export default class Package extends Base {
         this.destinationPath("package.json")
       );
 
-      Object.keys(pckg).forEach(
-        (key): void => {
-          const genName = this.generatorName + ":" + key;
-          if (this.getProp(genName) === undefined) {
-            this.addProp(genName, pckg[key]);
-          }
+      Object.keys(pckg).forEach((key): void => {
+        const genName = this.generatorName + ":" + key;
+        if (this.getProp(genName) === undefined) {
+          this.addProp(genName, pckg[key]);
         }
-      );
+      });
     } catch (e) {
       this.addProp(this.generatorName, []);
     }

@@ -87,13 +87,11 @@ export default class ConfigDependencies extends Base {
     for (const dpType of depTypes) {
       const dps = this.dependencies[dpType];
 
-      Object.keys(deps).forEach(
-        (key): void => {
-          if (dps[key]) {
-            delete dps[key];
-          }
+      Object.keys(deps).forEach((key): void => {
+        if (dps[key]) {
+          delete dps[key];
         }
-      );
+      });
     }
 
     this._sortDeps(depType, deps);

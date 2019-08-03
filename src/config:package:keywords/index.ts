@@ -40,22 +40,20 @@ export default class PackageKeywords extends Base {
             if (!keywords.length) {
               return "You must enter at least one keyword";
             } else if (
-              keywords.some(
-                (kwd): boolean => {
-                  if (
-                    !/^[A-Za-zÀ-ÖØ-öø-ÿ]+(-[A-Za-zÀ-ÖØ-öø-ÿ]+)*\d*$/.test(kwd)
-                  ) {
-                    keyword = kwd;
-                    return true;
-                  }
-                  return false;
+              keywords.some((kwd): boolean => {
+                if (
+                  !/^[A-Za-zÀ-ÖØ-öø-ÿ]+(-[A-Za-zÀ-ÖØ-öø-ÿ]+)*\d*$/.test(kwd)
+                ) {
+                  keyword = kwd;
+                  return true;
                 }
-              )
+                return false;
+              })
             ) {
               const kwd = chalk.yellow(keyword);
 
-              return `you typed [${keywords.map(
-                (k): string => (k === keyword ? kwd : k)
+              return `you typed [${keywords.map((k): string =>
+                k === keyword ? kwd : k
               )}] but ${kwd} is invalid`;
             }
 

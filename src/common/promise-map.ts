@@ -12,11 +12,9 @@ export default class PromiseMap extends Map<any, Promise<any>> {
 
     promise
       .then((): void => {}, (): void => {})
-      .finally(
-        (): void => {
-          this.delete(key);
-        }
-      );
+      .finally((): void => {
+        this.delete(key);
+      });
 
     return this;
   }
