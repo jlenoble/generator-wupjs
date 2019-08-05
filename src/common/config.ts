@@ -12,7 +12,6 @@ type Options = Wup.Options;
 type Path = Wup.Path;
 type PropName = Wup.PropName;
 type PropValue = Wup.PropValue;
-type Props = Wup.Props;
 
 export default class Config extends EventEmitter {
   protected generatorNodes: DepMesh<BaseGenerator> = new DepMesh({
@@ -54,7 +53,7 @@ export default class Config extends EventEmitter {
   public constructor(fs: Editor, destinationPath: (path: Path) => Path) {
     super();
 
-    const yoConfig: Props = fs.readJSON(destinationPath(".yo-rc.json"), {
+    const yoConfig: Options = fs.readJSON(destinationPath(".yo-rc.json"), {
       [genName]: {}
     });
 
