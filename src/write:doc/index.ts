@@ -14,7 +14,7 @@ export default class WriteDoc extends Base {
     );
   }
 
-  public async writing(): void {
+  public async writing(): Promise<void> {
     if (!this.mustWrite()) {
       return;
     }
