@@ -154,7 +154,7 @@ Change your custom license file name.`;
       ];
 
       const props = await this.prompt(prompts);
-      const file = props[name].trim();
+      const file = (props[name] as string).trim();
 
       res[idx] = `SEE IN FILE ${file}`;
     }
