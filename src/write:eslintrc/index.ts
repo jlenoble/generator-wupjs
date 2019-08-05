@@ -1,5 +1,5 @@
 import Base from "../common/base-generator";
-import { Props } from "../config:eslint";
+import { EslintConfig } from "organon";
 
 export default class EslintRc extends Base {
   public constructor(args: string | string[], options: {}) {
@@ -17,7 +17,7 @@ export default class EslintRc extends Base {
       return;
     }
 
-    const props = this.getProp("config:eslint") as Props;
+    const props = this.getProp("config:eslint") as EslintConfig;
 
     if (props) {
       this.fs.writeJSON(this.destinationPath(".eslintrc"), props, undefined, 2);
