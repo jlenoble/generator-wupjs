@@ -88,7 +88,7 @@ export default class Paths extends Base {
   public configuring(): void {
     this.addProp(
       this.generatorName + ":examples",
-      path.join(this.getProp(this.generatorName + ":doc"), "examples")
+      path.join(this.getProp(this.generatorName + ":doc") as string, "examples")
     );
   }
 }
