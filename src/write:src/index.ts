@@ -7,7 +7,7 @@ import prettyWrite from "../common/pretty-write";
 type Name = Wup.Name;
 type Path = Wup.Path;
 
-interface Props {
+interface Props extends Wup.Props {
   srcDir: Path;
   testDir: Path;
   files: Path[];
@@ -48,12 +48,12 @@ export default class Src extends Base {
 
     const testDir = this.getProp("config:paths:test") as Path;
     const extensions = this.getProp("config:languages:extensions") as string[];
-    let main: any = this.getProp("config:package:main");
+    let main = this.getProp("config:package:main") as string;
 
     if (main) {
-      main = main.match(/^([-\w.]+\/)?([-\w.]+)\.js$/);
-      if (main !== null) {
-        main = main[2];
+      const _main = main.match(/^([-\w.]+\/)?([-\w.]+)\.js$/);
+      if (_main !== null) {
+        main = _main[2];
       } else {
         main = "index";
       }

@@ -2,8 +2,10 @@ import Base from "../common/base-generator";
 import { BabelConfig } from "organon";
 
 interface Props {
-  presets: any[];
-  plugins: any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  presets: (string | [string, any])[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  plugins: (string | [string, any])[];
 }
 
 export default class BabelRc extends Base {

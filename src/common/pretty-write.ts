@@ -10,7 +10,7 @@ let engine: CLIEngine;
 
 export default function prettyWrite(
   gen: BaseGenerator,
-  props: any,
+  props: Wup.Props,
   fileName: string,
   destName: string
 ): void {
