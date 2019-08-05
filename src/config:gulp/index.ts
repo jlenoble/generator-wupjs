@@ -6,7 +6,7 @@ import { GulpConfig } from "organon";
 
 type Path = Wup.Path;
 
-export interface Props {
+export interface Props extends Wup.Props {
   packageName: string;
   gulpIncludes: string[];
 
