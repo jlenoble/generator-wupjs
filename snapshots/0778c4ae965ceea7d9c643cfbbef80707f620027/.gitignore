@@ -18,6 +18,8 @@
 /mochawesome-report/
 /eslint-report/
 /typescript-report/
+/git-report/
+/npm-report/
 /docs/license.md
 
 # Test
