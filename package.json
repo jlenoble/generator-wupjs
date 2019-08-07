@@ -54,7 +54,7 @@
     "json-stable-stringify": "^1.0.1",
     "latest-version": "^5.1.0",
     "mem-fs-editor": "^6.0.0",
-    "organon": "^0.1.0-2",
+    "organon": "^0.1.0-3",
     "prettier": "^1.18.2",
     "semver": "^6.3.0",
     "uppercamelcase": "^3.0.0",
