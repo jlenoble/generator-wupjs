@@ -33,13 +33,12 @@ const sanityCheck = async () => {
 
 gulp.task("sanity-check", sanityCheck);
 
-gulp.task("prepublish", gulp.series(
-  "test",
-  gulp.parallel(
-    "lint",
-    "dist-clean",
-    "doc"
-  ),
-  "dist-test"
-  "sanity-check"
-));
+gulp.task(
+  "prepublish",
+  gulp.series(
+    "test",
+    gulp.parallel("lint", "dist-clean", "doc"),
+    "dist-test",
+    "sanity-check"
+  )
+);
