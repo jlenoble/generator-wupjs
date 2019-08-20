@@ -42,6 +42,6 @@ gulp.task("prepublish", gulp.series(
     "doc"
   ),
   "dist-test"<% if (typescript) { %>,
-  gulp.parallel("types", "sanity-check")<% }  else { %>
+  gulp.parallel("types", "sanity-check")<% }  else { %>,
   "sanity-check"<% } %>
 ));
