@@ -48,7 +48,7 @@ export default class PackageTypes extends Base {
     }
   }
 
-  public configure(): void {
+  public configuring(): void {
     if (!this.getProp("config:languages:typescript")) {
       this.setProp(this.generatorName, "");
     }

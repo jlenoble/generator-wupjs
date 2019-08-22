@@ -14,7 +14,7 @@ export default class Eslint extends Base {
     );
   }
 
-  public async configure(): Promise<void> {
+  public async configuring(): Promise<void> {
     const eslint = new EslintConfig({
       eslint: true,
       prettier: true,

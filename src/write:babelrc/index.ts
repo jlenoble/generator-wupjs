@@ -21,7 +21,7 @@ export default class BabelRc extends Base {
     );
   }
 
-  public async configure(): Promise<void> {
+  public async configuring(): Promise<void> {
     const babel = new BabelConfig({
       babel: true,
       node: (this.config.get("prodModuleTypes") || []).includes("CommonJS")

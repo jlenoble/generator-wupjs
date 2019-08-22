@@ -27,7 +27,7 @@ export default class GitIgnore extends Base {
     );
   }
 
-  public async configure(): Promise<void> {
+  public async configuring(): Promise<void> {
     const buildDir = this.getProp("config:paths:build") as Path;
     const libDir = this.getProp("config:paths:lib") as Path;
     const docDir = this.getProp("config:paths:doc") as Path;

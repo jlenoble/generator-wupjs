@@ -30,7 +30,7 @@ export default class TsConfigJson extends Base {
     );
   }
 
-  public async configure(): Promise<void> {
+  public async configuring(): Promise<void> {
     const srcDir = this.getProp("config:paths:src") as Path;
     const testDir = this.getProp("config:paths:test") as Path;
 
