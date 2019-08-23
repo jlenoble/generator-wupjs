@@ -1,4 +1,4 @@
-import { Editor } from "mem-fs-editor";
+import { MemFsEditor } from "yeoman-generator";
 import latestVersion from "latest-version";
 import path from "path";
 import semver from "semver";
@@ -16,11 +16,11 @@ export interface Deps {
 
 export default class RefDeps {
   protected readonly depsFile: string = path.join(__dirname, "../../deps.json");
-  protected readonly fs: Editor;
+  protected readonly fs: MemFsEditor;
   protected readonly deps: Deps;
   protected readonly pending: PromiseMap = new PromiseMap();
 
-  public constructor(fs: Editor) {
+  public constructor(fs: MemFsEditor) {
     this.fs = fs;
     this.deps = fs.readJSON(this.depsFile, {});
   }

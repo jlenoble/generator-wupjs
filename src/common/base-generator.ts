@@ -1,4 +1,3 @@
-import { Editor } from "mem-fs-editor";
 import Generator from "yeoman-generator";
 import chalk from "chalk";
 import Config from "./config";
@@ -48,11 +47,11 @@ export default class BaseGenerator extends Generator
     super(args, options);
 
     if (!config) {
-      config = new Config(this.fs as Editor, this.destinationPath.bind(this));
+      config = new Config(this.fs, this.destinationPath.bind(this));
     }
 
     if (!refDeps) {
-      refDeps = new RefDeps(this.fs as Editor);
+      refDeps = new RefDeps(this.fs);
     }
 
     if (generatorName) {
