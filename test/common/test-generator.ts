@@ -62,7 +62,6 @@ const testGenerator = (_options: {
             "ready",
             // We don't want to import any source statically, so can't import
             // type BaseGenerator
-            // @ts-ignore
             (generator): void => {
               // .yo-rc.json is in topdir and yeoman-test silently resets
               // cwd to topdir (because of sinonjs masking the warning)
@@ -70,11 +69,9 @@ const testGenerator = (_options: {
               generator.destinationRoot(scratchDir);
 
               // Also override the reset for every single subgen
-              // @ts-ignore
               generator._composedWith.forEach(
-                // We don't want to import any source statically, so can't import
-                // type BaseGenerator
-                // @ts-ignore
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore We don't want to import any source statically, so can't import type BaseGenerator
                 (gen): void => {
                   gen.destinationRoot(scratchDir);
                 }

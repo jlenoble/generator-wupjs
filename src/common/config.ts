@@ -32,14 +32,15 @@ export default class Config extends EventEmitter {
       }
 
       try {
-        // Method .create() does exist; .env is an instance of Yeoman Environment
-        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore Method .create() does exist; .env is an instance of Yeoman Environment
         gen = options.env.create(`wupjs:${name}`, options);
       } catch (e) {
-        // yeoman-test, unlike yo, does not collect subgenerators: fix that!
-        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore yeoman-test, unlike yo, does not collect subgenerators: fix that!
         options.env.lookup((): void => {});
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         gen = options.env.create(`wupjs:${name}`, options);
       }

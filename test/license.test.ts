@@ -69,10 +69,7 @@ for (const only of [true, false]) {
   }
 }
 
-const testMultipleLicense = (
-  licenses: Wup.License[],
-  only: boolean = false
-): void => {
+const testMultipleLicense = (licenses: Wup.License[], only = false): void => {
   return testGenerator({
     title: `Testing LICENSE: ${toLicense(
       licenses.map(

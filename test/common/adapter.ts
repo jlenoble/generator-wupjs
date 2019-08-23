@@ -1,6 +1,7 @@
 import { DummyPrompt, TestAdapter } from "yeoman-test/lib/adapter";
 import chalk from "chalk";
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore Path is relative to build directory after transpilation
 import stringify from "../../../generators/common/stringify";
 
 console.warn(

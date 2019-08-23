@@ -45,16 +45,14 @@ export default class PackageJson extends Base {
         return;
       }
 
-      // @ts-ignore
-      const a = this.props[key];
+      const a = this.props[key as keyof Wup.PackageJson];
 
       if (
         a === "" ||
         (Array.isArray(a) && a.length === 0) ||
         (typeof a === "object" && Object.keys(a).length === 0)
       ) {
-        // @ts-ignore
-        delete this.props[key];
+        delete this.props[key as keyof Wup.PackageJson];
       }
     });
   }

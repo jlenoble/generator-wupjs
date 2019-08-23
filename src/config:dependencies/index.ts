@@ -31,7 +31,7 @@ export default class ConfigDependencies extends Base {
   protected devDependencies: Dependencies;
   protected peerDependencies: Dependencies;
   protected optionalDependencies: Dependencies;
-  protected isBeforeWriting: boolean = false;
+  protected isBeforeWriting = false;
 
   public constructor(args: string | string[], options: {}) {
     super(
@@ -97,7 +97,7 @@ export default class ConfigDependencies extends Base {
     this._sortDeps(depType, deps);
   }
 
-  protected _addDep(name: string, version: string = "*"): void {
+  protected _addDep(name: string, version = "*"): void {
     if (!this.prodDependencies[name]) {
       this.prodDependencies[name] = version;
     }
@@ -105,7 +105,7 @@ export default class ConfigDependencies extends Base {
     this._cleanUpDeps();
   }
 
-  protected _addDevDep(name: string, version: string = "*"): void {
+  protected _addDevDep(name: string, version = "*"): void {
     if (!this.devDependencies[name]) {
       this.devDependencies[name] = version;
     }
@@ -113,7 +113,7 @@ export default class ConfigDependencies extends Base {
     this._cleanUpDeps();
   }
 
-  protected _addPeerDep(name: string, version: string = "*"): void {
+  protected _addPeerDep(name: string, version = "*"): void {
     if (!this.peerDependencies[name]) {
       this.peerDependencies[name] = version;
     }
@@ -151,7 +151,10 @@ export default class ConfigDependencies extends Base {
 
       refDeps.addDep(dep, { typescript }); // async, wait in this.afterConfiguring()
 
-      if (this._isUserDep(version) || this._isPeerDep(version)) {
+      if (
+        (this._isUserDep(version) || this._isPeerDep(version)) &&
+        dep !== "mocha"
+      ) {
         continue;
       }
 

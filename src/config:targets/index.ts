@@ -29,7 +29,7 @@ export default class Targets extends Base {
           : "server (Node)"
         : this.getProp(this.generatorName + ":client")
         ? "client (Browsers)"
-        : undefined;
+        : "server (Node)";
 
       const prompts: Wup.Options[] = [
         {
@@ -37,7 +37,6 @@ export default class Targets extends Base {
           name: this.generatorName + ":side",
           message: "Which side of the dev stack will you target?",
           choices: ["server (Node)", "client (Browsers)", "both"],
-          // @ts-ignore
           default: side
         }
       ];

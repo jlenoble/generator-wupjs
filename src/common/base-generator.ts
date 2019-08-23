@@ -48,12 +48,10 @@ export default class BaseGenerator extends Generator
     super(args, options);
 
     if (!config) {
-      // @ts-ignore
       config = new Config(this.fs as Editor, this.destinationPath.bind(this));
     }
 
     if (!refDeps) {
-      // @ts-ignore
       refDeps = new RefDeps(this.fs as Editor);
     }
 
@@ -91,7 +89,8 @@ export default class BaseGenerator extends Generator
 
       gen.destinationRoot(calledGen.destinationRoot());
 
-      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore Intentional access to internal
       calledGen._composedWith.length = 0;
       calledGen.composeAll();
     });
@@ -99,7 +98,7 @@ export default class BaseGenerator extends Generator
     this.composeAll();
   }
 
-  protected _addDep(name: string, version: string = "*"): void {
+  protected _addDep(name: string, version = "*"): void {
     throw new Error(
       chalk.red(`
 Don't use ._addDep(${name}, ${version}) super method;
@@ -108,7 +107,7 @@ Call .addDep(${name}, ${version}) and delegate to "config:dependencies" subgen
     );
   }
 
-  protected _addDevDep(name: string, version: string = "*"): void {
+  protected _addDevDep(name: string, version = "*"): void {
     throw new Error(
       chalk.red(`
 Don't use ._addDevDep(${name}, ${version}) super method;
@@ -117,7 +116,7 @@ Call .addDevDep(${name}, ${version}) and delegate to "config:dependencies" subge
     );
   }
 
-  protected _addPeerDep(name: string, version: string = "*"): void {
+  protected _addPeerDep(name: string, version = "*"): void {
     throw new Error(
       chalk.red(`
 Don't use ._addPeerDep(${name}, ${version}) super method;
@@ -126,7 +125,7 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
     );
   }
 
-  public addDep(name: string | Wup.Dependencies, version: string = "*"): void {
+  public addDep(name: string | Wup.Dependencies, version = "*"): void {
     // Make every subgen able to add deps on the fly
     const gen = this.getGen("config:dependencies");
 
@@ -146,10 +145,7 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
     }
   }
 
-  public addDevDep(
-    name: string | Wup.Dependencies,
-    version: string = "*"
-  ): void {
+  public addDevDep(name: string | Wup.Dependencies, version = "*"): void {
     // Make every subgen able to add dev deps on the fly
     const gen = this.getGen("config:dependencies");
 
@@ -169,10 +165,7 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
     }
   }
 
-  public addPeerDep(
-    name: string | Wup.Dependencies,
-    version: string = "*"
-  ): void {
+  public addPeerDep(name: string | Wup.Dependencies, version = "*"): void {
     // Make every subgen able to add peer deps on the fly
     const gen = this.getGen("config:dependencies");
 
@@ -242,11 +235,12 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
         // subgenerators but instanciate them as needed by hand during the
         // linking process; This prevents from being prompted again and again
         // for the same parameters.
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         this._composedWith.push(generator);
 
-        // Accessing internals to start gens added after prompting or configuring
-        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore Accessing internals to start gens added after prompting or configuring
         if (this._running && !generator._running) {
           generator.run();
         }
