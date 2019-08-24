@@ -25,7 +25,8 @@ export const gulpFiles: BoolOptions = {
   "gulp/dist-clean.js": true,
   "gulp/dist-test.js": true,
   "gulp/doc.js": true,
-  "gulp/prepublish.js": true
+  "gulp/prepublish.js": true,
+  "gulp/push.js": true
 };
 
 export const docFiles: BoolOptions = {

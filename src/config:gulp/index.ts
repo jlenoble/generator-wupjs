@@ -152,7 +152,8 @@ export default class Gulp extends Base {
       "dist-clean",
       "dist-test",
       "doc",
-      "prepublish"
+      "prepublish",
+      "push"
     ];
 
     const buildDir = this.getProp("config:paths:build") as Path;
