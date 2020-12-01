@@ -9,13 +9,13 @@ const buildDir = "build";
 const srcGlob = [
   "src/**/*.js",
   "test/**/*.js",
-  "!src/static/antlr4/parsers/**/*.js"
+  "!src/static/antlr4/parsers/**/*.js",
 ];
 
 export const handleBuild = () => {
   return src(srcGlob, {
     base: process.cwd(),
-    since: lastRun(handleBuild)
+    since: lastRun(handleBuild),
   })
     .pipe(newer(buildDir))
     .pipe(cached())
@@ -23,7 +23,7 @@ export const handleBuild = () => {
     .pipe(babel())
     .pipe(
       sourcemaps.write(".", {
-        sourceRoot: file => file.cwd
+        sourceRoot: (file) => file.cwd,
       })
     )
     .pipe(dest(buildDir));

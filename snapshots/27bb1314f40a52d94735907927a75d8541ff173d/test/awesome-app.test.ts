@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import AwesomeApp from "../../src/ts/awesome-app";
+import AwesomeApp from "../src/awesome-app";
 
 describe("Testing AwesomeApp", (): void => {
   const defaultArgs = [];

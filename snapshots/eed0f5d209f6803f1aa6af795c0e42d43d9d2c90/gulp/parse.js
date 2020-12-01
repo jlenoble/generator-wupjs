@@ -10,7 +10,7 @@ const parserOptions = { parserDir };
 const grammarGlob = ["src/static/antlr4/grammars/**/*.g4"];
 const parserTokenGlob = [
   "src/static/antlr4/parsers/**/*.interp",
-  "src/static/antlr4/parsers/**/*.tokens"
+  "src/static/antlr4/parsers/**/*.tokens",
 ];
 const parserSrcGlob = ["src/static/antlr4/parsers/**/*.js"];
 const dataGlob = ["src/static/data/**/*"];
@@ -26,10 +26,10 @@ const makeParser = () => {
   if (require && require.cache) {
     // Remove parser files from Babel cache
     Object.keys(require.cache)
-      .filter(key => {
+      .filter((key) => {
         return key.includes(parserDir) || key.includes(listenerDir);
       })
-      .forEach(key => {
+      .forEach((key) => {
         delete require.cache[key];
       });
   }
@@ -40,7 +40,7 @@ const makeParser = () => {
 const copyParser = () => {
   return src(parserTokenGlob, {
     base: process.cwd(),
-    since: lastRun(copyParser)
+    since: lastRun(copyParser),
   })
     .pipe(newer(buildDir))
     .pipe(dest(buildDir));
@@ -49,13 +49,13 @@ const copyParser = () => {
 const transpileParser = () => {
   return src(parserSrcGlob, {
     base: process.cwd(),
-    since: lastRun(transpileParser)
+    since: lastRun(transpileParser),
   })
     .pipe(newer(buildDir))
     .pipe(sourcemaps.init())
     .pipe(
       sourcemaps.write(".", {
-        sourceRoot: file => file.cwd
+        sourceRoot: (file) => file.cwd,
       })
     )
     .pipe(dest(buildDir));
@@ -73,7 +73,7 @@ export const translate = () => {
       parserDir,
       listener,
       listenerDir,
-      rule
+      rule,
     })
   );
 };

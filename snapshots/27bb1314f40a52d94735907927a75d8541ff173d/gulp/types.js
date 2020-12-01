@@ -5,7 +5,7 @@ import fse from "fs-extra";
 
 const srcDir = "src";
 const libDir = "lib";
-const libGlob = ["src/**/*.ts", "src/**/*.js"];
+const libGlob = ["src/**/*.ts"];
 const tsProject = ts.createProject("tsconfig.json");
 
 function reporter() {
@@ -18,12 +18,12 @@ function reporter() {
       reportOptions.results.messages.push(err.message);
     },
 
-    finish: results => {
+    finish: (results) => {
       finish(results);
       Object.assign(reportOptions.results, results);
     },
 
-    results
+    results,
   };
 
   return reportOptions;
@@ -35,7 +35,7 @@ const handleTypes = () => {
   const tsResult = gulp
     .src(libGlob, {
       base: srcDir,
-      since: gulp.lastRun(handleTypes)
+      since: gulp.lastRun(handleTypes),
     })
     .pipe(tsProject(reportOptions));
 
@@ -51,7 +51,7 @@ const handleTypes = () => {
           )
         );
       })
-      .on("error", err => {
+      .on("error", (err) => {
         fse
           .outputJson(
             path.join("typescript-report", "report.json"),
@@ -60,7 +60,7 @@ const handleTypes = () => {
           )
           .then(
             () => reject(err),
-            e =>
+            (e) =>
               reject(
                 new Error(`
 First error: ${err.message}

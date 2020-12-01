@@ -9,19 +9,19 @@ const buildDir = "build";
 const srcGlob = [
   "src/**/*.js",
   "test/**/*.js",
-  "!src/static/antlr4/parsers/**/*.js"
+  "!src/static/antlr4/parsers/**/*.js",
 ];
 const buildGlob = [
   "build/src/**/*.js",
   "build/test/**/*.js",
-  "!build/src/static/antlr4/parsers/**/*.js"
+  "!build/src/static/antlr4/parsers/**/*.js",
 ];
 const grammarGlob = ["src/static/antlr4/grammars/**/*.g4"];
 
-export const startWatching = done => {
+export const startWatching = (done) => {
   const watcher = watch(srcGlob, { events: ["add", "change"] }, build);
 
-  watcher.on("unlink", file => {
+  watcher.on("unlink", (file) => {
     const buildFile = path.join(buildDir, file.replace(/(\.[\w]+)$/, ".js"));
     const mapFile = path.join(buildDir, file.replace(/(\.[\w]+)$/, ".js.map"));
     del(buildFile).catch(() => {});

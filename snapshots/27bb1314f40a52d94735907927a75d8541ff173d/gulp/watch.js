@@ -5,13 +5,13 @@ import { handleBuild as build } from "./build";
 import { handleTest as test } from "./test";
 
 const buildDir = "build";
-const srcGlob = ["src/**/*.ts", "test/**/*.ts", "src/**/*.js", "test/**/*.js"];
+const srcGlob = ["src/**/*.ts", "test/**/*.ts"];
 const buildGlob = ["build/src/**/*.js", "build/test/**/*.js"];
 
-export const startWatching = done => {
+export const startWatching = (done) => {
   const watcher = watch(srcGlob, { events: ["add", "change"] }, build);
 
-  watcher.on("unlink", file => {
+  watcher.on("unlink", (file) => {
     const buildFile = path.join(buildDir, file.replace(/(\.[\w]+)$/, ".js"));
     const mapFile = path.join(buildDir, file.replace(/(\.[\w]+)$/, ".js.map"));
     del(buildFile).catch(() => {});

@@ -17,11 +17,11 @@ const sanityCheck = async () => {
 
     await Promise.all([
       git.outputReport("git-report/report.json"),
-      npm.outputReport("npm-report/report.json")
+      npm.outputReport("npm-report/report.json"),
     ]);
 
     const warnMessages = [
-      chalk.red("The following warnings were encountered during sanity check:")
+      chalk.red("The following warnings were encountered during sanity check:"),
     ].concat(git.getErrorMessages(), npm.getErrorMessages());
 
     if (warnMessages.length > 1) {
