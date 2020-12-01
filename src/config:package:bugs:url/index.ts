@@ -29,7 +29,7 @@ export default class PackageBugsUrl extends Base {
 
       if (
         url &&
-        /^(https:\/\/)?(?:[\w-]{1,63}\.){1,8}[A-Za-z]{2,63}(\/[\w-\.]+)*/.test(
+        /^(https:\/\/)?(?:[\w-]{1,63}\.){1,8}[A-Za-z]{2,63}(\/[\w-.]+)*/.test(
           url
         )
       ) {

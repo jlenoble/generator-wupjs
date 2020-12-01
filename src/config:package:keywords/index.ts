@@ -62,7 +62,7 @@ export default class PackageKeywords extends Base {
           filter: (keywords: string): string[] => {
             return keywords
               .trim()
-              .replace(/[\]\[]/g, "")
+              .replace(/[\][]/g, "")
               .split(/,\s*/)
               .map((kwd): string => kwd.trim());
           },

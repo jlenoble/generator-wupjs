@@ -10,8 +10,8 @@ const extractTestParameters = (assertContent: {
 } => {
   const matchFiles: { [k: string]: RegExp[] } = {
     ".yo-rc.json": [
-      /"createdWith": "\d+\.\d+\.\d+(\-(alpha\.|beta\.)?\d+)?"/,
-      /"modifiedWith": "\d+\.\d+\.\d+(\-(alpha\.|beta\.)?\d+)?"/,
+      /"createdWith": "\d+\.\d+\.\d+(-(alpha\.|beta\.)?\d+)?"/,
+      /"modifiedWith": "\d+\.\d+\.\d+(-(alpha\.|beta\.)?\d+)?"/,
       /"createdOn": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/,
       /"modifiedOn": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/,
     ],

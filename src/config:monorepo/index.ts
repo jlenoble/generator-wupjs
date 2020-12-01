@@ -22,7 +22,7 @@ const getPackage = (
   const chunk = chunks[chunks.length - 1];
 
   if (!chunk.includes(`${packageDir}/`)) {
-    const pck = chunk.match(/^([^\/]+)/);
+    const pck = chunk.match(/^([^/]+)/);
     if (pck !== null && activePackages.includes(pck[1])) {
       return pck[1];
     }
