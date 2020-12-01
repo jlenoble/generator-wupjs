@@ -32,13 +32,13 @@ const getPackage = (
 };
 
 export default class Mono extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:monorepo",
         dependsOn: ["config:paths"],
-        willWrite: ["write:monorepo"]
+        willWrite: ["write:monorepo"],
       })
     );
   }
@@ -66,8 +66,8 @@ export default class Mono extends Base {
           type: "confirm",
           name: this.generatorName,
           message: "Will this be a monorepository ?",
-          default: this.getProp(this.generatorName) as boolean
-        }
+          default: this.getProp(this.generatorName) as boolean,
+        },
       ];
 
       this.addProp(await this.prompt(prompts));
@@ -81,8 +81,8 @@ export default class Mono extends Base {
             name: "config:paths:packages",
             message: "Packages directory:",
             default: this.getProp("config:paths:packages") || "packages",
-            validate
-          }
+            validate,
+          },
         ];
 
         this.addProp(await this.prompt(prompts));
@@ -111,8 +111,8 @@ export default class Mono extends Base {
               choices: links,
               default:
                 (this.getProp(this.generatorName + ":packages") as string[]) ||
-                []
-            }
+                [],
+            },
           ];
 
           this.addProp(await this.prompt(prompts));
@@ -145,7 +145,7 @@ export default class Mono extends Base {
           directory: packageDir,
           filter: (p): boolean => {
             return !!getPackage(p, packageDir, activePackages);
-          }
+          },
         });
 
         const dependencies =

@@ -1,7 +1,7 @@
 import Base from "../common/base-generator";
 
 export default class Package extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
@@ -16,22 +16,22 @@ export default class Package extends Base {
           "config:package:main",
           "config:package:files",
           "config:package:types",
-          "config:license" // "config:package:private" depends on it
-        ]
+          "config:license", // "config:package:private" depends on it
+        ],
       })
     );
   }
 
   public initializing(): void {
     try {
-      const pckg: Wup.Props = this.fs.readJSON(
+      const pckg: Wup.PackageJson = this.fs.readJSON(
         this.destinationPath("package.json")
-      );
+      ) as Wup.PackageJson;
 
       Object.keys(pckg).forEach((key): void => {
         const genName = this.generatorName + ":" + key;
         if (this.getProp(genName) === undefined) {
-          this.addProp(genName, pckg[key]);
+          this.addProp(genName, pckg[key as keyof Wup.PackageJson]);
         }
       });
     } catch (e) {
@@ -57,7 +57,7 @@ export default class Package extends Base {
       files: this.getProp("config:package:files"),
       types: this.getProp("config:package:types"),
       bugs: this.getProp("config:package:bugs"),
-      scripts: this.getProp("config:package:scripts")
+      scripts: this.getProp("config:package:scripts"),
     });
   }
 }

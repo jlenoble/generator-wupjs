@@ -4,12 +4,12 @@ import Base from "../common/base-generator";
 import { Props } from "../config:doc";
 
 export default class WriteDoc extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "write:doc",
-        dependsOn: ["config:doc"]
+        dependsOn: ["config:doc"],
       })
     );
   }
@@ -19,7 +19,7 @@ export default class WriteDoc extends Base {
       return;
     }
 
-    const props: Props = this.getProp("config:doc") as Props;
+    const props: Props = (this.getProp("config:doc") as unknown) as Props;
     const { docDir, examplesDir } = props;
 
     let found = true;

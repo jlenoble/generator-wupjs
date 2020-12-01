@@ -3,7 +3,7 @@ import chalk from "chalk";
 import yosay from "yosay";
 
 export default class App extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
@@ -21,8 +21,8 @@ export default class App extends Base {
           "config:paths",
           "config:parser",
           "config:gulp",
-          "config:monorepo"
-        ]
+          "config:monorepo",
+        ],
       })
     );
   }

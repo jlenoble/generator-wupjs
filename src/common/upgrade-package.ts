@@ -6,7 +6,7 @@ const upgradeOneToOne = new Map([
   ["babel-preset-es2016", "@babel/preset-env"],
   ["babel-preset-es2017", "@babel/preset-env"],
   ["babel-preset-env", "@babel/preset-env"],
-  ["babel-preset-react", "@babel/preset-react"]
+  ["babel-preset-react", "@babel/preset-react"],
 ]);
 
 export default function upgradePackage(

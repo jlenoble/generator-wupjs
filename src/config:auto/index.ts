@@ -1,12 +1,12 @@
 import Base from "../common/base-generator";
 
 export default class Auto extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:auto",
-        dependsOn: ["config:generator:version", "config:date"]
+        dependsOn: ["config:generator:version", "config:date"],
       })
     );
   }

@@ -1,12 +1,12 @@
 import Base from "../common/base-generator";
 
 export default class Author extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:author",
-        dependsOn: ["config:author:name", "config:author:email"]
+        dependsOn: ["config:author:name", "config:author:email"],
       })
     );
   }
@@ -14,7 +14,7 @@ export default class Author extends Base {
   public configuring(): void {
     this.addProp(this.generatorName, {
       name: this.getProp("config:author:name"),
-      email: this.getProp("config:author:email")
+      email: this.getProp("config:author:email"),
     });
   }
 }

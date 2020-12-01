@@ -1,6 +1,6 @@
 import { DummyPrompt, TestAdapter } from "yeoman-test/lib/adapter";
 import chalk from "chalk";
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore Path is relative to build directory after transpilation
 import stringify from "../../../generators/common/stringify";
 
@@ -13,7 +13,7 @@ This affects permanently the way "yeoman-test" behaves.
 
 const run = DummyPrompt.prototype.run;
 
-DummyPrompt.prototype.run = async function(): Promise<void> {
+DummyPrompt.prototype.run = async function (): Promise<void> {
   let answer = await run.call(this);
   let msg: true | string = true;
 

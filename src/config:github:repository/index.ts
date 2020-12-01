@@ -1,21 +1,24 @@
 import Base from "../common/base-generator";
 
 export default class GithubRepository extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:github:repository",
-        dependsOn: ["config:github:username", "config:package:name"]
+        dependsOn: ["config:github:username", "config:package:name"],
       })
     );
   }
 
   public initializing(): void {
     try {
-      const repository: Wup.Url | Wup.Repository = this.fs.readJSON(
+      const repository:
+        | Wup.Url
+        | Wup.Repository
+        | undefined = (this.fs.readJSON(
         this.destinationPath("package.json")
-      ).repository;
+      ) as Wup.PackageJson).repository;
 
       const url = typeof repository === "string" ? repository : repository.url;
 
@@ -32,8 +35,8 @@ export default class GithubRepository extends Base {
           message: "Github repository:",
           default: `git+https://github.com/${this.getProp(
             "config:github:username"
-          )}/${this.getProp("config:package:name")}.git`
-        }
+          )}/${this.getProp("config:package:name")}.git`,
+        },
       ];
 
       this.addProp(await this.prompt(prompts));

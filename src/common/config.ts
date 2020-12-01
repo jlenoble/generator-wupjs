@@ -1,5 +1,5 @@
 import { MemFsEditor } from "yeoman-generator";
-import EventEmitter from "events";
+import { EventEmitter } from "events";
 import config from "config";
 import Property from "./property";
 import BaseGenerator from "./base-generator";
@@ -32,21 +32,23 @@ export default class Config extends EventEmitter {
       }
 
       try {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore Method .create() does exist; .env is an instance of Yeoman Environment
         gen = options.env.create(`wupjs:${name}`, options);
       } catch (e) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore yeoman-test, unlike yo, does not collect subgenerators: fix that!
-        options.env.lookup((): void => {});
+        options.env.lookup((): void => {
+          // noop
+        });
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         gen = options.env.create(`wupjs:${name}`, options);
       }
 
       return gen;
-    }
+    },
   });
   protected options: Options = {};
   protected properties: Map<PropName, Property> = new Map();
@@ -55,7 +57,7 @@ export default class Config extends EventEmitter {
     super();
 
     const yoConfig: Options = fs.readJSON(destinationPath(".yo-rc.json"), {
-      [genName]: {}
+      [genName]: {},
     });
 
     Object.entries(yoConfig[genName]).forEach(
@@ -79,7 +81,7 @@ export default class Config extends EventEmitter {
         ...this.options,
         name,
         nameOrGen,
-        mesh: this.generatorNodes
+        mesh: this.generatorNodes,
       });
     }
 
@@ -145,14 +147,14 @@ export default class Config extends EventEmitter {
         ...this.options,
         ...parent.options,
         name: childGen,
-        mesh: this.generatorNodes
+        mesh: this.generatorNodes,
       });
     } else if (child && !parent) {
       new DepMeshNode({
         ...this.options,
         ...child.options,
         name: parentGen,
-        mesh: this.generatorNodes
+        mesh: this.generatorNodes,
       });
     }
 
@@ -160,7 +162,7 @@ export default class Config extends EventEmitter {
     child = this.generatorNodes.get(childGen) as DepMeshNode<BaseGenerator>;
 
     (parent as DepMeshNode<BaseGenerator>).addChild({
-      name: (child as DepMeshNode<BaseGenerator>).name
+      name: (child as DepMeshNode<BaseGenerator>).name,
     });
 
     return this;

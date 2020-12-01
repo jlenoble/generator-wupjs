@@ -1,13 +1,13 @@
 import Base from "../common/base-generator";
 
 export default class Targets extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:targets",
         dependsOn: ["config:languages"],
-        willWrite: ["write:package.json", "write:gitignore"]
+        willWrite: ["write:package.json", "write:gitignore"],
       })
     );
   }
@@ -37,11 +37,13 @@ export default class Targets extends Base {
           name: this.generatorName + ":side",
           message: "Which side of the dev stack will you target?",
           choices: ["server (Node)", "client (Browsers)", "both"],
-          default: side
-        }
+          default: side,
+        },
       ];
 
-      side = (await this.prompt(prompts))[this.generatorName + ":side"];
+      side = ((await this.prompt(prompts)) as Wup.Options)[
+        this.generatorName + ":side"
+      ] as string;
 
       switch (side) {
         case "both":

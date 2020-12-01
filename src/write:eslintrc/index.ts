@@ -2,12 +2,12 @@ import Base from "../common/base-generator";
 import { EslintConfig } from "organon";
 
 export default class EslintRc extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "write:eslintrc",
-        dependsOn: ["config:eslint"]
+        dependsOn: ["config:eslint"],
       })
     );
   }
@@ -17,7 +17,7 @@ export default class EslintRc extends Base {
       return;
     }
 
-    const props = this.getProp("config:eslint") as EslintConfig;
+    const props = (this.getProp("config:eslint") as unknown) as EslintConfig;
 
     if (props) {
       this.fs.writeJSON(this.destinationPath(".eslintrc"), props, undefined, 2);

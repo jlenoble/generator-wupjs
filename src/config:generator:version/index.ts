@@ -5,11 +5,11 @@ import Base from "../common/base-generator";
 type Version = Wup.Version;
 
 export default class GeneratorVersion extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
-        generatorName: "config:generator:version"
+        generatorName: "config:generator:version",
       })
     );
   }
@@ -35,9 +35,9 @@ Upgrade generator-wupjs before proceeding further`
     let createdWith: Version = this.config.get("createdWith");
     let modifiedWith: Version = this.config.get("modifiedWith");
 
-    const version: Version = this.fs.readJSON(
+    const version: Version | undefined = (this.fs.readJSON(
       path.join(__dirname, "../../package.json")
-    ).version;
+    ) as Wup.PackageJson).version;
 
     if (!createdWith) {
       createdWith = version;

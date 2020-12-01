@@ -1,4 +1,4 @@
-import EventEmitter from "events";
+import { EventEmitter } from "events";
 
 type PropName = Wup.PropName;
 type PropValue = Wup.PropValue;

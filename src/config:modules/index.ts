@@ -3,13 +3,13 @@ import Base from "../common/base-generator";
 export default class Modules extends Base {
   public static types: string[] = ["ES6", "CommonJS", "AMD", "UMD"];
 
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:modules",
         dependsOn: ["config:targets"],
-        willWrite: ["write:package.json", "write:src"]
+        willWrite: ["write:package.json", "write:src"],
       })
     );
   }
@@ -40,15 +40,15 @@ export default class Modules extends Base {
           name: this.generatorName + ":dev",
           message: "Select your module type(s) for development?",
           choices: Modules.types,
-          default: this.getProp(this.generatorName + ":dev") as string[]
+          default: this.getProp(this.generatorName + ":dev") as string[],
         },
         {
           type: "checkbox",
           name: this.generatorName + ":prod",
           message: "Select your module type(s) for production?",
           choices: Modules.types,
-          default: this.getProp(this.generatorName + ":prod") as string[]
-        }
+          default: this.getProp(this.generatorName + ":prod") as string[],
+        },
       ];
 
       this.addProp(await this.prompt(prompts));

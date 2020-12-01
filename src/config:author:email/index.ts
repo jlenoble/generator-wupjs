@@ -1,21 +1,21 @@
 import Base from "../common/base-generator";
 
 export default class AuthorEmail extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:author:email",
-        willWrite: ["write:package.json", "write:LICENSE"]
+        willWrite: ["write:package.json", "write:LICENSE"],
       })
     );
   }
 
   public initializing(): void {
     try {
-      const author: Wup.Name | Wup.Person = this.fs.readJSON(
+      const author: Wup.Name | Wup.Person = (this.fs.readJSON(
         this.destinationPath("package.json")
-      ).author;
+      ) as Wup.PackageJson).author;
 
       if (typeof author !== "string") {
         this.addProp(this.generatorName, author.email);
@@ -43,8 +43,8 @@ export default class AuthorEmail extends Base {
             }
 
             return true;
-          }
-        }
+          },
+        },
       ];
 
       this.addProp(await this.prompt(prompts));

@@ -5,12 +5,12 @@ import ejs from "ejs";
 export default class LICENSE extends Base {
   protected props?: Wup.LICENSE;
 
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "write:LICENSE",
-        dependsOn: ["config:date", "config:author", "config:license"]
+        dependsOn: ["config:date", "config:author", "config:license"],
       })
     );
   }
@@ -62,10 +62,12 @@ export default class LICENSE extends Base {
   // 'default' queue runs between 'configuring' and 'writing' queues
   public beforeWriting(): void {
     const license = this.getProp("config:license") as Wup.License;
-    const { name, email } = this.getProp("config:author") as Wup.Person;
-    const { createdOn, modifiedOn } = this.getProp(
+    const { name, email } = (this.getProp(
+      "config:author"
+    ) as unknown) as Wup.Person;
+    const { createdOn, modifiedOn } = (this.getProp(
       "config:date"
-    ) as Wup.YoRcJson;
+    ) as unknown) as Wup.YoRcJson;
 
     const y1 = createdOn.getFullYear();
     const y2 = modifiedOn.getFullYear();
@@ -96,7 +98,7 @@ export default class LICENSE extends Base {
       licenseText,
       cYear,
       cHolder: name,
-      email: email as Wup.Email
+      email: email as Wup.Email,
     };
 
     this.props.licenseText = ejs.compile(this.props.licenseText)(this.props);

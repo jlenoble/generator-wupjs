@@ -14,7 +14,7 @@ This affects permanently the way "yeoman-test" behaves.
 Now generators may have an extension.`)
 );
 
-RunContext.prototype._run = function(): void {
+RunContext.prototype._run = function (): void {
   if (!this.inDirSet && this.settings.tmpdir) {
     this.inTmpDir();
   }
@@ -51,7 +51,7 @@ RunContext.prototype._run = function(): void {
 
   this.generator = this.env.create(namespace, {
     arguments: this.args,
-    options: this.options
+    options: this.options,
   });
 
   helpers.mockPrompt(this.generator, this.answers);

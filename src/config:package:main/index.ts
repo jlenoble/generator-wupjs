@@ -4,21 +4,22 @@ import Base from "../common/base-generator";
 type Path = Wup.Path;
 
 export default class PackageMain extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:package:main",
         dependsOn: ["config:paths"],
-        willWrite: ["write:package.json"]
+        willWrite: ["write:package.json"],
       })
     );
   }
 
   public initializing(): void {
     try {
-      const main: Path = this.fs.readJSON(this.destinationPath("package.json"))
-        .main;
+      const main: Path | undefined = (this.fs.readJSON(
+        this.destinationPath("package.json")
+      ) as Wup.PackageJson).main;
 
       this.addProp(this.generatorName, main);
     } catch (e) {
@@ -40,8 +41,8 @@ export default class PackageMain extends Base {
           type: "input",
           name: this.generatorName,
           message: "Package main entry:",
-          default: main
-        }
+          default: main,
+        },
       ];
 
       this.setProp(await this.prompt(prompts));

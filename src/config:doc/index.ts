@@ -18,7 +18,7 @@ export interface Props {
 export default class Doc extends Base {
   protected props?: Props;
 
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
@@ -28,9 +28,9 @@ export default class Doc extends Base {
           "config:date",
           "config:paths",
           "config:package",
-          "config:license"
+          "config:license",
         ],
-        willWrite: ["write:doc", "write:gulp"]
+        willWrite: ["write:doc", "write:gulp"],
       })
     );
   }
@@ -46,9 +46,9 @@ export default class Doc extends Base {
     const examplesDir = this.getProp("config:paths:examples") as string;
     const builtExamplesDir = path.join(buildDir, examplesDir);
 
-    const { createdOn, modifiedOn } = this.getProp(
+    const { createdOn, modifiedOn } = (this.getProp(
       "config:date"
-    ) as Wup.YoRcJson;
+    ) as unknown) as Wup.YoRcJson;
 
     const y1 = createdOn.getFullYear();
     const y2 = modifiedOn.getFullYear();
@@ -65,7 +65,7 @@ export default class Doc extends Base {
       cYear,
       docDir: this.getProp("config:paths:doc") as string,
       examplesDir,
-      builtExamplesDir
+      builtExamplesDir,
     };
 
     this.addProp(this.generatorName, this.props);

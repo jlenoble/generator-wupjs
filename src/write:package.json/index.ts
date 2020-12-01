@@ -3,7 +3,7 @@ import Base from "../common/base-generator";
 export default class PackageJson extends Base {
   protected props?: Wup.PackageJson;
 
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
@@ -14,22 +14,24 @@ export default class PackageJson extends Base {
           "config:author",
           "config:repository",
           "config:dependencies",
-          "config:eslint" // add dev deps
-        ]
+          "config:eslint", // add dev deps
+        ],
       })
     );
   }
 
   // 'default' queue runs between 'configuring' and 'writing' queues
   public beforeWriting(): void {
-    const _package = this.getProp("config:package") as Wup.Package;
-    const license = this.getProp("config:license") as Wup.License;
-    const author = this.getProp("config:author") as Wup.Person;
-    const repository = this.getProp("config:repository") as Wup.Repository;
+    const _package = (this.getProp("config:package") as unknown) as Wup.Package;
+    const license = (this.getProp("config:license") as unknown) as Wup.License;
+    const author = (this.getProp("config:author") as unknown) as Wup.Person;
+    const repository = (this.getProp(
+      "config:repository"
+    ) as unknown) as Wup.Repository;
     const engines = { node: ">=" + process.version.substring(1) };
-    const dependencies = this.getProp(
+    const dependencies = (this.getProp(
       "config:dependencies"
-    ) as Wup.Dependencies[];
+    ) as unknown) as Wup.Dependencies[];
 
     this.props = {
       ..._package,
@@ -37,7 +39,7 @@ export default class PackageJson extends Base {
       author,
       repository,
       engines,
-      ...dependencies
+      ...dependencies,
     };
 
     Object.keys(this.props).forEach((key): void => {

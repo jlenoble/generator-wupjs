@@ -90,7 +90,7 @@ export default class RefDeps {
     if (!dep) {
       dep = this.deps[name] = {
         latestVersion: "",
-        lastChecked: new Date().toUTCString()
+        lastChecked: new Date().toUTCString(),
       };
     }
 

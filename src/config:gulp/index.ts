@@ -60,7 +60,7 @@ export interface Props extends Wup.Props {
 export default class Gulp extends Base {
   protected props?: Props;
 
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
@@ -70,9 +70,9 @@ export default class Gulp extends Base {
           "config:languages",
           "config:dependencies",
           "config:monorepo",
-          "config:doc"
+          "config:doc",
         ],
-        willWrite: ["write:gulp"]
+        willWrite: ["write:gulp"],
       })
     );
   }
@@ -99,8 +99,8 @@ export default class Gulp extends Base {
           message: "Do you need a gulpfiles dir?",
           default: this.getProp(
             this.generatorName + ":hasGulpfilesDir"
-          ) as boolean
-        }
+          ) as boolean,
+        },
       ];
 
       this.addProp(await this.prompt(prompts));
@@ -117,8 +117,8 @@ export default class Gulp extends Base {
             name: "config:paths:gulpfiles",
             message: "Gulpfiles directory:",
             default: this.getProp("config:paths:gulpfiles") as Path,
-            validate
-          }
+            validate,
+          },
         ];
 
         this.addProp(await this.prompt(prompts));
@@ -134,7 +134,7 @@ export default class Gulp extends Base {
       eslint: true,
       gulp: true,
       mocha: true,
-      typescript: !!this.getProp("config:languages:typescript")
+      typescript: !!this.getProp("config:languages:typescript"),
     });
 
     this.addDevDep(gulp.dependencies);
@@ -153,7 +153,7 @@ export default class Gulp extends Base {
       "dist-test",
       "doc",
       "prepublish",
-      "push"
+      "push",
     ];
 
     const buildDir = this.getProp("config:paths:build") as Path;
@@ -226,7 +226,7 @@ export default class Gulp extends Base {
 
     const buildGlobs = [
       path.join(buildDir, srcDir, "**/*.js"),
-      path.join(buildDir, testDir, "**/*.js")
+      path.join(buildDir, testDir, "**/*.js"),
     ];
 
     if (antlr4) {
@@ -270,7 +270,7 @@ export default class Gulp extends Base {
 
     if (monorepo) {
       activePackages = [
-        ...(this.getProp("config:monorepo:active") as string[])
+        ...(this.getProp("config:monorepo:active") as string[]),
       ];
       packageGlobs = { ...(this.getProp("config:monorepo:deps") as object) };
 
@@ -329,7 +329,7 @@ export default class Gulp extends Base {
 
       docConfigFile,
       examplesGlob,
-      relPath
+      relPath,
     };
 
     if (antlr4) {
@@ -346,7 +346,7 @@ export default class Gulp extends Base {
       const parserTokenGlob = JSON.stringify(
         [
           path.join(parserDir, "**/*.interp"),
-          path.join(parserDir, "**/*.tokens")
+          path.join(parserDir, "**/*.tokens"),
         ],
         undefined,
         2
@@ -361,13 +361,13 @@ export default class Gulp extends Base {
         grammarGlob,
         dataGlob,
         parserTokenGlob,
-        parserSrcGlob
+        parserSrcGlob,
       });
     }
 
     if (hasGulpfilesDir) {
       Object.assign(this.props, {
-        gulpfilesGlob
+        gulpfilesGlob,
       });
     }
 

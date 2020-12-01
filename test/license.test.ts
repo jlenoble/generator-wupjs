@@ -21,12 +21,12 @@ const testLicense = (licenses: Wup.License[]): void => {
     command: "yo wupjs:write:LICENSE",
     prompt: {
       ...prompt,
-      "config:license": licenses
+      "config:license": licenses,
     },
     assertContent: {
       "package.json": true,
-      LICENSE: true
-    }
+      LICENSE: true,
+    },
   });
 };
 
@@ -48,12 +48,12 @@ const testGplLicense = (licenses: Wup.License[], only: boolean): void => {
     prompt: {
       ...prompt,
       "config:license": licenses,
-      "config:license:GPL-suffix": only
+      "config:license:GPL-suffix": only,
     },
     assertContent: {
       "package.json": true,
-      LICENSE: true
-    }
+      LICENSE: true,
+    },
   });
 };
 
@@ -63,7 +63,7 @@ for (const only of [true, false]) {
     "GPL-3.0",
     "LGPL-2.1",
     "LGPL-3.0",
-    "AGPL-3.0"
+    "AGPL-3.0",
   ]) {
     testGplLicense([gpl], only);
   }
@@ -81,12 +81,12 @@ const testMultipleLicense = (licenses: Wup.License[], only = false): void => {
     prompt: {
       ...prompt,
       "config:license": licenses,
-      "config:license:GPL-suffix": only
+      "config:license:GPL-suffix": only,
     },
     assertContent: {
       "package.json": true,
-      LICENSE: true
-    }
+      LICENSE: true,
+    },
   });
 };
 

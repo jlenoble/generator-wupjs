@@ -12,7 +12,8 @@ type Props = Wup.Props;
 let config: Config | null;
 let refDeps: RefDeps | null;
 
-export default class BaseGenerator extends Generator
+export default class BaseGenerator
+  extends Generator
   implements Wup.BaseGenerator {
   public readonly generatorName: GenName;
   protected mustPrompt: boolean;
@@ -37,7 +38,7 @@ export default class BaseGenerator extends Generator
     const {
       generatorName,
       willWrite = [],
-      dependsOn = []
+      dependsOn = [],
     }: {
       generatorName?: GenName;
       willWrite?: GenName[];
@@ -88,7 +89,7 @@ export default class BaseGenerator extends Generator
 
       gen.destinationRoot(calledGen.destinationRoot());
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore Intentional access to internal
       calledGen._composedWith.length = 0;
       calledGen.composeAll();
@@ -234,11 +235,11 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
         // subgenerators but instanciate them as needed by hand during the
         // linking process; This prevents from being prompted again and again
         // for the same parameters.
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         this._composedWith.push(generator);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore Accessing internals to start gens added after prompting or configuring
         if (this._running && !generator._running) {
           generator.run();

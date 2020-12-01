@@ -111,8 +111,8 @@ gulp.task(
   series(
     "test",
     gulp.parallel("lint", "dist-clean", "doc"),
-    "dist-test",
-    "types",
+    "dist-test"<% if (typescript) { %>,
+    "types"<% } %>,
     push,
     "sanity-check"
   )

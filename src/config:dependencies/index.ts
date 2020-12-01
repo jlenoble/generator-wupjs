@@ -15,14 +15,14 @@ enum DepName {
   prodDependencies = "dependencies",
   devDependencies = "devDependencies",
   peerDependencies = "peerDependencies",
-  optionalDependencies = "optionalDependencies"
+  optionalDependencies = "optionalDependencies",
 }
 
 enum PropName {
   prodDependencies = "prodDependencies",
   devDependencies = "devDependencies",
   peerDependencies = "peerDependencies",
-  optionalDependencies = "optionalDependencies"
+  optionalDependencies = "optionalDependencies",
 }
 
 export default class ConfigDependencies extends Base {
@@ -33,7 +33,7 @@ export default class ConfigDependencies extends Base {
   protected optionalDependencies: Dependencies;
   protected isBeforeWriting = false;
 
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
@@ -42,8 +42,8 @@ export default class ConfigDependencies extends Base {
           "write:package.json",
           "write:eslintrc",
           "write:babelrc",
-          "write:gulp"
-        ]
+          "write:gulp",
+        ],
       })
     );
 
@@ -56,7 +56,7 @@ export default class ConfigDependencies extends Base {
       dependencies: this.prodDependencies, // _cleanUpDeps rely on this being first
       devDependencies: this.devDependencies,
       peerDependencies: this.peerDependencies,
-      optionalDependencies: this.optionalDependencies
+      optionalDependencies: this.optionalDependencies,
     };
   }
 

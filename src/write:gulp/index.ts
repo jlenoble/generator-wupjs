@@ -7,12 +7,12 @@ import { Props } from "../config:gulp";
 type Path = Wup.Path;
 
 export default class WritingGulp extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "write:gulp",
-        dependsOn: ["config:gulp", "config:doc"]
+        dependsOn: ["config:gulp", "config:doc"],
       })
     );
   }
@@ -54,7 +54,7 @@ export default class WritingGulp extends Base {
         ...props,
         gulpIncludes: props.gulpIncludes.concat(
           this._collectCustom(this.destinationPath(gulpDir), props.gulpIncludes)
-        )
+        ),
       },
       this.templatePath("gulpfile.ejs"),
       this.destinationPath("gulpfile.babel.js")

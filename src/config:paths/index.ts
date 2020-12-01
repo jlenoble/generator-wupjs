@@ -10,7 +10,7 @@ export const validate = (path: Path): boolean | string => {
 };
 
 export default class Paths extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
@@ -19,8 +19,8 @@ export default class Paths extends Base {
           "write:package.json",
           "write:src",
           "write:gitignore",
-          "write:gulp"
-        ]
+          "write:gulp",
+        ],
       })
     );
   }
@@ -42,36 +42,36 @@ export default class Paths extends Base {
           name: this.generatorName + ":src",
           message: "Source directory:",
           default: this.getProp(this.generatorName + ":src"),
-          validate
+          validate,
         },
         {
           type: "input",
           name: this.generatorName + ":test",
           message: "Test directory:",
           default: this.getProp(this.generatorName + ":test"),
-          validate
+          validate,
         },
         {
           type: "input",
           name: this.generatorName + ":build",
           message: "Build directory:",
           default: this.getProp(this.generatorName + ":build"),
-          validate
+          validate,
         },
         {
           type: "input",
           name: this.generatorName + ":doc",
           message: "Documention directory:",
           default: this.getProp(this.generatorName + ":doc"),
-          validate
+          validate,
         },
         {
           type: "input",
           name: this.generatorName + ":lib",
           message: "Lib directory:",
           default: this.getProp(this.generatorName + ":lib"),
-          validate
-        }
+          validate,
+        },
       ];
 
       this.addProp(await this.prompt(prompts));

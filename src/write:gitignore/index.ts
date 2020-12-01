@@ -17,12 +17,12 @@ interface Props {
 export default class GitIgnore extends Base {
   protected props?: Props;
 
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "write:gitignore",
-        dependsOn: ["config:paths", "config:targets", "config:languages"]
+        dependsOn: ["config:paths", "config:targets", "config:languages"],
       })
     );
   }
@@ -68,7 +68,7 @@ export default class GitIgnore extends Base {
       gulpDir,
       gitignores,
       antlr4,
-      parserDir
+      parserDir,
     };
   }
 

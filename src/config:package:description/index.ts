@@ -3,21 +3,21 @@ import Base from "../common/base-generator";
 type Description = Wup.Description;
 
 export default class PackageDescription extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:package:description",
-        willWrite: ["write:package.json"]
+        willWrite: ["write:package.json"],
       })
     );
   }
 
   public initializing(): void {
     try {
-      const description: Description = this.fs.readJSON(
+      const description: Description | undefined = (this.fs.readJSON(
         this.destinationPath("package.json")
-      ).description;
+      ) as Wup.PackageJson).description;
 
       this.addProp(this.generatorName, description);
     } catch (e) {
@@ -38,8 +38,8 @@ export default class PackageDescription extends Base {
               return true;
             }
             return "You must enter a proper description (at least a couple of words)";
-          }
-        }
+          },
+        },
       ];
 
       this.addProp(await this.prompt(prompts));

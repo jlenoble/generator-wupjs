@@ -4,21 +4,21 @@ import Base from "../common/base-generator";
 type Version = Wup.Version;
 
 export default class PackageVersion extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:package:version",
-        willWrite: ["write:package.json"]
+        willWrite: ["write:package.json"],
       })
     );
   }
 
   public initializing(): void {
     try {
-      const version: Version = this.fs.readJSON(
+      const version: Version | undefined = (this.fs.readJSON(
         this.destinationPath("package.json")
-      ).version;
+      ) as Wup.PackageJson).version;
 
       this.addProp(this.generatorName, version);
     } catch (e) {
@@ -40,8 +40,8 @@ export default class PackageVersion extends Base {
             }
 
             return true;
-          }
-        }
+          },
+        },
       ];
 
       this.setProp(await this.prompt(prompts));

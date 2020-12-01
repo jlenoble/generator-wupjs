@@ -13,8 +13,8 @@ const extractTestParameters = (assertContent: {
       /"createdWith": "\d+\.\d+\.\d+(\-(alpha\.|beta\.)?\d+)?"/,
       /"modifiedWith": "\d+\.\d+\.\d+(\-(alpha\.|beta\.)?\d+)?"/,
       /"createdOn": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/,
-      /"modifiedOn": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/
-    ]
+      /"modifiedOn": "\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z"/,
+    ],
   };
 
   const expectedFiles: Set<string> = new Set([".yo-rc.json"]);
@@ -55,7 +55,7 @@ const extractTestParameters = (assertContent: {
     matchFiles,
     snapshotFiles: Array.from(snapshotFiles),
     expectedFiles: Array.from(expectedFiles),
-    noFiles: Array.from(noFiles)
+    noFiles: Array.from(noFiles),
   };
 };
 

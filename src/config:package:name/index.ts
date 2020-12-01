@@ -1,21 +1,21 @@
 import Base from "../common/base-generator";
 
 export default class PackageName extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:package:name",
-        willWrite: ["write:package.json", "write:src"]
+        willWrite: ["write:package.json", "write:src"],
       })
     );
   }
 
   public initializing(): void {
     try {
-      const name: string = this.fs.readJSON(
+      const name: string | undefined = (this.fs.readJSON(
         this.destinationPath("package.json")
-      ).name;
+      ) as Wup.PackageJson).name;
 
       this.addProp(this.generatorName, name);
     } catch (e) {
@@ -50,8 +50,8 @@ export default class PackageName extends Base {
               }
             }
             return true;
-          }
-        }
+          },
+        },
       ];
 
       this.setProp(await this.prompt(prompts));

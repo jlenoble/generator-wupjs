@@ -1,13 +1,13 @@
 import Base from "../common/base-generator";
 
 export default class DevTranspile extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:dev:transpile",
         dependsOn: ["config:dependencies"],
-        willWrite: ["write:package.json", "write:babelrc"]
+        willWrite: ["write:package.json", "write:babelrc"],
       })
     );
   }

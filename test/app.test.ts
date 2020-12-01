@@ -4,7 +4,7 @@ import {
   gulpFiles,
   docFiles,
   files,
-  prompt
+  prompt,
 } from "./common/default-options";
 
 testGenerator({
@@ -15,8 +15,8 @@ testGenerator({
     ...configFiles,
     ...gulpFiles,
     ...docFiles,
-    ...files("js")
-  }
+    ...files("js"),
+  },
 });
 
 testGenerator({
@@ -24,7 +24,7 @@ testGenerator({
   command: "yo wupjs",
   prompt: {
     ...prompt,
-    "config:languages:typescript": true
+    "config:languages:typescript": true,
   },
   assertContent: {
     ...configFiles,
@@ -32,8 +32,8 @@ testGenerator({
     ...gulpFiles,
     "gulp/types.js": true,
     ...docFiles,
-    ...files("js", "ts")
-  }
+    ...files("ts"),
+  },
 });
 
 testGenerator({
@@ -41,15 +41,15 @@ testGenerator({
   command: "yo wupjs",
   prompt: {
     ...prompt,
-    "config:languages:jupyter": true
+    "config:languages:jupyter": true,
   },
   assertContent: {
     ...configFiles,
     ...gulpFiles,
     ...docFiles,
     "gulp/notebooks.js": true,
-    ...files("js")
-  }
+    ...files("js"),
+  },
 });
 
 testGenerator({
@@ -57,7 +57,7 @@ testGenerator({
   command: "yo wupjs",
   prompt: {
     ...prompt,
-    "config:languages:antlr4": true
+    "config:languages:antlr4": true,
   },
   assertContent: {
     ...configFiles,
@@ -67,8 +67,8 @@ testGenerator({
     ...files("js"),
     "src/static/antlr4/MyListener.js": true,
     "src/static/antlr4/grammars/MyGrammar.g4": true,
-    "src/static/data/data.txt": true
-  }
+    "src/static/data/data.txt": true,
+  },
 });
 
 testGenerator({
@@ -82,16 +82,16 @@ testGenerator({
       "plumb-gulp",
       "muter",
       "cleanup-wrapper",
-      "stat-again"
-    ]
+      "stat-again",
+    ],
   },
   assertContent: {
     ...configFiles,
     ...gulpFiles,
     ...docFiles,
     "gulp/monorepo.js": true,
-    ...files("js")
-  }
+    ...files("js"),
+  },
 });
 
 testGenerator({
@@ -100,7 +100,7 @@ testGenerator({
   prompt: {
     ...prompt,
     "config:gulp:hasGulpfilesDir": true,
-    "config:paths:gulpfiles": "gulpfiles"
+    "config:paths:gulpfiles": "gulpfiles",
   },
   assertContent: {
     ...configFiles,
@@ -108,8 +108,8 @@ testGenerator({
     ...docFiles,
     "gulp/copy-gulpfiles.js": true,
     "gulpfiles/gulpfile.js": true,
-    ...files("js")
-  }
+    ...files("js"),
+  },
 });
 
 testGenerator({
@@ -118,7 +118,7 @@ testGenerator({
   prompt: {
     ...prompt,
     "config:languages:typescript": true,
-    "config:languages:extensions": ["js", "ts"]
+    "config:languages:extensions": ["js", "ts"],
   },
   assertContent: {
     ...configFiles,
@@ -126,6 +126,6 @@ testGenerator({
     ...gulpFiles,
     "gulp/types.js": true,
     ...docFiles,
-    ...files("js", "ts")
-  }
+    ...files("js", "ts"),
+  },
 });

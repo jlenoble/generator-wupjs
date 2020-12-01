@@ -2,11 +2,11 @@ import chalk from "chalk";
 import Base from "../common/base-generator";
 
 export default class Datetime extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
-        generatorName: "config:date"
+        generatorName: "config:date",
       })
     );
   }

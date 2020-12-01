@@ -2,13 +2,13 @@ import path from "path";
 import Base from "../common/base-generator";
 
 export default class Parser extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:parser",
         dependsOn: ["config:languages", "config:paths"],
-        willWrite: ["write:parser"]
+        willWrite: ["write:parser"],
       })
     );
   }
@@ -47,21 +47,21 @@ export default class Parser extends Base {
           type: "input",
           name: this.generatorName + ":grammar",
           message: "Grammar name:",
-          default: this.getProp(this.generatorName + ":grammar")
+          default: this.getProp(this.generatorName + ":grammar"),
         },
         {
           type: "input",
           name: this.generatorName + ":rule",
           message: "Parser's starting rule:",
-          default: this.getProp(this.generatorName + ":rule")
+          default: this.getProp(this.generatorName + ":rule"),
         },
         {
           type: "checkbox",
           name: this.generatorName + ":parsers",
           message: "Generated parser files:",
           choices: ["Listener", "Visitor"],
-          default: this.getProp(this.generatorName + ":parsers")
-        }
+          default: this.getProp(this.generatorName + ":parsers"),
+        },
       ];
 
       this.setProp(await this.prompt(prompts));
@@ -74,7 +74,7 @@ export default class Parser extends Base {
           type: "input",
           name: this.generatorName + ":listener",
           message: "Listener name:",
-          default: this.getProp(this.generatorName + ":listener")
+          default: this.getProp(this.generatorName + ":listener"),
         });
       }
 
@@ -83,7 +83,7 @@ export default class Parser extends Base {
           type: "input",
           name: this.generatorName + ":visitor",
           message: "Visitor name:",
-          default: this.getProp(this.generatorName + ":visitor")
+          default: this.getProp(this.generatorName + ":visitor"),
         });
       }
 

@@ -3,13 +3,13 @@ import ConfigDependencies from "../config:dependencies";
 import { EslintConfig } from "organon";
 
 export default class Eslint extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:eslint",
         dependsOn: ["config:dependencies"],
-        willWrite: ["write:eslintrc"]
+        willWrite: ["write:eslintrc"],
       })
     );
   }
@@ -18,7 +18,7 @@ export default class Eslint extends Base {
     const eslint = new EslintConfig({
       eslint: true,
       prettier: true,
-      typescript: !!this.getProp("config:languages:typescript")
+      typescript: !!this.getProp("config:languages:typescript"),
     });
 
     this.addDevDep(eslint.dependencies);

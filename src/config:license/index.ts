@@ -15,15 +15,15 @@ export default class License extends Base {
     "LGPL-2.1",
     "LGPL-3.0",
     "MIT",
-    "SEE IN FILE"
+    "SEE IN FILE",
   ];
 
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:license",
-        willWrite: ["write:package.json", "write:LICENSE"]
+        willWrite: ["write:package.json", "write:LICENSE"],
       })
     );
   }
@@ -74,9 +74,9 @@ export default class License extends Base {
 
   public initializing(): void {
     try {
-      const license: Wup.License = this.fs.readJSON(
+      const license: Wup.License | undefined = (this.fs.readJSON(
         this.destinationPath("package.json")
-      ).license;
+      ) as Wup.PackageJson).license;
 
       this.addProp(this.generatorName, license);
     } catch (e) {
@@ -109,8 +109,8 @@ export default class License extends Base {
           type: "confirm",
           name,
           message: `May a user apply a later version of the GPL terms and conditions?`,
-          default: false
-        }
+          default: false,
+        },
       ];
 
       const props = await this.prompt(prompts);
@@ -149,8 +149,8 @@ Change your custom license file name.`;
               )}, use only plain latin letters, numbers, '-', '_' or '.'`;
             }
             return true;
-          }
-        }
+          },
+        },
       ];
 
       const props = await this.prompt(prompts);
@@ -173,8 +173,8 @@ Change your custom license file name.`;
           name: this.generatorName,
           message: "LICENSE:",
           choices: this._toChoices(licenses),
-          default: licenses.map(this._unsuffixGPL)
-        }
+          default: licenses.map(this._unsuffixGPL),
+        },
       ];
 
       const props = await this.prompt(prompts);

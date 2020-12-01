@@ -10,7 +10,7 @@ export const configFiles: BoolOptions = {
   ".babelrc": true,
   ".eslintrc": true,
   ".gitignore": true,
-  "markdown.json": true
+  "markdown.json": true,
 };
 
 export const gulpFiles: BoolOptions = {
@@ -26,27 +26,27 @@ export const gulpFiles: BoolOptions = {
   "gulp/dist-test.js": true,
   "gulp/doc.js": true,
   "gulp/prepublish.js": true,
-  "gulp/push.js": true
+  "gulp/push.js": true,
 };
 
 export const docFiles: BoolOptions = {
   "docs/index.md": true,
   "docs/usage.md": true,
   "docs/examples/usage.test.js": true,
-  "docs/license.md": true
+  "docs/license.md": true,
 };
 
 export const files = (ext: string, ext2?: string): BoolOptions => {
   return !ext2
     ? {
         [`src/awesome-app.${ext}`]: true,
-        [`test/awesome-app.test.${ext}`]: true
+        [`test/awesome-app.test.${ext}`]: true,
       }
     : {
         [`src/${ext}/awesome-app.${ext}`]: true,
         [`test/${ext}/awesome-app.test.${ext}`]: true,
         [`src/${ext2}/awesome-app.${ext2}`]: true,
-        [`test/${ext2}/awesome-app.test.${ext2}`]: true
+        [`test/${ext2}/awesome-app.test.${ext2}`]: true,
       };
 };
 
@@ -58,7 +58,7 @@ export const prompt: StringOptions = {
   "config:package:version": "1.2.3",
   "config:package:description": "Some dummy description",
   "config:package:keywords": "foo, bar, quux",
-  "config:github:username": "me-me"
+  "config:github:username": "me-me",
 };
 
 export default { configFiles, gulpFiles };

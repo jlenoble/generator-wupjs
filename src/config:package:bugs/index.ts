@@ -1,12 +1,12 @@
 import Base from "../common/base-generator";
 
 export default class PackageBugs extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:package:bugs",
-        dependsOn: ["config:package:bugs:url", "config:package:bugs:email"]
+        dependsOn: ["config:package:bugs:url", "config:package:bugs:email"],
       })
     );
   }
@@ -17,7 +17,7 @@ export default class PackageBugs extends Base {
   public prompting(): void {
     this.addProp(this.generatorName, {
       url: this.getProp("config:package:bugs:url"),
-      email: this.getProp("config:package:bugs:email")
+      email: this.getProp("config:package:bugs:email"),
     });
   }
 }

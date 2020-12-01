@@ -1,7 +1,7 @@
 import Base from "../common/base-generator";
 
 export default class Languages extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
@@ -10,8 +10,8 @@ export default class Languages extends Base {
           "write:package.json",
           "write:src",
           "write:eslintrc",
-          "write:tsconfig.json"
-        ]
+          "write:tsconfig.json",
+        ],
       })
     );
   }
@@ -47,8 +47,8 @@ export default class Languages extends Base {
           type: "confirm",
           name: this.generatorName + ":typescript",
           message: "Will you use TypeScript?",
-          default: this.getProp(this.generatorName + ":typescript") as boolean
-        }
+          default: this.getProp(this.generatorName + ":typescript") as boolean,
+        },
       ];
 
       this.addProp(await this.prompt(prompts));
@@ -58,20 +58,20 @@ export default class Languages extends Base {
           type: "confirm",
           name: this.generatorName + ":jsx",
           message: "Will you use JavaScript XML (JSX)?",
-          default: this.getProp(this.generatorName + ":jsx") as boolean
-        }
+          default: this.getProp(this.generatorName + ":jsx") as boolean,
+        },
       ];
 
       this.addProp(await this.prompt(prompts));
 
       const choices: Set<string> = new Set(
         (this.getProp(this.generatorName + ":extensions") as string[]).concat([
-          "js"
+          "js",
         ])
       );
-      const previousChoices = new Set(this.getProp(
-        this.generatorName + ":extensions"
-      ) as string[]);
+      const previousChoices = new Set(
+        this.getProp(this.generatorName + ":extensions") as string[]
+      );
       let defaultChoice = "js";
 
       if (this.getProp(this.generatorName + ":jsx")) {
@@ -109,11 +109,11 @@ export default class Languages extends Base {
             name: this.generatorName + ":extensions",
             choices: Array.from(new Set([defaultChoice, ...choices])),
             message: "Pick the extensions you'll use",
-            filter: (choices: string[]): string[] => {
-              return Array.from(new Set(choices).add("js"));
-            },
-            default: Array.from(new Set([...previousChoices, defaultChoice]))
-          }
+            // filter: (choices: string[]): string[] => {
+            //   return Array.from(new Set(choices).add("js"));
+            // },
+            default: Array.from(new Set([...previousChoices, defaultChoice])),
+          },
         ];
 
         this.addProp(await this.prompt(prompts));
@@ -144,8 +144,8 @@ export default class Languages extends Base {
           type: "confirm",
           name: this.generatorName + ":jupyter",
           message: "Will you use Jupyter notebooks?",
-          default: this.getProp(this.generatorName + ":jupyter") as boolean
-        }
+          default: this.getProp(this.generatorName + ":jupyter") as boolean,
+        },
       ];
 
       this.addProp(await this.prompt(prompts));
@@ -157,8 +157,8 @@ export default class Languages extends Base {
           type: "confirm",
           name: this.generatorName + ":antlr4",
           message: "Will you use ANTLR4 grammars?",
-          default: this.getProp(this.generatorName + ":antlr4") as boolean
-        }
+          default: this.getProp(this.generatorName + ":antlr4") as boolean,
+        },
       ];
 
       this.addProp(await this.prompt(prompts));

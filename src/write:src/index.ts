@@ -21,7 +21,7 @@ interface Props extends Wup.Props {
 export default class Src extends Base {
   protected props?: Props;
 
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
@@ -31,8 +31,8 @@ export default class Src extends Base {
           "config:languages",
           "config:modules",
           "config:package:name",
-          "config:package:main"
-        ]
+          "config:package:main",
+        ],
       })
     );
   }
@@ -92,7 +92,7 @@ export default class Src extends Base {
       testFiles,
       relPath,
       className,
-      extensions
+      extensions,
     };
   }
 
@@ -112,7 +112,7 @@ export default class Src extends Base {
     try {
       await Promise.all([
         fs.stat(this.destinationPath(props.srcDir)),
-        fs.stat(this.destinationPath(props.testDir))
+        fs.stat(this.destinationPath(props.testDir)),
       ]);
     } catch (e) {
       found = false;

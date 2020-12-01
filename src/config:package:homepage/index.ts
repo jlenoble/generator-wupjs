@@ -3,21 +3,22 @@ import Base from "../common/base-generator";
 type Url = Wup.Url;
 
 export default class PackageHomepage extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:package:homepage",
         dependsOn: ["config:repository"],
-        willWrite: ["write:package.json"]
+        willWrite: ["write:package.json"],
       })
     );
   }
 
   public initializing(): void {
     try {
-      const url: Url = this.fs.readJSON(this.destinationPath("package.json"))
-        .homepage;
+      const url: Url | undefined = (this.fs.readJSON(
+        this.destinationPath("package.json")
+      ) as Wup.PackageJson).homepage;
 
       if (
         url &&
@@ -52,8 +53,8 @@ export default class PackageHomepage extends Base {
           type: "input",
           name: this.generatorName,
           message: "Homepage of the project:",
-          default: url
-        }
+          default: url,
+        },
       ];
 
       this.addProp(await this.prompt(prompts));

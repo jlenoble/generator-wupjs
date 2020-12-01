@@ -1,12 +1,12 @@
 import Base from "../common/base-generator";
 
 export default class Dev extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:dev",
-        dependsOn: ["config:dependencies", "config:dev:transpile"]
+        dependsOn: ["config:dependencies", "config:dev:transpile"],
       })
     );
   }

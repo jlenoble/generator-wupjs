@@ -27,7 +27,7 @@ export default function prettyWrite(
 
         engine = new CLIEngine({
           ...(gen.getProp("config:eslint") as Options),
-          fix: true
+          fix: true,
         });
       } catch (e) {
         engine = new CLIEngine({
@@ -37,13 +37,13 @@ export default function prettyWrite(
             "../../node_modules",
             "@typescript-eslint/parser"
           ),
-          fix: true
+          fix: true,
         });
       }
     } else {
       engine = new CLIEngine({
         ...(gen.getProp("config:eslint") as Options),
-        fix: true
+        fix: true,
       });
     }
   }
@@ -56,9 +56,9 @@ export default function prettyWrite(
         // warningCount,
         // fixableErrorCount,
         // fixableWarningCount,
-        output
-      }
-    ]
+        output,
+      },
+    ],
   } = engine.executeOnText(text);
 
   gen.fs.write(destName, output || text);

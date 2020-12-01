@@ -11,12 +11,12 @@ interface Props {
 export default class BabelRc extends Base {
   protected props?: Props;
 
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "write:babelrc",
-        dependsOn: ["config:dev"]
+        dependsOn: ["config:dev"],
       })
     );
   }
@@ -27,7 +27,7 @@ export default class BabelRc extends Base {
       node: (this.config.get("prodModuleTypes") || []).includes("CommonJS")
         ? "current"
         : false,
-      typescript: !!this.getProp("config:languages:typescript")
+      typescript: !!this.getProp("config:languages:typescript"),
     });
 
     this.addDevDep(babel.dependencies);

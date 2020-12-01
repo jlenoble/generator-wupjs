@@ -11,6 +11,7 @@ declare namespace Wup {
     contributors?: (Name | Person)[];
     files?: RelGlob[];
     main?: RelPath;
+    types?: string;
     browser?: RelPath;
     bin?: DotSlashPath | { [name: string]: DotSlashPath };
     man?: DotSlashPath | DotSlashPath[];
@@ -23,8 +24,8 @@ declare namespace Wup {
       test?: RelPath;
     };
     repository: Repository;
-    scripts?: {};
-    config?: {};
+    scripts?: Record<string, unknown>;
+    config?: Record<string, unknown>;
     dependencies?: Dependencies;
     devDependencies?: Dependencies;
     peerDependencies?: Dependencies;
@@ -34,6 +35,6 @@ declare namespace Wup {
     os?: (Os | NotOs)[];
     cpu?: (Cpu | NotCpu)[];
     private?: true;
-    publishConfig?: {};
+    publishConfig?: Record<string, unknown>;
   }
 }

@@ -20,12 +20,12 @@ interface Props {
 export default class WriteParser extends Base {
   protected props?: Props;
 
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "write:parser",
-        dependsOn: ["config:paths", "config:parser"]
+        dependsOn: ["config:paths", "config:parser"],
       })
     );
   }
@@ -52,7 +52,7 @@ export default class WriteParser extends Base {
       visitorDir,
       listener,
       visitor,
-      parsers
+      parsers,
     };
   }
 
@@ -69,7 +69,7 @@ export default class WriteParser extends Base {
         await Promise.all([
           fs.stat(this.destinationPath(grammarDir)),
           fs.stat(this.destinationPath(dataDir)),
-          fs.stat(this.destinationPath(parserDir))
+          fs.stat(this.destinationPath(parserDir)),
         ]);
       } catch (e) {
         found = false;

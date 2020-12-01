@@ -8,11 +8,17 @@ declare namespace Wup {
   type Name = string;
   type NotCpu = string;
   type NotOs = string;
-  type Option = string | object | boolean;
+  type Option = string | string[] | Record<string, unknown> | boolean;
   type Os = string;
   type Path = string;
   type PropName = string;
-  type PropValue = string | object | boolean | undefined;
+  type PropValue =
+    | string
+    | string[]
+    | Date
+    | Record<string, unknown>
+    | boolean
+    | undefined;
   type RelGlob = string;
   type RelPath = string;
   type Url = string;

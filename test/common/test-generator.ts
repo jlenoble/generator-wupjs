@@ -16,7 +16,7 @@ import {
   addMissingFilesToSnapshot,
   diffSnapshotFile,
   createSnapshotIfMissing,
-  removeUnexpectedFilesFromSnapshot
+  removeUnexpectedFilesFromSnapshot,
 } from "./snapshots";
 
 type Options = Wup.Options;
@@ -38,7 +38,7 @@ const testGenerator = (_options: {
   // Provide a global config dir specific to the tests to load defaults from
   process.env["NODE_CONFIG_DIR"] = path.join(__dirname, "../config");
 
-  describe(title, function(): void {
+  describe(title, function (): void {
     const prompt: Options = Object.assign({}, _options.prompt);
     const scratchDir = path.join(__dirname, "../../../scratch");
     const snapshotDir = path.join(__dirname, "../../../snapshots");
@@ -47,13 +47,13 @@ const testGenerator = (_options: {
 
     this.timeout(10000);
 
-    before(function(): Promise<void> {
+    before(function (): Promise<void> {
       this.cwd = process.cwd();
 
       this.end = new Promise((resolve, reject): void => {
         this.runContext = helpers
           .run(path.join(__dirname, `../../../generators/${name}`), {
-            tmpdir: false
+            tmpdir: false,
           })
           .inDir(scratchDir)
           .withArguments(args)
@@ -70,7 +70,7 @@ const testGenerator = (_options: {
 
               // Also override the reset for every single subgen
               generator._composedWith.forEach(
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore We don't want to import any source statically, so can't import type BaseGenerator
                 (gen): void => {
                   gen.destinationRoot(scratchDir);
@@ -86,7 +86,7 @@ const testGenerator = (_options: {
       return this.runContext;
     });
 
-    after(function(): void {
+    after(function (): void {
       return this.end.then((): void => {
         process.chdir(this.cwd);
         // Dynamic loading because the config package is linked
@@ -101,7 +101,7 @@ const testGenerator = (_options: {
       {
         "package.json": true,
         LICENSE: true,
-        "README.md": false
+        "README.md": false,
       },
       _options.assertContent
     );
@@ -118,10 +118,12 @@ const testGenerator = (_options: {
       matchFiles,
       snapshotFiles,
       expectedFiles,
-      noFiles
-    } = extractTestParameters(assertContent as {
-      [k: string]: RegExp[] | true;
-    });
+      noFiles,
+    } = extractTestParameters(
+      assertContent as {
+        [k: string]: RegExp[] | true;
+      }
+    );
 
     const validInput = invalidFiles.length === 0;
 
@@ -146,7 +148,7 @@ const testGenerator = (_options: {
                 scratchDir,
                 hashDir
               ),
-              removeUnexpectedFilesFromSnapshot(files, expectedFiles, hashDir)
+              removeUnexpectedFilesFromSnapshot(files, expectedFiles, hashDir),
             ]);
           } else {
             throw new Error(
@@ -202,9 +204,7 @@ If this is fine, you can update your snapshot with: gulp update-snapshots
         const snapshotFile = path.join(hashDir, file);
         const filename = path.join(path.relative(snapshotDir, hashDir), file);
 
-        it(`${file} has the expected content ${filename}`, async (): Promise<
-          void
-        > => {
+        it(`${file} has the expected content ${filename}`, async (): Promise<void> => {
           const diffText = await diffSnapshotFile(file, hashDir);
 
           if (diffText !== "") {

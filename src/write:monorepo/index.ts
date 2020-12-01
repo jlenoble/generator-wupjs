@@ -2,12 +2,12 @@ import fs from "fs-extra";
 import Base from "../common/base-generator";
 
 export default class WritingMono extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "write:monorepo",
-        dependsOn: ["config:gulp", "config:monorepo"]
+        dependsOn: ["config:gulp", "config:monorepo"],
       })
     );
   }

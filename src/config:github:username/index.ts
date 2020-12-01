@@ -1,21 +1,24 @@
 import Base from "../common/base-generator";
 
 export default class GithubUsername extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:github:username",
-        willWrite: ["write:package.json"]
+        willWrite: ["write:package.json"],
       })
     );
   }
 
   public initializing(): void {
     try {
-      const repository: Wup.Url | Wup.Repository = this.fs.readJSON(
+      const repository:
+        | Wup.Url
+        | Wup.Repository
+        | undefined = (this.fs.readJSON(
         this.destinationPath("package.json")
-      ).repository;
+      ) as Wup.PackageJson).repository;
 
       const url = typeof repository === "string" ? repository : repository.url;
       const match =
@@ -34,8 +37,8 @@ export default class GithubUsername extends Base {
           type: "input",
           name: this.generatorName,
           message: "Github user name:",
-          default: this.getProp(this.generatorName)
-        }
+          default: this.getProp(this.generatorName),
+        },
       ];
 
       this.addProp(await this.prompt(prompts));

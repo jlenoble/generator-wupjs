@@ -20,12 +20,12 @@ interface Props {
 export default class TsConfigJson extends Base {
   protected props?: Props;
 
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "write:tsconfig.json",
-        dependsOn: ["config:dev"]
+        dependsOn: ["config:dev"],
       })
     );
   }
@@ -44,9 +44,9 @@ export default class TsConfigJson extends Base {
         strict: true,
         isolatedModules: false,
         esModuleInterop: true,
-        experimentalDecorators: true
+        experimentalDecorators: true,
       },
-      include: [srcDir, testDir]
+      include: [srcDir, testDir],
     };
   }
 

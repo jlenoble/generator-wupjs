@@ -4,20 +4,21 @@ type Bugs = Wup.Bugs;
 type Email = Wup.Email;
 
 export default class PackageBugsEmail extends Base {
-  public constructor(args: string | string[], options: {}) {
+  public constructor(args: string | string[], options: Wup.Options) {
     super(
       args,
       Object.assign({}, options, {
         generatorName: "config:package:bugs:email",
-        dependsOn: ["config:author:email"]
+        dependsOn: ["config:author:email"],
       })
     );
   }
 
   public initializing(): void {
     try {
-      const bugs: Bugs = this.fs.readJSON(this.destinationPath("package.json"))
-        .bugs;
+      const bugs: Bugs | undefined = (this.fs.readJSON(
+        this.destinationPath("package.json")
+      ) as Wup.PackageJson).bugs;
       const email: Email | undefined =
         typeof bugs === "string"
           ? bugs
@@ -65,8 +66,8 @@ export default class PackageBugsEmail extends Base {
           name: this.generatorName,
           message: "Email to report bugs to:",
           default: email,
-          validate
-        }
+          validate,
+        },
       ];
 
       this.addProp(await this.prompt(prompts));
