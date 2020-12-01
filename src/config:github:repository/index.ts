@@ -16,9 +16,9 @@ export default class GithubRepository extends Base {
       const repository:
         | Wup.Url
         | Wup.Repository
-        | undefined = (this.fs.readJSON(
+        | undefined = ((this.fs.readJSON(
         this.destinationPath("package.json")
-      ) as Wup.PackageJson).repository;
+      ) as unknown) as Wup.PackageJson).repository;
 
       const url = typeof repository === "string" ? repository : repository.url;
 

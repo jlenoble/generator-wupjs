@@ -24,9 +24,9 @@ export default class Package extends Base {
 
   public initializing(): void {
     try {
-      const pckg: Wup.PackageJson = this.fs.readJSON(
+      const pckg: Wup.PackageJson = (this.fs.readJSON(
         this.destinationPath("package.json")
-      ) as Wup.PackageJson;
+      ) as unknown) as Wup.PackageJson;
 
       Object.keys(pckg).forEach((key): void => {
         const genName = this.generatorName + ":" + key;

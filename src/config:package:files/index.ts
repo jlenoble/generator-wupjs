@@ -16,9 +16,9 @@ export default class PackageFiles extends Base {
 
   public initializing(): void {
     try {
-      const files: Path[] | undefined = (this.fs.readJSON(
+      const files: Path[] | undefined = ((this.fs.readJSON(
         this.destinationPath("package.json")
-      ) as Wup.PackageJson).files;
+      ) as unknown) as Wup.PackageJson).files;
 
       this.addProp(this.generatorName, files);
     } catch (e) {

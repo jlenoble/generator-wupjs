@@ -62,9 +62,9 @@ export default class ConfigDependencies extends Base {
 
   public initializing(): void {
     try {
-      const deps = this.fs.readJSON(
+      const deps = (this.fs.readJSON(
         this.destinationPath("package.json")
-      ) as Deps;
+      ) as unknown) as Deps;
 
       if (deps) {
         this._updateDeps(DepName.prodDependencies, deps.dependencies || {});

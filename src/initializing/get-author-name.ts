@@ -2,9 +2,9 @@ import BaseGenerator from "../common/base-generator";
 
 function getFromPackageJson(gen: BaseGenerator): string {
   try {
-    const author: Wup.Name | Wup.Person = (gen.fs.readJSON(
+    const author: Wup.Name | Wup.Person = ((gen.fs.readJSON(
       gen.destinationPath("package.json")
-    ) as Wup.PackageJson).author;
+    ) as unknown) as Wup.PackageJson).author;
 
     if (!author) {
       return "";

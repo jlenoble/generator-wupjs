@@ -14,9 +14,9 @@ export default class PackageKeywords extends Base {
 
   public initializing(): void {
     try {
-      const keywords: string[] | undefined = (this.fs.readJSON(
+      const keywords: string[] | undefined = ((this.fs.readJSON(
         this.destinationPath("package.json")
-      ) as Wup.PackageJson).keywords;
+      ) as unknown) as Wup.PackageJson).keywords;
 
       this.addProp(this.generatorName, keywords);
     } catch (e) {

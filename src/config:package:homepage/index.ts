@@ -16,9 +16,9 @@ export default class PackageHomepage extends Base {
 
   public initializing(): void {
     try {
-      const url: Url | undefined = (this.fs.readJSON(
+      const url: Url | undefined = ((this.fs.readJSON(
         this.destinationPath("package.json")
-      ) as Wup.PackageJson).homepage;
+      ) as unknown) as Wup.PackageJson).homepage;
 
       if (
         url &&

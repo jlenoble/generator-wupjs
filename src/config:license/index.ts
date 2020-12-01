@@ -74,9 +74,9 @@ export default class License extends Base {
 
   public initializing(): void {
     try {
-      const license: Wup.License | undefined = (this.fs.readJSON(
+      const license: Wup.License | undefined = ((this.fs.readJSON(
         this.destinationPath("package.json")
-      ) as Wup.PackageJson).license;
+      ) as unknown) as Wup.PackageJson).license;
 
       this.addProp(this.generatorName, license);
     } catch (e) {

@@ -16,9 +16,9 @@ export default class PackageBugsEmail extends Base {
 
   public initializing(): void {
     try {
-      const bugs: Bugs | undefined = (this.fs.readJSON(
+      const bugs: Bugs | undefined = ((this.fs.readJSON(
         this.destinationPath("package.json")
-      ) as Wup.PackageJson).bugs;
+      ) as unknown) as Wup.PackageJson).bugs;
       const email: Email | undefined =
         typeof bugs === "string"
           ? bugs

@@ -17,9 +17,9 @@ export default class PackageMain extends Base {
 
   public initializing(): void {
     try {
-      const main: Path | undefined = (this.fs.readJSON(
+      const main: Path | undefined = ((this.fs.readJSON(
         this.destinationPath("package.json")
-      ) as Wup.PackageJson).main;
+      ) as unknown) as Wup.PackageJson).main;
 
       this.addProp(this.generatorName, main);
     } catch (e) {

@@ -16,9 +16,9 @@ export default class PackageVersion extends Base {
 
   public initializing(): void {
     try {
-      const version: Version | undefined = (this.fs.readJSON(
+      const version: Version | undefined = ((this.fs.readJSON(
         this.destinationPath("package.json")
-      ) as Wup.PackageJson).version;
+      ) as unknown) as Wup.PackageJson).version;
 
       this.addProp(this.generatorName, version);
     } catch (e) {

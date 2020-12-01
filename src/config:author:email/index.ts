@@ -13,9 +13,9 @@ export default class AuthorEmail extends Base {
 
   public initializing(): void {
     try {
-      const author: Wup.Name | Wup.Person = (this.fs.readJSON(
+      const author: Wup.Name | Wup.Person = ((this.fs.readJSON(
         this.destinationPath("package.json")
-      ) as Wup.PackageJson).author;
+      ) as unknown) as Wup.PackageJson).author;
 
       if (typeof author !== "string") {
         this.addProp(this.generatorName, author.email);
