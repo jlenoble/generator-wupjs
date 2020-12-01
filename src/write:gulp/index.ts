@@ -59,7 +59,7 @@ export default class WritingGulp extends Base {
         ),
       },
       this.templatePath("gulpfile.ejs"),
-      this.destinationPath("gulpfile.babel.js")
+      this.destinationPath("gulpfile.js")
     );
 
     props.gulpIncludes.forEach((include): void => {

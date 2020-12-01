@@ -20,7 +20,7 @@ dependencies:
   fs-extra: 9.0.1
   json-stable-stringify: 1.0.1
   latest-version: 5.1.0
-  organon: 0.1.0-6
+  organon: 0.1.0-8
   prettier: 2.2.1
   semver: 7.3.2
   uppercamelcase: 3.0.0
@@ -38,9 +38,11 @@ devDependencies:
   '@types/diff': 4.0.2
   '@types/eslint-config-prettier': 6.11.0
   '@types/eslint-plugin-prettier': 3.1.0
+  '@types/fancy-log': 1.3.1
   '@types/gulp': 4.0.7
   '@types/gulp-babel': 6.1.29
   '@types/gulp-cached': 0.0.31
+  '@types/gulp-debug': 2.0.31
   '@types/gulp-mocha': 0.0.33
   '@types/gulp-newer': 0.0.31
   '@types/gulp-rename': 2.0.0
@@ -69,9 +71,12 @@ devDependencies:
   eslint-config-google: 0.14.0_eslint@7.14.0
   eslint-config-prettier: 6.15.0_eslint@7.14.0
   eslint-plugin-prettier: 3.1.4_eslint@7.14.0+prettier@2.2.1
+  execa: 4.1.0
+  fancy-log: 1.3.3
   gulp: 4.0.2
   gulp-babel: 8.0.0_@babel+core@7.12.9
   gulp-cached: 1.1.1
+  gulp-debug: 4.0.0_gulp@4.0.2
   gulp-eslint: 6.0.0
   gulp-mocha: 7.0.2_gulp@4.0.2
   gulp-newer: 1.4.0
@@ -1237,6 +1242,10 @@ packages:
   /@types/expect/1.20.4:
     resolution:
       integrity: sha512-Q5Vn3yjTDyCMV50TB6VRIbQNxSE4OmZR86VSbGaNpfUolm0iePBB4KdEEHmxoY5sT2+2DIvXW0rvMDP2nHZ4Mg==
+  /@types/fancy-log/1.3.1:
+    dev: true
+    resolution:
+      integrity: sha512-31Dt9JaGfHretvwVxCBrCFL5iC9MQ3zOXpu+8C4qzW0cxc5rJJVGxB5c/vZ+wmeTk/JjPz/D0gv8BZ+Ip6iCqQ==
   /@types/fs-extra/8.1.1:
     dependencies:
       '@types/node': 14.14.10
@@ -1274,6 +1283,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-jNt5thOL0Ab32Vx7nyRFDsPulJlDQyTRzVejVimCVbPcN/19aW3HigdPD1P+LzzElL5lWp9kR8L5QM3Ry5NHjg==
+  /@types/gulp-debug/2.0.31:
+    dependencies:
+      '@types/node': 14.14.10
+    dev: true
+    resolution:
+      integrity: sha512-y2pav+vXAHhbCdG6dL2wedAn1ToGyqy6pmmQrfs6TTo+195QUHmZNXZpEtk3IG2pegLu2j7PpfR3DHx9noFryQ==
   /@types/gulp-mocha/0.0.33:
     dependencies:
       '@types/mocha': 8.0.4
@@ -4002,7 +4017,6 @@ packages:
     resolution:
       integrity: sha512-ZnWP+AmS1VUaLgTRy47+zKtjTxz+0xMpx3I52i+aalBK1QP19ggLF3Db89KJX7kjfOfP2eoa01qc++GwPgufPg==
   /get-own-enumerable-property-symbols/3.0.2:
-    dev: false
     resolution:
       integrity: sha512-I0UBV/XOz1XkIJHEUDMZAbzCThU/H8DxmSfmdGcKPnVhu2VfFqr34jr9777IyaTYvxjedWhqVIilEDsCdP5G6g==
   /get-stdin/4.0.1:
@@ -4331,6 +4345,22 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-zzGBl5fHo0EKSXsHzjspp3y5CONegCm8ErO5Qh0UzFzk2y4tMvzLWhoDokADbarfZRL2pGpRp7yt6gfJX4ph7A==
+  /gulp-debug/4.0.0_gulp@4.0.2:
+    dependencies:
+      chalk: 2.4.2
+      fancy-log: 1.3.3
+      gulp: 4.0.2
+      plur: 3.1.1
+      stringify-object: 3.3.0
+      through2: 2.0.5
+      tildify: 1.2.0
+    dev: true
+    engines:
+      node: '>=6'
+    peerDependencies:
+      gulp: '>=4'
+    resolution:
+      integrity: sha512-cn/GhMD2nVZCVxAl5vWao4/dcoZ8wUJ8w3oqTvQaGDmC1vT7swNOEbhQTWJp+/otKePT64aENcqAQXDcdj5H1g==
   /gulp-eslint/6.0.0:
     dependencies:
       eslint: 6.8.0
@@ -4666,6 +4696,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-EEqOSqym09jNFXqO+L+rLXo//bY=
+  /irregular-plurals/2.0.0:
+    dev: true
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-Y75zBYLkh0lJ9qxeHlMjQ7bSbyiSqNW/UOPWDmzC7cXskL1hekSITh1Oc6JV0XCWWZ9DE8VYSB71xocLk3gmGw==
   /is-absolute/1.0.0:
     dependencies:
       is-relative: 1.0.0
@@ -4844,7 +4880,6 @@ packages:
     resolution:
       integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
   /is-obj/1.0.1:
-    dev: false
     engines:
       node: '>=0.10.0'
     resolution:
@@ -4919,7 +4954,6 @@ packages:
     resolution:
       integrity: sha512-1+QkEcxiLlB7VEyFtyBg94e08OAsvq7FUBgApTq/w2ymCLyKJgDPsybBENVtA7XCQEgEXxKPonG+mvYRxh/LIg==
   /is-regexp/1.0.0:
-    dev: false
     engines:
       node: '>=0.10.0'
     resolution:
@@ -6119,7 +6153,7 @@ packages:
     dev: true
     resolution:
       integrity: sha1-d8DLN8QVJdZBZtmQ/61+xqDhNj4=
-  /organon/0.1.0-6:
+  /organon/0.1.0-8:
     dependencies:
       '@types/eslint': 6.8.1
       '@types/fs-extra': 8.1.1
@@ -6139,9 +6173,8 @@ packages:
     engines:
       node: '>=10.16.1'
     resolution:
-      integrity: sha512-6VLAWimPOjHYIMz1cLra74GjgWPYiIy7hbkuNz70pCzJwOmqXHeIHi7rBdSCD5TGg9I/lZf7iuyyM65DNgaoYQ==
+      integrity: sha512-RyTtHBlpoZq2HQwFquOkpfGzm3LDFsrPU8WdV+qm2oDZp2OeYcB9lEqK58AAf7wZNSczJNSuiH2RIL4JY8Jjew==
   /os-homedir/1.0.2:
-    dev: false
     engines:
       node: '>=0.10.0'
     resolution:
@@ -6487,6 +6520,14 @@ packages:
       gulp: ^4.0.0
     resolution:
       integrity: sha512-wnZNFzMwwYZnIO8H4QxvXdWTei4stVE2d7k3NUdmqPFxae2R22g2rVoedt1k+tdM8I/2gM5WIL5WXQuZcWs5CA==
+  /plur/3.1.1:
+    dependencies:
+      irregular-plurals: 2.0.0
+    dev: true
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-t1Ax8KUvV3FFII8ltczPn2tJdjqbd1sIzu6t4JL7nQ3EyeL/lTrj5PWKb06ic5/6XYDr65rQ4uzQEGN70/6X5w==
   /polypath/0.7.0:
     dependencies:
       glob: 7.1.6
@@ -7523,7 +7564,6 @@ packages:
       get-own-enumerable-property-symbols: 3.0.2
       is-obj: 1.0.1
       is-regexp: 1.0.0
-    dev: false
     engines:
       node: '>=4'
     resolution:
@@ -7714,6 +7754,14 @@ packages:
       readable-stream: 3.6.0
     resolution:
       integrity: sha512-enaDQ4MUyP2W6ZyT6EsMzqBPZaM/avg8iuo+l2d3QCs0J+6RaqkHV/2/lOwDTueBHeJ/2LG9lrLW3d5rWPucuQ==
+  /tildify/1.2.0:
+    dependencies:
+      os-homedir: 1.0.2
+    dev: true
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-3OwD9V3Km3qj5bBPIYF+tW5jWIo=
   /time-stamp/1.1.0:
     dev: true
     engines:
@@ -8461,10 +8509,12 @@ specifiers:
   '@types/eslint': ^7.2.5
   '@types/eslint-config-prettier': ^6.11.0
   '@types/eslint-plugin-prettier': ^3.1.0
+  '@types/fancy-log': ^1.3.1
   '@types/fs-extra': ^9.0.4
   '@types/gulp': ^4.0.7
   '@types/gulp-babel': ^6.1.29
   '@types/gulp-cached': ^0.0.31
+  '@types/gulp-debug': ^2.0.31
   '@types/gulp-mocha': ^0.0.33
   '@types/gulp-newer': ^0.0.31
   '@types/gulp-rename': ^2.0.0
@@ -8506,10 +8556,13 @@ specifiers:
   eslint-config-prettier: ^6.15.0
   eslint-plugin-jsdoc: ^30.7.8
   eslint-plugin-prettier: ^3.1.4
+  execa: ^4.1.0
+  fancy-log: ^1.3.3
   fs-extra: ^9.0.1
   gulp: ^4.0.2
   gulp-babel: ^8.0.0
   gulp-cached: ^1.1.1
+  gulp-debug: ^4.0.0
   gulp-eslint: ^6.0.0
   gulp-mocha: ^7.0.2
   gulp-newer: ^1.4.0
@@ -8527,7 +8580,7 @@ specifiers:
   mocha: ^8.2.1
   mochawesome: ^6.2.1
   object-hash: ^2.0.3
-  organon: ^0.1.0-6
+  organon: ^0.1.0-8
   plumb-gulp: ^0.2.2
   polypath: ^0.7.0
   prettier: ^2.2.1
