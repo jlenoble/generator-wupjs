@@ -14,7 +14,7 @@ export const configFiles: BoolOptions = {
 };
 
 export const gulpFiles: BoolOptions = {
-  "gulpfile.babel.js": true,
+  "gulpfile.js": true,
   "gulp/build.js": true,
   "gulp/clean.js": true,
   "gulp/test.js": true,
