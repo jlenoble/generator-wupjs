@@ -1,0 +1,43 @@
+{
+  "root": true,
+  "env": {
+    "es2020": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:jsdoc/recommended"
+  ],
+  "rules": {
+    "prefer-arrow-callback": [
+      "error"
+    ],
+    "spaced-comment": [
+      "error",
+      "always",
+      {
+        "markers": [
+          "/"
+        ]
+      }
+    ],
+    "jsdoc/require-jsdoc": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.ts"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint"
+      ]
+    }
+  ]
+}
