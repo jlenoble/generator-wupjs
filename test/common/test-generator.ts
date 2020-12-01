@@ -109,7 +109,7 @@ const testGenerator = (_options: {
 
     Object.keys(assertContent).forEach((key): void => {
       if (typeof assertContent[key] === "function") {
-        assertContent[key] = (assertContent[key] as Function)();
+        assertContent[key] = (assertContent[key] as () => RegExp[] | true)();
       }
     });
 

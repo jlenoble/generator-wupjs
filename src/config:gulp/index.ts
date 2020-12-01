@@ -272,7 +272,9 @@ export default class Gulp extends Base {
       activePackages = [
         ...(this.getProp("config:monorepo:active") as string[]),
       ];
-      packageGlobs = { ...(this.getProp("config:monorepo:deps") as object) };
+      packageGlobs = {
+        ...(this.getProp("config:monorepo:deps") as Record<string, string>),
+      };
 
       Object.keys(packageGlobs).forEach((key): void => {
         packageGlobs[key] = JSON.stringify(packageGlobs[key], undefined, 2);
