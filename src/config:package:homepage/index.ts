@@ -28,7 +28,9 @@ export default class PackageHomepage extends Base {
       ) {
         this.addProp(this.generatorName, url);
       }
-    } catch (e) {}
+    } catch (e) {
+      // empty
+    }
   }
 
   public async prompting(): Promise<void> {

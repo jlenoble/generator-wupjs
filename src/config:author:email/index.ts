@@ -20,7 +20,9 @@ export default class AuthorEmail extends Base {
       if (typeof author !== "string") {
         this.addProp(this.generatorName, author.email);
       }
-    } catch (e) {}
+    } catch (e) {
+      // empty
+    }
   }
 
   public async prompting(): Promise<void> {

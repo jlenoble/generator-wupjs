@@ -44,7 +44,9 @@ export default class Src extends Base {
       if (fs.readdirSync(srcDir)) {
         return;
       }
-    } catch (e) {}
+    } catch (e) {
+      // empty
+    }
 
     const testDir = this.getProp("config:paths:test") as Path;
     const extensions = this.getProp("config:languages:extensions") as string[];

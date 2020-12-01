@@ -35,7 +35,9 @@ export default class PackageBugsEmail extends Base {
       ) {
         this.addProp(this.generatorName, email);
       }
-    } catch (e) {}
+    } catch (e) {
+      // empty
+    }
   }
 
   public async prompting(): Promise<void> {

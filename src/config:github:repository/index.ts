@@ -23,7 +23,9 @@ export default class GithubRepository extends Base {
       const url = typeof repository === "string" ? repository : repository.url;
 
       this.addProp(this.generatorName, url);
-    } catch (e) {}
+    } catch (e) {
+      // empty
+    }
   }
 
   public async prompting(): Promise<void> {

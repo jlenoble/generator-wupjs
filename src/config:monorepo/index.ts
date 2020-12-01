@@ -117,6 +117,7 @@ export default class Mono extends Base {
 
           this.addProp(await this.prompt(prompts));
         } catch (e) {
+          // empty
         } finally {
           this.config.set(
             "activePackages",

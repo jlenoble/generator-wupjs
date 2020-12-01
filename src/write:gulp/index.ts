@@ -29,7 +29,9 @@ export default class WritingGulp extends Base {
           files.push(file);
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      // empty
+    }
 
     return files
       .map((file): string => {

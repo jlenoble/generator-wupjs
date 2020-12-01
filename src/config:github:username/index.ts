@@ -27,7 +27,9 @@ export default class GithubUsername extends Base {
         ) || [];
 
       this.addProp(this.generatorName, match[1]);
-    } catch (e) {}
+    } catch (e) {
+      // empty
+    }
   }
 
   public async prompting(): Promise<void> {

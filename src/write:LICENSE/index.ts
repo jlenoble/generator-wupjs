@@ -34,7 +34,9 @@ export default class LICENSE extends Base {
     } catch (e) {
       try {
         text = this.fs.read(this.templatePath(`LICENSE_${lic}`));
-      } catch (e) {}
+      } catch (e) {
+        // empty
+      }
     }
 
     return text;
@@ -53,7 +55,9 @@ export default class LICENSE extends Base {
         const name = `LICENSE_${lic}`;
         this.fs.read(this.templatePath(name));
         return name;
-      } catch (e) {}
+      } catch (e) {
+        // empty
+      }
     }
 
     return "";

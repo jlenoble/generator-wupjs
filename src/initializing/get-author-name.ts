@@ -15,7 +15,9 @@ function getFromPackageJson(gen: BaseGenerator): string {
     } else {
       return author.name;
     }
-  } catch (e) {}
+  } catch (e) {
+    // empty
+  }
 
   return "";
 }
