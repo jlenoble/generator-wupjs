@@ -93,6 +93,7 @@ const testGenerator = (_options: {
         // statically via common/config.ts so it can't acknowledge the
         // redefinition of process.env["NODE_CONFIG_DIR"] if any src is
         // linked statically (they all import indirectly common/config.ts)
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         require("../../../generators/common/base-generator").reset();
       });
     });
