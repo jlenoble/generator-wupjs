@@ -8,7 +8,14 @@ declare namespace Wup {
   type Name = string;
   type NotCpu = string;
   type NotOs = string;
-  type Option = string | string[] | Record<string, unknown> | boolean;
+  type Option =
+    | string
+    | string[]
+    | Date
+    | ((path: Path) => boolean | string)
+    | Record<string, unknown>
+    | boolean
+    | number;
   type Os = string;
   type Path = string;
   type PropName = string;
@@ -17,7 +24,9 @@ declare namespace Wup {
     | string[]
     | Date
     | Record<string, unknown>
+    | number
     | boolean
+    | null
     | undefined;
   type RelGlob = string;
   type RelPath = string;
@@ -70,7 +79,7 @@ declare namespace Wup {
   interface BaseGenerator {
     readonly generatorName: GenName;
     composeAll(): void;
-    composeWith(): this;
+    composeWith(): void;
     getProp(name: PropName): PropValue | undefined;
     setProp(name: PropName | Props, value?: PropValue): this;
   }

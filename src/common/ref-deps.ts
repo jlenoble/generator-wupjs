@@ -1,4 +1,4 @@
-import { MemFsEditor } from "yeoman-generator";
+import { Editor as MemFsEditor } from "mem-fs-editor";
 import latestVersion from "latest-version";
 import path from "path";
 import semver from "semver";
@@ -22,7 +22,7 @@ export default class RefDeps {
 
   public constructor(fs: MemFsEditor) {
     this.fs = fs;
-    this.deps = fs.readJSON(this.depsFile, {});
+    this.deps = (fs.readJSON(this.depsFile, {}) as unknown) as Deps;
   }
 
   public mustUpdate(name: string): boolean {

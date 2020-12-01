@@ -75,7 +75,10 @@ export default class ConfigDependencies extends Base {
       // empty
     }
 
-    this.addProp(this.generatorName, this.dependencies);
+    this.addProp(
+      this.generatorName,
+      (this.dependencies as unknown) as Wup.PropValue
+    );
   }
 
   protected _cleanUpDeps(): void {

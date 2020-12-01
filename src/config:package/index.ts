@@ -24,14 +24,17 @@ export default class Package extends Base {
 
   public initializing(): void {
     try {
-      const pckg: Wup.PackageJson = (this.fs.readJSON(
+      const pckg = (this.fs.readJSON(
         this.destinationPath("package.json")
       ) as unknown) as Wup.PackageJson;
 
       Object.keys(pckg).forEach((key): void => {
         const genName = this.generatorName + ":" + key;
         if (this.getProp(genName) === undefined) {
-          this.addProp(genName, pckg[key as keyof Wup.PackageJson]);
+          this.addProp(
+            genName,
+            pckg[key as keyof Wup.PackageJson] as Wup.PropValue
+          );
         }
       });
     } catch (e) {

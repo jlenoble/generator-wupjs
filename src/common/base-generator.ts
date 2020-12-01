@@ -248,7 +248,9 @@ Call .addPeerDep(${name}, ${version}) and delegate to "config:dependencies" subg
     }
   }
 
-  public composeWith(): this {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  public composeWith(): void {
     throw new Error(
       chalk.red(`
 Don't use .composeWith() super method;

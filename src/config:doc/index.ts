@@ -68,6 +68,6 @@ export default class Doc extends Base {
       builtExamplesDir,
     };
 
-    this.addProp(this.generatorName, this.props);
+    this.addProp(this.generatorName, (this.props as unknown) as Wup.PropValue);
   }
 }

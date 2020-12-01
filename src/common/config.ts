@@ -1,4 +1,4 @@
-import { MemFsEditor } from "yeoman-generator";
+import { Editor as MemFsEditor } from "mem-fs-editor";
 import { EventEmitter } from "events";
 import config from "config";
 import Property from "./property";
@@ -56,9 +56,9 @@ export default class Config extends EventEmitter {
   public constructor(fs: MemFsEditor, destinationPath: (path: Path) => Path) {
     super();
 
-    const yoConfig: Options = fs.readJSON(destinationPath(".yo-rc.json"), {
+    const yoConfig = (fs.readJSON(destinationPath(".yo-rc.json"), {
       [genName]: {},
-    });
+    }) as unknown) as Options;
 
     Object.entries(yoConfig[genName]).forEach(
       ([name, value]: [PropName, PropValue]): void => {

@@ -9,7 +9,10 @@ type Path = Wup.Path;
 const getMain = (gen: Base, packageDir: Path): string => {
   return path.join(
     packageDir,
-    gen.fs.readJSON(path.join(packageDir, "package.json"), {}).main || "MISSING"
+    ((gen.fs.readJSON(
+      path.join(packageDir, "package.json"),
+      {}
+    ) as unknown) as Wup.PackageJson).main || "MISSING"
   );
 };
 

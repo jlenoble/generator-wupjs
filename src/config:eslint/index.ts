@@ -23,7 +23,7 @@ export default class Eslint extends Base {
 
     this.addDevDep(eslint.dependencies);
 
-    this.addProp(this.generatorName, eslint);
+    this.addProp(this.generatorName, (eslint as unknown) as Wup.PropValue);
   }
 
   public async afterConfiguring(): Promise<void> {
