@@ -6,7 +6,7 @@ export const copy = () => {
   return gulp
     .src(templateGlob, {
       base: srcDir,
-      since: gulp.lastRun(copy)
+      since: gulp.lastRun(copy),
     })
     .pipe(gulp.dest(generatorsDir));
 };
@@ -14,7 +14,7 @@ export const copy = () => {
 export const distCopy = () => {
   return gulp
     .src(templateGlob, {
-      base: srcDir
+      base: srcDir,
     })
     .pipe(gulp.dest(generatorsDir));
 };

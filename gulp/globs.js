@@ -13,7 +13,7 @@ function join(...args) {
 
   args.pop();
 
-  return glob.map(str => {
+  return glob.map((str) => {
     const dir = path.join(...args);
     return path.join(dir, path.relative(cwd, str));
   });

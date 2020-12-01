@@ -12,8 +12,8 @@ export const test = () => {
       require: ["source-map-support/register"],
       reporter: "mochawesome",
       reporterOptions: {
-        reportFilename: "mochawesome-dev"
-      }
+        reportFilename: "mochawesome-dev",
+      },
     })
   );
 };
@@ -21,7 +21,7 @@ export const test = () => {
 export const updateSnapshots = () => {
   return gulp.src(testBuildGlob).pipe(
     mocha({
-      updateSnapshots: true
+      updateSnapshots: true,
     })
   );
 };
