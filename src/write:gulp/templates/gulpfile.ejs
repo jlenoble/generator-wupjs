@@ -18,6 +18,7 @@ const gulpSrc = "<%- gulpDir %>/**/*.js";
 const buildDir = "<%- buildDir %>";
 const gulpDir = path.join(`${buildDir}`, "gulp");
 const autoTask = "tdd";
+const privateAutoTask = "private:tdd";
 
 usePlumbedGulpSrc();
 
@@ -51,8 +52,10 @@ return filename.match(/\.js$/);
 require(path.join(process.cwd(), gulpDir, filename));
 });
 
+gulp.task(privateAutoTask, gulp.parallel(watchGulp, autoTask));
+
 // If success, start infinite dev process with autoreload
-gulp.task("default", autoreload(autoTask, gulpDir));
+gulp.task("default", autoreload(privateAutoTask, gulpDir));
 } catch (err) {
 // If error, try to regenerate include files
 
