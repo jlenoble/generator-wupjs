@@ -1,26 +1,9 @@
-# Config
-/.babelrc
-/.eslintrc
-/.gitignore
-/markdown.json
-/package-lock.json
-/pnpm-lock.yaml
-/tsconfig.json
-
 # Build
 /build/
-/gulpfile.babel.js
-/gulpfile.js
-/gulp/
 
 # Dist
 /lib/
-/mochawesome-report/
-/eslint-report/
-/typescript-report/
-/git-report/
-/npm-report/
-/docs/license.md
+/*-report/
 
 # Test
 tmp
@@ -286,4 +269,3 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-
