@@ -6,42 +6,43 @@ import "./test";
 import "./lint";
 import "./dist-clean";
 import "./doc";
-import "./dist-test";<% if (typescript) { %>
+import "./dist-test";
+import "./todo";<% if (typescript) { %>
 import "./types";<% } %>
 
 const sanityCheck = async () => {
-  try {
-    const cwd = process.cwd();
-    const git = new GitHandler(cwd);
-    const npm = new NpmHandler(cwd);
+try {
+const cwd = process.cwd();
+const git = new GitHandler(cwd);
+const npm = new NpmHandler(cwd);
 
-    await Promise.all([
-      git.outputReport("git-report/report.json"),
-      npm.outputReport("npm-report/report.json")
-    ]);
+await Promise.all([
+git.outputReport("git-report/report.json"),
+npm.outputReport("npm-report/report.json")
+]);
 
-    const warnMessages = [
-      chalk.red("The following warnings were encountered during sanity check:")
-    ].concat(git.getErrorMessages(), npm.getErrorMessages());
+const warnMessages = [
+chalk.red("The following warnings were encountered during sanity check:")
+].concat(git.getErrorMessages(), npm.getErrorMessages());
 
-    if (warnMessages.length > 1) {
-      console.warn(warnMessages.join("\n  - "));
-    }
-  } catch (e) {
-    console.error(e);
-  }
+if (warnMessages.length > 1) {
+console.warn(warnMessages.join("\n  - "));
+}
+} catch (e) {
+console.error(e);
+}
 };
 
 gulp.task("sanity-check", sanityCheck);
 
 gulp.task("prepublish", gulp.series(
-  "test",
-  gulp.parallel(
-    "lint",
-    "dist-clean",
-    "doc"
-  ),
-  "dist-test"<% if (typescript) { %>,
-  gulp.parallel("types", "sanity-check")<% }  else { %>,
-  "sanity-check"<% } %>
+"test",
+gulp.parallel(
+"lint",
+"dist-clean",
+"doc"
+),
+"dist-test"<% if (typescript) { %>,
+gulp.parallel("types", "todo", "sanity-check")<% }  else { %>,
+gulp.parallel("todo", "sanity-check")<% } %>
 ));
