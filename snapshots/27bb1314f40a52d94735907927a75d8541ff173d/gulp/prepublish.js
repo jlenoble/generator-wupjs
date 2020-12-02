@@ -7,6 +7,7 @@ import "./lint";
 import "./dist-clean";
 import "./doc";
 import "./dist-test";
+import "./todo";
 import "./types";
 
 const sanityCheck = async () => {
@@ -40,6 +41,6 @@ gulp.task(
     "test",
     gulp.parallel("lint", "dist-clean", "doc"),
     "dist-test",
-    gulp.parallel("types", "sanity-check")
+    gulp.parallel("types", "todo", "sanity-check")
   )
 );

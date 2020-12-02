@@ -3,6 +3,7 @@ import path from "path";
 import del from "del";
 import { handleBuild as build } from "./build";
 import { handleTest as test } from "./test";
+import { todoGlob, todoCheck } from "./todo";
 import { handleParse } from "./parse";
 
 const buildDir = "build";
@@ -29,6 +30,7 @@ export const startWatching = (done) => {
   });
 
   watch(buildGlob, test);
+  watch(todoGlob, todoCheck);
   watch(grammarGlob, series(handleParse, test));
 
   done();
