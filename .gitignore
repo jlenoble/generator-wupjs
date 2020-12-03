@@ -3,11 +3,7 @@
 
 # Dist
 /generators/
-/mochawesome-report/
-/eslint-report/
-/typescript-report/
-/git-report/
-/npm-report/
+/*-report/
 
 # Test
 tmp
