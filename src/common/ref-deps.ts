@@ -49,7 +49,8 @@ export default class RefDeps {
       if (
         (!checkedRecently &&
           dep.latestVersion !== `Package \`${name}\` could not be found`) ||
-        checkedAWhileAgo
+        checkedAWhileAgo ||
+        dep.latestVersion.includes("connect ECONNREFUSED")
       ) {
         return true;
       }
