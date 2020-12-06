@@ -37,6 +37,9 @@ export default class WritingGulp extends Base {
       .map((file): string => {
         return path.basename(file, ".js");
       })
+      .map((file): string => {
+        return path.basename(file, ".ts");
+      })
       .filter((stem): boolean => {
         return !stems.includes(stem);
       });
@@ -49,6 +52,9 @@ export default class WritingGulp extends Base {
 
     const props: Props = this.getProp("config:gulp") as Props;
     const gulpDir: Path = this.getProp("config:paths:gulp") as Path;
+
+    const extensions = this.getProp("config:languages:extensions") as string[];
+    const extension: string = extensions.includes("ts") ? "ts" : "js";
 
     prettyWrite(
       this,
@@ -67,7 +73,7 @@ export default class WritingGulp extends Base {
         this,
         props,
         this.templatePath(`${include}.ejs`),
-        this.destinationPath(path.join(gulpDir, `${include}.js`))
+        this.destinationPath(path.join(gulpDir, `${include}.${extension}`))
       );
     });
 

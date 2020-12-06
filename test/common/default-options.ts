@@ -13,22 +13,22 @@ export const configFiles: BoolOptions = {
   "markdown.json": true,
 };
 
-export const gulpFiles: BoolOptions = {
+export const gulpFiles = (ext = "js"): BoolOptions => ({
   "gulpfile.js": true,
-  "gulp/build.js": true,
-  "gulp/clean.js": true,
-  "gulp/test.js": true,
-  "gulp/watch.js": true,
-  "gulp/tdd.js": true,
-  "gulp/lint.js": true,
-  "gulp/dist-build.js": true,
-  "gulp/dist-clean.js": true,
-  "gulp/dist-test.js": true,
-  "gulp/doc.js": true,
-  "gulp/prepublish.js": true,
-  "gulp/push.js": true,
-  "gulp/todo.js": true,
-};
+  [`gulp/build.${ext}`]: true,
+  [`gulp/clean.${ext}`]: true,
+  [`gulp/test.${ext}`]: true,
+  [`gulp/watch.${ext}`]: true,
+  [`gulp/tdd.${ext}`]: true,
+  [`gulp/lint.${ext}`]: true,
+  [`gulp/dist-build.${ext}`]: true,
+  [`gulp/dist-clean.${ext}`]: true,
+  [`gulp/dist-test.${ext}`]: true,
+  [`gulp/doc.${ext}`]: true,
+  [`gulp/prepublish.${ext}`]: true,
+  [`gulp/push.${ext}`]: true,
+  [`gulp/todo.${ext}`]: true,
+});
 
 export const docFiles = (ext = "js"): BoolOptions => ({
   "docs/index.md": true,

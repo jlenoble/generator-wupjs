@@ -13,7 +13,7 @@ testGenerator({
   prompt,
   assertContent: {
     ...configFiles,
-    ...gulpFiles,
+    ...gulpFiles(),
     ...docFiles(),
     ...files("js"),
   },
@@ -29,8 +29,8 @@ testGenerator({
   assertContent: {
     ...configFiles,
     "tsconfig.json": true,
-    ...gulpFiles,
-    "gulp/types.js": true,
+    ...gulpFiles("ts"),
+    "gulp/types.ts": true,
     ...docFiles("ts"),
     ...files("ts"),
   },
@@ -45,7 +45,7 @@ testGenerator({
   },
   assertContent: {
     ...configFiles,
-    ...gulpFiles,
+    ...gulpFiles(),
     ...docFiles(),
     "gulp/notebooks.js": true,
     ...files("js"),
@@ -61,7 +61,7 @@ testGenerator({
   },
   assertContent: {
     ...configFiles,
-    ...gulpFiles,
+    ...gulpFiles(),
     ...docFiles(),
     "gulp/parse.js": true,
     ...files("js"),
@@ -87,7 +87,7 @@ testGenerator({
   },
   assertContent: {
     ...configFiles,
-    ...gulpFiles,
+    ...gulpFiles(),
     ...docFiles(),
     "gulp/monorepo.js": true,
     ...files("js"),
@@ -104,7 +104,7 @@ testGenerator({
   },
   assertContent: {
     ...configFiles,
-    ...gulpFiles,
+    ...gulpFiles(),
     ...docFiles(),
     "gulp/copy-gulpfiles.js": true,
     "gulpfiles/gulpfile.js": true,
@@ -123,8 +123,8 @@ testGenerator({
   assertContent: {
     ...configFiles,
     "tsconfig.json": true,
-    ...gulpFiles,
-    "gulp/types.js": true,
+    ...gulpFiles("ts"),
+    "gulp/types.ts": true,
     ...docFiles("ts"),
     ...files("js", "ts"),
   },
