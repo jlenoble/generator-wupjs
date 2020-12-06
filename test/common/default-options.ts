@@ -30,12 +30,12 @@ export const gulpFiles: BoolOptions = {
   "gulp/todo.js": true,
 };
 
-export const docFiles: BoolOptions = {
+export const docFiles = (ext = "js"): BoolOptions => ({
   "docs/index.md": true,
   "docs/usage.md": true,
-  "docs/examples/usage.test.js": true,
+  [`docs/examples/usage.test.${ext}`]: true,
   "docs/license.md": true,
-};
+});
 
 export const files = (ext: string, ext2?: string): BoolOptions => {
   return !ext2
@@ -44,10 +44,10 @@ export const files = (ext: string, ext2?: string): BoolOptions => {
         [`test/awesome-app.test.${ext}`]: true,
       }
     : {
-        [`src/${ext}/awesome-app.${ext}`]: true,
-        [`test/${ext}/awesome-app.test.${ext}`]: true,
-        [`src/${ext2}/awesome-app.${ext2}`]: true,
-        [`test/${ext2}/awesome-app.test.${ext2}`]: true,
+        [`src/awesome-app.${ext}`]: true,
+        [`test/awesome-app.test.${ext}`]: true,
+        [`src/awesome-app.${ext2}`]: true,
+        [`test/awesome-app.test.${ext2}`]: true,
       };
 };
 

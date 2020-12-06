@@ -50,6 +50,27 @@ export default class Src extends Base {
 
     const testDir = this.getProp("config:paths:test") as Path;
     const extensions = this.getProp("config:languages:extensions") as string[];
+    let extension: string = extensions[0];
+
+    forloop: for (const ext of extensions) {
+      switch (ext) {
+        case "tsx":
+          break forloop;
+
+        case "jsx":
+          if (extension === "js" || extension === "ts") {
+            extension = ext;
+          }
+          break;
+
+        case "ts":
+          if (extension === "js") {
+            extension = ext;
+          }
+          break;
+      }
+    }
+
     let main = this.getProp("config:package:main") as string;
 
     if (main) {
@@ -61,24 +82,19 @@ export default class Src extends Base {
       }
     }
 
-    const files =
-      extensions.length > 1
-        ? extensions.map((ext): string => path.join(ext, main))
-        : [main];
+    const files = [main];
 
     const srcFiles =
       extensions.length > 1
-        ? extensions.map((ext): string =>
-            path.join(srcDir, ext, `${main}.${ext}`)
-          )
-        : [path.join(srcDir, `${main}.${extensions[0]}`)];
+        ? extensions.map((ext): string => path.join(srcDir, `${main}.${ext}`))
+        : [path.join(srcDir, `${main}.${extension}`)];
 
     const testFiles =
       extensions.length > 1
         ? extensions.map((ext): string =>
-            path.join(testDir, ext, `${main}.test.${ext}`)
+            path.join(testDir, `${main}.test.${ext}`)
           )
-        : [path.join(testDir, `${main}.test.${extensions[0]}`)];
+        : [path.join(testDir, `${main}.test.${extension}`)];
 
     const relPath = extensions.length > 1 ? "../.." : "..";
 
@@ -95,6 +111,7 @@ export default class Src extends Base {
       relPath,
       className,
       extensions,
+      extension,
     };
   }
 

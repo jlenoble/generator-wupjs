@@ -21,6 +21,27 @@ export default class WriteDoc extends Base {
 
     const props: Props = (this.getProp("config:doc") as unknown) as Props;
     const { docDir, examplesDir } = props;
+    const extensions = this.getProp("config:languages:extensions") as string[];
+    let extension: string = extensions[0];
+
+    forloop: for (const ext of extensions) {
+      switch (ext) {
+        case "tsx":
+          break forloop;
+
+        case "jsx":
+          if (extension === "js" || extension === "ts") {
+            extension = ext;
+          }
+          break;
+
+        case "ts":
+          if (extension === "js") {
+            extension = ext;
+          }
+          break;
+      }
+    }
 
     let found = true;
 
@@ -46,7 +67,7 @@ export default class WriteDoc extends Base {
 
       this.fs.copyTpl(
         this.templatePath("usage.test.ejs"),
-        this.destinationPath(path.join(examplesDir, "usage.test.js")),
+        this.destinationPath(path.join(examplesDir, `usage.test.${extension}`)),
         props
       );
     }

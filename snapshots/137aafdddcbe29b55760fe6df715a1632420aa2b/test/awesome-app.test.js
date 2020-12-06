@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import AwesomeApp from "../../src/js/awesome-app";
+import AwesomeApp from "../../src/awesome-app";
 
 describe("Testing AwesomeApp", () => {
   const defaultArgs = [];
